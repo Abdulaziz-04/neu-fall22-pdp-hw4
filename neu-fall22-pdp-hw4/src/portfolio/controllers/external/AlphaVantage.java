@@ -10,7 +10,9 @@ import portfolio.entities.StockListResponse;
 import portfolio.entities.StockPriceRequest;
 import portfolio.entities.StockPriceResponse;
 
-public class AlphaVantage {
+public class AlphaVantage implements StockPriceAPI {
+
+  @Override
   public StockPriceResponse getStockPrice(StockPriceRequest stockPriceRequest) {
     String apiKey = "W0M1JOKC82EZEQA8";
     String stockSymbol = stockPriceRequest.stockSymbol; //ticker symbol for Google
@@ -49,6 +51,7 @@ public class AlphaVantage {
     return new StockPriceResponse();
   }
 
+  @Override
   public StockListResponse getStockList() {
     return new StockListResponse();
   }
