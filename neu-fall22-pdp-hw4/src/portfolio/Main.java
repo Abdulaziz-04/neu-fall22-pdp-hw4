@@ -9,8 +9,8 @@ import portfolio.services.impl.AlphaVantageAPI;
 import portfolio.services.impl.FileIOService;
 import portfolio.services.impl.PortfolioServiceImpl;
 import portfolio.services.impl.StockQueryServiceImpl;
-import portfolio.views.View;
-import portfolio.views.impl.ViewImpl;
+import portfolio.views.MainMenuView;
+import portfolio.views.impl.CreateMenuView;
 
 public class Main {
   public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class Main {
     StockQueryService stockQueryService = new StockQueryServiceImpl(alphaVantageAPI);
     PortfolioService portfolioService = new PortfolioServiceImpl(ioService, stockQueryService);
 
-    View view = new ViewImpl();
+    MainMenuView view = new CreateMenuView();
 
     FrontController frontController = new FrontControllerImpl(view, portfolioService);
     frontController.run();

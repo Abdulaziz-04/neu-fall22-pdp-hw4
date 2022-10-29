@@ -8,5 +8,4 @@ public interface PortfolioService {
   boolean saveToFile(Portfolio portfolio, String fileName) throws Exception;
 
 
-
 }
