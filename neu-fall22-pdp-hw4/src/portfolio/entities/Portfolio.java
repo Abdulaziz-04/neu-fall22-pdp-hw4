@@ -1,17 +1,16 @@
 package portfolio.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class Portfolio {
 
-  List<Stock> stockList;
+  private final Map<String, Integer> stockMap;
 
-  public Portfolio(List<Stock> list){
-    stockList = list;
+  public Portfolio(Map<String, Integer> map){
+    stockMap = map;
   }
 
-  List<Stock> getStockList () {
-    return new ArrayList<>();
+  public Map<String, Integer> getStockMap() {
+    return stockMap;
   }
 }
