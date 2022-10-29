@@ -5,6 +5,6 @@ import portfolio.entities.StockPriceRequest;
 import portfolio.entities.StockPriceResponse;
 
 public interface StockPriceAPI {
-  StockPriceResponse getStockPrice(StockPriceRequest request);
+  public StockPriceResponse getStockPrice(StockPriceRequest request);
   public StockListResponse getStockList();
 }
