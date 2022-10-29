@@ -13,7 +13,6 @@ import portfolio.views.View;
 import portfolio.views.impl.ViewImpl;
 
 public class Main {
-
   public static void main(String[] args) {
 
     IOService ioService = new FileIOService();
@@ -24,6 +23,7 @@ public class Main {
     View view = new ViewImpl();
 
     FrontController frontController = new FrontControllerImpl(view, portfolioService);
+    frontController.run();
   }
 
 }
