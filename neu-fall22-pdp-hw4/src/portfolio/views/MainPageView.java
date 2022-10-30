@@ -1,5 +1,5 @@
 package portfolio.views;
 
-public interface MainMenuView {
+public interface MainPageView {
   void print(String errorMessage);
 }

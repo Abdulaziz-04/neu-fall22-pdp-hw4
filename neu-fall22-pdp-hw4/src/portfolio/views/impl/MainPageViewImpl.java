@@ -1,8 +1,8 @@
 package portfolio.views.impl;
 
-import portfolio.views.MainMenuView;
+import portfolio.views.MainPageView;
 
-public class MainMenuViewImpl implements MainMenuView {
+public class MainPageViewImpl implements MainPageView {
 
   @Override
   public void print(String errorMessage){

@@ -4,21 +4,45 @@ import java.util.Scanner;
 import portfolio.controllers.FrontController;
 import portfolio.controllers.PageController;
 import portfolio.entities.Page;
-import portfolio.entities.Portfolio;
 import portfolio.services.PortfolioService;
-import portfolio.views.MainMenuView;
+import portfolio.services.PortfolioValueService;
+import portfolio.services.StockQueryService;
+import portfolio.services.impl.PortfolioStore;
+import portfolio.views.CreatePageView;
+import portfolio.views.InfoPageView;
+import portfolio.views.LoadPageView;
+import portfolio.views.MainPageView;
 
 public class FrontControllerImpl implements FrontController {
 
-  MainMenuView view;
-  PageController pageController;
+  // Views
+  MainPageView mainMenuView;
+  CreatePageView createMenuView;
+  LoadPageView loadPageView;
+  InfoPageView infoPageView;
+
+  // Services
   PortfolioService portfolioService;
-  Portfolio portfolio;
+  StockQueryService stockQueryService;
+  PortfolioValueService portfolioValueService;
+
+  // Storage and entities
+  PortfolioStore portfolioStore = new PortfolioStore();
+  PageController pageController;
   Scanner scan = new Scanner(System.in);
 
-  public FrontControllerImpl(MainMenuView view, PortfolioService portfolioService) {
-    this.view = view;
+  public FrontControllerImpl(MainPageView mainMenuView, CreatePageView createMenuView,
+      LoadPageView loadPageView, InfoPageView infoPageView,
+      PortfolioService portfolioService, StockQueryService stockQueryService,
+      PortfolioValueService portfolioValueService) {
+    this.mainMenuView = mainMenuView;
+    this.createMenuView = createMenuView;
+    this.loadPageView = loadPageView;
+    this.infoPageView = infoPageView;
+    this.pageController = new MainPageController(mainMenuView);
+    this.stockQueryService = stockQueryService;
     this.portfolioService = portfolioService;
+    this.portfolioValueService = portfolioValueService;
   }
 
   @Override
@@ -33,7 +57,17 @@ public class FrontControllerImpl implements FrontController {
 
       switch (nextPage) {
         case MAINMENU:
-          pageController = new MainMenuController(view);
+          pageController = new MainPageController(mainMenuView);
+          break;
+        case CREATE_PORTFOLIO:
+          pageController = new CreatePageController(createMenuView, stockQueryService,
+              portfolioStore, portfolioService);
+          break;
+        case LOAD_PORTFOLIO:
+          pageController = new LoadPageController(loadPageView, portfolioService, portfolioStore);
+          break;
+        case PORTFOLIO_INFO:
+          pageController = new InfoPageController(infoPageView, portfolioValueService, portfolioStore);
           break;
         case EXIT:
           return;
