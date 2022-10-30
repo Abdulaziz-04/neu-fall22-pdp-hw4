@@ -3,8 +3,8 @@ package portfolio.entities;
 import java.time.LocalTime;
 
 public class CacheEntry<T> {
-  private LocalTime time;
-  private T data;
+  private final LocalTime time;
+  private final T data;
 
   public CacheEntry( LocalTime dateTime, T data){
     this.time = dateTime;

@@ -48,13 +48,18 @@ public class FrontControllerImpl implements FrontController {
   @Override
   public void run() throws Exception {
     while (true) {
+      // Render the page
       pageController.render();
+
+      // Waiting for user command
       Page nextPage = pageController.gotCommand(scan.nextLine());
 
+      // Stay on the same page
       if (nextPage == null) {
         continue;
       }
 
+      // Redirect user to the next page
       switch (nextPage) {
         case MAINMENU:
           pageController = new MainPageController(mainMenuView);

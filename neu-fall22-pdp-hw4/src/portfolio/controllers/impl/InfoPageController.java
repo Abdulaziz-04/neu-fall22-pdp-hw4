@@ -10,10 +10,10 @@ import portfolio.services.impl.PortfolioStore;
 import portfolio.views.InfoPageView;
 
 public class InfoPageController implements PageController {
-  private PortfolioValueService portfolioValueService;
-  private InfoPageView infoPageView;
+  private final PortfolioValueService portfolioValueService;
+  private final InfoPageView infoPageView;
   private String errorMessage;
-  private Portfolio portfolio;
+  private final Portfolio portfolio;
   private PortfolioValue portfolioValue ;
 
   public InfoPageController(InfoPageView infoPageView, PortfolioValueService portfolioValueService, PortfolioStore portfolioStore){

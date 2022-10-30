@@ -9,7 +9,7 @@ public interface Cache<T> {
 
   /**
    * Get value from cache. If there is a value for the key in the cache, the cache will return that
-   * value, otherwise it will create a new entry with value query from Function func.
+   * value, otherwise it will create a new entry with a new value retrieved from Function func.
    *
    * @param key  key as a string
    * @param func get function
