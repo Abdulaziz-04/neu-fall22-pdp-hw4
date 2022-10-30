@@ -1,17 +1,25 @@
 package portfolio.views.impl;
 
 import java.util.Map;
-import java.util.Map.Entry;
-import portfolio.views.CreateMenuView;
+import portfolio.views.View;
 
-public class CreateMenuViewImpl implements CreateMenuView {
+public class CreatePageView implements View {
 
-  public void print(Map<String, Integer> map, String errorMessage) {
+  private final Map<String, Integer> map;
+  private final String errorMessage;
+
+  public CreatePageView(Map<String, Integer> map, String errorMessage){
+    this.map = map;
+    this.errorMessage = errorMessage;
+  }
+
+  @Override
+  public void render() {
     System.out.println("--This is Create the portfolios interface--");
 
     if (map.size() > 0) {
       System.out.println("Selected stock and shares:");
-      for (Entry entry: map.entrySet()) {
+      for (var entry: map.entrySet()) {
         System.out.println(entry.getKey() + " ," + entry.getValue());
       }
     }

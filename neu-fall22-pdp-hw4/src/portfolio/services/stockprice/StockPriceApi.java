@@ -1,13 +1,11 @@
-package portfolio.services;
+package portfolio.services.stockprice;
 
 import java.util.List;
 import java.util.Map;
 import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
 
-public interface StockQueryService {
-  // Map<symbol, StockPrice>
+public interface StockPriceApi {
   Map<String, StockPrice> getStockPrice(String symbol);
-
   List<StockListEntry> getStockList();
 }

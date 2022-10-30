@@ -1,29 +1,28 @@
 package portfolio;
 
-import portfolio.controllers.FrontController;
-import portfolio.controllers.impl.FrontControllerImpl;
-import portfolio.services.IOService;
-import portfolio.services.PortfolioService;
-import portfolio.services.StockQueryService;
-import portfolio.services.impl.AlphaVantageAPI;
-import portfolio.services.impl.FileIOService;
-import portfolio.services.impl.PortfolioServiceImpl;
-import portfolio.services.impl.StockQueryServiceImpl;
-import portfolio.views.CreateMenuView;
-import portfolio.views.MainMenuView;
+import portfolio.controllers.PageControllerFactory;
+import portfolio.services.datastore.FileIOService;
+import portfolio.services.datastore.IOService;
+import portfolio.services.portfolio.PortfolioService;
+import portfolio.services.portfolio.PortfolioServiceImpl;
+import portfolio.services.stockprice.AlphaVantageApi;
+import portfolio.services.stockprice.StockPriceApi;
+import portfolio.services.stockprice.StockQueryService;
+import portfolio.services.stockprice.StockQueryServiceImpl;
 
 public class Main {
+
   public static void main(String[] args) throws Exception {
 
+    // Service
     IOService ioService = new FileIOService();
-    AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-    StockQueryService stockQueryService = new StockQueryServiceImpl(alphaVantageAPI);
-    PortfolioService portfolioService = new PortfolioServiceImpl(ioService, stockQueryService);
+    StockPriceApi stockPriceApi = new AlphaVantageApi();
+    StockQueryService stockQueryService = new StockQueryServiceImpl(stockPriceApi);
+    PortfolioService portfolioService = new PortfolioServiceImpl(ioService);
+    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService);
 
-    MainMenuView view = new CreateMenuView();
-
-    FrontController frontController = new FrontControllerImpl(view, portfolioService);
-    frontController.run();
+    EventLoop eventLoop = new EventLoopImpl(pageControllerFactory);
+    eventLoop.run();
   }
 
 }

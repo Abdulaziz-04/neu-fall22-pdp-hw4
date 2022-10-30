@@ -1,13 +1,29 @@
-package portfolio.services.impl;
+package portfolio.services.cache;
 
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import portfolio.entities.CacheEntry;
-import portfolio.services.Cache;
 
 public class SimpleCache<T> implements Cache<T> {
+
+  static class CacheEntry<T> {
+    private final LocalTime time;
+    private final T data;
+
+    CacheEntry( LocalTime dateTime, T data){
+      this.time = dateTime;
+      this.data = data;
+    }
+
+    LocalTime getTime() {
+      return time;
+    }
+
+    T getData() {
+      return data;
+    }
+  }
 
   private final int timeout;
   private final Map<String, CacheEntry<T>> map;
