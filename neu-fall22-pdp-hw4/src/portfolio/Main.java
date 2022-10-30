@@ -9,11 +9,11 @@ import portfolio.services.impl.AlphaVantageAPI;
 import portfolio.services.impl.FileIOService;
 import portfolio.services.impl.PortfolioServiceImpl;
 import portfolio.services.impl.StockQueryServiceImpl;
+import portfolio.views.CreateMenuView;
 import portfolio.views.MainMenuView;
-import portfolio.views.impl.CreateMenuView;
 
 public class Main {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 
     IOService ioService = new FileIOService();
     AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();

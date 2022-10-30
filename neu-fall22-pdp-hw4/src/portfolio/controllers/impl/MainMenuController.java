@@ -23,8 +23,9 @@ public class MainMenuController implements PageController {
     }
     else if (command.equals("2")){
       return Page.LOAD_PORTFOLIO;
-    }
-    else {
+    } else if (command.equals("3")){
+      return Page.PORTFOLIO_INFO;
+    } else {
       errorMessage = "error!";
       return null;
     }

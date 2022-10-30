@@ -6,7 +6,9 @@ import portfolio.controllers.PageController;
 import portfolio.entities.Page;
 import portfolio.entities.Portfolio;
 import portfolio.services.PortfolioService;
+import portfolio.views.CreateMenuView;
 import portfolio.views.MainMenuView;
+import portfolio.views.impl.CreateMenuViewImpl;
 
 public class FrontControllerImpl implements FrontController {
 
@@ -23,7 +25,9 @@ public class FrontControllerImpl implements FrontController {
 
   @Override
   public void run() throws Exception {
+    pageController = new MainMenuController(view);
     while (true) {
+      //what this means
       pageController.render();
       Page nextPage = pageController.gotCommand(scan.nextLine());
 
@@ -33,6 +37,15 @@ public class FrontControllerImpl implements FrontController {
 
       switch (nextPage) {
         case MAINMENU:
+          pageController = new MainMenuController(view);
+          break;
+        case CREATE_PORTFOLIO:
+          pageController = new CreateMenuController(new CreateMenuViewImpl());
+          break;
+        case LOAD_PORTFOLIO:
+          pageController = new (view);
+          break;
+        case PORTFOLIO_INFO:
           pageController = new MainMenuController(view);
           break;
         case EXIT:

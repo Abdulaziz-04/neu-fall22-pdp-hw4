@@ -40,7 +40,8 @@ public class CreateMenuController implements PageController {
       Portfolio portfolio = new Portfolio(stockList);
       portfolioStore.setPortfolio(portfolio);
       portfolioService.saveToFile(portfolio, LocalDateTime.now().toString() + ".txt");
-      return Page.PORTFOLIO_INFO;
+      //return Page.PORTFOLIO_INFO;
+      return Page.MAINMENU;
     }
 
     List<String> allStocks = new ArrayList<>();

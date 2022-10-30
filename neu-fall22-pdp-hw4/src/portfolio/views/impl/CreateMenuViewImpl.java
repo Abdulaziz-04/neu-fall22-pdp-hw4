@@ -14,7 +14,6 @@ public class CreateMenuViewImpl implements CreateMenuView {
       for (Entry entry: map.entrySet()) {
         System.out.println(entry.getKey() + " ," + entry.getValue());
       }
-
     }
     if (errorMessage != null){
       System.out.println(errorMessage);
