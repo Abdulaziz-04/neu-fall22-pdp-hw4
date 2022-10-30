@@ -1,4 +1,4 @@
-package portfolio.services;
+package portfolio.services.datastore;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

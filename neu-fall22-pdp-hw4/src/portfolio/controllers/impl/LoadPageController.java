@@ -1,39 +1,36 @@
 package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
-import portfolio.entities.Page;
+import portfolio.controllers.PageControllerFactory;
 import portfolio.entities.Portfolio;
-import portfolio.services.PortfolioService;
-import portfolio.services.impl.PortfolioStore;
-import portfolio.views.LoadPageView;
+import portfolio.services.portfolio.PortfolioService;
+import portfolio.views.View;
+import portfolio.views.impl.LoadPageView;
 
 public class LoadPageController implements PageController {
 
-  private PortfolioStore portfolioStore;
   private PortfolioService portfolioService;
-  private LoadPageView loadPageView;
+  PageControllerFactory controllerFactory;
   private String errorMessage;
 
-  public LoadPageController(LoadPageView loadPageView, PortfolioService portfolioService, PortfolioStore portfolioStore){
+  public LoadPageController(PortfolioService portfolioService, PageControllerFactory controllerFactory){
     this.portfolioService = portfolioService;
-    this.loadPageView = loadPageView;
-    this.portfolioStore = portfolioStore;
+    this.controllerFactory = controllerFactory;
   }
   @Override
-  public void render() {
-
+  public View getView(){
+    return new LoadPageView(errorMessage);
   }
 
   @Override
-  public Page gotCommand(String command) throws Exception {
+  public PageController handleCommand(String command) throws Exception {
     try {
       Portfolio portfolio = portfolioService.getPortfolio(command);
-      portfolioStore.setPortfolio(portfolio);
-      return Page.PORTFOLIO_INFO;
+      return controllerFactory.newInfoPageController(portfolio);
     }
     catch (Exception e){
       errorMessage = "Error! Cannot load file. Please try again.";
-      return null;
+      return this;
     }
   }
 }

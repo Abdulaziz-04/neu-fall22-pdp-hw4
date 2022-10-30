@@ -1,33 +1,34 @@
 package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
-import portfolio.entities.Page;
-import portfolio.views.MainPageView;
+import portfolio.controllers.PageControllerFactory;
+import portfolio.views.View;
+import portfolio.views.impl.MainPageView;
 
 public class MainPageController implements PageController {
 
-  MainPageView view;
+  PageControllerFactory controllerFactory;
   String errorMessage;
 
-  public MainPageController(MainPageView view) {
-    this.view = view;
+  public MainPageController(PageControllerFactory controllerFactory) {
+    this.controllerFactory = controllerFactory;
   }
 
-  public void render() {
-    view.print(errorMessage);
+  @Override
+  public View getView() {
+    return new MainPageView(errorMessage);
   }
 
-  public Page gotCommand(String command) {
+  public PageController handleCommand(String command) {
     switch (command) {
       case "1":
-        return Page.CREATE_PORTFOLIO;
+        return controllerFactory.newCreatePageController();
       case "2":
-        return Page.LOAD_PORTFOLIO;
-      case "3":
-        return Page.PORTFOLIO_INFO;
+        return controllerFactory.newLoadPageController();
       default:
         errorMessage = "error!";
         return null;
     }
   }
+
 }

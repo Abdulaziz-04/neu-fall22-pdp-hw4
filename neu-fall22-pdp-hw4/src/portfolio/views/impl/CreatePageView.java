@@ -1,11 +1,20 @@
 package portfolio.views.impl;
 
 import java.util.Map;
-import portfolio.views.CreatePageView;
+import portfolio.views.View;
 
-public class CreatePageViewImpl implements CreatePageView {
+public class CreatePageView implements View {
 
-  public void print(Map<String, Integer> map, String errorMessage) {
+  private final Map<String, Integer> map;
+  private final String errorMessage;
+
+  public CreatePageView(Map<String, Integer> map, String errorMessage){
+    this.map = map;
+    this.errorMessage = errorMessage;
+  }
+
+  @Override
+  public void render() {
     System.out.println("--This is Create the portfolios interface--");
 
     if (map.size() > 0) {

@@ -1,4 +1,4 @@
-package portfolio.services.impl;
+package portfolio.services.datastore;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import portfolio.services.IOService;
 
 public class FileIOService implements IOService {
   @Override

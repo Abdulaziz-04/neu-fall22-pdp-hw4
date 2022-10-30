@@ -1,11 +1,15 @@
 package portfolio.views.impl;
 
-import portfolio.views.MainPageView;
+import portfolio.views.View;
 
-public class MainPageViewImpl implements MainPageView {
+public class MainPageView implements View {
 
+  private final String errorMessage;
+  public MainPageView(String errorMessage){
+    this.errorMessage = errorMessage;
+  }
   @Override
-  public void print(String errorMessage){
+  public void render(){
     System.out.printf("*********************************************************************" +
         "*******************************\n");
     System.out.printf("This is the menu of the portfolio\n");

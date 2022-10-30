@@ -6,8 +6,8 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import org.junit.Test;
-import portfolio.services.IOService;
-import portfolio.services.impl.FileIOService;
+import portfolio.services.datastore.IOService;
+import portfolio.services.datastore.FileIOService;
 
 public class FileIOServiceTest {
 

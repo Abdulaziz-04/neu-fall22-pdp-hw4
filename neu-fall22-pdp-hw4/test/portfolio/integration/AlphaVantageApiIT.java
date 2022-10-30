@@ -7,11 +7,11 @@ import java.util.Map;
 import org.junit.Test;
 import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
-import portfolio.services.impl.AlphaVantageAPI;
+import portfolio.services.stockprice.AlphaVantageApi;
 
-public class AlphaVantageAPIIT {
+public class AlphaVantageApiIT {
 
-  AlphaVantageAPI api = new AlphaVantageAPI();
+  AlphaVantageApi api = new AlphaVantageApi();
 
   @Test
   public void getStockPrice(){

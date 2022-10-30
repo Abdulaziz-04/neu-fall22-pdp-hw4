@@ -1,5 +1,6 @@
-package portfolio.services;
+package portfolio.services.stockprice;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.entities.StockListEntry;
@@ -11,13 +12,14 @@ import portfolio.entities.StockPrice;
 public interface StockQueryService {
 
   /**
-   * Get all time daily prices of the stock. The result will be in a format of a map of (date:
+   * Get all time daily prices of the stock. The result will be in a format of a map of (symbol:
    * String, price: StockPrice).
    *
-   * @param symbol stock symbol
+   * @param date date
+   * @param symbols stock symbol
    * @return a map of date and StockPrice
    */
-  Map<String, StockPrice> getStockPrice(String symbol);
+  Map<String, StockPrice> getStockPrice(LocalDate date, List<String> symbols);
 
   /**
    * Get all stock listed in the US stock market.

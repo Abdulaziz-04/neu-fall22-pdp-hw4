@@ -1,12 +1,13 @@
-package portfolio.services.impl;
+package portfolio.services.portfolio;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import portfolio.entities.Portfolio;
-import portfolio.services.IOService;
-import portfolio.services.PortfolioService;
+import portfolio.entities.PortfolioEntry;
+import portfolio.services.datastore.IOService;
 
 public class PortfolioServiceImpl implements PortfolioService {
   private IOService ioService;
@@ -49,12 +50,12 @@ public class PortfolioServiceImpl implements PortfolioService {
   }
 
   private static String toString(Portfolio portfolio) {
-    Map<String, Integer> map = portfolio.getStockMap();
+    List<PortfolioEntry> stocks = portfolio.getStocks();
     StringBuilder builder = new StringBuilder();
 
-    for (Map.Entry<String,Integer> entry: map.entrySet())
+    for (var entry: stocks)
     {
-      builder.append(entry.getKey()).append(",").append(entry.getValue()).append("\n");
+      builder.append(entry.getSymbol()).append(",").append(entry.getAmount()).append("\n");
     }
 
     return builder.toString();

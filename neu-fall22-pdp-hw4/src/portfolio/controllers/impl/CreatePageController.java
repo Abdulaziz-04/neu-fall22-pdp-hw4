@@ -6,45 +6,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import portfolio.controllers.PageController;
-import portfolio.entities.Page;
+import portfolio.controllers.PageControllerFactory;
 import portfolio.entities.Portfolio;
 import portfolio.entities.StockListEntry;
-import portfolio.services.PortfolioService;
-import portfolio.services.impl.PortfolioStore;
-import portfolio.services.StockQueryService;
-import portfolio.views.CreatePageView;
+import portfolio.services.portfolio.PortfolioService;
+import portfolio.services.stockprice.StockQueryService;
+import portfolio.views.View;
+import portfolio.views.impl.CreatePageView;
 
 public class CreatePageController implements PageController {
 
-  CreatePageView view;
-  StockQueryService stockQueryService;
+  private final StockQueryService stockQueryService;
+  private final PortfolioService portfolioService;
+  private final PageControllerFactory pageControllerFactory;
   String errorMessage;
-  PortfolioStore portfolioStore;
-  PortfolioService portfolioService;
   Map<String, Integer> stockList = new HashMap<>();
 
-  public CreatePageController(CreatePageView view, StockQueryService stockQueryService,
-      PortfolioStore portfolioStore, PortfolioService portfolioService) {
-    this.view = view;
+  public CreatePageController(StockQueryService stockQueryService,
+      PortfolioService portfolioService, PageControllerFactory controllerFactory) {
     this.stockQueryService = stockQueryService;
-    this.portfolioStore = portfolioStore;
     this.portfolioService = portfolioService;
+    this.pageControllerFactory = controllerFactory;
   }
 
   @Override
-  public void render() {
-    view.print(stockList, errorMessage);
+  public View getView() {
+    return new CreatePageView(stockList, errorMessage);
   }
 
   @Override
-  public Page gotCommand(String command) throws Exception {
+  public PageController handleCommand(String command) throws Exception {
     command = command.trim();
     errorMessage = "";
     if (command.equals("end")) {
       Portfolio portfolio = new Portfolio(stockList);
-      portfolioStore.setPortfolio(portfolio);
       portfolioService.saveToFile(portfolio, LocalDateTime.now() + ".txt");
-      return Page.PORTFOLIO_INFO;
+      return pageControllerFactory.newInfoPageController(portfolio);
     }
 
     List<String> allStocks = new ArrayList<>();
@@ -52,23 +49,21 @@ public class CreatePageController implements PageController {
       allStocks.add(entry.getSymbol());
     }
 
-    String symbol;
-    Integer amount;
-
     try {
       String[] cmd = command.split(",");
-      symbol = cmd[0];
-      amount = Integer.parseInt(cmd[1]);
+      String symbol = cmd[0];
+      int amount = Integer.parseInt(cmd[1]);
       if (allStocks.contains(symbol)) {
         stockList.put(symbol, stockList.getOrDefault(symbol, 0) + amount);
       } else {
         errorMessage = "Symbol not found.";
-        return null;
+        return this;
       }
     } catch (Exception e) {
       errorMessage = "error!";
-      return null;
+      return this;
     }
-    return null;
+    return this;
   }
+
 }

@@ -1,4 +1,4 @@
-package portfolio.services.impl;
+package portfolio.services.stockprice;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +11,7 @@ import java.util.Map;
 import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
 
-public class AlphaVantageAPI {
+public class AlphaVantageApi implements StockPriceApi {
   private String apiKey = "W0M1JOKC82EZEQA8";
   public Map<String, StockPrice> getStockPrice(String symbol) {
     Map<String, StockPrice> map = new HashMap<>();

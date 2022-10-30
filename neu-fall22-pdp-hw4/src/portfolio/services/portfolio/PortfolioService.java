@@ -1,4 +1,4 @@
-package portfolio.services;
+package portfolio.services.portfolio;
 
 import portfolio.entities.Portfolio;
 
