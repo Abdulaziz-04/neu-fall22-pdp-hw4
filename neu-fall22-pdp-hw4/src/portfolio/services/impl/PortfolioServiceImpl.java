@@ -2,6 +2,7 @@ package portfolio.services.impl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import portfolio.entities.Portfolio;
 import portfolio.services.IOService;
@@ -37,14 +38,14 @@ public class PortfolioServiceImpl implements PortfolioService {
 
   private static Portfolio parse(String str) {
 
-    PortfolioBuilder builder = new PortfolioBuilder();
+    Map<String, Integer> map = new HashMap<>();
 
     for (String line: str.split("\n")) {
       String[] stock = line.split(",");
-      builder.add(stock[0], Integer.parseInt(stock[1]));
+      map.put(stock[0], map.getOrDefault(stock[0], 0) + Integer.parseInt(stock[1]));
     }
 
-    return builder.getResult();
+    return new Portfolio(map);
   }
 
   private static String toString(Portfolio portfolio) {
