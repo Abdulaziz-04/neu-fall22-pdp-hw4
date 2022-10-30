@@ -4,26 +4,14 @@ import java.util.Scanner;
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.stockprice.StockQueryService;
 import portfolio.views.View;
 
 public class EventLoopImpl implements EventLoop {
+  private final Scanner scan = new Scanner(System.in);
 
-  // Services
-  PortfolioService portfolioService;
-  StockQueryService stockQueryService;
+  private PageController pageController;
 
-  PageControllerFactory pageControllerFactory;
-
-  PageController pageController;
-  Scanner scan = new Scanner(System.in);
-
-  public EventLoopImpl(
-      PortfolioService portfolioService, StockQueryService stockQueryService, PageControllerFactory pageControllerFactory) {
-    this.stockQueryService = stockQueryService;
-    this.portfolioService = portfolioService;
-    this.pageControllerFactory = pageControllerFactory;
+  public EventLoopImpl(PageControllerFactory pageControllerFactory) {
     this.pageController = new MainPageController(pageControllerFactory);
   }
 
@@ -34,7 +22,7 @@ public class EventLoopImpl implements EventLoop {
       View view = pageController.getView();
       view.render();
 
-      // Waiting for user command
+      // Receive for user command and redirect to next page
       pageController = pageController.handleCommand(scan.nextLine());
     }
   }

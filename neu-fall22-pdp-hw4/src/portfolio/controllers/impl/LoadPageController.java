@@ -9,8 +9,8 @@ import portfolio.views.impl.LoadPageView;
 
 public class LoadPageController implements PageController {
 
-  private PortfolioService portfolioService;
-  PageControllerFactory controllerFactory;
+  private final PortfolioService portfolioService;
+  private final PageControllerFactory controllerFactory;
   private String errorMessage;
 
   public LoadPageController(PortfolioService portfolioService, PageControllerFactory controllerFactory){

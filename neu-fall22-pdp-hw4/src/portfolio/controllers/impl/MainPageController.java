@@ -7,8 +7,8 @@ import portfolio.views.impl.MainPageView;
 
 public class MainPageController implements PageController {
 
-  PageControllerFactory controllerFactory;
-  String errorMessage;
+  private final PageControllerFactory controllerFactory;
+  private String errorMessage;
 
   public MainPageController(PageControllerFactory controllerFactory) {
     this.controllerFactory = controllerFactory;

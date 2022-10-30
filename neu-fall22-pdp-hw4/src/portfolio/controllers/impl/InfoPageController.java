@@ -12,8 +12,8 @@ import portfolio.views.impl.InfoPageView;
 public class InfoPageController implements PageController {
   private final StockQueryService stockQueryService;
   private final PageControllerFactory controllerFactory;
-  private String errorMessage;
   private final Portfolio portfolio;
+  private String errorMessage;
   private PortfolioWithValue portfolioWithValue;
 
   public InfoPageController(StockQueryService stockQueryService, Portfolio portfolio, PageControllerFactory controllerFactory){
@@ -22,12 +22,15 @@ public class InfoPageController implements PageController {
     this.controllerFactory = controllerFactory;
   }
 
+  private void updatePortfolioWithValue(LocalDate date){
+    var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
+    portfolioWithValue = portfolio.getPortfolioWithPrice(date, prices);
+  }
   @Override
   public View getView() {
     if (portfolioWithValue == null) {
       LocalDate date = LocalDate.now().minusDays(2);
-      var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
-      portfolioWithValue = portfolio.getPortfolioWithPrice(date, prices);
+      updatePortfolioWithValue(date);
     }
     return new InfoPageView(portfolio, portfolioWithValue, errorMessage);
   }
@@ -36,8 +39,7 @@ public class InfoPageController implements PageController {
   public PageController handleCommand(String command) throws Exception {
     try {
       LocalDate date = LocalDate.parse(command);
-      var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
-      portfolioWithValue = portfolio.getPortfolioWithPrice(date, prices);
+      updatePortfolioWithValue(date);
       return this;
     }
     catch (Exception e){
