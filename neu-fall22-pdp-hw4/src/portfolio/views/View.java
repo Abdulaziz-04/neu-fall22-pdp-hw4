@@ -1,6 +1,8 @@
 package portfolio.views;
 
+import java.io.IOException;
+
 public interface View {
 
-  void render();
+  void render() throws IOException;
 }

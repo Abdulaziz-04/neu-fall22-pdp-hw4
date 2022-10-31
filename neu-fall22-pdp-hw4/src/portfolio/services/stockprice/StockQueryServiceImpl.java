@@ -20,13 +20,18 @@ public class StockQueryServiceImpl implements StockQueryService {
   }
 
   @Override
-  public Map<String, StockPrice> getStockPrice(LocalDate date, List<String> symbols) {
+  public Map<String, StockPrice> getStockPrice(LocalDate date, List<String> symbols) throws Exception {
     Map<String, StockPrice> map = new HashMap<>();
     for (var symbol : symbols
     ) {
-      StockPrice price = stockPriceCache.get(symbol, x -> api.getStockPrice(symbol))
-          .get(date.toString());
-      map.put(symbol, price);
+      try {
+        StockPrice price = stockPriceCache.get(symbol, x -> api.getStockPrice(symbol))
+                .get(date.toString());
+        map.put(symbol, price);
+      }
+      catch (Exception e){
+        throw new Exception("Date not found.");
+      }
     }
     return map;
   }

@@ -19,7 +19,7 @@ public interface StockQueryService {
    * @param symbols stock symbol
    * @return a map of date and StockPrice
    */
-  Map<String, StockPrice> getStockPrice(LocalDate date, List<String> symbols);
+  Map<String, StockPrice> getStockPrice(LocalDate date, List<String> symbols) throws Exception;
 
   /**
    * Get all stock listed in the US stock market.

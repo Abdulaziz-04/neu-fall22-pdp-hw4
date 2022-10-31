@@ -42,6 +42,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     Map<String, Integer> map = new HashMap<>();
 
     for (String line: str.split("\n")) {
+      line = line.replace("\r", "");
       String[] stock = line.split(",");
       map.put(stock[0], map.getOrDefault(stock[0], 0) + Integer.parseInt(stock[1]));
     }

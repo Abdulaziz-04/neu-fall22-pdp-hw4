@@ -22,28 +22,31 @@ public class InfoPageController implements PageController {
     this.controllerFactory = controllerFactory;
   }
 
-  private void updatePortfolioWithValue(LocalDate date){
+  private void updatePortfolioWithValue(LocalDate date) throws Exception {
     var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
     portfolioWithValue = portfolio.getPortfolioWithPrice(date, prices);
   }
   @Override
   public View getView() {
-    if (portfolioWithValue == null) {
+    /*if (portfolioWithValue == null) {
       LocalDate date = LocalDate.now().minusDays(2);
       updatePortfolioWithValue(date);
-    }
+    }*/
     return new InfoPageView(portfolio, portfolioWithValue, errorMessage);
   }
 
   @Override
   public PageController handleCommand(String command) throws Exception {
+    if (command.equals("back")) {
+      return controllerFactory.newMainPageController();
+    }
     try {
       LocalDate date = LocalDate.parse(command);
       updatePortfolioWithValue(date);
       return this;
     }
     catch (Exception e){
-      errorMessage = "Error! Cannot load file. Please try again.";
+      errorMessage = "Error! Please input the correct date.";
       return this;
     }
   }

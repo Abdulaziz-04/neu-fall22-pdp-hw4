@@ -3,6 +3,7 @@ package portfolio.controllers;
 import portfolio.controllers.impl.CreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
+import portfolio.controllers.impl.MainPageController;
 import portfolio.entities.Portfolio;
 import portfolio.services.portfolio.PortfolioService;
 import portfolio.services.stockprice.StockQueryService;
@@ -28,6 +29,10 @@ public class PageControllerFactory {
 
   public PageController newLoadPageController(){
     return new LoadPageController(portfolioService, this);
+  }
+
+  public PageController newMainPageController(){
+    return new MainPageController(this);
   }
 
 }

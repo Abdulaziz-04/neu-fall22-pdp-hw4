@@ -26,8 +26,8 @@ public class MainPageController implements PageController {
       case "2":
         return controllerFactory.newLoadPageController();
       default:
-        errorMessage = "error!";
-        return null;
+        errorMessage = "please enter the correct number!";
+        return this;
     }
   }
 
