@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
-public class Portfolio {
+public class Portfolio implements IPortfolio {
 
   private final List<PortfolioEntry> stocks;
 
@@ -39,6 +39,7 @@ public class Portfolio {
    *
    * @return
    */
+  @Override
   public List<PortfolioEntry> getStocks() {
     return Collections.unmodifiableList(stocks);
   }
@@ -47,6 +48,7 @@ public class Portfolio {
    *
    * @return
    */
+  @Override
   public List<String> getSymbols() {
     var list = stocks.stream().map(x -> x.getSymbol()).collect(Collectors.toList());
     return Collections.unmodifiableList(list);
@@ -61,6 +63,7 @@ public class Portfolio {
    *
    * @return PortfolioWithValue class that has the total value of this portfolio
    */
+  @Override
   public PortfolioWithValue getPortfolioWithPrice(LocalDate date, Map<String, StockPrice> prices) {
 
     List<PortfolioEntryWithValue> portfolioEntryWithValues = new ArrayList<>();

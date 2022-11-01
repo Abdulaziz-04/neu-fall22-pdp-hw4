@@ -60,10 +60,15 @@ public class SimpleCache<T> implements Cache<T> {
 
   @Override
   public T get(String key, Function<String, T> func) {
+    return get(key, func, LocalTime.now());
+  }
+
+  @Override
+  public T get(String key, Function<String, T> func, LocalTime time) {
     CacheEntry<T> entry = map.getOrDefault(key, null);
 
     if (entry == null
-        || Math.abs(LocalTime.now().toSecondOfDay() - entry.getTime().toSecondOfDay()) > timeout) {
+        || Math.abs(time.toSecondOfDay() - entry.getTime().toSecondOfDay()) > timeout) {
       T data = func.apply(key);
       CacheEntry<T> newEntry = new CacheEntry<>(LocalTime.now(), data);
       map.put(key, newEntry);

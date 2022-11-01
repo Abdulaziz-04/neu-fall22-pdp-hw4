@@ -1,11 +1,12 @@
 package portfolio.views.impl;
 
-import portfolio.views.View;
+import java.io.PrintStream;
+import portfolio.views.ViewAbs;
 
 /**
  * This is a class that represent a main menu view page, which implement the View interface.
  */
-public class MainPageView implements View {
+public class MainPageView extends ViewAbs {
 
   private final String errorMessage;
 
@@ -15,26 +16,32 @@ public class MainPageView implements View {
    *
    * @param errorMessage "Please enter the correct number!"
    */
+  public MainPageView(PrintStream printStream, String errorMessage){
+    super(printStream);
+    this.errorMessage = errorMessage;
+  }
+
   public MainPageView(String errorMessage){
     this.errorMessage = errorMessage;
   }
+
   @Override
   public void render(){
     if (errorMessage != null) {
-      System.out.println(errorMessage);
+      printStream.println(errorMessage);
     }
-    System.out.printf("*********************************************************************" +
+    printStream.printf("*********************************************************************" +
         "*******************************\n");
-    System.out.printf("This is the main menu of the portfolios\n");
-    System.out.printf("1.Create a portfolios\n");
-    System.out.printf("2.Examine the composition of a portfolio\n");
-    System.out.printf("*********************************************************************" +
+    printStream.printf("This is the main menu of the portfolios\n");
+    printStream.printf("1.Create a portfolios\n");
+    printStream.printf("2.Examine the composition of a portfolio\n");
+    printStream.printf("*********************************************************************" +
             "*******************************\n");
-    System.out.printf("!!!If you want to determine a portfolio, you need to go examine it first and" +
+    printStream.printf("!!!If you want to determine a portfolio, you need to go examine it first and" +
             "then to determine it.\n");
-    System.out.printf("----------------------------------------------------------------------" +
+    printStream.printf("----------------------------------------------------------------------" +
         "----------------------------------------------------------\n");
-    System.out.printf("Please enter the number 1 or 2 that you want to choose.\n");
+    printStream.printf("Please enter the number 1 or 2 that you want to choose.\n");
   }
 
 }

@@ -1,6 +1,5 @@
 package portfolio.controllers.impl;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,11 +91,11 @@ public class CreatePageController implements PageController {
         errorMessage = "error!";
         return this;
       }
-    } else if (command.equals("end") && !isEnd && isNamed == false) {
+    } else if (command.equals("end") && !isEnd && !isNamed) {
         portfolio = new Portfolio(stockList);
         isEnd = true;
         return this;
-    } else if (isEnd && isNamed == false) {
+    } else if (isEnd && !isNamed) {
       //save to file
       if(command.equals("end") || command.equals("yes") || command.equals("no")
               || command.equals("back")) {
@@ -112,39 +111,6 @@ public class CreatePageController implements PageController {
         return pageControllerFactory.newMainPageController();
       }
     }
-   /* if (command.equals("end")) {
-      Portfolio portfolio = new Portfolio(stockList);
-      //save to file
-      portfolioService.saveToFile(portfolio, LocalDateTime.now() + ".txt");
-      isEnd = true;
-      return this;
-    }
-
-    //return pageControllerFactory.newInfoPageController(portfolio);
-
-    if (command.equals("back")){
-      return pageControllerFactory.newMainPageController();
-    }
-
-    List<String> allStocks = new ArrayList<>();
-    for (StockListEntry entry : stockQueryService.getStockList()) {
-      allStocks.add(entry.getSymbol());
-    }
-
-    try {
-      String[] cmd = command.split(",");
-      String symbol = cmd[0];
-      int amount = Integer.parseInt(cmd[1]);
-      if (allStocks.contains(symbol)) {
-        stockList.put(symbol, stockList.getOrDefault(symbol, 0) + amount);
-      } else {
-        errorMessage = "Symbol not found.";
-        return this;
-      }
-    } catch (Exception e) {
-      errorMessage = "error!";
-      return this;
-    }*/
     return this;
   }
 

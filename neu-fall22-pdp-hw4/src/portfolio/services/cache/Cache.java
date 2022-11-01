@@ -17,4 +17,6 @@ public interface Cache<T> {
    * @return value as type T
    */
   T get(String key, Function<String, T> func);
+
+  T get(String key, Function<String, T> func, LocalTime time);
 }

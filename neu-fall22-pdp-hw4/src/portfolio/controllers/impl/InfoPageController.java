@@ -49,7 +49,7 @@ public class InfoPageController implements PageController {
       LocalDate date = LocalDate.now().minusDays(2);
       updatePortfolioWithValue(date);
     }*/
-    return new InfoPageView(portfolio, portfolioWithValue, errorMessage);
+    return new InfoPageView(portfolioWithValue, errorMessage);
   }
 
   @Override

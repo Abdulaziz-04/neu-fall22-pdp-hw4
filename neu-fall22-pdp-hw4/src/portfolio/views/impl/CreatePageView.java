@@ -1,20 +1,19 @@
 package portfolio.views.impl;
 
-import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Map;
 
-import portfolio.entities.Portfolio;
-import portfolio.views.View;
+import portfolio.views.ViewAbs;
 
 /**
  * This is a view that show the create page, which implement the View function.
  */
-public class CreatePageView implements View {
+public class CreatePageView extends ViewAbs {
 
   private final Map<String, Integer> map;
   private final String errorMessage;
-  private Boolean isEnd;
-  private Boolean isNamed;
+  private final Boolean isEnd;
+  private final Boolean isNamed;
 
   /**
    * This is a constructor that construct a create page view.
@@ -27,6 +26,14 @@ public class CreatePageView implements View {
    * @param map the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
+  public CreatePageView(PrintStream printStream, Boolean isEnd, Boolean isNamed, Map<String, Integer> map, String errorMessage){
+    super(printStream);
+    this.isEnd = isEnd;
+    this.isNamed = isNamed;
+    this.map = map;
+    this.errorMessage = errorMessage;
+  }
+
   public CreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map, String errorMessage){
     this.isEnd = isEnd;
     this.isNamed = isNamed;
@@ -37,40 +44,40 @@ public class CreatePageView implements View {
   @Override
   public void render() /*throws IOException*/ {
     if (errorMessage != null){
-      System.out.println(errorMessage);
+      printStream.println(errorMessage);
     }
     if(!isEnd) {
-      System.out.println("*********************************************************");
-      System.out.println("!!! If you enter back, you will back to the main menu.");
-      System.out.println("*********************************************************");
-      System.out.println("Enter symbol and number of shares for one stock. " +
+      printStream.println("*********************************************************");
+      printStream.println("!!! If you enter back, you will back to the main menu.");
+      printStream.println("*********************************************************");
+      printStream.println("Enter symbol and number of shares for one stock. " +
               "The format is: AAPL,100.");
-      System.out.println("--The symbol must be capital letters and " +
+      printStream.println("--The symbol must be capital letters and " +
       "the shares need to be numbers.");
-      System.out.println("--The shares cannot be 0 and " +
+      printStream.println("--The shares cannot be 0 and " +
       "negative number.");
-      System.out.println("--Between the symbol and shares must have a comma " +
+      printStream.println("--Between the symbol and shares must have a comma " +
       "with no spaces.");
-      System.out.println("--Enter end to finish input this portfolio.");
+      printStream.println("--Enter end to finish input this portfolio.");
     } else {
       if(!isNamed) {
         if (map.size() > 0) {
-          System.out.println("Selected stock and shares:");
+          printStream.println("Selected stock and shares:");
           for (var entry: map.entrySet()) {
-            System.out.println(entry.getKey() + "," + entry.getValue());
+            printStream.println(entry.getKey() + "," + entry.getValue());
           }
         }
-        System.out.println("*********************************************************");
-        System.out.println("!!! If you enter back, you will back to the main menu.");
-        System.out.println("*********************************************************");
-        System.out.println("Please enter the file name of this portfolio." +
+        printStream.println("*********************************************************");
+        printStream.println("!!! If you enter back, you will back to the main menu.");
+        printStream.println("*********************************************************");
+        printStream.println("Please enter the file name of this portfolio." +
                 "The name cannot be end, back, no and yes");
       } else {
-        System.out.println("*********************************************************");
-        System.out.println("!!! If you enter back, you will back to the main menu.");
-        System.out.println("*********************************************************");
-        System.out.println("Do you want to determine the total value of this portfolio?");
-        System.out.println("--Please enter yes if you want to determine. " +
+        printStream.println("*********************************************************");
+        printStream.println("!!! If you enter back, you will back to the main menu.");
+        printStream.println("*********************************************************");
+        printStream.println("Do you want to determine the total value of this portfolio?");
+        printStream.println("--Please enter yes if you want to determine. " +
                 "Other input will be back to the main menu.");
       }
     }
