@@ -11,26 +11,8 @@ import portfolio.views.impl.MainPageView;
 
 public class PortfolioEntryTest {
 
-  private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-  private PrintStream printStream;
-
-
-  @Before
-  public void setUp() {
-    printStream = new PrintStream(outputStreamCaptor);
-  }
-
   @Test
-  public void testRender_NullErrorMessage() {
-    View view = new MainPageView(printStream, null);
-    view.render();
-    assertEquals("aaa", outputStreamCaptor.toString());
+  public void test() {
   }
 
-  @Test
-  public void testRender_ErrorMessage() {
-    View view = new MainPageView(printStream, "this is error message from test.");
-    view.render();
-    assertEquals("aaa", outputStreamCaptor.toString());
-  }
 }

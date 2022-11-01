@@ -1,4 +1,4 @@
-package portfolio.integration;
+package portfolio.service.integration;
 
 import static org.junit.Assert.assertTrue;
 
