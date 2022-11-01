@@ -5,6 +5,7 @@ import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.impl.MainPageController;
 import portfolio.views.View;
+import portfolio.views.ViewFactory;
 
 /**
  *
@@ -19,8 +20,8 @@ public class EventLoopImpl implements EventLoop {
    *
    * @param pageControllerFactory
    */
-  public EventLoopImpl(PageControllerFactory pageControllerFactory) {
-    this.pageController = new MainPageController(pageControllerFactory);
+  public EventLoopImpl(PageControllerFactory pageControllerFactory, ViewFactory viewFactory) {
+    this.pageController = new MainPageController(pageControllerFactory, viewFactory);
   }
 
   @Override

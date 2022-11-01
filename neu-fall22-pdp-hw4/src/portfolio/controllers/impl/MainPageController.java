@@ -2,8 +2,8 @@ package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
+import portfolio.views.ViewFactory;
 import portfolio.views.View;
-import portfolio.views.impl.MainPageView;
 
 /**
  * This is a page controller for the main menu page, which is implement the page controller.
@@ -11,6 +11,7 @@ import portfolio.views.impl.MainPageView;
 public class MainPageController implements PageController {
 
   private final PageControllerFactory controllerFactory;
+  private final ViewFactory viewFactory;
   private String errorMessage;
 
   /**
@@ -18,13 +19,14 @@ public class MainPageController implements PageController {
    *
    * @param controllerFactory the controller factory that we will use
    */
-  public MainPageController(PageControllerFactory controllerFactory) {
+  public MainPageController(PageControllerFactory controllerFactory, ViewFactory viewFactory) {
     this.controllerFactory = controllerFactory;
+    this.viewFactory = viewFactory;
   }
 
   @Override
   public View getView() {
-    return new MainPageView(errorMessage);
+    return viewFactory.newMainPageView(errorMessage);
   }
 
   public PageController handleCommand(String command) {

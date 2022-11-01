@@ -33,6 +33,7 @@ public class InfoPageView extends ViewAbs {
 
   @Override
   public void render() {
+    clearConsole();
     if (errorMessage != null) {
       printStream.println(errorMessage);
     }
@@ -54,8 +55,4 @@ public class InfoPageView extends ViewAbs {
     }
   }
 
-  @Override
-  protected String getConstructor() {
-    return errorMessage;
-  }
 }

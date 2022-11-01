@@ -6,8 +6,8 @@ import portfolio.controllers.PageControllerFactory;
 import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioWithValue;
 import portfolio.services.stockprice.StockQueryService;
+import portfolio.views.ViewFactory;
 import portfolio.views.View;
-import portfolio.views.impl.InfoPageView;
 
 /**
  * This is a page controller for the determine page, which is implement the page controller.
@@ -16,6 +16,7 @@ import portfolio.views.impl.InfoPageView;
 public class InfoPageController implements PageController {
   private final StockQueryService stockQueryService;
   private final PageControllerFactory controllerFactory;
+  private final ViewFactory viewFactory;
   private final Portfolio portfolio;
   private String errorMessage;
   private PortfolioWithValue portfolioWithValue;
@@ -28,10 +29,11 @@ public class InfoPageController implements PageController {
    * @param portfolio the portfolio that we want to determine
    * @param controllerFactory the controller factory that we will use
    */
-  public InfoPageController(StockQueryService stockQueryService, Portfolio portfolio, PageControllerFactory controllerFactory){
+  public InfoPageController(StockQueryService stockQueryService, Portfolio portfolio, PageControllerFactory controllerFactory, ViewFactory viewFactory){
     this.portfolio = portfolio;
     this.stockQueryService = stockQueryService;
     this.controllerFactory = controllerFactory;
+    this.viewFactory = viewFactory;
   }
 
   /**
@@ -45,7 +47,7 @@ public class InfoPageController implements PageController {
   }
   @Override
   public View getView() {
-    return new InfoPageView(portfolioWithValue, errorMessage);
+    return viewFactory.newInfoPageView(portfolioWithValue, errorMessage);
   }
 
   @Override

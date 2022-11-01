@@ -5,9 +5,13 @@ import portfolio.services.datastore.IOService;
 
 public class IOServiceMock implements IOService {
 
-  private final ArgumentCaptor argumentCaptor;
-  public IOServiceMock(ArgumentCaptor argumentCaptor){
+  private final ArgumentCaptor<String> argumentCaptor;
+  public IOServiceMock(ArgumentCaptor<String> argumentCaptor){
     this.argumentCaptor = argumentCaptor;
+  }
+
+  public IOServiceMock(){
+    this.argumentCaptor = new ArgumentCaptor<>();
   }
 
   @Override

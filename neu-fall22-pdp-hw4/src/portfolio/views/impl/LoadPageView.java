@@ -33,6 +33,7 @@ public class LoadPageView extends ViewAbs {
 
   @Override
   public void render() {
+    clearConsole();
     if (errorMessage != null) {
       printStream.println(errorMessage);
     }
@@ -50,11 +51,6 @@ public class LoadPageView extends ViewAbs {
       printStream.println("Please enter yes if you want to determine. " +
               "Other input will be back to the main menu.");
     }
-  }
-
-  @Override
-  protected String getConstructor() {
-    return portfolio.toString() + "," + errorMessage;
   }
 
 }

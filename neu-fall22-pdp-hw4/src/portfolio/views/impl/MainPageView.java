@@ -27,6 +27,7 @@ public class MainPageView extends ViewAbs {
 
   @Override
   public void render(){
+    clearConsole();
     if (errorMessage != null) {
       printStream.println(errorMessage);
     }
@@ -42,11 +43,6 @@ public class MainPageView extends ViewAbs {
     printStream.println("----------------------------------------------------------------------" +
         "----------------------------------------------------------");
     printStream.println("Please enter the number 1 or 2 that you want to choose.");
-  }
-
-  @Override
-  protected String getConstructor() {
-    return errorMessage;
   }
 
 }

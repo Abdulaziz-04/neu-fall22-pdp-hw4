@@ -43,6 +43,7 @@ public class CreatePageView extends ViewAbs {
 
   @Override
   public void render() /*throws IOException*/ {
+    clearConsole();
     if (errorMessage != null){
       printStream.println(errorMessage);
     }
@@ -82,11 +83,6 @@ public class CreatePageView extends ViewAbs {
       }
     }
 
-  }
-
-  @Override
-  protected String getConstructor() {
-    return isEnd + "," + isNamed+ "," + map.toString() + "," + errorMessage;
   }
 
 }

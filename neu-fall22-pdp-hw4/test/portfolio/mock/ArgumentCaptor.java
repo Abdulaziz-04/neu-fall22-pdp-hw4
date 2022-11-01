@@ -3,14 +3,14 @@ package portfolio.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArgumentCaptor {
-  private List<String> arguments = new ArrayList<>();
+public class ArgumentCaptor<T> {
+  private final List<T> arguments = new ArrayList<>();
 
-  public List<String> getArguments(){
+  public List<T> getArguments(){
     return arguments;
   }
 
-  public void addArgument(String arg){
+  public void addArgument(T arg){
     arguments.add(arg);
   }
 }

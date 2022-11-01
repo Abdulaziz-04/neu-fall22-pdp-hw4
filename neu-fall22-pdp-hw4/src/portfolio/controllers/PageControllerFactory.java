@@ -7,6 +7,7 @@ import portfolio.controllers.impl.MainPageController;
 import portfolio.entities.Portfolio;
 import portfolio.services.portfolio.PortfolioService;
 import portfolio.services.stockprice.StockQueryService;
+import portfolio.views.ViewFactory;
 
 /**
  * This is a class that can generate different controller.
@@ -15,6 +16,7 @@ public class PageControllerFactory {
 
   private final PortfolioService portfolioService;
   private final StockQueryService stockQueryService;
+  private final ViewFactory viewFactory;
 
   /**
    * This is a constructor that construct a page controller factory.
@@ -23,9 +25,10 @@ public class PageControllerFactory {
    * @param stockQueryService
    */
   public PageControllerFactory(
-      PortfolioService portfolioService, StockQueryService stockQueryService) {
+      PortfolioService portfolioService, StockQueryService stockQueryService, ViewFactory viewFactory) {
     this.stockQueryService = stockQueryService;
     this.portfolioService = portfolioService;
+    this.viewFactory = viewFactory;
   }
 
   /**
@@ -35,7 +38,7 @@ public class PageControllerFactory {
    * @return a new page controller,which is to determine a portfolio on certain date
    */
   public PageController newInfoPageController(Portfolio portfolio){
-    return new InfoPageController(stockQueryService, portfolio, this);
+    return new InfoPageController(stockQueryService, portfolio, this, viewFactory);
   }
 
   /**
@@ -44,7 +47,7 @@ public class PageControllerFactory {
    * @return a new page controller,which is to create the portfolio.
    */
   public PageController newCreatePageController(){
-    return new CreatePageController(stockQueryService, portfolioService, this);
+    return new CreatePageController(stockQueryService, portfolioService, this, viewFactory);
   }
 
   /**
@@ -53,7 +56,7 @@ public class PageControllerFactory {
    * @return a new page controller,which is to examine the composition of a portfolio.
    */
   public PageController newLoadPageController(){
-    return new LoadPageController(portfolioService, this);
+    return new LoadPageController(portfolioService, this, viewFactory);
   }
 
   /**
@@ -62,7 +65,7 @@ public class PageControllerFactory {
    * @return a new page controller,which is to the main menu.
    */
   public PageController newMainPageController(){
-    return new MainPageController(this);
+    return new MainPageController(this, viewFactory);
   }
 
 }

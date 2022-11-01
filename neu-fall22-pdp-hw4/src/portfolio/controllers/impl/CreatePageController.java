@@ -10,8 +10,8 @@ import portfolio.entities.Portfolio;
 import portfolio.entities.StockListEntry;
 import portfolio.services.portfolio.PortfolioService;
 import portfolio.services.stockprice.StockQueryService;
+import portfolio.views.ViewFactory;
 import portfolio.views.View;
-import portfolio.views.impl.CreatePageView;
 
 /**
  * This is a page controller for the create page, which is implement the page controller.
@@ -21,6 +21,7 @@ public class CreatePageController implements PageController {
   private final StockQueryService stockQueryService;
   private final PortfolioService portfolioService;
   private final PageControllerFactory pageControllerFactory;
+  private final ViewFactory viewFactory;
   private String errorMessage;
   private Boolean isEnd = false;
   private Boolean isNamed = false;
@@ -35,15 +36,16 @@ public class CreatePageController implements PageController {
    * @param controllerFactory the controller factory for this controller
    */
   public CreatePageController(StockQueryService stockQueryService,
-      PortfolioService portfolioService, PageControllerFactory controllerFactory) {
+      PortfolioService portfolioService, PageControllerFactory controllerFactory, ViewFactory viewFactory) {
     this.stockQueryService = stockQueryService;
     this.portfolioService = portfolioService;
     this.pageControllerFactory = controllerFactory;
+    this.viewFactory = viewFactory;
   }
 
   @Override
   public View getView() {
-    return new CreatePageView(isEnd, isNamed, stockList, errorMessage);
+    return viewFactory.newCreatePageView(isEnd, isNamed, stockList, errorMessage);
   }
 
   @Override
@@ -96,8 +98,13 @@ public class CreatePageController implements PageController {
       if(command.equals("end") || command.equals("yes") || command.equals("no")) {
         errorMessage = "The name cannot be end, back, no and yes.";
       }
-      portfolioService.saveToFile(portfolio, command + ".txt");
-      isNamed = true;
+      try {
+        portfolioService.saveToFile(portfolio, command + ".txt");
+        isNamed = true;
+      }
+      catch (Exception e) {
+        errorMessage = e.getMessage();
+      }
       return this;
     } else {
       if(command.equals("yes")) {

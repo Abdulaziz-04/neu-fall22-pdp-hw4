@@ -1,16 +1,11 @@
 package portfolio.controllers.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioEntry;
-import portfolio.entities.StockListEntry;
 import portfolio.services.portfolio.PortfolioService;
+import portfolio.views.ViewFactory;
 import portfolio.views.View;
-import portfolio.views.impl.LoadPageView;
 
 /**
  * This is a page controller for the examine page, which is implement the page controller.
@@ -19,6 +14,7 @@ public class LoadPageController implements PageController {
 
   private final PortfolioService portfolioService;
   private final PageControllerFactory controllerFactory;
+  private final ViewFactory viewFactory;
   private String errorMessage;
   private Portfolio portfolio;
 
@@ -29,13 +25,14 @@ public class LoadPageController implements PageController {
    * @param portfolioService the service for portfolio
    * @param controllerFactory the controller factory that we will use
    */
-  public LoadPageController(PortfolioService portfolioService, PageControllerFactory controllerFactory){
+  public LoadPageController(PortfolioService portfolioService, PageControllerFactory controllerFactory, ViewFactory viewFactory){
     this.portfolioService = portfolioService;
     this.controllerFactory = controllerFactory;
+    this.viewFactory = viewFactory;
   }
   @Override
   public View getView(){
-    return new LoadPageView(portfolio, errorMessage);
+    return viewFactory.newLoadPageView(portfolio, errorMessage);
   }
 
   @Override
@@ -57,7 +54,7 @@ public class LoadPageController implements PageController {
         }
       }
     } catch (Exception e) {
-      errorMessage = "Error! Cannot load file. Please try again.";
+      errorMessage = e.getMessage();
       return this;
     }
   }
