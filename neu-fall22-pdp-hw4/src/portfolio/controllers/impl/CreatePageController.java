@@ -24,12 +24,8 @@ public class CreatePageController implements PageController {
   private String errorMessage;
   private Boolean isEnd = false;
   private Boolean isNamed = false;
-
-
   private Portfolio portfolio;
-
-
-  private Map<String, Integer> stockList = new HashMap<>();
+  private final Map<String, Integer> stockList = new HashMap<>();
 
   /**
    * This is a constructor to construct a create page controller.
@@ -97,8 +93,7 @@ public class CreatePageController implements PageController {
         return this;
     } else if (isEnd && !isNamed) {
       //save to file
-      if(command.equals("end") || command.equals("yes") || command.equals("no")
-              || command.equals("back")) {
+      if(command.equals("end") || command.equals("yes") || command.equals("no")) {
         errorMessage = "The name cannot be end, back, no and yes.";
       }
       portfolioService.saveToFile(portfolio, command + ".txt");

@@ -1,12 +1,8 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioEntry;
-import portfolio.views.View;
 import portfolio.views.ViewAbs;
 
 /**
@@ -55,4 +51,10 @@ public class LoadPageView extends ViewAbs {
               "Other input will be back to the main menu.");
     }
   }
+
+  @Override
+  protected String getConstructor() {
+    return portfolio.toString() + "," + errorMessage;
+  }
+
 }

@@ -1,6 +1,5 @@
 package portfolio.services.portfolio;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -13,38 +12,35 @@ import portfolio.services.datastore.IOService;
  *
  */
 public class PortfolioServiceImpl implements PortfolioService {
-  private IOService ioService;
 
-  public PortfolioServiceImpl(IOService ioService){
+  private final IOService ioService;
+
+  public PortfolioServiceImpl(IOService ioService) {
     this.ioService = ioService;
   }
 
   @Override
-  public Portfolio getPortfolio(String fileName){
+  public Portfolio getPortfolio(String fileName) throws IOException {
+    String str = ioService.read(fileName);
     try {
-      String str = ioService.read(fileName);
       return parse(str);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    }
+    catch (Exception e){
+      throw new IOException("Cannot read portfolio. It may have a wrong format.");
     }
   }
 
   @Override
-  public boolean saveToFile(Portfolio portfolio, String fileName) {
+  public boolean saveToFile(Portfolio portfolio, String fileName) throws IllegalArgumentException {
     String str = toString(portfolio);
-    try {
-      return ioService.saveTo(str, fileName);
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+    return ioService.saveTo(str, fileName);
   }
-
 
   private static Portfolio parse(String str) {
 
     Map<String, Integer> map = new HashMap<>();
 
-    for (String line: str.split("\n")) {
+    for (String line : str.split("\n")) {
       line = line.replace("\r", "");
       String[] stock = line.split(",");
       map.put(stock[0], map.getOrDefault(stock[0], 0) + Integer.parseInt(stock[1]));
@@ -57,8 +53,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     List<PortfolioEntry> stocks = portfolio.getStocks();
     StringBuilder builder = new StringBuilder();
 
-    for (var entry: stocks)
-    {
+    for (var entry : stocks) {
       builder.append(entry.getSymbol()).append(",").append(entry.getAmount()).append("\n");
     }
 

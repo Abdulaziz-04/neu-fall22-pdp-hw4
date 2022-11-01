@@ -13,19 +13,20 @@ public class InfoPageView extends ViewAbs {
   private final String errorMessage;
 
   /**
-   * This is a constructor that construct a determine page view.
-   * The error messages is "Error! Please input the correct date.".
+   * This is a constructor that construct a determine page view. The error messages is "Error!
+   * Please input the correct date.".
    *
    * @param portfolioWithPrice the object of PortfolioWithValue
-   * @param errorMessage the error message we want to show to the user
+   * @param errorMessage       the error message we want to show to the user
    */
-  public InfoPageView(PrintStream printStream, PortfolioWithValue portfolioWithPrice, String errorMessage){
+  public InfoPageView(PrintStream printStream, PortfolioWithValue portfolioWithPrice,
+      String errorMessage) {
     super(printStream);
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;
   }
 
-  public InfoPageView(PortfolioWithValue portfolioWithPrice, String errorMessage){
+  public InfoPageView(PortfolioWithValue portfolioWithPrice, String errorMessage) {
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;
   }
@@ -38,16 +39,23 @@ public class InfoPageView extends ViewAbs {
     printStream.println("!!! If you enter back, you will back to the main menu.");
     if (portfolioWithPrice != null) {
       printStream.println("Portfolio value as of: " + portfolioWithPrice.getDate());
-      for (var entry: portfolioWithPrice.getStocks()){
+      printStream.println(
+          "If stock price not found, the value with be N/A and will not be include in total value");
+      for (var entry : portfolioWithPrice.getStocks()) {
         String symbol = entry.getSymbol();
         int amount = entry.getAmount();
-        double value = entry.getValue();
-        printStream.println(symbol + "," + amount +"," + value);
+        String value = entry.getValue() == null ? "N/A" : entry.getValue().toString();
+        printStream.println(symbol + "\t\t" + amount + "\t\t" + value);
       }
       printStream.println("Total value: " + portfolioWithPrice.getTotalValue());
     } else {
       printStream.println("Please enter the date that you want to determine." +
-              "The format is year-month-day, ex: 2022-10-08");
+          "The format is year-month-day, ex: 2022-10-08");
     }
+  }
+
+  @Override
+  protected String getConstructor() {
+    return errorMessage;
   }
 }

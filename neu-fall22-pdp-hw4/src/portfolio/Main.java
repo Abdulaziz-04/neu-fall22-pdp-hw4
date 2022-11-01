@@ -21,6 +21,10 @@ public class Main {
     PortfolioService portfolioService = new PortfolioServiceImpl(ioService);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService);
 
+    // Init cache
+    stockQueryService.getStockList();
+
+    // Run
     EventLoop eventLoop = new EventLoopImpl(pageControllerFactory);
     eventLoop.run();
   }

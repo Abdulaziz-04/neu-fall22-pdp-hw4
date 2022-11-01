@@ -84,4 +84,9 @@ public class CreatePageView extends ViewAbs {
 
   }
 
+  @Override
+  protected String getConstructor() {
+    return isEnd + "," + isNamed+ "," + map.toString() + "," + errorMessage;
+  }
+
 }

@@ -1,6 +1,5 @@
 package portfolio.services.datastore;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -23,5 +22,5 @@ public interface IOService {
    * @param path filepath
    * @return boolean true if successfully wrote to the file otherwise false
    */
-  boolean saveTo(String text, String path) throws FileNotFoundException;
+  boolean saveTo(String text, String path) throws IllegalArgumentException;
 }

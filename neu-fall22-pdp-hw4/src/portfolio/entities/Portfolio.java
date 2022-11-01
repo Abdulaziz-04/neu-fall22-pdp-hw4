@@ -69,10 +69,13 @@ public class Portfolio implements IPortfolio {
     List<PortfolioEntryWithValue> portfolioEntryWithValues = new ArrayList<>();
     double total = 0;
 
-    for (var entry: stocks
-    ) {
-      double value = prices.get(entry.getSymbol()).getClose() * entry.getAmount();
-      total = total + value;
+    for (var entry: stocks) {
+      Double value = null;
+      StockPrice price = prices.get(entry.getSymbol());
+      if (price != null) {
+        value = price.getClose() * entry.getAmount();
+        total = total + value;
+      }
       portfolioEntryWithValues.add(new PortfolioEntryWithValue(entry, value));
     }
 

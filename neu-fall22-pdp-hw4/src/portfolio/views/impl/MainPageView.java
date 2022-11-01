@@ -30,18 +30,23 @@ public class MainPageView extends ViewAbs {
     if (errorMessage != null) {
       printStream.println(errorMessage);
     }
-    printStream.printf("*********************************************************************" +
-        "*******************************\n");
-    printStream.printf("This is the main menu of the portfolios\n");
-    printStream.printf("1.Create a portfolios\n");
-    printStream.printf("2.Examine the composition of a portfolio\n");
-    printStream.printf("*********************************************************************" +
-            "*******************************\n");
-    printStream.printf("!!!If you want to determine a portfolio, you need to go examine it first and" +
-            "then to determine it.\n");
-    printStream.printf("----------------------------------------------------------------------" +
-        "----------------------------------------------------------\n");
-    printStream.printf("Please enter the number 1 or 2 that you want to choose.\n");
+    printStream.println("*********************************************************************" +
+        "*******************************");
+    printStream.println("This is the main menu of the portfolios");
+    printStream.println("1.Create a portfolios");
+    printStream.println("2.Examine the composition of a portfolio");
+    printStream.println("*********************************************************************" +
+            "*******************************");
+    printStream.println("!!!If you want to determine a portfolio, you need to go examine it first and" +
+            "then to determine it.");
+    printStream.println("----------------------------------------------------------------------" +
+        "----------------------------------------------------------");
+    printStream.println("Please enter the number 1 or 2 that you want to choose.");
+  }
+
+  @Override
+  protected String getConstructor() {
+    return errorMessage;
   }
 
 }

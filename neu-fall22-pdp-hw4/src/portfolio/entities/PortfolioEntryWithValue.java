@@ -6,14 +6,14 @@ package portfolio.entities;
 public class PortfolioEntryWithValue {
   private final String symbol;
   private final int amount;
-  private final double value;
+  private final Double value;
 
   /**
    *
    * @param portfolioEntry
    * @param value
    */
-  public PortfolioEntryWithValue(PortfolioEntry portfolioEntry, double value){
+  public PortfolioEntryWithValue(PortfolioEntry portfolioEntry, Double value){
     this.value = value;
     this.symbol = portfolioEntry.getSymbol();
     this.amount = portfolioEntry.getAmount();
@@ -23,7 +23,7 @@ public class PortfolioEntryWithValue {
    *
    * @return
    */
-  public double getValue() {
+  public Double getValue() {
     return value;
   }
 

@@ -26,5 +26,5 @@ public interface StockQueryService {
    *
    * @return a list of StockListEntry object
    */
-  List<StockListEntry> getStockList();
+  List<StockListEntry> getStockList() throws Exception;
 }

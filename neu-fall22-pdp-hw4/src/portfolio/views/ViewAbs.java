@@ -14,4 +14,6 @@ public abstract class ViewAbs implements View {
   }
 
   public abstract void render();
+
+  protected abstract String getConstructor();
 }

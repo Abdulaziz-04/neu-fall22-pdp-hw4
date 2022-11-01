@@ -1,5 +1,6 @@
 package portfolio.services.portfolio;
 
+import java.io.IOException;
 import portfolio.entities.Portfolio;
 
 /**
@@ -13,7 +14,7 @@ public interface PortfolioService {
    * @param fileName filename to load the portfolio
    * @return Portfolio object
    */
-  Portfolio getPortfolio(String fileName);
+  Portfolio getPortfolio(String fileName) throws IOException;
 
   /**
    * Save a Portfolio to file.
@@ -22,7 +23,7 @@ public interface PortfolioService {
    * @param fileName save location
    * @return boolean true if successfully saved otherwise false
    */
-  boolean saveToFile(Portfolio portfolio, String fileName) throws Exception;
+  boolean saveToFile(Portfolio portfolio, String fileName) throws IllegalArgumentException;
 
 
 }

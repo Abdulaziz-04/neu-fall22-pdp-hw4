@@ -45,10 +45,6 @@ public class InfoPageController implements PageController {
   }
   @Override
   public View getView() {
-    /*if (portfolioWithValue == null) {
-      LocalDate date = LocalDate.now().minusDays(2);
-      updatePortfolioWithValue(date);
-    }*/
     return new InfoPageView(portfolioWithValue, errorMessage);
   }
 
