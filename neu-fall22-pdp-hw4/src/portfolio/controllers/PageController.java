@@ -14,7 +14,11 @@ public interface PageController {
    * @param command user input command as a string
    * @return next page to be redirected
    */
-  PageController handleCommand(String command) throws Exception;
+  public PageController handleCommand(String command) throws Exception;
 
-  View getView();
+  /**
+   * Return the view that want to show.
+   * @return the view that want to show.
+   */
+  public View getView();
 }

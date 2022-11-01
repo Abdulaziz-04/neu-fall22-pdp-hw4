@@ -9,6 +9,9 @@ import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioEntry;
 import portfolio.services.datastore.IOService;
 
+/**
+ *
+ */
 public class PortfolioServiceImpl implements PortfolioService {
   private IOService ioService;
 

@@ -14,21 +14,31 @@ import portfolio.services.stockprice.StockQueryService;
 import portfolio.views.View;
 import portfolio.views.impl.CreatePageView;
 
+/**
+ * This is a page controller for the create page, which is implement the page controller.
+ */
 public class CreatePageController implements PageController {
 
   private final StockQueryService stockQueryService;
   private final PortfolioService portfolioService;
   private final PageControllerFactory pageControllerFactory;
-  String errorMessage;
-  Boolean isEnd = false;
-  Boolean isNamed = false;
+  private String errorMessage;
+  private Boolean isEnd = false;
+  private Boolean isNamed = false;
 
 
-  Portfolio portfolio;
+  private Portfolio portfolio;
 
 
-  Map<String, Integer> stockList = new HashMap<>();
+  private Map<String, Integer> stockList = new HashMap<>();
 
+  /**
+   * This is a constructor to construct a create page controller.
+   *
+   * @param stockQueryService the stock price data that we get from the external source
+   * @param portfolioService the portfolio service
+   * @param controllerFactory the controller factory for this controller
+   */
   public CreatePageController(StockQueryService stockQueryService,
       PortfolioService portfolioService, PageControllerFactory controllerFactory) {
     this.stockQueryService = stockQueryService;
@@ -56,6 +66,10 @@ public class CreatePageController implements PageController {
       try {
         String[] cmd = command.split(",");
         String symbol = cmd[0];
+        if (cmd.length != 2) {
+          errorMessage = "Error Format!";
+          return this;
+        }
         //int amount = Integer.parseInt(cmd[1]);
         if (allStocks.contains(symbol)) {
           int amount = 0;
@@ -71,7 +85,7 @@ public class CreatePageController implements PageController {
           }
           stockList.put(symbol, stockList.getOrDefault(symbol, 0) + amount);
         } else {
-          errorMessage = "Error Format!";
+          errorMessage = "Symbol not found.";
           return this;
         }
       } catch (Exception e) {

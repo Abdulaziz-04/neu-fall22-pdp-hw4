@@ -7,10 +7,21 @@ import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioEntry;
 import portfolio.views.View;
 
+/**
+ * This is a view that show the determine page, which implement the View function.
+ */
 public class LoadPageView implements View {
 
   private final String errorMessage;
   private Portfolio portfolio;
+
+  /**
+   * This is a constructor that construct a determine page view.
+   * The error messages is "Error! Cannot load file. Please try again.".
+   *
+   * @param portfolio the portfolio that we want to examine
+   * @param errorMessage the error message we want to show to the user
+   */
   public LoadPageView(Portfolio portfolio, String errorMessage){
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;
@@ -25,7 +36,6 @@ public class LoadPageView implements View {
       System.out.println("--Please enter the name of the portfolio that you want to examine." +
               "The name cannot be end,yes,no,back.--");
     } else {
-      // get portfoio list
       for (PortfolioEntry entry : portfolio.getStocks()) {
         String symbol = entry.getSymbol();
         int amount = entry.getAmount();

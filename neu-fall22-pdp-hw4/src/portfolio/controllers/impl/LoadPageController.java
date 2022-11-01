@@ -12,6 +12,9 @@ import portfolio.services.portfolio.PortfolioService;
 import portfolio.views.View;
 import portfolio.views.impl.LoadPageView;
 
+/**
+ * This is a page controller for the examine page, which is implement the page controller.
+ */
 public class LoadPageController implements PageController {
 
   private final PortfolioService portfolioService;
@@ -19,6 +22,13 @@ public class LoadPageController implements PageController {
   private String errorMessage;
   private Portfolio portfolio;
 
+  /**
+   * This is a constructor that construct a page controller,which is examining the composition
+   * of a portfolio.
+   *
+   * @param portfolioService the service for portfolio
+   * @param controllerFactory the controller factory that we will use
+   */
   public LoadPageController(PortfolioService portfolioService, PageControllerFactory controllerFactory){
     this.portfolioService = portfolioService;
     this.controllerFactory = controllerFactory;

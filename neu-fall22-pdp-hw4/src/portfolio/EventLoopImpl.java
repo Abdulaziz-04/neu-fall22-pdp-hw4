@@ -6,11 +6,19 @@ import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.impl.MainPageController;
 import portfolio.views.View;
 
+/**
+ *
+ */
 public class EventLoopImpl implements EventLoop {
   private final Scanner scan = new Scanner(System.in);
 
   private PageController pageController;
 
+  /**
+   *
+   *
+   * @param pageControllerFactory
+   */
   public EventLoopImpl(PageControllerFactory pageControllerFactory) {
     this.pageController = new MainPageController(pageControllerFactory);
   }

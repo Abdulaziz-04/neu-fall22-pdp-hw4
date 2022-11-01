@@ -4,12 +4,23 @@ import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioWithValue;
 import portfolio.views.View;
 
+/**
+ * This is a view that show the determine page, which implement the View function.
+ */
 public class InfoPageView implements View {
 
   private final Portfolio portfolio;
   private final PortfolioWithValue portfolioWithPrice;
   private final String errorMessage;
 
+  /**
+   * This is a constructor that construct a determine page view.
+   * The error messages is "Error! Please input the correct date.".
+   *
+   * @param portfolio the portfolio that we want to determine
+   * @param portfolioWithPrice the object of PortfolioWithValue
+   * @param errorMessage the error message we want to show to the user
+   */
   public InfoPageView(Portfolio portfolio, PortfolioWithValue portfolioWithPrice, String errorMessage){
     this.portfolio = portfolio;
     this.portfolioWithPrice = portfolioWithPrice;

@@ -1,5 +1,8 @@
 package portfolio.entities;
 
+/**
+ *
+ */
 public class StockListEntry {
 
   private final String symbol;
@@ -10,6 +13,16 @@ public class StockListEntry {
   private final String delistingDate;
   private final String status;
 
+  /**
+   *
+   * @param symbol
+   * @param name
+   * @param exchange
+   * @param assetType
+   * @param ipoDate
+   * @param delistingDate
+   * @param status
+   */
   public StockListEntry(String symbol, String name, String exchange, String assetType,
       String ipoDate, String delistingDate, String status) {
     this.symbol = symbol;
@@ -21,30 +34,58 @@ public class StockListEntry {
     this.status = status;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getSymbol() {
     return symbol;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getAssetType() {
     return assetType;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getDelistingDate() {
     return delistingDate;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getExchange() {
     return exchange;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getIpoDate() {
     return ipoDate;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   *
+   * @return
+   */
   public String getStatus() {
     return status;
   }

@@ -7,14 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ *
+ */
 public class Portfolio {
 
   private final List<PortfolioEntry> stocks;
 
+  /**
+   *
+   * @param stocks
+   */
   public Portfolio(List<PortfolioEntry> stocks){
     this.stocks = stocks;
   }
 
+  /**
+   *
+   * @param stocks
+   */
   public Portfolio(Map<String, Integer> stocks){
     List<PortfolioEntry> portfolioEntries = new ArrayList<>();
     for (var entry: stocks.entrySet()) {
@@ -24,14 +35,32 @@ public class Portfolio {
     this.stocks = portfolioEntries;
   }
 
+  /**
+   *
+   * @return
+   */
   public List<PortfolioEntry> getStocks() {
     return Collections.unmodifiableList(stocks);
   }
+
+  /**
+   *
+   * @return
+   */
   public List<String> getSymbols() {
     var list = stocks.stream().map(x -> x.getSymbol()).collect(Collectors.toList());
     return Collections.unmodifiableList(list);
   }
 
+  /**
+   * This is the function is to calculate the portfolio price on a certain date. It will return
+   * a PortfolioWithValue class that has the total value of this portfolio.
+   *
+   * @param date the date that we want to determine the price
+   * @param prices the price for every stock in this portfolio
+   *
+   * @return PortfolioWithValue class that has the total value of this portfolio
+   */
   public PortfolioWithValue getPortfolioWithPrice(LocalDate date, Map<String, StockPrice> prices) {
 
     List<PortfolioEntryWithValue> portfolioEntryWithValues = new ArrayList<>();
