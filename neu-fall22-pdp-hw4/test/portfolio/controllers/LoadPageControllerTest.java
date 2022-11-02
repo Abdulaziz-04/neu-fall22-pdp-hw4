@@ -114,5 +114,11 @@ public class LoadPageControllerTest {
     assertEquals(MainPageController.class, nextPage.getClass());
   }
 
+  @Test
+  public void handelInput_back() {
+    PageController nextPage = pageController.handleInput("back");
+    assertEquals(MainPageController.class, nextPage.getClass());
+  }
+
 
 }

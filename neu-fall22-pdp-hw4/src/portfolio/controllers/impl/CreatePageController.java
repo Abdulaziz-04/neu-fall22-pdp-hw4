@@ -96,6 +96,9 @@ public class CreatePageController implements PageController {
         errorMessage = "error!";
         return this;
       }
+    } else if(input.equals("end") && stockList.size() == 0){
+      errorMessage = "No stock entered. Please input stock.";
+      return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
       portfolio = new Portfolio(stockList);
       isEnd = true;
@@ -107,8 +110,7 @@ public class CreatePageController implements PageController {
         return this;
       }
       try {
-        portfolioService.saveToFile(portfolio, input + ".txt");
-        isNamed = true;
+        isNamed = portfolioService.saveToFile(portfolio, input + ".txt");
       } catch (Exception e) {
         errorMessage = e.getMessage();
       }
