@@ -7,12 +7,6 @@ package portfolio.entities;
 public class StockListEntry {
 
   private final String symbol;
-  private final String name;
-  private final String exchange;
-  private final String assetType;
-  private final String ipoDate;
-  private final String delistingDate;
-  private final String status;
 
   /**
    * This is a constructor that to construct a stock list entry, which contains symbol, name,
@@ -29,12 +23,6 @@ public class StockListEntry {
   public StockListEntry(String symbol, String name, String exchange, String assetType,
       String ipoDate, String delistingDate, String status) {
     this.symbol = symbol;
-    this.name = name;
-    this.exchange = exchange;
-    this.assetType = assetType;
-    this.ipoDate = ipoDate;
-    this.delistingDate = delistingDate;
-    this.status = status;
   }
 
   /**

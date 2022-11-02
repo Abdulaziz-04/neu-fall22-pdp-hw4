@@ -6,16 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.views.impl.LoadPageView;
-import portfolio.views.impl.MainPageView;
-
 import portfolio.entities.Portfolio;
 import portfolio.views.impl.LoadPageView;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This is a test class to test LoadPageView class.

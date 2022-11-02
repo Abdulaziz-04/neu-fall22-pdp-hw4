@@ -6,7 +6,7 @@ package portfolio;
 public interface EventLoop {
 
   /**
-   * execute program loop
+   * Execute program loop.
    */
   void run();
 }
