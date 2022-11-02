@@ -31,6 +31,6 @@ public class PortfolioWithValueTest {
   @Test
   public void test() {
     assertEquals(LocalDate.parse("2022-10-10"), portfolioWithValue.getDate());
-    assertEquals(50050, portfolioWithValue.getTotalValue());
+    assertEquals(50050, portfolioWithValue.getTotalValue(),0.0000001);
   }
 }

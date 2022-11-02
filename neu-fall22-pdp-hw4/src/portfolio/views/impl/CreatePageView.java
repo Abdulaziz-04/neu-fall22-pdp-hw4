@@ -60,6 +60,12 @@ public class CreatePageView extends ViewAbs {
       printStream.println("!Error message: " + errorMessage);
     }
     if(!isEnd) {
+      if (map.size() > 0) {
+        printStream.println("Selected stocks and shares:");
+        for (var entry : map.entrySet()) {
+          printStream.println(entry.getKey() + "," + entry.getValue());
+        }
+      }
       printStream.println("*********************************************************");
       printStream.println("!!! If you enter back, you will back to the main menu.");
       printStream.println("*********************************************************");

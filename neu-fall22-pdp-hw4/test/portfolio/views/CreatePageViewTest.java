@@ -70,6 +70,8 @@ public class CreatePageViewTest {
             "Error Format!");
     view.render();
     assertEquals("!Error message: Error Format!\r\n" +
+            "Selected stocks and shares:\r\n" +
+            "AAA,100\r\n" +
             "*********************************************************\r\n" +
             "!!! If you enter back, you will back to the main menu.\r\n" +
             "*********************************************************\r\n" +
@@ -106,6 +108,8 @@ public class CreatePageViewTest {
             "The shares cannot be negative and 0.");
     view.render();
     assertEquals("!Error message: The shares cannot be negative and 0.\r\n" +
+            "Selected stocks and shares:\r\n" +
+                    "AAA,100\r\n" +
             "*********************************************************\r\n" +
             "!!! If you enter back, you will back to the main menu.\r\n" +
             "*********************************************************\r\n" +
@@ -140,6 +144,8 @@ public class CreatePageViewTest {
             "Symbol not found.");
     view.render();
     assertEquals("!Error message: Symbol not found.\r\n" +
+            "Selected stocks and shares:\r\n" +
+            "AAA,100\r\n" +
             "*********************************************************\r\n" +
             "!!! If you enter back, you will back to the main menu.\r\n" +
             "*********************************************************\r\n" +
