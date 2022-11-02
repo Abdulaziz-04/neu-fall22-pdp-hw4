@@ -36,7 +36,7 @@ public class MainPageView extends ViewAbs {
   public void render(){
     clearConsole();
     if (errorMessage != null) {
-      printStream.println(errorMessage);
+      printStream.println("!Error message: " + errorMessage);
     }
     printStream.println("*********************************************************************" +
         "*******************************");
@@ -46,7 +46,7 @@ public class MainPageView extends ViewAbs {
     printStream.println("*********************************************************************" +
             "*******************************");
     printStream.println("!!!If you want to determine a portfolio, you need to go examine it first and" +
-            "then to determine it.");
+            " then to determine it.");
     printStream.println("----------------------------------------------------------------------" +
         "----------------------------------------------------------");
     printStream.println("Please enter the number 1 or 2 that you want to choose.");

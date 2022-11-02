@@ -52,6 +52,7 @@ public class InfoPageController implements PageController {
 
   @Override
   public PageController handleCommand(String command) throws Exception {
+    errorMessage = null;
     if (command.equals("back")) {
       return controllerFactory.newMainPageController();
     }

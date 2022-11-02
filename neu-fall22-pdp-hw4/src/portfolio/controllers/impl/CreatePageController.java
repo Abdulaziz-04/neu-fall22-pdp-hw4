@@ -43,6 +43,8 @@ public class CreatePageController implements PageController {
     this.viewFactory = viewFactory;
   }
 
+
+
   @Override
   public View getView() {
     return viewFactory.newCreatePageView(isEnd, isNamed, stockList, errorMessage);
@@ -51,7 +53,7 @@ public class CreatePageController implements PageController {
   @Override
   public PageController handleCommand(String command) throws Exception {
     command = command.trim();
-    errorMessage = "";
+    errorMessage = null;
     if(command.equals("back")) {
       return pageControllerFactory.newMainPageController();
     }
@@ -97,6 +99,7 @@ public class CreatePageController implements PageController {
       //save to file
       if(command.equals("end") || command.equals("yes") || command.equals("no")) {
         errorMessage = "The name cannot be end, back, no and yes.";
+        return this;
       }
       try {
         portfolioService.saveToFile(portfolio, command + ".txt");

@@ -39,6 +39,7 @@ public class LoadPageController implements PageController {
   @Override
   public PageController handleCommand(String command) throws Exception {
     command = command.trim();
+    errorMessage = null;
     if (command.equals("back")) {
       return controllerFactory.newMainPageController();
     }
@@ -55,7 +56,7 @@ public class LoadPageController implements PageController {
         }
       }
     } catch (Exception e) {
-      errorMessage = e.getMessage();
+      errorMessage = "Cannot find this portfolio.";
       return this;
     }
   }

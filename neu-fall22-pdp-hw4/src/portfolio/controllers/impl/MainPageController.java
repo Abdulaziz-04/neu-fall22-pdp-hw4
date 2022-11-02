@@ -31,6 +31,7 @@ public class MainPageController implements PageController {
 
   @Override
   public PageController handleCommand(String command) {
+    errorMessage = null;
     switch (command) {
       case "1":
         return controllerFactory.newCreatePageController();
