@@ -158,14 +158,14 @@ public class CreatePageViewTest {
     View view = new CreatePageView(printStream,true,false,map,
             null);
     view.render();
-    assertEquals("Selected stock and shares:\r\n" +
+    assertEquals("Selected stocks and shares:\r\n" +
             "AA,200\r\n" +
             "AAA,100\r\n" +
             "*********************************************************\r\n" +
             "!!! If you enter back, you will back to the main menu.\r\n" +
             "*********************************************************\r\n" +
             "Please enter the file name of this portfolio.The name cannot be end, " +
-                    "back, no and yes\r\n"
+                    "back, no and yes.\r\n"
             ,outputStreamCaptor.toString());
   }
 
@@ -195,14 +195,14 @@ public class CreatePageViewTest {
             "The name cannot be end, back, no and yes.");
     view.render();
     assertEquals("!Error message: The name cannot be end, back, no and yes.\r\n" +
-                    "Selected stock and shares:\r\n" +
+                    "Selected stocks and shares:\r\n" +
                     "AA,200\r\n" +
                     "AAA,100\r\n" +
                     "*********************************************************\r\n" +
                     "!!! If you enter back, you will back to the main menu.\r\n" +
                     "*********************************************************\r\n" +
                     "Please enter the file name of this portfolio.The name " +
-                    "cannot be end, back, no and yes\r\n"
+                    "cannot be end, back, no and yes.\r\n"
             ,outputStreamCaptor.toString());
   }
 }

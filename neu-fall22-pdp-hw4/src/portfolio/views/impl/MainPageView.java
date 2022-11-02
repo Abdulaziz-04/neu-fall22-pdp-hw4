@@ -41,12 +41,13 @@ public class MainPageView extends ViewAbs {
     printStream.println("*********************************************************************" +
         "*******************************");
     printStream.println("This is the main menu of the portfolios");
-    printStream.println("1.Create a portfolios");
+    printStream.println("1.Create a portfolio");
     printStream.println("2.Examine the composition of a portfolio");
     printStream.println("*********************************************************************" +
             "*******************************");
-    printStream.println("!!!If you want to determine a portfolio, you need to go examine it first and" +
-            " then to determine it.");
+    printStream.println("!!!If you want to determine a portfolio, you need to " +
+            "go to examine page or create page first and" +
+            " then go to determine it.");
     printStream.println("----------------------------------------------------------------------" +
         "----------------------------------------------------------");
     printStream.println("Please enter the number 1 or 2 that you want to choose.");

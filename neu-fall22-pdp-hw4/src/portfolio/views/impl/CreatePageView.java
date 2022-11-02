@@ -75,7 +75,7 @@ public class CreatePageView extends ViewAbs {
     } else {
       if(!isNamed) {
         if (map.size() > 0) {
-          printStream.println("Selected stock and shares:");
+          printStream.println("Selected stocks and shares:");
           for (var entry: map.entrySet()) {
             printStream.println(entry.getKey() + "," + entry.getValue());
           }
@@ -84,7 +84,7 @@ public class CreatePageView extends ViewAbs {
         printStream.println("!!! If you enter back, you will back to the main menu.");
         printStream.println("*********************************************************");
         printStream.println("Please enter the file name of this portfolio." +
-                "The name cannot be end, back, no and yes");
+                "The name cannot be end, back, no and yes.");
       } else {
         printStream.println("*********************************************************");
         printStream.println("!!! If you enter back, you will back to the main menu.");
