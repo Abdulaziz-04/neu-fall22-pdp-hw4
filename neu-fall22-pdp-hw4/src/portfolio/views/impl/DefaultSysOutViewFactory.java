@@ -11,7 +11,7 @@ import portfolio.views.impl.LoadPageView;
 import portfolio.views.impl.MainPageView;
 
 /**
- * This is a class that can generate different controller.
+ * This is a class that can generate different view, which implement the view factory.
  */
 public class DefaultSysOutViewFactory implements ViewFactory {
 

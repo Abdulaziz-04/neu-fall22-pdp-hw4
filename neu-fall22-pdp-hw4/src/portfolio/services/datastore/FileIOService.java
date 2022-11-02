@@ -11,7 +11,8 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 /**
- *
+ * This is a class that represent the file service, which will implement the IOService interface.
+ * This class will read and write string to file.
  */
 public class FileIOService implements IOService {
 

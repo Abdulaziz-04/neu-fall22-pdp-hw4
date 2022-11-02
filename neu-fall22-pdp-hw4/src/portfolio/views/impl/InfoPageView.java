@@ -16,6 +16,7 @@ public class InfoPageView extends ViewAbs {
    * This is a constructor that construct a determine page view. The error messages is "Error!
    * Please input the correct date.".
    *
+   * @param printStream
    * @param portfolioWithPrice the object of PortfolioWithValue
    * @param errorMessage       the error message we want to show to the user
    */
@@ -26,6 +27,13 @@ public class InfoPageView extends ViewAbs {
     this.errorMessage = errorMessage;
   }
 
+  /**
+   * This is a constructor that construct a determine page view. The error messages is "Error!
+   * Please input the correct date.".
+   *
+   * @param portfolioWithPrice the object of PortfolioWithValue
+   * @param errorMessage       the error message we want to show to the user
+   */
   public InfoPageView(PortfolioWithValue portfolioWithPrice, String errorMessage) {
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;

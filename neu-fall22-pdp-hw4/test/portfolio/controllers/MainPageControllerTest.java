@@ -18,6 +18,9 @@ import portfolio.services.stockprice.StockQueryService;
 import portfolio.services.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
+/**
+ * This is a test class to test MainPageController class.
+ */
 public class MainPageControllerTest {
 
   private final PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());

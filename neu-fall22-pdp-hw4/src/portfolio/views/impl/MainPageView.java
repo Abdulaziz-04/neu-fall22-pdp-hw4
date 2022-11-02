@@ -14,6 +14,7 @@ public class MainPageView extends ViewAbs {
    * It will show the error message for main menu.
    * The error message will be "Please enter the correct number!"
    *
+   * @param printStream
    * @param errorMessage "Please enter the correct number!"
    */
   public MainPageView(PrintStream printStream, String errorMessage){
@@ -21,6 +22,12 @@ public class MainPageView extends ViewAbs {
     this.errorMessage = errorMessage;
   }
 
+  /**
+   * It will show the error message for main menu.
+   * The error message will be "Please enter the correct number!"
+   *
+   * @param errorMessage "Please enter the correct number!"
+   */
   public MainPageView(String errorMessage){
     this.errorMessage = errorMessage;
   }

@@ -17,6 +17,9 @@ import portfolio.services.datastore.IOService;
 import portfolio.services.portfolio.PortfolioService;
 import portfolio.services.portfolio.PortfolioServiceImpl;
 
+/**
+ * This is a test class to test PortfolioServiceImpl class.
+ */
 public class PortfolioServiceImplTest {
 
   private ArgumentCaptor argumentCaptor;

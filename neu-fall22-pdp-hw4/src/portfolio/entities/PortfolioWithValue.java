@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- *
+ * This is a class that represent a portfolio with the value on a certain date. This class
+ * contains the date, a list of stocks for the portfolio abd the total value of portfolio on
+ * a certain date.
  */
 public class PortfolioWithValue {
 
@@ -14,10 +16,12 @@ public class PortfolioWithValue {
   private final double totalValue;
 
   /**
+   * This is a constructor to construct a PortfolioWithValue object. It will have the total
+   * price of this portfolio on that date.
    *
-   * @param date
-   * @param stocks
-   * @param totalValue
+   * @param date the date for check
+   * @param stocks the portfolio stock list
+   * @param totalValue the total value of the portfolio
    */
   public PortfolioWithValue(LocalDate date, List<PortfolioEntryWithValue> stocks, double totalValue) {
     this.date = date;
@@ -26,24 +30,27 @@ public class PortfolioWithValue {
   }
 
   /**
+   * Return the date that we want to determine.
    *
-   * @return
+   * @return the date that we want to determine
    */
   public LocalDate getDate() {
     return date;
   }
 
   /**
+   * Return the portfolio list, which contains the value of each stock.
    *
-   * @return
+   * @return the portfolio list, which contains the value of each stock
    */
   public List<PortfolioEntryWithValue> getStocks() {
     return stocks;
   }
 
   /**
+   * Return the total value of this portfolio.
    *
-   * @return
+   * @return the total value of this portfolio
    */
   public double getTotalValue() {
     return totalValue;

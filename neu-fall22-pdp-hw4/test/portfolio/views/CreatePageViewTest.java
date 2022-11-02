@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import portfolio.views.impl.MainPageView;
 
+/**
+ * This is a test class to test CreatePageView class.
+ */
 public class CreatePageViewTest {
 
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();

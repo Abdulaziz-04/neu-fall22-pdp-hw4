@@ -13,6 +13,7 @@ public interface PageController {
    *
    * @param command user input command as a string
    * @return next page to be redirected
+   * @throws Exception some errors in different page
    */
   public PageController handleCommand(String command) throws Exception;
 

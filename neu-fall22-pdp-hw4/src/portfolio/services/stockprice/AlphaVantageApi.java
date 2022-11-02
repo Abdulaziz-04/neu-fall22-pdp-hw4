@@ -11,6 +11,9 @@ import java.util.Map;
 import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
 
+/**
+ * Service for API, which will implement the stockPriceApi interface.
+ */
 public class AlphaVantageApi implements StockPriceApi {
 
   private String apiKey = "IQ29BBAWEJE88VFA";

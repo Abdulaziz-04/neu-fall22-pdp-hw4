@@ -10,6 +10,9 @@ import org.junit.Test;
 import portfolio.services.datastore.IOService;
 import portfolio.services.datastore.FileIOService;
 
+/**
+ * This is a test class to test FileIOService class.
+ */
 public class FileIOServiceTest {
 
   IOService ioService = new FileIOService();

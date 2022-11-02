@@ -1,7 +1,7 @@
 package portfolio.entities;
 
 /**
- *
+ * This is a class represent a stock list entry.
  */
 public class StockListEntry {
 
@@ -14,14 +14,16 @@ public class StockListEntry {
   private final String status;
 
   /**
+   * This is a constructor that to construct a stock list entry, which contains symbol,name,
+   * exchange,assetType,ipoDate,delistingDate,status
    *
-   * @param symbol
-   * @param name
-   * @param exchange
-   * @param assetType
-   * @param ipoDate
-   * @param delistingDate
-   * @param status
+   * @param symbol the symbol of a stock
+   * @param name the name of a stock
+   * @param exchange the exchange of a stock
+   * @param assetType the assertType of a stock
+   * @param ipoDate the ipo date of a stock
+   * @param delistingDate the delisting date
+   * @param status the status of this entry
    */
   public StockListEntry(String symbol, String name, String exchange, String assetType,
       String ipoDate, String delistingDate, String status) {
@@ -35,8 +37,9 @@ public class StockListEntry {
   }
 
   /**
+   * Return the symbol of this stock.
    *
-   * @return
+   * @return the symbol of this stock.
    */
   public String getSymbol() {
     return symbol;

@@ -9,12 +9,19 @@ import portfolio.entities.PortfolioEntry;
 import portfolio.services.datastore.IOService;
 
 /**
- *
+ * This is a class that represent a portfolio service, which creating and retrieving
+ * portfolio.
  */
 public class PortfolioServiceImpl implements PortfolioService {
 
   private final IOService ioService;
 
+  /**
+   * This is a constructor that to construct a portfolio service object. It will initialize
+   * io service for portfolio service.
+   *
+   * @param ioService the service to read or write string to the file
+   */
   public PortfolioServiceImpl(IOService ioService) {
     this.ioService = ioService;
   }
@@ -49,6 +56,13 @@ public class PortfolioServiceImpl implements PortfolioService {
     return new Portfolio(map);
   }
 
+  /**
+   * Transfer the portfolio into a string format. The format is "symbol,amount". The amount means
+   * shares.
+   *
+   * @param portfolio the portfolio that we want to transfer
+   * @return the portfolio in a string format
+   */
   private static String toString(Portfolio portfolio) {
     List<PortfolioEntry> stocks = portfolio.getStocks();
     StringBuilder builder = new StringBuilder();

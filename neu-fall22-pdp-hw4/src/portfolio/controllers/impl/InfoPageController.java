@@ -39,7 +39,7 @@ public class InfoPageController implements PageController {
   /**
    * This is a helper function that to help us the get the portfolio value from the model and then
    * @param date the date that we want to determine
-   * @throws Exception
+   * @throws Exception cannot get the price on that date
    */
   private void updatePortfolioWithValue(LocalDate date) throws Exception {
     var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());

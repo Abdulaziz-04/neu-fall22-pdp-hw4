@@ -10,6 +10,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This is a test class to test Portfolio class.
+ */
 public class PortfolioTest {
 
   private final Map<String, Integer> stocks = new HashMap<>();

@@ -12,8 +12,17 @@ import portfolio.services.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 import portfolio.views.impl.DefaultSysOutViewFactory;
 
+/**
+ * This is main class to run the stock program. It will build the model, view and controller.
+ */
 public class Main {
 
+  /**
+   * Main fuction to run the stock program.
+   *
+   * @param args arguments
+   * @throws Exception error
+   */
   public static void main(String[] args) throws Exception {
 
     // Service

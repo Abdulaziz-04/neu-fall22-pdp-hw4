@@ -9,6 +9,9 @@ import org.junit.Test;
 import portfolio.services.cache.Cache;
 import portfolio.services.cache.SimpleCache;
 
+/**
+ * This is a test class to test SimpleCache class.
+ */
 public class SimpleCacheTest {
 
   private final Cache<Integer> cache = new SimpleCache<>(1);

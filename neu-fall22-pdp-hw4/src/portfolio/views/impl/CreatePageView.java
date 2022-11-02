@@ -21,6 +21,7 @@ public class CreatePageView extends ViewAbs {
    * "The shares cannot be negative and 0.", "Symbol not found.", "error!",
    * "The name cannot be end, back, no and yes.".
    *
+   * @param printStream
    * @param isEnd if the user finish input the portfolio, it will be true. Otherwise, false.
    * @param isNamed if the user finish input name, it will be true. Otherwise, false.
    * @param map the map that store the symbol and shares for portfolio.
@@ -34,6 +35,17 @@ public class CreatePageView extends ViewAbs {
     this.errorMessage = errorMessage;
   }
 
+  /**
+   * This is a constructor that construct a create page view.
+   * The error messages will contain "Error Format!", "The share is not a number.",
+   * "The shares cannot be negative and 0.", "Symbol not found.", "error!",
+   * "The name cannot be end, back, no and yes.".
+   *
+   * @param isEnd if the user finish input the portfolio, it will be true. Otherwise, false.
+   * @param isNamed if the user finish input name, it will be true. Otherwise, false.
+   * @param map the map that store the symbol and shares for portfolio.
+   * @param errorMessage the error message we want to show to the user.
+   */
   public CreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map, String errorMessage){
     this.isEnd = isEnd;
     this.isNamed = isNamed;

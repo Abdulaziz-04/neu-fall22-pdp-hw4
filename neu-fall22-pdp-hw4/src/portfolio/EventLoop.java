@@ -1,8 +1,7 @@
 package portfolio;
 
 /**
- * FrontController handle request from the user. It receives all the action from the user and
- * dispatches them to PageController.
+ * EventLoop is an interface to continue running the program.
  */
 public interface EventLoop {
 

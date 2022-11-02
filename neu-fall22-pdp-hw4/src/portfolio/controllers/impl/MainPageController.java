@@ -15,7 +15,7 @@ public class MainPageController implements PageController {
   private String errorMessage;
 
   /**
-   * This is a constructor that construct a main menu page controller
+   * This is a constructor that construct a main menu page controller.
    *
    * @param controllerFactory the controller factory that we will use
    */
@@ -29,6 +29,7 @@ public class MainPageController implements PageController {
     return viewFactory.newMainPageView(errorMessage);
   }
 
+  @Override
   public PageController handleCommand(String command) {
     switch (command) {
       case "1":

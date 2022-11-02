@@ -21,8 +21,8 @@ public class PageControllerFactory {
   /**
    * This is a constructor that construct a page controller factory.
    *
-   * @param portfolioService
-   * @param stockQueryService
+   * @param portfolioService the service for portfolio
+   * @param stockQueryService the service for get stock list
    */
   public PageControllerFactory(
       PortfolioService portfolioService, StockQueryService stockQueryService, ViewFactory viewFactory) {
@@ -34,7 +34,7 @@ public class PageControllerFactory {
   /**
    * Return a new page controller,which is to determine a portfolio on certain date.
    *
-   * @param portfolio The portfolio that we want to determine.
+   * @param portfolio the portfolio that we want to determine.
    * @return a new page controller,which is to determine a portfolio on certain date
    */
   public PageController newInfoPageController(Portfolio portfolio){

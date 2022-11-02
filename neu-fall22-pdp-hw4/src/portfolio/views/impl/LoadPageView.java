@@ -17,6 +17,7 @@ public class LoadPageView extends ViewAbs {
    * This is a constructor that construct a determine page view.
    * The error messages is "Error! Cannot load file. Please try again.".
    *
+   * @param printStream
    * @param portfolio the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
@@ -26,6 +27,13 @@ public class LoadPageView extends ViewAbs {
     this.portfolio = portfolio;
   }
 
+  /**
+   * This is a constructor that construct a determine page view.
+   * The error messages is "Error! Cannot load file. Please try again.".
+   *
+   * @param portfolio the portfolio that we want to examine
+   * @param errorMessage the error message we want to show to the user
+   */
   public LoadPageView(Portfolio portfolio, String errorMessage){
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;

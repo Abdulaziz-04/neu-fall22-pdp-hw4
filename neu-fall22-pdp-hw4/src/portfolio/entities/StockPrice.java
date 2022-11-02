@@ -1,7 +1,7 @@
 package portfolio.entities;
 
 /**
- *
+ * This is a class that represent a stock price.
  */
 public class StockPrice {
   private final double open;
@@ -11,12 +11,14 @@ public class StockPrice {
   private final long volume;
 
   /**
+   * This is a constructor that construct a stock price object, which contains open price,
+   * the highest price, the lowest price, the close price and volume in a day.
    *
-   * @param open
-   * @param high
-   * @param low
-   * @param close
-   * @param volume
+   * @param open the price for a stock at opening time
+   * @param high the highest price of a stock on that day
+   * @param low the lowest price of a stock on that day
+   * @param close the price for a stock at the closing time
+   * @param volume the volume of a stock in that day
    */
   public StockPrice(double open, double high, double low, double close, long volume) {
     this.open = open;
@@ -27,40 +29,45 @@ public class StockPrice {
   }
 
   /**
+   * Return the price for a stock at opening time.
    *
-   * @return
+   * @return the price for a stock at opening time
    */
   public double getOpen() {
     return open;
   }
 
   /**
+   * Return the price for a stock at closing time.
    *
-   * @return
+   * @return the price for a stock at closing time
    */
   public double getClose() {
     return close;
   }
 
   /**
+   * Return the highest price of a stock on that day.
    *
-   * @return
+   * @return the highest price of a stock on that day
    */
   public double getHigh() {
     return high;
   }
 
   /**
+   * Return the lowest price of a stock on that day.
    *
-   * @return
+   * @return the lowest price of a stock on that day
    */
   public double getLow() {
     return low;
   }
 
   /**
+   * Return the volume of a stock in that day.
    *
-   * @return
+   * @return the volume of a stock in that day
    */
   public long getVolume() {
     return volume;

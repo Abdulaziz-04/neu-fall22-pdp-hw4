@@ -8,7 +8,7 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- *
+ * This is class represent event loop, which will continue to run the program.
  */
 public class EventLoopImpl implements EventLoop {
   private final Scanner scan = new Scanner(System.in);
@@ -16,9 +16,10 @@ public class EventLoopImpl implements EventLoop {
   private PageController pageController;
 
   /**
+   * This is a constructor to construct a EventLoopImpl object.
    *
-   *
-   * @param pageControllerFactory
+   * @param pageControllerFactory the controller factory to run the program
+   * @param viewFactory the view factory to run the program
    */
   public EventLoopImpl(PageControllerFactory pageControllerFactory, ViewFactory viewFactory) {
     this.pageController = new MainPageController(pageControllerFactory, viewFactory);

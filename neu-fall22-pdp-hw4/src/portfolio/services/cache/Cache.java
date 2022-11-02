@@ -18,5 +18,13 @@ public interface Cache<T> {
    */
   T get(String key, Function<String, T> func);
 
+  /**
+   *
+   *
+   * @param key key as a string
+   * @param func get function
+   * @param time the local time
+   * @return value as type T
+   */
   T get(String key, Function<String, T> func, LocalTime time);
 }

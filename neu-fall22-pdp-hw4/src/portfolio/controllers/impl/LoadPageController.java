@@ -30,6 +30,7 @@ public class LoadPageController implements PageController {
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
   }
+
   @Override
   public View getView(){
     return viewFactory.newLoadPageView(portfolio, errorMessage);

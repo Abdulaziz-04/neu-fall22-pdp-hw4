@@ -10,6 +10,9 @@ import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
 import portfolio.services.stockprice.AlphaVantageApi;
 
+/**
+ * This is a test class to test AlphaVantageApiIT class.
+ */
 public class AlphaVantageApiIT {
 
   AlphaVantageApi api = new AlphaVantageApi();

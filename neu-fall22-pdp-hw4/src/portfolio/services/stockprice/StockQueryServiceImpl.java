@@ -9,16 +9,32 @@ import portfolio.entities.StockPrice;
 import portfolio.services.cache.Cache;
 import portfolio.services.cache.SimpleCache;
 
+/**
+ * This is a class that represent the stock query service, which implement StockQueryService
+ * interface.
+ */
 public class StockQueryServiceImpl implements StockQueryService {
 
   private final StockPriceApi api;
   private final Cache<List<StockListEntry>> stockListCache = new SimpleCache<>(10000);
   private final Cache<Map<String, StockPrice>> stockPriceCache = new SimpleCache<>(10000);
 
+  /**
+   * This is a constructor to construct the StockQueryServiceImpl object, which contains the
+   * StockPriceApi.
+   *
+   * @param api the api
+   */
   public StockQueryServiceImpl(StockPriceApi api) {
     this.api = api;
   }
 
+  /**
+   * This is a method to know the symbol of a stock is in the list or not.
+   *
+   * @param symbol the symbol of a stock that we want to find
+   * @return if it is in the list, true. Otherwise, false.
+   */
   private boolean isInList(String symbol){
     for (var entry: getStockList()){
       if (symbol.equals(entry.getSymbol()))

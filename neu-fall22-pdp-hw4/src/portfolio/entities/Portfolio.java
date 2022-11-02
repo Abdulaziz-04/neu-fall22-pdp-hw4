@@ -8,23 +8,26 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- *
+ * This is a class that represent a portfolio object, which contains a list of portfolio entry.
  */
 public class Portfolio implements IPortfolio {
 
   private final List<PortfolioEntry> stocks;
 
   /**
+   * This is a constructor to a portfolio object, which we already
+   * have the list of entry of it.
    *
-   * @param stocks
+   * @param stocks a list of portfolio entry
    */
   public Portfolio(List<PortfolioEntry> stocks){
     this.stocks = stocks;
   }
 
   /**
+   * This is a constructor to a portfolio object, which do not have the portfolio entry.
    *
-   * @param stocks
+   * @param stocks a map type object
    */
   public Portfolio(Map<String, Integer> stocks){
     List<PortfolioEntry> portfolioEntries = new ArrayList<>();
@@ -35,34 +38,20 @@ public class Portfolio implements IPortfolio {
     this.stocks = portfolioEntries;
   }
 
-  /**
-   *
-   * @return
-   */
+
   @Override
   public List<PortfolioEntry> getStocks() {
     return Collections.unmodifiableList(stocks);
   }
 
-  /**
-   *
-   * @return
-   */
+
   @Override
   public List<String> getSymbols() {
     var list = stocks.stream().map(x -> x.getSymbol()).collect(Collectors.toList());
     return Collections.unmodifiableList(list);
   }
 
-  /**
-   * This is the function is to calculate the portfolio price on a certain date. It will return
-   * a PortfolioWithValue class that has the total value of this portfolio.
-   *
-   * @param date the date that we want to determine the price
-   * @param prices the price for every stock in this portfolio
-   *
-   * @return PortfolioWithValue class that has the total value of this portfolio
-   */
+
   @Override
   public PortfolioWithValue getPortfolioWithPrice(LocalDate date, Map<String, StockPrice> prices) {
 

@@ -17,6 +17,9 @@ import portfolio.services.stockprice.StockPriceApi;
 import portfolio.services.stockprice.StockQueryService;
 import portfolio.services.stockprice.StockQueryServiceImpl;
 
+/**
+ * This is a test class to test StockQueryServiceImpl class.
+ */
 public class StockQueryServiceImplTest {
   private StockQueryService stockQueryService;
   private StockPriceApi stockPriceApi;
