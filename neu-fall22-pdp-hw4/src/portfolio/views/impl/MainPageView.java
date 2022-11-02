@@ -43,21 +43,24 @@ public class MainPageView extends ViewAbs {
           "Something wrong with external API, cannot initialize the application. Please try again in few minutes.");
     }
 
-    if (errorMessage != null) {
-      printStream.println("!Error message: " + errorMessage);
-    }
+
     printStream.println("*********************************************************************" +
         "*******************************");
     printStream.println("This is the main menu of the portfolios");
     printStream.println("1.Create a portfolios");
     printStream.println("2.Examine the composition of a portfolio");
     printStream.println("*********************************************************************" +
-            "*******************************");
-    printStream.println("!!!If you want to determine a portfolio, you need to go examine it first and" +
+        "*******************************");
+    printStream.println(
+        "!!! If you want to determine a portfolio, you need to go examine it first and" +
             " then to determine it.");
-    printStream.println("----------------------------------------------------------------------" +
-        "----------------------------------------------------------");
+    printStream.println("---------------------------------------------------------------------" +
+        "-------------------------------");
     printStream.println("Please enter the number 1 or 2 that you want to choose.");
+    if (errorMessage != null) {
+      printStream.println("! Error message: " + errorMessage);
+    }
+    printStream.print("input > ");
   }
 
 }

@@ -42,9 +42,7 @@ public class LoadPageView extends ViewAbs {
   @Override
   public void render() {
     clearConsole();
-    if (errorMessage != null) {
-      printStream.println("!Error message: " + errorMessage);
-    }
+
     printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
@@ -52,15 +50,21 @@ public class LoadPageView extends ViewAbs {
       printStream.println("--Please enter the name of the portfolio that you want to examine. " +
               "The name cannot be end,yes,no,back.--");
     } else {
-      for (PortfolioEntry entry : portfolio.getStocks()) {
-        String symbol = entry.getSymbol();
-        int amount = entry.getAmount();
-        printStream.println(symbol + "," + amount);
+      printStream.println("           +---------+---------------+");
+      printStream.println("Portfolio: |    Stock|  No. of shares|");
+      printStream.println("           +---------+---------------+");
+      for (var entry: portfolio.getStocks()) {
+        printStream.printf("           |%9s|%15d|%n", entry.getSymbol(), entry.getAmount());
       }
+      printStream.println("           +---------+---------------+");
       printStream.println("Do you want to determine the total value of current portfolio?");
       printStream.println("Please enter yes if you want to determine. " +
               "Other input will be back to the main menu.");
     }
+    if (errorMessage != null) {
+      printStream.println("! Error message: " + errorMessage);
+    }
+    printStream.print("input > ");
   }
 
 }

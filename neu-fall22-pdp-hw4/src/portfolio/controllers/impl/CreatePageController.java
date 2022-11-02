@@ -75,7 +75,6 @@ public class CreatePageController implements PageController {
           errorMessage = "Error Format!";
           return this;
         }
-        //int amount = Integer.parseInt(cmd[1]);
         if (allStocks.contains(symbol)) {
           int amount = 0;
           try {

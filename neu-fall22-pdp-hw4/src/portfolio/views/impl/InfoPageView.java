@@ -42,27 +42,36 @@ public class InfoPageView extends ViewAbs {
   @Override
   public void render() {
     clearConsole();
-    if (errorMessage != null) {
-      printStream.println("!Error message: " + errorMessage);
-    }
     printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
     if (portfolioWithPrice != null) {
-      printStream.println("Portfolio value as of: " + portfolioWithPrice.getDate());
       printStream.println(
-          "If stock price not found, the value with be N/A and will not be include in total value");
+          "If stock price not found, the value with be N/A and will not be include in the total value.");
+      printStream.println("");
+      printStream.println("Portfolio value as of: " + portfolioWithPrice.getDate());
+      printStream.println("+---------+---------------+--------------------+");
+      printStream.println("|    Stock|  No. of shares|       Current value|");
+      printStream.println("+---------+---------------+--------------------+");
       for (var entry : portfolioWithPrice.getStocks()) {
         String symbol = entry.getSymbol();
         int amount = entry.getAmount();
         String value = entry.getValue() == null ? "N/A" : entry.getValue().toString();
-        printStream.println(symbol + "\t\t" + amount + "\t\t" + value);
+        printStream.printf("|%9s|%15d|%20s|%n", symbol, amount, value);
       }
+      printStream.println("+---------+---------------+--------------------+");
       printStream.println("Total value: " + portfolioWithPrice.getTotalValue());
+      printStream.println("");
+      printStream.println("Please enter the date again if you want to determine value for another date. " +
+          "The format is year-month-day, ex: 2022-10-11");
     } else {
       printStream.println("Please enter the date that you want to determine. " +
           "The format is year-month-day, ex: 2022-10-11");
     }
+    if (errorMessage != null) {
+      printStream.println("! Error message: " + errorMessage);
+    }
+    printStream.print("input > ");
   }
 
 }
