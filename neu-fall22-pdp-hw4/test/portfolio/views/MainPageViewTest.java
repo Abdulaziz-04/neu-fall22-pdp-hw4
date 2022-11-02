@@ -28,12 +28,12 @@ public class MainPageViewTest {
     assertEquals("********************************************" +
             "********************************************************\r\n" +
             "This is the main menu of the portfolios\r\n" +
-            "1.Create a portfolios\r\n" +
+            "1.Create a portfolio\r\n" +
             "2.Examine the composition of a portfolio\r\n" +
             "************************************************************" +
             "****************************************\r\n" +
             "!!!If you want to determine a portfolio, you need to go " +
-            "examine it first and then to determine it.\r\n" +
+            "to examine page or create page first and then go to determine it.\r\n" +
             "---------------------------------------------------" +
             "-----------------------------------------------------------------------------\r\n" +
             "Please enter the number 1 or 2 that you " +
@@ -48,15 +48,39 @@ public class MainPageViewTest {
             "*******************************************************************************" +
             "*********************\r\n" +
             "This is the main menu of the portfolios\r\n" +
-            "1.Create a portfolios\r\n" +
+            "1.Create a portfolio\r\n" +
             "2.Examine the composition of a portfolio\r\n" +
             "*********************************************************************" +
             "*******************************\r\n" +
-            "!!!If you want to determine a portfolio, you need to go examine" +
-            " it first and then to determine it.\r\n" +
+            "!!!If you want to determine a portfolio, you need to go " +
+                    "to examine page or create page first and then go to determine it.\r\n" +
             "---------------------------------------------------------------------" +
             "-----------------------------------------------------------\r\n" +
             "Please enter the number 1 or 2 that you want to choose.\r\n",
             outputStreamCaptor.toString());
   }
+
+  @Test
+  public void testRender_InitializeError() {
+    View view = new MainPageView(printStream, null, true);
+    view.render();
+    assertEquals("Something wrong with external API, cannot initialize the application. " +
+                    "Please try again in few minutes.\r\n"+
+                    "**********************************************************************" +
+                    "*********" +
+                    "*********************\r\n" +
+                    "This is the main menu of the portfolios\r\n" +
+                    "1.Create a portfolio\r\n" +
+                    "2.Examine the composition of a portfolio\r\n" +
+                    "*********************************************************************" +
+                    "*******************************\r\n" +
+                    "!!!If you want to determine a portfolio, you need to go " +
+                    "to examine page or create page first and then go to determine it.\r\n" +
+                    "---------------------------------------------------------------------" +
+                    "-----------------------------------------------------------\r\n" +
+                    "Please enter the number 1 or 2 that you want to choose.\r\n",
+            outputStreamCaptor.toString());
+  }
+
+
 }

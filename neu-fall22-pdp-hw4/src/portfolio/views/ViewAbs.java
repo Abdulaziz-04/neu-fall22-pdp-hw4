@@ -22,7 +22,7 @@ public abstract class ViewAbs implements View {
    * This is a constructor to construct a ViewAbs object. It will initialize the output stream
    * to the printStream passed to it.
    *
-   * @param printStream
+   * @param printStream a PrintStream object to output what will show on view
    */
   public ViewAbs(PrintStream printStream) {
     this.printStream = printStream;

@@ -20,7 +20,7 @@ public class CreatePageView extends ViewAbs {
    * Format!", "The share is not a number.", "The shares cannot be negative and 0.", "Symbol not
    * found.", "error!", "The name cannot be end, back, no and yes.".
    *
-   * @param printStream
+   * @param printStream  a PrintStream object to output what will show on view
    * @param isEnd        if the user finish input the portfolio, it will be true. Otherwise, false.
    * @param isNamed      if the user finish input name, it will be true. Otherwise, false.
    * @param map          the map that store the symbol and shares for portfolio.

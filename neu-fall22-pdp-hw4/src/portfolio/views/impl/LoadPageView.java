@@ -17,7 +17,7 @@ public class LoadPageView extends ViewAbs {
    * This is a constructor that construct a determine page view.
    * The error messages is "Error! Cannot load file. Please try again.".
    *
-   * @param printStream
+   * @param printStream a PrintStream object to output what will show on view
    * @param portfolio the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
