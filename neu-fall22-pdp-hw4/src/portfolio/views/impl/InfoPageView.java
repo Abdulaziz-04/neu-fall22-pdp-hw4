@@ -43,9 +43,11 @@ public class InfoPageView extends ViewAbs {
   public void render() {
     clearConsole();
     if (errorMessage != null) {
-      printStream.println(errorMessage);
+      printStream.println("!Error message: " + errorMessage);
     }
+    printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
+    printStream.println("*********************************************************");
     if (portfolioWithPrice != null) {
       printStream.println("Portfolio value as of: " + portfolioWithPrice.getDate());
       printStream.println(
@@ -58,8 +60,8 @@ public class InfoPageView extends ViewAbs {
       }
       printStream.println("Total value: " + portfolioWithPrice.getTotalValue());
     } else {
-      printStream.println("Please enter the date that you want to determine." +
-          "The format is year-month-day, ex: 2022-10-08");
+      printStream.println("Please enter the date that you want to determine. " +
+          "The format is year-month-day, ex: 2022-10-11");
     }
   }
 

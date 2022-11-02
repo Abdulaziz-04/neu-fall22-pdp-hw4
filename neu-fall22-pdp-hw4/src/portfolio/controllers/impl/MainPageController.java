@@ -40,7 +40,7 @@ public class MainPageController implements PageController {
 
   @Override
   public PageController handleInput(String input) {
-
+    errorMessage = null;
     switch (input) {
       case "1":
         return controllerFactory.newCreatePageController();

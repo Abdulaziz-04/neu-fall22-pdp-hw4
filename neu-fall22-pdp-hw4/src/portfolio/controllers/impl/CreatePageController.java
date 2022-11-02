@@ -32,7 +32,7 @@ public class CreatePageController implements PageController {
    * This is a constructor to construct a create page controller.
    *
    * @param stockQueryService the stock price data that we get from the external source
-   * @param portfolioService  the portfolio service
+   * @param portfolioService the portfolio service
    * @param controllerFactory the controller factory for this controller
    */
   public CreatePageController(StockQueryService stockQueryService,
@@ -52,7 +52,7 @@ public class CreatePageController implements PageController {
   @Override
   public PageController handleInput(String input) {
     input = input.trim();
-    errorMessage = "";
+    errorMessage = null;
     if (input.equals("back")) {
       return pageControllerFactory.newMainPageController();
     }
@@ -105,6 +105,7 @@ public class CreatePageController implements PageController {
       //save to file
       if (input.equals("end") || input.equals("yes") || input.equals("no")) {
         errorMessage = "The name cannot be end, back, no and yes.";
+        return this;
       }
       try {
         portfolioService.saveToFile(portfolio, input + ".txt");

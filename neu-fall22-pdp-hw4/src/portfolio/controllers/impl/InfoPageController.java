@@ -53,6 +53,7 @@ public class InfoPageController implements PageController {
 
   @Override
   public PageController handleInput(String input) {
+    errorMessage = null;
     if (input.equals("back")) {
       return controllerFactory.newMainPageController();
     }

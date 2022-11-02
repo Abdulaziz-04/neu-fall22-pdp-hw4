@@ -57,7 +57,7 @@ public class CreatePageView extends ViewAbs {
   public void render() /*throws IOException*/ {
     clearConsole();
     if (errorMessage != null){
-      printStream.println(errorMessage);
+      printStream.println("!Error message: " + errorMessage);
     }
     if(!isEnd) {
       printStream.println("*********************************************************");

@@ -43,11 +43,13 @@ public class LoadPageView extends ViewAbs {
   public void render() {
     clearConsole();
     if (errorMessage != null) {
-      printStream.println(errorMessage);
+      printStream.println("!Error message: " + errorMessage);
     }
+    printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
+    printStream.println("*********************************************************");
     if(portfolio == null) {
-      printStream.println("--Please enter the name of the portfolio that you want to examine." +
+      printStream.println("--Please enter the name of the portfolio that you want to examine. " +
               "The name cannot be end,yes,no,back.--");
     } else {
       for (PortfolioEntry entry : portfolio.getStocks()) {
