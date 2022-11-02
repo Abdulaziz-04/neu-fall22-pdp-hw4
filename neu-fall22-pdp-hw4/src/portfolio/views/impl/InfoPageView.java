@@ -16,7 +16,7 @@ public class InfoPageView extends ViewAbs {
    * This is a constructor that construct a determine page view. The error messages is "Error!
    * Please input the correct date.".
    *
-   * @param printStream
+   * @param printStream a PrintStream object to output what will show on view
    * @param portfolioWithPrice the object of PortfolioWithValue
    * @param errorMessage       the error message we want to show to the user
    */

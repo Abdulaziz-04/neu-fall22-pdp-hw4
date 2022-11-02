@@ -15,7 +15,7 @@ public class MainPageView extends ViewAbs {
    * It will show the error message for main menu. The error message will be "Please enter the
    * correct number!"
    *
-   * @param printStream
+   * @param printStream a PrintStream object to output what will show on view
    * @param errorMessage "Please enter the correct number!"
    */
   public MainPageView(PrintStream printStream, String errorMessage, boolean isInitFailed) {
