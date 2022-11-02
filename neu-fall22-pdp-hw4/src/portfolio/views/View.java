@@ -1,14 +1,12 @@
 package portfolio.views;
 
-import java.io.IOException;
-
 /**
- * This is an interface that show the different menu pages.
+ * This is an interface for storing user interface for each page.
  */
 public interface View {
 
   /**
-   * This is the function to render different pages.
+   * Render this view to user.
    */
-  void render() /*throws IOException*/;
+  void render();
 }

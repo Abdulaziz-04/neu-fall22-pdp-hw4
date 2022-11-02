@@ -1,7 +1,8 @@
 package portfolio.entities;
 
 /**
- * This is a class represent a stock list entry.
+ * This is a class representing a stock list entry. It contains stock symbol and basic information
+ * of each stock.
  */
 public class StockListEntry {
 
@@ -14,16 +15,16 @@ public class StockListEntry {
   private final String status;
 
   /**
-   * This is a constructor that to construct a stock list entry, which contains symbol,name,
-   * exchange,assetType,ipoDate,delistingDate,status
+   * This is a constructor that to construct a stock list entry, which contains symbol, name,
+   * exchange, assetType, ipoDate, delistingDate and status.
    *
-   * @param symbol the symbol of a stock
-   * @param name the name of a stock
-   * @param exchange the exchange of a stock
-   * @param assetType the assertType of a stock
-   * @param ipoDate the ipo date of a stock
+   * @param symbol        the symbol of a stock
+   * @param name          the name of a stock
+   * @param exchange      the exchange of a stock
+   * @param assetType     the assertType of a stock
+   * @param ipoDate       the ipo date of a stock
    * @param delistingDate the delisting date
-   * @param status the status of this entry
+   * @param status        the status of this entry
    */
   public StockListEntry(String symbol, String name, String exchange, String assetType,
       String ipoDate, String delistingDate, String status) {
@@ -45,51 +46,4 @@ public class StockListEntry {
     return symbol;
   }
 
-  /**
-   *
-   * @return
-   */
-  public String getAssetType() {
-    return assetType;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public String getDelistingDate() {
-    return delistingDate;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public String getExchange() {
-    return exchange;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public String getIpoDate() {
-    return ipoDate;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public String getStatus() {
-    return status;
-  }
 }

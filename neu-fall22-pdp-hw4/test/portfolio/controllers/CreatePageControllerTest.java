@@ -27,38 +27,38 @@ import portfolio.views.ViewFactory;
  * This is a test class to test CreatePageController class.
  */
 public class CreatePageControllerTest {
-
-  private final PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());
-  private ViewFactory viewFactory;
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
-  private StockQueryService stockQueryService;
-  private PageControllerFactory pageControllerFactory;
   private final Map<String, Integer> map = new HashMap<>();
-  private Portfolio portfolio;
 
   private final double EPSILON = 0.000000001;
+
   @Before
   public void setUp() {
+    PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());
     argumentCaptor = new ArgumentCaptor<>();
-    viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService,
+    ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
+    StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
+    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
+        stockQueryService,
         viewFactory);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    portfolio = new Portfolio(map);
+    Portfolio portfolio = new Portfolio(map);
 
-    pageController = new CreatePageController(stockQueryService, portfolioService, pageControllerFactory,
+    pageController = new CreatePageController(stockQueryService, portfolioService,
+        pageControllerFactory,
         viewFactory);
   }
+
   @Test
-  public void getView_init(){
+  public void getView_init() {
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertTrue(stockList.isEmpty());
     assertNull(argumentCaptor.getArguments().get(3));
   }
@@ -70,102 +70,109 @@ public class CreatePageControllerTest {
   }
 
   @Test
-  public void handleInput_enterStock(){
+  public void handleInput_enterStock() {
     PageController nextPage = pageController.handleInput("AAPL,100");
     assertEquals(pageController, nextPage);
     nextPage = pageController.handleInput("AAA,100");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertEquals(2, stockList.size());
     assertNull(argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_negativeShares(){
+  public void handleInput_enterStock_negativeShares() {
     PageController nextPage = pageController.handleInput("AAPL,-100");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertTrue(stockList.isEmpty());
     assertEquals("The shares cannot be negative and 0.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_stockNotFound(){
+  public void handleInput_enterStock_stockNotFound() {
     PageController nextPage = pageController.handleInput("BKNG,100");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertTrue(stockList.isEmpty());
     assertEquals("Symbol not found.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_shareNotNumber(){
+  public void handleInput_enterStock_shareNotNumber() {
     PageController nextPage = pageController.handleInput("AAPL,abc");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertTrue(stockList.isEmpty());
     assertEquals("The share is not a number.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_wrongInput1(){
+  public void handleInput_enterStock_wrongInput1() {
     PageController nextPage = pageController.handleInput("abc");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertTrue(stockList.isEmpty());
     assertEquals("Error Format!", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_wrongInput2(){
+  public void handleInput_enterStock_wrongInput2() {
     PageController nextPage = pageController.handleInput("");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertTrue(stockList.isEmpty());
     assertEquals("Error Format!", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_end(){
+  public void handleInput_enterStock_end() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");
     PageController nextPage = pageController.handleInput("end");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertTrue((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertTrue((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertEquals(2, stockList.size());
     assertNull(argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_end_name(){
+  public void handleInput_enterStock_end_name() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");
     pageController.handleInput("end");
@@ -173,15 +180,16 @@ public class CreatePageControllerTest {
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertTrue((boolean)argumentCaptor.getArguments().get(0));
-    assertTrue((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertTrue((boolean) argumentCaptor.getArguments().get(0));
+    assertTrue((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertEquals(2, stockList.size());
     assertNull(argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_end_fileExists(){
+  public void handleInput_enterStock_end_fileExists() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");
     pageController.handleInput("end");
@@ -189,15 +197,16 @@ public class CreatePageControllerTest {
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertTrue((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertTrue((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertEquals(2, stockList.size());
     assertEquals("File already exists.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_end_errorSaveFile(){
+  public void handleInput_enterStock_end_errorSaveFile() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");
     pageController.handleInput("end");
@@ -205,54 +214,56 @@ public class CreatePageControllerTest {
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertTrue((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertTrue((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertEquals(2, stockList.size());
     assertNull(argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_end_listEmpty(){
+  public void handleInput_enterStock_end_listEmpty() {
     PageController nextPage = pageController.handleInput("end");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
     assertEquals("No stock entered. Please input stock.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_NoStock(){
+  public void handleInput_enterStock_NoStock() {
     PageController nextPage = pageController.handleInput("AAPL,100");
     assertEquals(pageController, nextPage);
     nextPage = pageController.handleInput("AAA,100");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertFalse((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments().get(2);
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
+    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
+        .get(2);
     assertEquals(2, stockList.size());
     assertNull(argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_useKeyword(){
+  public void handleInput_enterStock_useKeyword() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("end");
     PageController nextPage = pageController.handleInput("yes");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertTrue((boolean)argumentCaptor.getArguments().get(0));
-    assertFalse((boolean)argumentCaptor.getArguments().get(1));
+    assertTrue((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(1));
     assertEquals("The name cannot be end, back, no and yes.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
-  public void handleInput_enterStock_success(){
+  public void handleInput_enterStock_success() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("end");
     pageController.handleInput("a");
@@ -261,7 +272,7 @@ public class CreatePageControllerTest {
   }
 
   @Test
-  public void handleInput_enterStock_end_no(){
+  public void handleInput_enterStock_end_no() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("end");
     pageController.handleInput("a");

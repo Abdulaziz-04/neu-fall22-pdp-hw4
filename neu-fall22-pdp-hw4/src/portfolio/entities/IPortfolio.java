@@ -31,6 +31,6 @@ public interface IPortfolio {
    * @param prices the price for every stock in this portfolio
    * @return PortfolioWithValue object that has the total value of this portfolio
    */
-  PortfolioWithValue getPortfolioWithPrice(LocalDate date, Map<String, StockPrice> prices);
+  PortfolioWithValue getPortfolioWithValue(LocalDate date, Map<String, StockPrice> prices);
 
 }

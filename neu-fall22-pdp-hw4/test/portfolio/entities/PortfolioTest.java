@@ -21,7 +21,7 @@ public class PortfolioTest {
   private IPortfolio portfolio;
 
   @Before
-  public void setUp(){
+  public void setUp() {
     stocks.put("AAA", 100);
     stocks.put("AAPL", 1000);
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
@@ -48,7 +48,7 @@ public class PortfolioTest {
   @Test
   public void getPortfolioWithPrice() {
     LocalDate date = LocalDate.parse("2022-10-10");
-    PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithPrice(date, prices);
+    PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
     assertEquals(date, portfolioWithValue.getDate());
     assertEquals(44400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
@@ -63,7 +63,7 @@ public class PortfolioTest {
     prices.put("ABC", null);
     portfolio = new Portfolio(stocks);
     LocalDate date = LocalDate.parse("2022-10-10");
-    PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithPrice(date, prices);
+    PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 
     List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
     assertNull(list.get(2).getValue());

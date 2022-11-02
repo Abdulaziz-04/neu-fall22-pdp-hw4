@@ -26,14 +26,13 @@ import portfolio.views.ViewFactory;
 public class LoadPageControllerTest {
 
   private final PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());
-  private ViewFactory viewFactory;
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
 
   @Before
   public void setUp() {
     argumentCaptor = new ArgumentCaptor<>();
-    viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
+    ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
         null, viewFactory);
     pageController = new LoadPageController(portfolioService, pageControllerFactory, viewFactory);
@@ -41,7 +40,7 @@ public class LoadPageControllerTest {
 
 
   @Test
-  public void getView_init(){
+  public void getView_init() {
     pageController.getView();
 
     assertNull(argumentCaptor.getArguments().get(0));
@@ -49,7 +48,7 @@ public class LoadPageControllerTest {
   }
 
   @Test
-  public void handelInput_portfolioFileExists(){
+  public void handelInput_portfolioFileExists() {
     PageController nextPage = pageController.handleInput("pass");
     assertEquals(pageController, nextPage);
 
@@ -70,16 +69,17 @@ public class LoadPageControllerTest {
   }
 
   @Test
-  public void handelInput_portfolioFileParseFail(){
+  public void handelInput_portfolioFileParseFail() {
     PageController nextPage = pageController.handleInput("parsefail");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertEquals("Cannot read portfolio. It may have a wrong format.", argumentCaptor.getArguments().get(1));
+    assertEquals("Cannot read portfolio. It may have a wrong format.",
+        argumentCaptor.getArguments().get(1));
   }
 
   @Test
-  public void handelInput_portfolioFileNotFound(){
+  public void handelInput_portfolioFileNotFound() {
     PageController nextPage = pageController.handleInput("abc");
     assertEquals(pageController, nextPage);
 
@@ -88,7 +88,7 @@ public class LoadPageControllerTest {
   }
 
   @Test
-  public void handelInput_portfolioFileExists_confirm(){
+  public void handelInput_portfolioFileExists_confirm() {
     PageController nextPage = pageController.handleInput("pass");
     assertEquals(pageController, nextPage);
 
@@ -97,7 +97,7 @@ public class LoadPageControllerTest {
   }
 
   @Test
-  public void handelInput_portfolioFileExists_notConfirm(){
+  public void handelInput_portfolioFileExists_notConfirm() {
     PageController nextPage = pageController.handleInput("pass");
     assertEquals(pageController, nextPage);
 
@@ -106,7 +106,7 @@ public class LoadPageControllerTest {
   }
 
   @Test
-  public void handelInput_portfolioFileExists_wrongInput(){
+  public void handelInput_portfolioFileExists_wrongInput() {
     PageController nextPage = pageController.handleInput("pass");
     assertEquals(pageController, nextPage);
 

@@ -1,12 +1,12 @@
 package portfolio;
 
 /**
- * EventLoop is an interface to continue running the program.
+ * An interface to run and dispatch job to different controller.
  */
 public interface EventLoop {
 
   /**
-   * Receive action from the user, render the page and then redirect user to the next page.
+   * execute program loop
    */
   void run();
 }

@@ -18,7 +18,7 @@ import portfolio.views.impl.DefaultSysOutViewFactory;
 public class Main {
 
   /**
-   * Main fuction to run the stock program.
+   * Main fucntion to run the stock program.
    *
    * @param args arguments
    * @throws Exception error
@@ -31,7 +31,8 @@ public class Main {
     StockQueryService stockQueryService = new StockQueryServiceImpl(stockPriceApi);
     PortfolioService portfolioService = new PortfolioServiceImpl(ioService);
     ViewFactory viewFactory = new DefaultSysOutViewFactory();
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService, viewFactory);
+    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
+        stockQueryService, viewFactory);
 
     // Run
     EventLoop eventLoop = new EventLoopImpl(pageControllerFactory);

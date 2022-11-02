@@ -13,22 +13,23 @@ public class DefaultSysOutViewFactory implements ViewFactory {
 
   @Override
   public View newInfoPageView(PortfolioWithValue portfolioWithPrice,
-      String errorMessage){
+      String errorMessage) {
     return new InfoPageView(portfolioWithPrice, errorMessage);
   }
 
   @Override
-  public View newCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map, String errorMessage){
+  public View newCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
+      String errorMessage) {
     return new CreatePageView(isEnd, isNamed, map, errorMessage);
   }
 
   @Override
-  public View newLoadPageView(Portfolio portfolio, String errorMessage){
+  public View newLoadPageView(Portfolio portfolio, String errorMessage) {
     return new LoadPageView(portfolio, errorMessage);
   }
 
   @Override
-  public View newMainPageView(String errorMessage, boolean isInitFailed){
+  public View newMainPageView(String errorMessage, boolean isInitFailed) {
     return new MainPageView(errorMessage, isInitFailed);
   }
 

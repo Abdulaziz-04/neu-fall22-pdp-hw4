@@ -12,10 +12,9 @@ public class MainPageView extends ViewAbs {
   private final boolean isInitFailed;
 
   /**
-   * It will show the error message for main menu. The error message will be "Please enter the
-   * correct number!"
+   * It will show the error message for main menu.
    *
-   * @param printStream a PrintStream object to output what will show on view
+   * @param printStream  a PrintStream object to where the output will be directed to
    * @param errorMessage "Please enter the correct number!"
    */
   public MainPageView(PrintStream printStream, String errorMessage, boolean isInitFailed) {
@@ -25,8 +24,7 @@ public class MainPageView extends ViewAbs {
   }
 
   /**
-   * It will show the error message for main menu. The error message will be "Please enter the
-   * correct number!"
+   * It will show the error message for main menu. The output stream is System.out.
    *
    * @param errorMessage "Please enter the correct number!"
    */

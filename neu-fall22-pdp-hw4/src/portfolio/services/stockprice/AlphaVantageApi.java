@@ -12,7 +12,7 @@ import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
 
 /**
- * Service for API, which will implement the stockPriceApi interface.
+ * Service for calling AlphaVantage API, which implements the stockPriceApi interface.
  */
 public class AlphaVantageApi implements StockPriceApi {
 

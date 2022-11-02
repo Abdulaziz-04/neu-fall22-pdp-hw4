@@ -1,12 +1,12 @@
 package portfolio.entities;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * This is a class that represent a portfolio with the value on a certain date. This class
- * contains the date, a list of stocks for the portfolio abd the total value of portfolio on
- * a certain date.
+ * This is a class that represent a portfolio with the value on a certain date. This class contains
+ * the date, a list of stocks for the portfolio abd the total value of portfolio on a certain date.
  */
 public class PortfolioWithValue {
 
@@ -16,14 +16,15 @@ public class PortfolioWithValue {
   private final double totalValue;
 
   /**
-   * This is a constructor to construct a PortfolioWithValue object. It will have the total
-   * price of this portfolio on that date.
+   * This is a constructor to construct a PortfolioWithValue object. It will have the total price of
+   * this portfolio on that date.
    *
-   * @param date the date for check
-   * @param stocks the portfolio stock list
+   * @param date       the date for check
+   * @param stocks     the portfolio stock list
    * @param totalValue the total value of the portfolio
    */
-  public PortfolioWithValue(LocalDate date, List<PortfolioEntryWithValue> stocks, double totalValue) {
+  public PortfolioWithValue(LocalDate date, List<PortfolioEntryWithValue> stocks,
+      double totalValue) {
     this.date = date;
     this.stocks = stocks;
     this.totalValue = totalValue;
@@ -39,12 +40,12 @@ public class PortfolioWithValue {
   }
 
   /**
-   * Return the portfolio list, which contains the value of each stock.
+   * Return the portfolio entry list, which each entry contains the value of its stock.
    *
-   * @return the portfolio list, which contains the value of each stock
+   * @return PortfolioEntryWithValue object
    */
   public List<PortfolioEntryWithValue> getStocks() {
-    return stocks;
+    return Collections.unmodifiableList(stocks);
   }
 
   /**

@@ -11,23 +11,20 @@ import org.junit.Test;
  */
 public class PortfolioEntryWithValueTest {
 
-  private PortfolioEntry portfolioEntry;
-  private double price;
-
   private PortfolioEntryWithValue portfolioEntryWithValue;
 
   @Before
   public void setup() {
-    portfolioEntry = new PortfolioEntry("AAA",100);
-    price = 100.2;
-    portfolioEntryWithValue = new PortfolioEntryWithValue(portfolioEntry,price);
+    PortfolioEntry portfolioEntry = new PortfolioEntry("AAA", 100);
+    double price = 100.2;
+    portfolioEntryWithValue = new PortfolioEntryWithValue(portfolioEntry, price);
   }
 
   @Test
   public void test() {
-    assertEquals("AAA",portfolioEntryWithValue.getSymbol());
-    assertEquals(100,portfolioEntryWithValue.getAmount());
-    assertEquals(Double.valueOf(100.2),portfolioEntryWithValue.getValue());
+    assertEquals("AAA", portfolioEntryWithValue.getSymbol());
+    assertEquals(100, portfolioEntryWithValue.getAmount());
+    assertEquals(Double.valueOf(100.2), portfolioEntryWithValue.getValue());
   }
 
 }

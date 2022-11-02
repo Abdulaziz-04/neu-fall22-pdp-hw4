@@ -9,6 +9,7 @@ import portfolio.entities.StockPrice;
  * This is an API interface, which will get the stocks data from internet.
  */
 public interface StockPriceApi {
+
   /**
    * This is the method to get a stock price, which need to know the symbol of this stock.
    *

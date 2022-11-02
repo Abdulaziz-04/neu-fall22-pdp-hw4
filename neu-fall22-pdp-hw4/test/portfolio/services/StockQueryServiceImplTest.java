@@ -21,6 +21,7 @@ import portfolio.services.stockprice.StockQueryServiceImpl;
  * This is a test class to test StockQueryServiceImpl class.
  */
 public class StockQueryServiceImplTest {
+
   private StockQueryService stockQueryService;
   private StockPriceApi stockPriceApi;
   private final Map<String, Integer> map = new HashMap<>();
@@ -32,6 +33,7 @@ public class StockQueryServiceImplTest {
     map.put("AAPL", 100);
     map.put("AAA", 10000);
   }
+
   @Test
   public void getStockPrice() throws Exception {
     stockPriceApi = new StockApiMock(false);
@@ -91,8 +93,7 @@ public class StockQueryServiceImplTest {
     try {
       stockQueryService.getStockPrice(LocalDate.parse("2022-10-12"), list);
       fail("should fail");
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Date not found.", e.getMessage());
     }
   }
@@ -114,8 +115,7 @@ public class StockQueryServiceImplTest {
     try {
       stockQueryService.getStockList();
       fail("should fail");
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Something wrong.", e.getMessage());
     }
   }

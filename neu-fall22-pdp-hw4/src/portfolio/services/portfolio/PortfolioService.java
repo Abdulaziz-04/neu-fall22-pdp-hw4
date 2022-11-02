@@ -13,6 +13,7 @@ public interface PortfolioService {
    *
    * @param fileName filename to load the portfolio
    * @return Portfolio object
+   * @throws IOException if file cannot be parsed
    */
   Portfolio getPortfolio(String fileName) throws IOException;
 
@@ -22,6 +23,7 @@ public interface PortfolioService {
    * @param portfolio Portfolio object
    * @param fileName save location
    * @return boolean true if successfully saved otherwise false
+   * @throws IllegalArgumentException if filepath is not valid
    */
   boolean saveToFile(Portfolio portfolio, String fileName) throws IllegalArgumentException;
 

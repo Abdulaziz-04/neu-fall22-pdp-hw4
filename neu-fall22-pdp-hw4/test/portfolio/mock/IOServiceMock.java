@@ -3,14 +3,18 @@ package portfolio.mock;
 import java.io.IOException;
 import portfolio.services.datastore.IOService;
 
+/**
+ * Mock class for IOService interface.
+ */
 public class IOServiceMock implements IOService {
 
   private final ArgumentCaptor<String> argumentCaptor;
-  public IOServiceMock(ArgumentCaptor<String> argumentCaptor){
+
+  public IOServiceMock(ArgumentCaptor<String> argumentCaptor) {
     this.argumentCaptor = argumentCaptor;
   }
 
-  public IOServiceMock(){
+  public IOServiceMock() {
     this.argumentCaptor = new ArgumentCaptor<>();
   }
 

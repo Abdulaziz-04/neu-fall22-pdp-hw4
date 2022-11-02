@@ -22,6 +22,9 @@ public class EventLoopImpl implements EventLoop {
     this.pageController = pageControllerFactory.newMainPageController();
   }
 
+  /**
+   * Receive action from the user, render the page and then redirect user to the next page.
+   */
   @Override
   public void run() {
     while (true) {

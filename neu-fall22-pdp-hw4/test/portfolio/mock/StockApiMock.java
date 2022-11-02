@@ -8,6 +8,9 @@ import portfolio.entities.StockListEntry;
 import portfolio.entities.StockPrice;
 import portfolio.services.stockprice.StockPriceApi;
 
+/**
+ * Mock class for StockPriceApi interface.
+ */
 public class StockApiMock implements StockPriceApi {
 
   private final Map<String, StockPrice> map = new HashMap<>();

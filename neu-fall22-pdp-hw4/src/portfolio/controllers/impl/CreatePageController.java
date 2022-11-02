@@ -15,6 +15,10 @@ import portfolio.views.View;
 
 /**
  * This is a page controller for the create page, which is implement the page controller.
+ * CreatePageController handles input from user and is responsible for checking valid stock input,
+ * creating portfolio, saving portfolio and generate View. The controller can hold states while user
+ * creating their portfolio. The states are stock selection, naming portfolio and portfolio
+ * confirmation.
  */
 public class CreatePageController implements PageController {
 
@@ -29,11 +33,12 @@ public class CreatePageController implements PageController {
   private final Map<String, Integer> stockList = new HashMap<>();
 
   /**
-   * This is a constructor to construct a create page controller.
+   * This is a constructor to construct a CreatePageController.
    *
    * @param stockQueryService the stock price data that we get from the external source
-   * @param portfolioService the portfolio service
-   * @param controllerFactory the controller factory for this controller
+   * @param portfolioService  the portfolio service
+   * @param controllerFactory PageControllerFactory for creating PageController
+   * @param viewFactory ViewFactor for creating a view
    */
   public CreatePageController(StockQueryService stockQueryService,
       PortfolioService portfolioService, PageControllerFactory controllerFactory,
@@ -49,6 +54,15 @@ public class CreatePageController implements PageController {
     return viewFactory.newCreatePageView(isEnd, isNamed, stockList, errorMessage);
   }
 
+  /**
+   * Handle user input for creating portfolio. User can select stock symbol and number of shares,
+   * after type 'end', user can input the desire portfolio name. Portfolio name cannot be the same
+   * as an existing file in the folder and some keywords such as 'end', 'yes' and 'no'. The method
+   * return the next page controller that user should be navigated to.
+   *
+   * @param input user input as a string
+   * @return PageController as a next page to be redirected
+   */
   @Override
   public PageController handleInput(String input) {
     input = input.trim();
@@ -96,7 +110,7 @@ public class CreatePageController implements PageController {
         errorMessage = "error!";
         return this;
       }
-    } else if(input.equals("end") && stockList.size() == 0){
+    } else if (input.equals("end") && stockList.size() == 0) {
       errorMessage = "No stock entered. Please input stock.";
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {

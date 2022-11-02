@@ -11,15 +11,16 @@ import org.junit.Test;
 public class PortfolioEntryTest {
 
   private PortfolioEntry portfolioEntry;
+
   @Before
   public void setup() {
-    portfolioEntry = new PortfolioEntry("AAA",100);
+    portfolioEntry = new PortfolioEntry("AAA", 100);
   }
 
   @Test
   public void test() {
-    assertEquals("AAA",portfolioEntry.getSymbol());
-    assertEquals(100,portfolioEntry.getAmount());
+    assertEquals("AAA", portfolioEntry.getSymbol());
+    assertEquals(100, portfolioEntry.getAmount());
   }
 
 }

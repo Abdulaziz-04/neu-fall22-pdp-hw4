@@ -7,7 +7,9 @@ import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
 /**
- * This is a page controller for the main menu page, which is implement the page controller.
+ * This is a controller for handling the first page. It implements PageController.
+ * MainPageController handles input from user and is responsible for redirecting user to others
+ * PageController.
  */
 public class MainPageController implements PageController {
 
@@ -19,9 +21,11 @@ public class MainPageController implements PageController {
   /**
    * This is a constructor that construct a main menu page controller.
    *
-   * @param controllerFactory the controller factory that we will use
+   * @param controllerFactory PageControllerFactory for creating PageController
+   * @param viewFactory       ViewFactor for creating a view
    */
-  public MainPageController(StockQueryService stockQueryService, PageControllerFactory controllerFactory, ViewFactory viewFactory) {
+  public MainPageController(StockQueryService stockQueryService,
+      PageControllerFactory controllerFactory, ViewFactory viewFactory) {
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
     try {

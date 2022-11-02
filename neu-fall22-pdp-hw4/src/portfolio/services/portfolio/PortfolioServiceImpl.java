@@ -9,18 +9,17 @@ import portfolio.entities.PortfolioEntry;
 import portfolio.services.datastore.IOService;
 
 /**
- * This is a class that represent a portfolio service, which creating and retrieving
- * portfolio.
+ * This is a class that represent a portfolio service, which creating and retrieving portfolio.
  */
 public class PortfolioServiceImpl implements PortfolioService {
 
   private final IOService ioService;
 
   /**
-   * This is a constructor that to construct a portfolio service object. It will initialize
-   * io service for portfolio service.
+   * This is a constructor that to construct a portfolio service object. It will initialize io
+   * service for portfolio service.
    *
-   * @param ioService the service to read or write string to the file
+   * @param ioService the service to read or write string to the external storage
    */
   public PortfolioServiceImpl(IOService ioService) {
     this.ioService = ioService;
@@ -31,8 +30,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     String str = ioService.read(fileName);
     try {
       return parse(str);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       throw new IOException("Cannot read portfolio. It may have a wrong format.");
     }
   }

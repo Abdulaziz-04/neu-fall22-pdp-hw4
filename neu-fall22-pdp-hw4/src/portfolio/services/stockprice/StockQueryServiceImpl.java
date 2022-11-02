@@ -10,8 +10,8 @@ import portfolio.services.cache.Cache;
 import portfolio.services.cache.SimpleCache;
 
 /**
- * This is a class that represent the stock query service, which implement StockQueryService
- * interface.
+ * StockQueryServiceImpl implement StockQueryService interface. The class utilizes SimpleCache to
+ * cache the data that has been retrieved from StockPriceApi.
  */
 public class StockQueryServiceImpl implements StockQueryService {
 
@@ -23,7 +23,7 @@ public class StockQueryServiceImpl implements StockQueryService {
    * This is a constructor to construct the StockQueryServiceImpl object, which contains the
    * StockPriceApi.
    *
-   * @param api the api
+   * @param api the StockPriceApi object
    */
   public StockQueryServiceImpl(StockPriceApi api) {
     this.api = api;
@@ -35,10 +35,11 @@ public class StockQueryServiceImpl implements StockQueryService {
    * @param symbol the symbol of a stock that we want to find
    * @return if it is in the list, true. Otherwise, false.
    */
-  private boolean isInList(String symbol){
-    for (var entry: getStockList()){
-      if (symbol.equals(entry.getSymbol()))
+  private boolean isInList(String symbol) {
+    for (var entry : getStockList()) {
+      if (symbol.equals(entry.getSymbol())) {
         return true;
+      }
     }
     return false;
   }

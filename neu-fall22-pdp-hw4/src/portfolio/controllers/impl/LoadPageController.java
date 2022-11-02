@@ -8,7 +8,9 @@ import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
 /**
- * This is a page controller for the examine page, which is implement the page controller.
+ * This is a controller for the retrieving portfolio. It implements PageController.
+ * LoadPageController handles input from user and is responsible for retrieving portfolio and
+ * creating a view to show portfolio content.
  */
 public class LoadPageController implements PageController {
 
@@ -19,23 +21,32 @@ public class LoadPageController implements PageController {
   private Portfolio portfolio;
 
   /**
-   * This is a constructor that construct a page controller,which is examining the composition
+   * This is a constructor that construct a LoadPageController, which is examining the composition
    * of a portfolio.
    *
-   * @param portfolioService the service for portfolio
-   * @param controllerFactory the controller factory that we will use
+   * @param portfolioService  the service for portfolio
+   * @param controllerFactory PageControllerFactory for creating PageController
+   * @param viewFactory       ViewFactor for creating a view
    */
-  public LoadPageController(PortfolioService portfolioService, PageControllerFactory controllerFactory, ViewFactory viewFactory){
+  public LoadPageController(PortfolioService portfolioService,
+      PageControllerFactory controllerFactory, ViewFactory viewFactory) {
     this.portfolioService = portfolioService;
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
   }
 
   @Override
-  public View getView(){
+  public View getView() {
     return viewFactory.newLoadPageView(portfolio, errorMessage);
   }
 
+  /**
+   * Handle user input for loading portfolio. User can enter portfolio name. The method return the
+   * next page controller that user should be navigated to.
+   *
+   * @param input user input as a string
+   * @return PageController as a next page to be redirected
+   */
   @Override
   public PageController handleInput(String input) {
     input = input.trim();
@@ -46,7 +57,7 @@ public class LoadPageController implements PageController {
     try {
       if (portfolio == null) {
         //get portfolio
-        portfolio = portfolioService.getPortfolio(input +".txt");
+        portfolio = portfolioService.getPortfolio(input + ".txt");
         return this;
       } else {
         if (input.equals("yes")) {

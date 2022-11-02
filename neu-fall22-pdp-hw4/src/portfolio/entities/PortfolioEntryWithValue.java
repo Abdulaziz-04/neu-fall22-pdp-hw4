@@ -1,10 +1,12 @@
 package portfolio.entities;
 
 /**
- * This is a class represent the entry to get the portfolio with value. This class contains
- * the symbol of a stock and the amount(shares) of a stock and the value of this stock.
+ * This is a class represent an entry of the portfolio with current value on specific date. This
+ * class contains the symbol of a stock and the amount(shares) of a stock and the value of this
+ * stock.
  */
 public class PortfolioEntryWithValue {
+
   private final String symbol;
   private final int amount;
   private final Double value;
@@ -12,10 +14,10 @@ public class PortfolioEntryWithValue {
   /**
    * This is a constructor to construct a PortfolioEntryWithValue object.
    *
-   * @param portfolioEntry the entry for portfolio
-   * @param value the value of this stock
+   * @param portfolioEntry PortfolioEntry object containing symbol and shares
+   * @param value          the value of this stock
    */
-  public PortfolioEntryWithValue(PortfolioEntry portfolioEntry, Double value){
+  public PortfolioEntryWithValue(PortfolioEntry portfolioEntry, Double value) {
     this.value = value;
     this.symbol = portfolioEntry.getSymbol();
     this.amount = portfolioEntry.getAmount();

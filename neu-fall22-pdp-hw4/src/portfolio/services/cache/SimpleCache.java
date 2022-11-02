@@ -6,48 +6,28 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * This is a class that represent a simple cache.
+ * SimpleCache implements Cache. The cache compares last storing time of each entry. If the cache
+ * gets a query with the new time that is more than specified timeout duration. It will update the
+ * entry with new value retrieved from specified source.
  *
  * @param <T> a type
  */
 public class SimpleCache<T> implements Cache<T> {
 
-  /**
-   * This is the inner class for cache entry, which contains the local time and the data in
-   * this cache entry.
-   *
-   * @param <T> a type
-   */
   static class CacheEntry<T> {
+
     private final LocalTime time;
     private final T data;
 
-    /**
-     * This is a constructor to construct a cache entry, which contains the time and data
-     * stored in it.
-     *
-     * @param dateTime the time for date
-     * @param data the data is stored in it
-     */
-    CacheEntry( LocalTime dateTime, T data){
+    CacheEntry(LocalTime dateTime, T data) {
       this.time = dateTime;
       this.data = data;
     }
 
-    /**
-     * Return the time for this cache entry.
-     *
-     * @return the time for this cache entry
-     */
     LocalTime getTime() {
       return time;
     }
 
-    /**
-     * Return the data which is stored in this cache entry.
-     *
-     * @return the data which is stored in this cache entry
-     */
     T getData() {
       return data;
     }
@@ -57,22 +37,38 @@ public class SimpleCache<T> implements Cache<T> {
   private final Map<String, CacheEntry<T>> map;
 
   /**
-   * This is a constructor to construct a simple cache object, which contains the limited
-   * time and the map.
+   * This is a constructor to construct a simple cache object with the timeout duration.
    *
-   * @param timeout the limited time for get data
+   * @param timeout the duration for getting new data
    */
   public SimpleCache(int timeout) {
     this.timeout = timeout;
     this.map = new HashMap<>();
   }
 
+  /**
+   * Get value from cache. If there is a value for the key in the cache and within the timeout
+   * duration, the cache will return that value, otherwise it will create a new entry with a new
+   * value retrieved from Function func.
+   *
+   * @param key  key as a string
+   * @param func get function
+   * @return value as type T
+   */
   @Override
   public T get(String key, Function<String, T> func) {
     return get(key, func, LocalTime.now());
   }
 
-  @Override
+  /**
+   * Get value from cache by comparing with input time instead of using current time. If there is a
+   * value for the key in the cache and within the timeout, the cache will return that value,
+   * otherwise it will create a new entry with a new value retrieved from Function func.
+   *
+   * @param key  key as a string
+   * @param func get function
+   * @return value as type T
+   */
   public T get(String key, Function<String, T> func, LocalTime time) {
     CacheEntry<T> entry = map.getOrDefault(key, null);
 
