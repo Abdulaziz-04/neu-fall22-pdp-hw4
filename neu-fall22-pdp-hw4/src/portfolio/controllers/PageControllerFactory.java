@@ -65,7 +65,7 @@ public class PageControllerFactory {
    * @return a new page controller,which is to the main menu.
    */
   public PageController newMainPageController(){
-    return new MainPageController(this, viewFactory);
+    return new MainPageController(stockQueryService, this, viewFactory);
   }
 
 }

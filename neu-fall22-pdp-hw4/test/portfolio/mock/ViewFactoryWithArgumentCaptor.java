@@ -45,9 +45,10 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newMainPageView(String errorMessage){
+  public View newMainPageView(String errorMessage, boolean isInitFailed){
     argumentCaptor.addArgument(errorMessage);
-    return new MainPageView(errorMessage);
+    argumentCaptor.addArgument(isInitFailed);
+    return new MainPageView(errorMessage, isInitFailed);
   }
 
 }

@@ -47,8 +47,7 @@ public class Portfolio implements IPortfolio {
 
   @Override
   public List<String> getSymbols() {
-    var list = stocks.stream().map(x -> x.getSymbol()).collect(Collectors.toList());
-    return Collections.unmodifiableList(list);
+    return stocks.stream().map(PortfolioEntry::getSymbol).collect(Collectors.toUnmodifiableList());
   }
 
 

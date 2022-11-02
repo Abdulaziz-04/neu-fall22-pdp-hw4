@@ -23,7 +23,7 @@ public class MainPageViewTest {
 
   @Test
   public void testRender_NullErrorMessage() {
-    View view = new MainPageView(printStream, null);
+    View view = new MainPageView(printStream, null, false);
     view.render();
     assertEquals("********************************************" +
             "********************************************************\r\n" +
@@ -42,7 +42,7 @@ public class MainPageViewTest {
 
   @Test
   public void testRender_ErrorMessage() {
-    View view = new MainPageView(printStream, "Please enter the correct number!");
+    View view = new MainPageView(printStream, "Please enter the correct number!", false);
     view.render();
     assertEquals("!Error message: Please enter the correct number!\r\n"+
             "*******************************************************************************" +

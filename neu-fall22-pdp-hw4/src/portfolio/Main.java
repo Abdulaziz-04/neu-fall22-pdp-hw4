@@ -33,11 +33,8 @@ public class Main {
     ViewFactory viewFactory = new DefaultSysOutViewFactory();
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService, viewFactory);
 
-    // Init cache
-    stockQueryService.getStockList();
-
     // Run
-    EventLoop eventLoop = new EventLoopImpl(pageControllerFactory, viewFactory);
+    EventLoop eventLoop = new EventLoopImpl(pageControllerFactory);
     eventLoop.run();
   }
 

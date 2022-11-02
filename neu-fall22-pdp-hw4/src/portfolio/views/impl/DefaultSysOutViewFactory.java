@@ -5,10 +5,6 @@ import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
-import portfolio.views.impl.CreatePageView;
-import portfolio.views.impl.InfoPageView;
-import portfolio.views.impl.LoadPageView;
-import portfolio.views.impl.MainPageView;
 
 /**
  * This is a class that can generate different view, which implement the view factory.
@@ -32,8 +28,8 @@ public class DefaultSysOutViewFactory implements ViewFactory {
   }
 
   @Override
-  public View newMainPageView(String errorMessage){
-    return new MainPageView(errorMessage);
+  public View newMainPageView(String errorMessage, boolean isInitFailed){
+    return new MainPageView(errorMessage, isInitFailed);
   }
 
 }

@@ -8,5 +8,5 @@ public interface EventLoop {
   /**
    * Receive action from the user, render the page and then redirect user to the next page.
    */
-  void run() throws Exception;
+  void run();
 }

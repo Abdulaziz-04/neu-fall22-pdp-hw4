@@ -1,6 +1,7 @@
 package portfolio.controllers.impl;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.entities.Portfolio;
@@ -51,18 +52,19 @@ public class InfoPageController implements PageController {
   }
 
   @Override
-  public PageController handleCommand(String command) throws Exception {
+  public PageController handleInput(String input) {
     errorMessage = null;
-    if (command.equals("back")) {
+    if (input.equals("back")) {
       return controllerFactory.newMainPageController();
     }
     try {
-      LocalDate date = LocalDate.parse(command);
+      LocalDate date = LocalDate.parse(input);
       updatePortfolioWithValue(date);
-      return this;
-    } catch (Exception e){
+    } catch (DateTimeParseException e){
       errorMessage = "Error! Please input the correct date.";
-      return this;
+    } catch (Exception e) {
+      errorMessage = e.getMessage();
     }
+    return this;
   }
 }

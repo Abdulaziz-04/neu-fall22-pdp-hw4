@@ -9,32 +9,40 @@ import portfolio.views.ViewAbs;
 public class MainPageView extends ViewAbs {
 
   private final String errorMessage;
+  private final boolean isInitFailed;
 
   /**
-   * It will show the error message for main menu.
-   * The error message will be "Please enter the correct number!"
+   * It will show the error message for main menu. The error message will be "Please enter the
+   * correct number!"
    *
    * @param printStream
    * @param errorMessage "Please enter the correct number!"
    */
-  public MainPageView(PrintStream printStream, String errorMessage){
+  public MainPageView(PrintStream printStream, String errorMessage, boolean isInitFailed) {
     super(printStream);
     this.errorMessage = errorMessage;
+    this.isInitFailed = isInitFailed;
   }
 
   /**
-   * It will show the error message for main menu.
-   * The error message will be "Please enter the correct number!"
+   * It will show the error message for main menu. The error message will be "Please enter the
+   * correct number!"
    *
    * @param errorMessage "Please enter the correct number!"
    */
-  public MainPageView(String errorMessage){
+  public MainPageView(String errorMessage, boolean isInitFailed) {
     this.errorMessage = errorMessage;
+    this.isInitFailed = isInitFailed;
   }
 
   @Override
-  public void render(){
+  public void render() {
     clearConsole();
+    if (isInitFailed) {
+      printStream.println(
+          "Something wrong with external API, cannot initialize the application. Please try again in few minutes.");
+    }
+
     if (errorMessage != null) {
       printStream.println("!Error message: " + errorMessage);
     }
