@@ -32,11 +32,12 @@ public class CreatePageController implements PageController {
    * This is a constructor to construct a create page controller.
    *
    * @param stockQueryService the stock price data that we get from the external source
-   * @param portfolioService the portfolio service
+   * @param portfolioService  the portfolio service
    * @param controllerFactory the controller factory for this controller
    */
   public CreatePageController(StockQueryService stockQueryService,
-      PortfolioService portfolioService, PageControllerFactory controllerFactory, ViewFactory viewFactory) {
+      PortfolioService portfolioService, PageControllerFactory controllerFactory,
+      ViewFactory viewFactory) {
     this.stockQueryService = stockQueryService;
     this.portfolioService = portfolioService;
     this.pageControllerFactory = controllerFactory;
@@ -49,19 +50,26 @@ public class CreatePageController implements PageController {
   }
 
   @Override
-  public PageController handleCommand(String command) throws Exception {
-    command = command.trim();
+  public PageController handleInput(String input) {
+    input = input.trim();
     errorMessage = "";
-    if(command.equals("back")) {
+    if (input.equals("back")) {
       return pageControllerFactory.newMainPageController();
     }
-    if(!isEnd && !command.equals("end")) {
+    if (!isEnd && !input.equals("end")) {
       List<String> allStocks = new ArrayList<>();
-      for (StockListEntry entry : stockQueryService.getStockList()) {
-        allStocks.add(entry.getSymbol());
-      }
+
       try {
-        String[] cmd = command.split(",");
+        List<StockListEntry> stockList = stockQueryService.getStockList();
+        for (StockListEntry entry : stockList) {
+          allStocks.add(entry.getSymbol());
+        }
+      } catch (Exception e) {
+        errorMessage = "External API is not ready. Please try again in the next few minutes.";
+      }
+
+      try {
+        String[] cmd = input.split(",");
         String symbol = cmd[0];
         if (cmd.length != 2) {
           errorMessage = "Error Format!";
@@ -71,7 +79,7 @@ public class CreatePageController implements PageController {
         if (allStocks.contains(symbol)) {
           int amount = 0;
           try {
-             amount = Integer.parseInt(cmd[1]);
+            amount = Integer.parseInt(cmd[1]);
           } catch (Exception e) {
             errorMessage = "The share is not a number.";
             return this;
@@ -89,25 +97,24 @@ public class CreatePageController implements PageController {
         errorMessage = "error!";
         return this;
       }
-    } else if (command.equals("end") && !isEnd && !isNamed) {
-        portfolio = new Portfolio(stockList);
-        isEnd = true;
-        return this;
+    } else if (input.equals("end") && !isEnd && !isNamed) {
+      portfolio = new Portfolio(stockList);
+      isEnd = true;
+      return this;
     } else if (isEnd && !isNamed) {
       //save to file
-      if(command.equals("end") || command.equals("yes") || command.equals("no")) {
+      if (input.equals("end") || input.equals("yes") || input.equals("no")) {
         errorMessage = "The name cannot be end, back, no and yes.";
       }
       try {
-        portfolioService.saveToFile(portfolio, command + ".txt");
+        portfolioService.saveToFile(portfolio, input + ".txt");
         isNamed = true;
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         errorMessage = e.getMessage();
       }
       return this;
     } else {
-      if(command.equals("yes")) {
+      if (input.equals("yes")) {
         return pageControllerFactory.newInfoPageController(portfolio);
       } else {
         return pageControllerFactory.newMainPageController();

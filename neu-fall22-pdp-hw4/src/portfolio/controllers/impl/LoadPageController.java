@@ -37,18 +37,18 @@ public class LoadPageController implements PageController {
   }
 
   @Override
-  public PageController handleCommand(String command) throws Exception {
-    command = command.trim();
-    if (command.equals("back")) {
+  public PageController handleInput(String input) {
+    input = input.trim();
+    if (input.equals("back")) {
       return controllerFactory.newMainPageController();
     }
     try {
       if (portfolio == null) {
         //get portfolio
-        portfolio = portfolioService.getPortfolio(command+".txt");
+        portfolio = portfolioService.getPortfolio(input +".txt");
         return this;
       } else {
-        if (command.equals("yes")) {
+        if (input.equals("yes")) {
           return controllerFactory.newInfoPageController(portfolio);
         } else {
           return controllerFactory.newMainPageController();

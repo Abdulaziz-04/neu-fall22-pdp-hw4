@@ -46,5 +46,5 @@ public interface ViewFactory {
    * @param errorMessage the error message will show to the user
    * @return return a new view of main menu page
    */
-  View newMainPageView(String errorMessage);
+  View newMainPageView(String errorMessage, boolean isInitFailed);
 }

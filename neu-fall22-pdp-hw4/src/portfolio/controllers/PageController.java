@@ -8,18 +8,18 @@ import portfolio.views.View;
 public interface PageController {
 
   /**
-   * Handle user input command. Return Page enum as a next page to be directed. Return null if the page
+   * Handle user input. Return Page enum as a next page to be directed. Return null if the page
    * will not be changed after receiving the input.
    *
-   * @param command user input command as a string
+   * @param input user input as a string
    * @return next page to be redirected
    * @throws Exception some errors in different page
    */
-  public PageController handleCommand(String command) throws Exception;
+  PageController handleInput(String input) ;
 
   /**
    * Return the view that want to show.
    * @return the view that want to show.
    */
-  public View getView();
+  View getView();
 }

@@ -23,14 +23,14 @@ public class MainPageViewTest {
 
   @Test
   public void testRender_NullErrorMessage() {
-    View view = new MainPageView(printStream, null);
+    View view = new MainPageView(printStream, null, false);
     view.render();
     assertEquals("aaa", outputStreamCaptor.toString());
   }
 
   @Test
   public void testRender_ErrorMessage() {
-    View view = new MainPageView(printStream, "this is error message from test.");
+    View view = new MainPageView(printStream, "this is error message from test.", false);
     view.render();
     assertEquals("aaa", outputStreamCaptor.toString());
   }

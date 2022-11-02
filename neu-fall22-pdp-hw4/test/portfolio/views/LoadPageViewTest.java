@@ -1,9 +1,13 @@
 package portfolio.views;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
+import portfolio.views.impl.LoadPageView;
+import portfolio.views.impl.MainPageView;
 
 /**
  * This is a test class to test LoadPageView class.
