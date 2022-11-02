@@ -40,7 +40,8 @@ public class MainPageView extends ViewAbs {
     clearConsole();
     if (isInitFailed) {
       printStream.println(
-          "Something wrong with external API, cannot initialize the application. Please try again in few minutes.");
+          "Something wrong with external API, cannot initialize the application. " +
+                  "Please try again in few minutes.");
     }
 
     if (errorMessage != null) {

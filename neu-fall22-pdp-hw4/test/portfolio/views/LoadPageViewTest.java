@@ -48,12 +48,28 @@ public class LoadPageViewTest {
   }
 
   @Test
-  public void testRender_Error() {
+  public void testRender_Error1() {
     setUp();
     View view = new LoadPageView(printStream,null,
-            "Cannot find this portfolio.");
+            "Cannot read portfolio. It may have a wrong format.");
     view.render();
-    assertEquals("!Error message: Cannot find this portfolio.\r\n" +
+    assertEquals("!Error message: Cannot read portfolio. " +
+            "It may have a wrong format.\r\n" +
+            "*********************************************************\r\n" +
+            "!!! If you enter back, you will back to the main menu.\r\n" +
+            "*********************************************************\r\n" +
+            "--Please enter the name of the portfolio that you want to examine. " +
+            "The name cannot be end,yes,no,back.--\r\n", outputStreamCaptor.toString());
+
+  }
+
+  @Test
+  public void testRender_Error2() {
+    setUp();
+    View view = new LoadPageView(printStream,null,
+            "file not found.");
+    view.render();
+    assertEquals("!Error message: file not found.\r\n" +
             "*********************************************************\r\n" +
             "!!! If you enter back, you will back to the main menu.\r\n" +
             "*********************************************************\r\n" +
