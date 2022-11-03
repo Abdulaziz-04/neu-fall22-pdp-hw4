@@ -36,12 +36,17 @@ public class MainPageView extends ViewAbs {
   @Override
   public void render() {
     clearConsole();
+    if (errorMessage != null) {
+      printStream.println("---------------------ERROR--------------------------------");
+      printStream.println("! Error message: " + errorMessage);
+      printStream.println("----------------------------------------------------------");
+    }
     if (isInitFailed) {
       printStream.println(
           "Something wrong with external API, cannot initialize the application. " +
                   "Please try again in few minutes.");
+      return;
     }
-
 
     printStream.println("*********************************************************************" +
         "*******************************");
@@ -56,9 +61,6 @@ public class MainPageView extends ViewAbs {
     printStream.println("---------------------------------------------------------------------" +
         "-------------------------------");
     printStream.println("Please enter the number 1 or 2 that you want to choose.");
-    if (errorMessage != null) {
-      printStream.println("! Error message: " + errorMessage);
-    }
     printStream.print("input > ");
   }
 

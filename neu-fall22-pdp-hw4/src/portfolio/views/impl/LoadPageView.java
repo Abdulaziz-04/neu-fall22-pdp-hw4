@@ -39,7 +39,11 @@ public class LoadPageView extends ViewAbs {
   @Override
   public void render() {
     clearConsole();
-
+    if (errorMessage != null) {
+      printStream.println("---------------------ERROR--------------------------------");
+      printStream.println("! Error message: " + errorMessage);
+      printStream.println("----------------------------------------------------------");
+    }
     printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
@@ -57,9 +61,6 @@ public class LoadPageView extends ViewAbs {
       printStream.println("Do you want to determine the total value of current portfolio?");
       printStream.println("Please enter yes if you want to determine. " +
               "Other input will be back to the main menu.");
-    }
-    if (errorMessage != null) {
-      printStream.println("! Error message: " + errorMessage);
     }
     printStream.print("input > ");
   }

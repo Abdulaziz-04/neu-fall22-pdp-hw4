@@ -62,23 +62,27 @@ public class CreatePageView extends ViewAbs {
   @Override
   public void render() {
     clearConsole();
+    if (errorMessage != null) {
+      printStream.println("---------------------ERROR--------------------------------");
+      printStream.println("! Error message: " + errorMessage);
+      printStream.println("----------------------------------------------------------");
+    }
     printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
     if (!isEnd) {
-      printStream.println("Enter symbol and number of shares for one stock. " +
-          "The format is: AAPL,100.");
-      printStream.println("--The symbol must be capital letters and " +
-          "the shares need to be numbers.");
-      printStream.println("--The shares cannot be 0 and " +
-          "negative number.");
-      printStream.println("--Between the symbol and shares must have a comma " +
-          "with no spaces.");
-      printStream.println("--Enter end to finish input this portfolio.");
-
       if (!map.isEmpty()) {
         printSelectedStocks();
       }
+      printStream.println("Enter symbol and number of shares for one stock. "
+          + "The format is: AAPL,100.");
+      printStream.println("--The symbol must be capital letters and "
+          + "the shares need to be numbers.");
+      printStream.println("--The shares cannot be 0 and "
+          + "negative number.");
+      printStream.println("--Between the symbol and shares must have a comma "
+          + "with no spaces.");
+      printStream.println("--Enter end to finish input this portfolio.");
     } else {
       if (!isNamed) {
         if (map.size() > 0) {
@@ -92,9 +96,6 @@ public class CreatePageView extends ViewAbs {
         printStream.println("--Please enter yes if you want to determine. " +
             "Other input will be back to the main menu.");
       }
-    }
-    if (errorMessage != null) {
-      printStream.println("! Error message: " + errorMessage);
     }
     printStream.print("input > ");
   }

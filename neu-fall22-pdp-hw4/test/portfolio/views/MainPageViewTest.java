@@ -1,7 +1,6 @@
 package portfolio.views;
 
 import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.Before;
@@ -13,8 +12,10 @@ import portfolio.views.impl.MainPageView;
  */
 public class MainPageViewTest {
 
-  private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+  private final ByteArrayOutputStream outputStreamCaptor =
+      new ByteArrayOutputStream();
   private PrintStream printStream;
+
 
   @Before
   public void setUp() {
@@ -25,61 +26,55 @@ public class MainPageViewTest {
   public void testRender_NullErrorMessage() {
     View view = new MainPageView(printStream, null, false);
     view.render();
-    assertEquals("********************************************" +
-        "********************************************************\r\n" +
-        "This is the main menu of the portfolios\r\n" +
-        "1.Create a portfolio\r\n" +
-        "2.Examine the composition of a portfolio\r\n" +
-        "************************************************************" +
-        "****************************************\r\n" +
-        "!!!If you want to determine a portfolio, you need to go " +
-        "to examine page or create page first and then go to determine it.\r\n" +
-        "---------------------------------------------------" +
-        "-----------------------------------------------------------------------------\r\n" +
-        "Please enter the number 1 or 2 that you " +
-        "want to choose.\r\n", outputStreamCaptor.toString());
+    assertEquals("********************************************"
+        +  "********************************************************\r\n"
+        +  "This is the main menu of the portfolios\r\n"
+        + "1.Create a portfolio\r\n"
+        + "2.Examine the composition of a portfolio\r\n"
+        + "************************************************************"
+        + "****************************************\r\n"
+        +  "!!!If you want to determine a portfolio, you need to go "
+        + "to examine page or create page first and then go "
+        +  "to determine it.\r\n"
+        +  "--------------------------------------------------------------"
+        + "---------------"
+        + "-----------------------\r\n"
+        + "Please enter the number 1 or 2 that you "
+        + "want to choose.\r\n"
+        + "input > ", outputStreamCaptor.toString());
   }
 
   @Test
   public void testRender_ErrorMessage() {
-    View view = new MainPageView(printStream, "Please enter the correct number!", false);
+    View view = new MainPageView(printStream,
+        "Please enter the correct number!", false);
     view.render();
-    assertEquals("!Error message: Please enter the correct number!\r\n" +
-            "*******************************************************************************" +
-            "*********************\r\n" +
-            "This is the main menu of the portfolios\r\n" +
-            "1.Create a portfolio\r\n" +
-            "2.Examine the composition of a portfolio\r\n" +
-            "*********************************************************************" +
-            "*******************************\r\n" +
-            "!!!If you want to determine a portfolio, you need to go " +
-            "to examine page or create page first and then go to determine it.\r\n" +
-            "---------------------------------------------------------------------" +
-            "-----------------------------------------------------------\r\n" +
-            "Please enter the number 1 or 2 that you want to choose.\r\n",
-        outputStreamCaptor.toString());
+    assertEquals("---------------------ERROR----------------"
+        + "----------------\r\n"
+        + "! Error message: Please enter the correct number!\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "*******************************************************************************"
+        + "*********************\r\n"
+        + "This is the main menu of the portfolios\r\n"
+        +  "1.Create a portfolio\r\n"
+        + "2.Examine the composition of a portfolio\r\n"
+        + "*********************************************************************"
+        +  "*******************************\r\n"
+        + "!!!If you want to determine a portfolio, you need to go "
+        + "to examine page or create page first and then go to determine it.\r\n"
+        + "------------------------------------------------------------"
+        + "----------------------------------------\r\n"
+        + "Please enter the number 1 or 2 that you want to choose.\r\n"
+        + "input > ", outputStreamCaptor.toString());
   }
 
   @Test
   public void testRender_InitializeError() {
     View view = new MainPageView(printStream, null, true);
     view.render();
-    assertEquals("Something wrong with external API, cannot initialize the application. " +
-            "Please try again in few minutes.\r\n" +
-            "**********************************************************************" +
-            "*********" +
-            "*********************\r\n" +
-            "This is the main menu of the portfolios\r\n" +
-            "1.Create a portfolio\r\n" +
-            "2.Examine the composition of a portfolio\r\n" +
-            "*********************************************************************" +
-            "*******************************\r\n" +
-            "!!!If you want to determine a portfolio, you need to go " +
-            "to examine page or create page first and then go to determine it.\r\n" +
-            "---------------------------------------------------------------------" +
-            "-----------------------------------------------------------\r\n" +
-            "Please enter the number 1 or 2 that you want to choose.\r\n",
-        outputStreamCaptor.toString());
+    assertEquals("Something wrong with external "
+        + "API, cannot initialize the application. "
+        + "Please try again in few minutes.\r\n", outputStreamCaptor.toString());
   }
 
 

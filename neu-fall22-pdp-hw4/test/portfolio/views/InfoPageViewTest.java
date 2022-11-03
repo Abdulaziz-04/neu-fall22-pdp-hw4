@@ -3,7 +3,9 @@ package portfolio.views;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -14,6 +16,7 @@ import portfolio.entities.PortfolioWithValue;
 import portfolio.entities.StockPrice;
 import portfolio.views.impl.InfoPageView;
 
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -21,7 +24,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class InfoPageViewTest {
 
-  private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+  private final ByteArrayOutputStream outputStreamCaptor =
+      new ByteArrayOutputStream();
   private PrintStream printStream;
   Map<String, Integer> stocks;
   Map<String, StockPrice> prices;
@@ -37,8 +41,10 @@ public class InfoPageViewTest {
     prices = new HashMap<>();
     stocks.put("AAA", 100);
     stocks.put("AAPL", 1000);
-    prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
-    prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
+    prices.put("AAA",
+        new StockPrice(1, 2, 3, 4, 5));
+    prices.put("AAPL",
+        new StockPrice(11, 22, 33, 44, 55));
     portfolio = new Portfolio(stocks);
     date = LocalDate.parse("2022-10-10");
     portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
@@ -49,11 +55,13 @@ public class InfoPageViewTest {
     setUp();
     View view = new InfoPageView(printStream, null, null);
     view.render();
-    assertEquals("*********************************************************\r\n" +
-        "!!! If you enter back, you will back to the main menu.\r\n" +
-        "*********************************************************\r\n" +
-        "Please enter the date that you want to determine. The format is" +
-        " year-month-day, ex: 2022-10-11\r\n", outputStreamCaptor.toString());
+    assertEquals("*********************"
+        + "************************************\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "*********************************************************\r\n"
+        + "Please enter the date that you want to determine. The format is"
+        + " year-month-day, ex: 2022-10-11\r\n"
+        + "input > ", outputStreamCaptor.toString());
 
   }
 
@@ -63,12 +71,16 @@ public class InfoPageViewTest {
     View view = new InfoPageView(printStream, null,
         "Error! Please input the correct date.");
     view.render();
-    assertEquals("!Error message: Error! Please input the correct date.\r\n" +
-        "*********************************************************\r\n" +
-        "!!! If you enter back, you will back to the main menu.\r\n" +
-        "*********************************************************\r\n" +
-        "Please enter the date that you want to determine. " +
-        "The format is year-month-day, ex: 2022-10-11\r\n", outputStreamCaptor.toString());
+    assertEquals("---------------------ERROR----------"
+        + "----------------------\r\n"
+        + "! Error message: Error! Please input the correct date.\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "*********************************************************\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "*********************************************************\r\n"
+        + "Please enter the date that you want to determine. "
+        + "The format is year-month-day, ex: 2022-10-11\r\n"
+        + "input > ", outputStreamCaptor.toString());
 
   }
 
@@ -79,15 +91,26 @@ public class InfoPageViewTest {
     View view = new InfoPageView(printStream, portfolioWithValue,
         null);
     view.render();
-    assertEquals("*********************************************************\r\n" +
-        "!!! If you enter back, you will back to the main menu.\r\n" +
-        "*********************************************************\r\n" +
-        "Portfolio value as of: 2022-10-10\r\n" +
-        "If stock price not found, the value with be N/A and will not be include " +
-        "in total value\r\n" +
-        "AAA\t\t100\t\t400.0\r\n" +
-        "AAPL\t\t1000\t\t44000.0\r\n" +
-        "Total value: 44400.0\r\n", outputStreamCaptor.toString());
+    assertEquals("***********************************************"
+        + "**********\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "*********************************************************\r\n"
+        + "If stock price not found, the value with be N/A and will not be "
+        + "include in the total value.\r\n"
+        + "\r\n"
+        + "Portfolio value as of: 2022-10-10\r\n"
+        + "+---------+---------------+--------------------+\r\n"
+        + "|    Stock|  No. of shares|       Current value|\r\n"
+        + "+---------+---------------+--------------------+\r\n"
+        + "|      AAA|            100|               400.0|\r\n"
+        + "|     AAPL|           1000|             44000.0|\r\n"
+        + "+---------+---------------+--------------------+\r\n"
+        + "Total value: 44400.0\r\n"
+        + "\r\n"
+        + "Please enter the date again if you want to determine value "
+        + "for another date. "
+        + "The format is year-month-day, ex: 2022-10-11\r\n"
+        + "input > ", outputStreamCaptor.toString());
 
   }
 
