@@ -23,7 +23,6 @@ public class LoadPageViewTest {
 
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
   private PrintStream printStream;
-  private Portfolio portfolio;
   private Map<String, Integer> stocks;
 
 
@@ -90,7 +89,7 @@ public class LoadPageViewTest {
     setUp();
     stocks.put("AAA", 100);
     stocks.put("AA", 1000);
-    portfolio = new Portfolio(stocks);
+    Portfolio portfolio = new Portfolio(stocks);
     View view = new LoadPageView(printStream, portfolio,
         null);
     view.render();

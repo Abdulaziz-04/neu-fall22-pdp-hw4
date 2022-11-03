@@ -1,23 +1,18 @@
 package portfolio.views;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import portfolio.entities.Portfolio;
 import portfolio.entities.PortfolioWithValue;
 import portfolio.entities.StockPrice;
 import portfolio.views.impl.InfoPageView;
-
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This is a test class to test InfoPageView class.

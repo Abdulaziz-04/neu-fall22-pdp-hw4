@@ -16,12 +16,10 @@ public class CreatePageView extends ViewAbs {
   private final Boolean isNamed;
 
   /**
-   * This is a constructor that construct a create page view.
-   * The error messages will contain "Error Format!", "The share is not a number.",
-   * "The shares cannot be negative and 0.", "Symbol not found.", "error!",
-   * "The name cannot be end, back, no and yes.",
-   * "External API is not ready. Please try again in the next few minutes.",
-   * "No stock entered. Please input stock.".
+   * This is a constructor that construct a create page view. The error messages will contain "Error
+   * Format!", "The share is not a number.", "The shares cannot be negative and 0.", "Symbol not
+   * found.", "error!", "The name cannot be end, back, no and yes.", "External API is not ready.
+   * Please try again in the next few minutes.", "No stock entered. Please input stock.".
    *
    * @param printStream  a PrintStream object to where the output will be directed to
    * @param isEnd        if the user finish input the portfolio, it will be true. Otherwise, false.
@@ -39,12 +37,10 @@ public class CreatePageView extends ViewAbs {
   }
 
   /**
-   * This is a constructor that construct a create page view.
-   * The error messages will contain "Error Format!", "The share is not a number.",
-   * "The shares cannot be negative and 0.", "Symbol not found.", "error!",
-   * "The name cannot be end, back, no and yes.",
-   * "External API is not ready. Please try again in the next few minutes.",
-   * "No stock entered. Please input stock.".
+   * This is a constructor that construct a create page view. The error messages will contain "Error
+   * Format!", "The share is not a number.", "The shares cannot be negative and 0.", "Symbol not
+   * found.", "error!", "The name cannot be end, back, no and yes.", "External API is not ready.
+   * Please try again in the next few minutes.", "No stock entered. Please input stock.".
    *
    * @param isEnd        if user finish input the portfolio, it will be true. Otherwise, false.
    * @param isNamed      if user finish input name, it will be true. Otherwise, false.
@@ -86,13 +82,13 @@ public class CreatePageView extends ViewAbs {
       printStream.println("!!! If you enter back, you will back to the main menu.");
       printStream.println("*********************************************************");
       printStream.println("Enter symbol and number of shares for one stock. "
-          +"The format is: AAPL,100.");
+          + "The format is: AAPL,100.");
       printStream.println("--The symbol must be capital letters and "
           + "the shares need to be numbers.");
       printStream.println("--The shares cannot be 0 and "
-          +  "negative number.");
+          + "negative number.");
       printStream.println("--Between the symbol and shares must have a comma "
-          +  "with no spaces.");
+          + "with no spaces.");
       printStream.println("--Enter end to finish input this portfolio.");
 
     } else {
