@@ -12,6 +12,8 @@ public class ArgumentCaptor<T> {
 
   /**
    * Get the list of arguments.
+   *
+   * @return List of T
    */
   public List<T> getArguments() {
     return arguments;

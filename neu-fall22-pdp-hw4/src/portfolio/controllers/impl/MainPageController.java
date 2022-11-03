@@ -21,6 +21,7 @@ public class MainPageController implements PageController {
   /**
    * This is a constructor that construct a main menu page controller.
    *
+   * @param stockQueryService StockQueryService
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */

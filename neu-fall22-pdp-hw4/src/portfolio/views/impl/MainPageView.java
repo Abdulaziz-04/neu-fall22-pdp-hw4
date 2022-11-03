@@ -16,6 +16,7 @@ public class MainPageView extends ViewAbs {
    *
    * @param printStream  a PrintStream object to where the output will be directed to
    * @param errorMessage "Please enter the correct number!"
+   * @param isInitFailed is initialization failed
    */
   public MainPageView(PrintStream printStream, String errorMessage, boolean isInitFailed) {
     super(printStream);
@@ -27,6 +28,7 @@ public class MainPageView extends ViewAbs {
    * It will show the error message for main menu. The output stream is System.out.
    *
    * @param errorMessage "Please enter the correct number!"
+   * @param isInitFailed is initialization failed
    */
   public MainPageView(String errorMessage, boolean isInitFailed) {
     this.errorMessage = errorMessage;
@@ -44,7 +46,7 @@ public class MainPageView extends ViewAbs {
     if (isInitFailed) {
       printStream.println(
           "Something wrong with external API, cannot initialize the application. " +
-                  "Please try again in few minutes.");
+              "Please try again in few minutes.");
       return;
     }
 
@@ -54,10 +56,10 @@ public class MainPageView extends ViewAbs {
     printStream.println("1.Create a portfolio");
     printStream.println("2.Examine the composition of a portfolio");
     printStream.println("*********************************************************************" +
-            "*******************************");
+        "*******************************");
     printStream.println("!!!If you want to determine a portfolio, you need to " +
-            "go to examine page or create page first and" +
-            " then go to determine it.");
+        "go to examine page or create page first and" +
+        " then go to determine it.");
     printStream.println("---------------------------------------------------------------------" +
         "-------------------------------");
     printStream.println("Please enter the number 1 or 2 that you want to choose.");

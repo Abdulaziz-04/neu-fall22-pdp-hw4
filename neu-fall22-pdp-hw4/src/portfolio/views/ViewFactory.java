@@ -44,6 +44,7 @@ public interface ViewFactory {
    * To generate the view of main menu page.
    *
    * @param errorMessage the error message will show to the user
+   * @param isInitFailed is initialization failed
    * @return return a new view of main menu page
    */
   View newMainPageView(String errorMessage, boolean isInitFailed);

@@ -67,6 +67,7 @@ public class SimpleCache<T> implements Cache<T> {
    *
    * @param key  key as a string
    * @param func get function
+   * @param time input time as LocalTime
    * @return value as type T
    */
   public T get(String key, Function<String, T> func, LocalTime time) {

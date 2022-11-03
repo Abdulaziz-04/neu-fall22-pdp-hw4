@@ -18,6 +18,7 @@ public interface StockQueryService {
    * @param date date
    * @param symbols stock symbol
    * @return a map of date and StockPrice
+   * @throws Exception is there is any error
    */
   Map<String, StockPrice> getStockPrice(LocalDate date, List<String> symbols) throws Exception;
 
@@ -25,6 +26,7 @@ public interface StockQueryService {
    * Get all stocks listing.
    *
    * @return a list of StockListEntry object
+   * @throws Exception is there is any error
    */
   List<StockListEntry> getStockList() throws Exception;
 }
