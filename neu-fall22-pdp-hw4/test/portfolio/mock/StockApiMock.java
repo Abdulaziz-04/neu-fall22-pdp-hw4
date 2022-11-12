@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import portfolio.entities.StockListEntry;
-import portfolio.entities.StockPrice;
-import portfolio.services.stockprice.StockPriceApi;
+import portfolio.models.entities.StockListEntry;
+import portfolio.models.entities.StockPrice;
+import portfolio.models.stockprice.StockPriceApi;
 
 /**
  * Mock class for StockPriceApi interface.

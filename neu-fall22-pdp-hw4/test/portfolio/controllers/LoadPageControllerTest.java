@@ -11,13 +11,13 @@ import org.junit.Test;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioEntry;
+import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.entities.Transaction;
 import portfolio.mock.ArgumentCaptor;
 import portfolio.mock.IOServiceMock;
 import portfolio.mock.ViewFactoryWithArgumentCaptor;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.portfolio.PortfolioServiceImpl;
+import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioServiceImpl;
 import portfolio.views.ViewFactory;
 
 /**
@@ -54,11 +54,11 @@ public class LoadPageControllerTest {
 
     pageController.getView();
 
-    List<PortfolioEntry> actual = ((Portfolio) argumentCaptor.getArguments().get(0)).getStocks();
+    List<Transaction> actual = ((InflexiblePortfolio) argumentCaptor.getArguments().get(0)).getStocks();
     Map<String, Integer> map = new HashMap<>();
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    List<PortfolioEntry> expected = new Portfolio(map).getStocks();
+    List<Transaction> expected = new InflexiblePortfolio(map).getStocks();
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {

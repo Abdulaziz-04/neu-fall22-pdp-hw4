@@ -1,7 +1,7 @@
 package portfolio.mock;
 
 import java.io.IOException;
-import portfolio.services.datastore.IOService;
+import portfolio.controllers.datastore.IOService;
 
 /**
  * Mock class for IOService interface.

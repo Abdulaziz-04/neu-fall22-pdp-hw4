@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
-import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioWithValue;
-import portfolio.services.stockprice.StockQueryService;
+import portfolio.models.portfolio.Portfolio;
+import portfolio.models.entities.PortfolioWithValue;
+import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 

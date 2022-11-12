@@ -1,8 +1,8 @@
 package portfolio.mock;
 
 import java.util.Map;
-import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioWithValue;
+import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 import portfolio.views.impl.CreatePageView;
@@ -40,7 +40,7 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newLoadPageView(Portfolio portfolio, String errorMessage) {
+  public View newLoadPageView(InflexiblePortfolio portfolio, String errorMessage) {
     argumentCaptor.addArgument(portfolio);
     argumentCaptor.addArgument(errorMessage);
     return new LoadPageView(portfolio, errorMessage);

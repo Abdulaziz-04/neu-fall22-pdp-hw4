@@ -14,10 +14,10 @@ import portfolio.mock.ArgumentCaptor;
 import portfolio.mock.IOServiceMock;
 import portfolio.mock.StockApiMock;
 import portfolio.mock.ViewFactoryWithArgumentCaptor;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.portfolio.PortfolioServiceImpl;
-import portfolio.services.stockprice.StockQueryService;
-import portfolio.services.stockprice.StockQueryServiceImpl;
+import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioServiceImpl;
+import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
 /**

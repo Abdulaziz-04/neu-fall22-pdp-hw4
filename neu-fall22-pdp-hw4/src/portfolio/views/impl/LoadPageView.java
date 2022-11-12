@@ -1,7 +1,7 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import portfolio.entities.Portfolio;
+import portfolio.models.portfolio.InflexiblePortfolio;
 import portfolio.views.ViewAbs;
 
 /**
@@ -10,7 +10,7 @@ import portfolio.views.ViewAbs;
 public class LoadPageView extends ViewAbs {
 
   private final String errorMessage;
-  private final Portfolio portfolio;
+  private final InflexiblePortfolio portfolio;
 
   /**
    * This is a constructor that construct a determine page view.
@@ -19,7 +19,7 @@ public class LoadPageView extends ViewAbs {
    * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
-  public LoadPageView(PrintStream printStream, Portfolio portfolio, String errorMessage) {
+  public LoadPageView(PrintStream printStream, InflexiblePortfolio portfolio, String errorMessage) {
     super(printStream);
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;
@@ -31,7 +31,7 @@ public class LoadPageView extends ViewAbs {
    * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
-  public LoadPageView(Portfolio portfolio, String errorMessage) {
+  public LoadPageView(InflexiblePortfolio portfolio, String errorMessage) {
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;
   }

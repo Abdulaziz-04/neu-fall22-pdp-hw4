@@ -1,8 +1,8 @@
 package portfolio.views;
 
 import java.util.Map;
-import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioWithValue;
+import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.entities.PortfolioWithValue;
 
 /**
  * This is the interface that will generate different views.
@@ -38,7 +38,7 @@ public interface ViewFactory {
    * @param errorMessage the error message will show to the user
    * @return a new view of examine page
    */
-  View newLoadPageView(Portfolio portfolio, String errorMessage);
+  View newLoadPageView(InflexiblePortfolio portfolio, String errorMessage);
 
   /**
    * To generate the view of main menu page.

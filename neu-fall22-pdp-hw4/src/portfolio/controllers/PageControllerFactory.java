@@ -4,9 +4,9 @@ import portfolio.controllers.impl.CreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.entities.Portfolio;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.stockprice.StockQueryService;
+import portfolio.models.portfolio.Portfolio;
+import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 
 /**

@@ -12,15 +12,15 @@ import org.junit.Test;
 import portfolio.controllers.impl.CreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.entities.Portfolio;
+import portfolio.models.portfolio.InflexiblePortfolio;
 import portfolio.mock.ArgumentCaptor;
 import portfolio.mock.IOServiceMock;
 import portfolio.mock.StockApiMock;
 import portfolio.mock.ViewFactoryWithArgumentCaptor;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.portfolio.PortfolioServiceImpl;
-import portfolio.services.stockprice.StockQueryService;
-import portfolio.services.stockprice.StockQueryServiceImpl;
+import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioServiceImpl;
+import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
 /**
@@ -45,7 +45,7 @@ public class CreatePageControllerTest {
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    Portfolio portfolio = new Portfolio(map);
+    InflexiblePortfolio portfolio = new InflexiblePortfolio(map);
 
     pageController = new CreatePageController(stockQueryService, portfolioService,
         pageControllerFactory,

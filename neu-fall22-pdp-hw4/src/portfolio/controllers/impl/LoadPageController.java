@@ -2,8 +2,8 @@ package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
-import portfolio.entities.Portfolio;
-import portfolio.services.portfolio.PortfolioService;
+import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.portfolio.PortfolioService;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -18,7 +18,7 @@ public class LoadPageController implements PageController {
   private final PageControllerFactory controllerFactory;
   private final ViewFactory viewFactory;
   private String errorMessage;
-  private Portfolio portfolio;
+  private InflexiblePortfolio portfolio;
 
   /**
    * This is a constructor that construct a LoadPageController, which is examining the composition

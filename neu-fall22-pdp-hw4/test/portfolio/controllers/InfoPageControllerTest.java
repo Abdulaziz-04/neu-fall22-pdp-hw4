@@ -11,17 +11,17 @@ import org.junit.Before;
 import org.junit.Test;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioEntryWithValue;
-import portfolio.entities.PortfolioWithValue;
+import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.entities.PortfolioEntryWithValue;
+import portfolio.models.entities.PortfolioWithValue;
 import portfolio.mock.ArgumentCaptor;
 import portfolio.mock.IOServiceMock;
 import portfolio.mock.StockApiMock;
 import portfolio.mock.ViewFactoryWithArgumentCaptor;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.portfolio.PortfolioServiceImpl;
-import portfolio.services.stockprice.StockQueryService;
-import portfolio.services.stockprice.StockQueryServiceImpl;
+import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioServiceImpl;
+import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
 /**
@@ -36,7 +36,7 @@ public class InfoPageControllerTest {
   private StockQueryService stockQueryService;
   private PageControllerFactory pageControllerFactory;
   private final Map<String, Integer> map = new HashMap<>();
-  private Portfolio portfolio;
+  private InflexiblePortfolio portfolio;
 
   private final double EPSILON = 0.000000001;
 
@@ -50,7 +50,7 @@ public class InfoPageControllerTest {
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    portfolio = new Portfolio(map);
+    portfolio = new InflexiblePortfolio(map);
 
     pageController = new InfoPageController(stockQueryService, portfolio, pageControllerFactory,
         viewFactory);

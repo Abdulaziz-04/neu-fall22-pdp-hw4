@@ -2,7 +2,7 @@ package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
-import portfolio.services.stockprice.StockQueryService;
+import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
