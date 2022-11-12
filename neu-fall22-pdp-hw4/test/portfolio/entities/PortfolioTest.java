@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
+import portfolio.helper.TransactionConverter;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioWithValue;
@@ -32,12 +33,12 @@ public class PortfolioTest {
     stocks.put("AAPL", 1000);
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
-    portfolio = new InflexiblePortfolio(stocks);
+    portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
   }
 
   @Test
   public void getStocks() {
-    List<Transaction> portfolioEntries = portfolio.getStocks();
+    List<Transaction> portfolioEntries = portfolio.getTransaction();
     assertEquals(2, portfolioEntries.size());
     assertEquals("AAA", portfolioEntries.get(0).getSymbol());
     assertEquals("AAPL", portfolioEntries.get(1).getSymbol());
@@ -67,7 +68,7 @@ public class PortfolioTest {
   public void getPortfolioWithPrice_withNull() {
     stocks.put("ABC", 1000);
     prices.put("ABC", null);
-    portfolio = new InflexiblePortfolio(stocks);
+    portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 

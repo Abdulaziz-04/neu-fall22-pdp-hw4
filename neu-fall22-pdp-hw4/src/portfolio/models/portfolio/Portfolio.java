@@ -3,6 +3,7 @@ package portfolio.models.portfolio;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.PortfolioWithValue;
@@ -12,6 +13,9 @@ import portfolio.models.entities.StockPrice;
  * This is an interface for the portfolio class. The portfolio class will implement this class.
  */
 public interface Portfolio {
+
+  PortfolioFormat getFormat();
+  Portfolio create(List<Transaction> transactions);
 
   /**
    * This is a method to get the portfolio list. Return a list with the portfolio entry.
@@ -42,6 +46,6 @@ public interface Portfolio {
   PortfolioWithCostBasis getCostBasis(LocalDate date, Map<String, StockPrice> prices, Double commissionFee)
       throws Exception;
 
-  Portfolio setTransactions(List<Transaction> transactions) throws Exception;
+  boolean isReadOnly();
 
 }

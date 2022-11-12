@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.helper.TransactionConverter;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 import portfolio.views.impl.InfoPageView;
@@ -40,7 +41,7 @@ public class InfoPageViewTest {
         new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL",
         new StockPrice(11, 22, 33, 44, 55));
-    portfolio = new InflexiblePortfolio(stocks);
+    portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
     date = LocalDate.parse("2022-10-10");
     portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
   }

@@ -19,7 +19,8 @@ public class TransactionWithValueTest {
   public void setup() {
     Transaction transaction = new Transaction("AAA", 100);
     double price = 100.2;
-    portfolioEntryWithValue = new PortfolioEntryWithValue(transaction, price);
+    portfolioEntryWithValue = new PortfolioEntryWithValue(transaction.getSymbol(),
+        transaction.getAmount(), price);
   }
 
   @Test

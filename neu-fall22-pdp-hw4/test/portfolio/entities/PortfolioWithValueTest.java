@@ -23,8 +23,8 @@ public class PortfolioWithValueTest {
   @Before
   public void setup() {
     date = LocalDate.parse("2022-10-10");
-    stocksWithValue.add(new PortfolioEntryWithValue(new Transaction("AAA", 100), 100.1));
-    stocksWithValue.add(new PortfolioEntryWithValue(new Transaction("AA", 200), 200.2));
+    stocksWithValue.add(new PortfolioEntryWithValue("AAA", 100, 100.1));
+    stocksWithValue.add(new PortfolioEntryWithValue("AA", 200, 200.2));
     portfolioWithValue = new PortfolioWithValue(date, stocksWithValue, 50050);
   }
 

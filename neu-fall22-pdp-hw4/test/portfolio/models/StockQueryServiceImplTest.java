@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
-import portfolio.mock.StockApiMock;
+import portfolio.helper.StockApiMock;
 import portfolio.models.stockprice.StockPriceApi;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;

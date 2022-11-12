@@ -1,11 +1,16 @@
 package portfolio.controllers.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
+import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
-import portfolio.controllers.datastore.PortfolioParser;
+import portfolio.models.entities.PortfolioFormat;
+import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioService;
@@ -19,9 +24,10 @@ import portfolio.views.View;
  * creating their portfolio. The states are stock selection, naming portfolio and portfolio
  * confirmation.
  */
-public class CreatePageController implements PageController {
+public class InflexibleCreatePageController implements PageController {
+
   private final PortfolioService portfolioService;
-  private final IOService ioService;
+  private final IOService ioService = new FileIOService();
   private final PortfolioParser portfolioParser;
   private final PageControllerFactory pageControllerFactory;
   private final ViewFactory viewFactory;
@@ -29,12 +35,12 @@ public class CreatePageController implements PageController {
   private Boolean isEnd = false;
   private Boolean isNamed = false;
   private Portfolio portfolio;
-  private final List<Transaction> transactions = new ArrayList<>();
+  private final Map<String, Integer> stockList = new LinkedHashMap<>();
 
-  public CreatePageController(IOService ioService,
-      PortfolioService portfolioService, PortfolioParser portfolioParser, PageControllerFactory controllerFactory,
+  public InflexibleCreatePageController(
+      PortfolioService portfolioService, PortfolioParser portfolioParser,
+      PageControllerFactory controllerFactory,
       ViewFactory viewFactory) {
-    this.ioService = ioService;
     this.portfolioService = portfolioService;
     this.pageControllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
@@ -43,7 +49,7 @@ public class CreatePageController implements PageController {
 
   @Override
   public View getView() {
-    return viewFactory.newCreatePageView(isEnd, isNamed, transactions, errorMessage);
+    return viewFactory.newInflexibleCreatePageView(isEnd, isNamed, stockList, errorMessage);
   }
 
   /**
@@ -63,7 +69,6 @@ public class CreatePageController implements PageController {
       return pageControllerFactory.newMainPageController();
     }
     if (!isEnd && !input.equals("end")) {
-
       try {
         String[] cmd = input.split(",");
         String symbol = cmd[0];
@@ -71,29 +76,39 @@ public class CreatePageController implements PageController {
           errorMessage = "Error Format!";
           return this;
         }
-          int amount = 0;
-          try {
-            amount = Integer.parseInt(cmd[1]);
-          } catch (Exception e) {
-            errorMessage = "The share is not a number.";
-            return this;
-          }
-          if (amount <= 0) {
-            errorMessage = "The shares cannot be negative and 0.";
-            return this;
-          }
-          transactions.add(symbol, stockList.getOrDefault(symbol, 0) + amount);
+        int amount = 0;
+        try {
+          amount = Integer.parseInt(cmd[1]);
+        } catch (Exception e) {
+          errorMessage = "The share is not a number.";
+          return this;
+        }
+        if (amount <= 0) {
+          errorMessage = "The shares cannot be negative and 0.";
+          return this;
+        }
+        stockList.put(symbol, stockList.getOrDefault(symbol, 0) + amount);
       } catch (Exception e) {
         errorMessage = "error!";
         return this;
       }
-    } else if (input.equals("end") && transactions.size() == 0) {
+    } else if (input.equals("end") && stockList.size() == 0) {
       errorMessage = "No stock entered. Please input stock.";
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
-      portfolio = portfolioService.create(transactions);
-      isEnd = true;
-      return this;
+      List<Transaction> transactions = stockList.entrySet().stream()
+          .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+              Collectors.toList());
+      try {
+        portfolio = portfolioService.create(PortfolioFormat.INFLEXIBLE, transactions);
+        isEnd = true;
+        return this;
+      }
+      catch (Exception e) {
+        errorMessage = e.getMessage();
+        stockList.clear();
+        return this;
+      }
     } else if (isEnd && !isNamed) {
       //save to file
       if (input.equals("end") || input.equals("yes") || input.equals("no")) {

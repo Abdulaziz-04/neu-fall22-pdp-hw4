@@ -10,10 +10,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import portfolio.helper.TransactionConverter;
 import portfolio.views.impl.LoadPageView;
 
 
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 
 
 /**
@@ -89,7 +90,7 @@ public class LoadPageViewTest {
     setUp();
     stocks.put("AAA", 100);
     stocks.put("AA", 1000);
-    InflexiblePortfolio portfolio = new InflexiblePortfolio(stocks);
+    InflexiblePortfolio portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
     View view = new LoadPageView(printStream, portfolio,
         null);
     view.render();

@@ -1,6 +1,7 @@
 package portfolio.models.entities;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 /**
  * This is a class for portfolio entry.
@@ -26,8 +27,8 @@ public class Transaction {
     this.date = null;
   }
 
-  public Transaction(String txType, String symbol, int amount, LocalDate date) throws Exception {
-    this.txType = TransactionType.parse(txType);
+  public Transaction(TransactionType txType, String symbol, int amount, LocalDate date) throws Exception {
+    this.txType = txType;
     this.symbol = symbol;
     this.amount = amount;
     this.date = date;

@@ -1,14 +1,16 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import java.util.Map;
+import java.util.List;
 
+import java.util.Map;
+import portfolio.models.entities.Transaction;
 import portfolio.views.ViewAbs;
 
 /**
  * This is a view that show the create page, which implement the View function.
  */
-public class CreatePageView extends ViewAbs {
+public class InflexibleCreatePageView extends ViewAbs {
 
   private final Map<String, Integer> map;
   private final String errorMessage;
@@ -27,7 +29,7 @@ public class CreatePageView extends ViewAbs {
    * @param map          the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
-  public CreatePageView(PrintStream printStream, Boolean isEnd, Boolean isNamed,
+  public InflexibleCreatePageView(PrintStream printStream, Boolean isEnd, Boolean isNamed,
       Map<String, Integer> map, String errorMessage) {
     super(printStream);
     this.isEnd = isEnd;
@@ -47,7 +49,7 @@ public class CreatePageView extends ViewAbs {
    * @param map          the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
-  public CreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
+  public InflexibleCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
       String errorMessage) {
     this.isEnd = isEnd;
     this.isNamed = isNamed;

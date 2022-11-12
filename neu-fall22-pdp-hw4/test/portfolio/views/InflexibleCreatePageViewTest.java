@@ -9,12 +9,12 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.views.impl.CreatePageView;
+import portfolio.views.impl.InflexibleCreatePageView;
 
 /**
  * This is a test class to test CreatePageView class.
  */
-public class CreatePageViewTest {
+public class InflexibleCreatePageViewTest {
 
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
   private PrintStream printStream;
@@ -32,7 +32,7 @@ public class CreatePageViewTest {
   public void testRender_First() {
     setUp();
     View view =
-        new CreatePageView(printStream, false,
+        new InflexibleCreatePageView(printStream, false,
             false, map, null);
     view.render();
     assertEquals("*********************************************************\r\n"
@@ -50,7 +50,7 @@ public class CreatePageViewTest {
   @Test
   public void testRender_ErrorFormat() {
     setUp();
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "Error Format!");
     view.render();
     assertEquals("---------------------ERROR--------------------------"
@@ -73,7 +73,7 @@ public class CreatePageViewTest {
   public void testRender_ErrorFormat2() {
     setUp();
     map.put("AAA", 100);
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "Error Format!");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -99,7 +99,7 @@ public class CreatePageViewTest {
   @Test
   public void testRender_ErrorShares() {
     setUp();
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "The shares cannot be negative and 0.");
     view.render();
     assertEquals("---------------------ERROR--------------------------"
@@ -121,7 +121,7 @@ public class CreatePageViewTest {
   public void testRender_ErrorShares2() {
     setUp();
     map.put("AAA", 100);
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "The shares cannot be negative and 0.");
     view.render();
     assertEquals("---------------------ERROR----------"
@@ -148,7 +148,7 @@ public class CreatePageViewTest {
   @Test
   public void testRender_ErrorSymbol() {
     setUp();
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "Symbol not found.");
     view.render();
     assertEquals("---------------------ERROR------------------"
@@ -172,7 +172,7 @@ public class CreatePageViewTest {
   public void testRender_ErrorSymbol2() {
     setUp();
     map.put("AAA", 100);
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "Symbol not found.");
     view.render();
     assertEquals("---------------------ERROR--------"
@@ -202,7 +202,7 @@ public class CreatePageViewTest {
     setUp();
     map.put("AAA", 100);
     map.put("AA", 200);
-    View view = new CreatePageView(printStream, true, false, map,
+    View view = new InflexibleCreatePageView(printStream, true, false, map,
         null);
     view.render();
     assertEquals("*********************************************************\r\n"
@@ -222,7 +222,7 @@ public class CreatePageViewTest {
   @Test
   public void testRender_NoStock() {
     setUp();
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "No stock entered. Please input stock.");
     view.render();
     assertEquals("---------------------ERROR--------------"
@@ -246,7 +246,7 @@ public class CreatePageViewTest {
     setUp();
     map.put("AAA", 100);
     map.put("AA", 200);
-    View view = new CreatePageView(printStream, true, true, map,
+    View view = new InflexibleCreatePageView(printStream, true, true, map,
         null);
     view.render();
     assertEquals("*********************************************************\r\n"
@@ -263,7 +263,7 @@ public class CreatePageViewTest {
     setUp();
     map.put("AAA", 100);
     map.put("AA", 200);
-    View view = new CreatePageView(printStream, true, false, map,
+    View view = new InflexibleCreatePageView(printStream, true, false, map,
         "The name cannot be end, back, no and yes.");
     view.render();
     assertEquals("---------------------ERROR------------"
@@ -290,7 +290,7 @@ public class CreatePageViewTest {
     setUp();
     map.put("AAA", 100);
     map.put("AA", 200);
-    View view = new CreatePageView(printStream, true, false, map,
+    View view = new InflexibleCreatePageView(printStream, true, false, map,
         "There is a file or a directory exists with filename: 222.txt");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -315,7 +315,7 @@ public class CreatePageViewTest {
   @Test
   public void testRender_ApiError() {
     setUp();
-    View view = new CreatePageView(printStream, false, false, map,
+    View view = new InflexibleCreatePageView(printStream, false, false, map,
         "External API is not ready."
             + " Please try again in the next few minutes.");
     view.render();

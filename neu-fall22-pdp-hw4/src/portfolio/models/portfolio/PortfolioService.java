@@ -2,6 +2,7 @@ package portfolio.models.portfolio;
 
 import java.time.LocalDate;
 import java.util.List;
+import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
@@ -11,21 +12,21 @@ import portfolio.models.entities.Transaction;
  */
 public interface PortfolioService {
 
-  Portfolio create(List<Transaction> transactions);
+  Portfolio getPortfolio();
 
-  Portfolio load(Portfolio portfolio);
+  Portfolio create(PortfolioFormat format, List<Transaction> transactions) throws Exception;
 
-  Portfolio modify(String name, List<Transaction> newTransactions) throws Exception;
+  void createAndSet(PortfolioFormat format, List<Transaction> transactions) throws Exception;
 
-  Portfolio getPortfolio(String name);
+  void load(String text) throws Exception;
 
-  List<String> listPortfolios();
+  void modify(List<Transaction> newTransactions) throws Exception;
 
-  PortfolioWithValue getValue(String name, LocalDate date);
+  PortfolioWithValue getValue(LocalDate date) throws Exception;
 
-  PortfolioWithCostBasis getCostBasis(String name, LocalDate date);
+  PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception;
 
-  List<PortfolioWithValue> getValues(String name, LocalDate from, LocalDate to);
+  List<PortfolioWithValue> getValues(LocalDate from, LocalDate to) throws Exception;
 
   void setCommissionFee(double amount);
 }

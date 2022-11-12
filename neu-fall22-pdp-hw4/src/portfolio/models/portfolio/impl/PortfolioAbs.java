@@ -1,30 +1,30 @@
-package portfolio.models.portfolio;
+package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import portfolio.models.entities.PortfolioEntryWithValue;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
+import portfolio.models.portfolio.Portfolio;
 
-public class FlexiblePortfolio implements Portfolio {
+public abstract class PortfolioAbs implements Portfolio {
 
-  private final List<Transaction> transactions;
-  private Map<String, Integer> stocks;
+  protected final List<Transaction> transactions;
+  protected Map<String, Integer> stocks;
 
-  /**
-   * This is a constructor to a portfolio object from list of PortfolioEntry.
-   *
-   * @param transactions a list of PortfolioEntry
-   */
-  public FlexiblePortfolio(List<Transaction> transactions) {
+  protected PortfolioAbs(List<Transaction> transactions) {
     this.transactions = transactions;
+    if (transactions.get(0).getDate() != null) {
+      transactions.sort(Comparator.comparing(Transaction::getDate));
+    }
     setStocks();
   }
 
@@ -32,14 +32,16 @@ public class FlexiblePortfolio implements Portfolio {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
       int current = stocks.getOrDefault(tx.getSymbol(), 0);
-      int multiplier = tx.getType() == TransactionType.BUY ? 1 : -1;
-      int newShare = current + multiplier * tx.getAmount();
-      if (newShare < 0) {
-        throw new IllegalArgumentException("Transaction invalid.");
+      int newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
+      if (newShare >= 0) {
+        stocks.put(tx.getSymbol(), newShare);
       }
-      stocks.put(tx.getSymbol(), newShare);
+      else {
+        throw new RuntimeException("There is a conflict in the input transaction.");
+      }
     }
     this.stocks = stocks;
+
   }
 
   /**
@@ -49,12 +51,12 @@ public class FlexiblePortfolio implements Portfolio {
    */
   @Override
   public Map<String, Integer> getStocks() {
-    return stocks;
+    return Collections.unmodifiableMap(stocks);
   }
 
   @Override
   public List<Transaction> getTransaction() {
-    return transactions.stream().collect(Collectors.toUnmodifiableList());
+    return Collections.unmodifiableList(transactions);
   }
 
   /**
@@ -67,6 +69,8 @@ public class FlexiblePortfolio implements Portfolio {
     return transactions.stream().map(Transaction::getSymbol)
         .collect(Collectors.toUnmodifiableList());
   }
+
+
 
   /**
    * Calculate value of all stocks and total value of the portfolio from price map.
@@ -91,16 +95,5 @@ public class FlexiblePortfolio implements Portfolio {
     }
 
     return new PortfolioWithValue(date, portfolioEntryWithValues, total);
-  }
-
-  @Override
-  public PortfolioWithCostBasis getCostBasis(LocalDate date, Map<String, StockPrice> prices,
-      Double commissionFee) throws Exception {
-    throw new Exception("Cost basis function is not supported.");
-  }
-
-  @Override
-  public Portfolio setTransactions(List<Transaction> transactions) throws Exception {
-    throw new Exception("Set tranaction is not supported.");
   }
 }

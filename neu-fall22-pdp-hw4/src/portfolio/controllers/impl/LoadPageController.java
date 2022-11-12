@@ -2,10 +2,12 @@ package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.controllers.datastore.FileIOService;
+import portfolio.controllers.datastore.IOService;
+import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioService;
-import portfolio.views.ViewFactory;
 import portfolio.views.View;
+import portfolio.views.ViewFactory;
 
 /**
  * This is a controller for the retrieving portfolio. It implements PageController.
@@ -13,12 +15,12 @@ import portfolio.views.View;
  * creating a view to show portfolio content.
  */
 public class LoadPageController implements PageController {
-
+  private final IOService ioService = new FileIOService();
   private final PortfolioService portfolioService;
   private final PageControllerFactory controllerFactory;
   private final ViewFactory viewFactory;
   private String errorMessage;
-  private InflexiblePortfolio portfolio;
+  private Portfolio portfolio;
 
   /**
    * This is a constructor that construct a LoadPageController, which is examining the composition
@@ -57,7 +59,9 @@ public class LoadPageController implements PageController {
     try {
       if (portfolio == null) {
         //get portfolio
-        portfolio = portfolioService.getPortfolio(input + ".txt");
+        String str = ioService.read(input + ".txt");
+        portfolioService.load(str);
+        portfolio = portfolioService.getPortfolio();
         return this;
       } else {
         if (input.equals("yes")) {

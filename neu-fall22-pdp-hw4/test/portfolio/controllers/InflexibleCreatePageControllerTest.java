@@ -9,16 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.controllers.impl.CreatePageController;
+import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.models.portfolio.InflexiblePortfolio;
-import portfolio.mock.ArgumentCaptor;
-import portfolio.mock.IOServiceMock;
-import portfolio.mock.StockApiMock;
-import portfolio.mock.ViewFactoryWithArgumentCaptor;
+import portfolio.helper.TransactionConverter;
+import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
+import portfolio.helper.ArgumentCaptor;
+import portfolio.helper.StockApiMock;
+import portfolio.helper.ViewFactoryWithArgumentCaptor;
 import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.PortfolioServiceImpl;
+import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
@@ -26,7 +28,7 @@ import portfolio.views.ViewFactory;
 /**
  * This is a test class to test CreatePageController class.
  */
-public class CreatePageControllerTest {
+public class InflexibleCreatePageControllerTest {
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
   private final Map<String, Integer> map = new HashMap<>();
@@ -35,19 +37,20 @@ public class CreatePageControllerTest {
 
   @Before
   public void setUp() {
-    PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());
+    StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
+    PortfolioParser parser = new PortfolioTextParser();
+    PortfolioService portfolioService = new PortfolioServiceImpl(stockQueryService,parser
+        );
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
-        stockQueryService,
-        viewFactory);
+        stockQueryService, parser, viewFactory);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    InflexiblePortfolio portfolio = new InflexiblePortfolio(map);
+    InflexiblePortfolio portfolio = new InflexiblePortfolio(TransactionConverter.convert(map));
 
-    pageController = new CreatePageController(stockQueryService, portfolioService,
+    pageController = new InflexibleCreatePageController(portfolioService, parser,
         pageControllerFactory,
         viewFactory);
   }

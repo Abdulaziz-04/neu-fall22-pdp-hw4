@@ -11,21 +11,26 @@ import org.junit.Test;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.helper.StockApiMock;
+import portfolio.helper.TransactionConverter;
+import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.Transaction;
-import portfolio.mock.ArgumentCaptor;
-import portfolio.mock.IOServiceMock;
-import portfolio.mock.ViewFactoryWithArgumentCaptor;
+import portfolio.helper.ArgumentCaptor;
+import portfolio.helper.IOServiceMock;
+import portfolio.helper.ViewFactoryWithArgumentCaptor;
 import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.PortfolioServiceImpl;
+import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.impl.PortfolioTextParser;
+import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
 /**
  * This is a test class to test LoadPageController class.
  */
 public class LoadPageControllerTest {
-
-  private final PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());
+  private final PortfolioParser parser = new PortfolioTextParser();
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
 
@@ -33,8 +38,9 @@ public class LoadPageControllerTest {
   public void setUp() {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
+    PortfolioService portfolioService = new PortfolioServiceImpl(null, parser);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
-        null, viewFactory);
+        null, parser, viewFactory);
     pageController = new LoadPageController(portfolioService, pageControllerFactory, viewFactory);
   }
 
@@ -54,11 +60,11 @@ public class LoadPageControllerTest {
 
     pageController.getView();
 
-    List<Transaction> actual = ((InflexiblePortfolio) argumentCaptor.getArguments().get(0)).getStocks();
+    List<Transaction> actual = ((InflexiblePortfolio) argumentCaptor.getArguments().get(0)).getTransaction();
     Map<String, Integer> map = new HashMap<>();
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    List<Transaction> expected = new InflexiblePortfolio(map).getStocks();
+    List<Transaction> expected = new InflexiblePortfolio(TransactionConverter.convert(map)).getTransaction();
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {

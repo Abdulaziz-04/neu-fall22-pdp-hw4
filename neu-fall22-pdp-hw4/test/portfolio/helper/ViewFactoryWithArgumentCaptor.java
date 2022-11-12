@@ -1,11 +1,15 @@
-package portfolio.mock;
+package portfolio.helper;
 
+import java.util.List;
 import java.util.Map;
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.controllers.PageController;
+import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.Portfolio;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
-import portfolio.views.impl.CreatePageView;
+import portfolio.views.impl.InflexibleCreatePageView;
 import portfolio.views.impl.InfoPageView;
 import portfolio.views.impl.LoadPageView;
 import portfolio.views.impl.MainPageView;
@@ -30,17 +34,23 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
+  public View newInflexibleCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
       String errorMessage) {
     argumentCaptor.addArgument(isEnd);
     argumentCaptor.addArgument(isNamed);
     argumentCaptor.addArgument(map);
     argumentCaptor.addArgument(errorMessage);
-    return new CreatePageView(isEnd, isNamed, map, errorMessage);
+    return new InflexibleCreatePageView(isEnd, isNamed, map, errorMessage);
   }
 
   @Override
-  public View newLoadPageView(InflexiblePortfolio portfolio, String errorMessage) {
+  public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+      List<Transaction> transactions, String errorMessage) {
+    return null;
+  }
+
+  @Override
+  public View newLoadPageView(Portfolio portfolio, String errorMessage) {
     argumentCaptor.addArgument(portfolio);
     argumentCaptor.addArgument(errorMessage);
     return new LoadPageView(portfolio, errorMessage);

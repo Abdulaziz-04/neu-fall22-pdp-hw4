@@ -1,7 +1,10 @@
 package portfolio.views.impl;
 
+import java.util.List;
 import java.util.Map;
-import portfolio.models.portfolio.InflexiblePortfolio;
+import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.Portfolio;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -18,13 +21,19 @@ public class DefaultSysOutViewFactory implements ViewFactory {
   }
 
   @Override
-  public View newCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
+  public View newInflexibleCreatePageView(Boolean isEnd, Boolean isNamed, Map<String, Integer> map,
       String errorMessage) {
-    return new CreatePageView(isEnd, isNamed, map, errorMessage);
+    return new InflexibleCreatePageView(isEnd, isNamed, map, errorMessage);
   }
 
   @Override
-  public View newLoadPageView(InflexiblePortfolio portfolio, String errorMessage) {
+  public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+      List<Transaction> transactions, String errorMessage) {
+    return new FlexibleCreatePageView(isEnd, isNamed, transactions, errorMessage);
+  }
+
+  @Override
+  public View newLoadPageView(Portfolio portfolio, String errorMessage) {
     return new LoadPageView(portfolio, errorMessage);
   }
 

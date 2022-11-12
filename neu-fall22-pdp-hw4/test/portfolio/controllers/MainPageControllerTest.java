@@ -7,15 +7,17 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.controllers.impl.CreatePageController;
+import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.mock.ArgumentCaptor;
-import portfolio.mock.IOServiceMock;
-import portfolio.mock.StockApiMock;
-import portfolio.mock.ViewFactoryWithArgumentCaptor;
+import portfolio.helper.ArgumentCaptor;
+import portfolio.helper.IOServiceMock;
+import portfolio.helper.StockApiMock;
+import portfolio.helper.ViewFactoryWithArgumentCaptor;
+import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.PortfolioServiceImpl;
+import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
@@ -25,7 +27,8 @@ import portfolio.views.ViewFactory;
  */
 public class MainPageControllerTest {
 
-  private final PortfolioService portfolioService = new PortfolioServiceImpl(new IOServiceMock());
+  private final PortfolioParser parser = new PortfolioTextParser();
+  private PortfolioService portfolioService;
   private ViewFactory viewFactory;
   private StockQueryService stockQueryService;
   private ArgumentCaptor<Object> argumentCaptor;
@@ -35,9 +38,11 @@ public class MainPageControllerTest {
   public void setUp() {
     argumentCaptor = new ArgumentCaptor<>();
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
+    portfolioService = new PortfolioServiceImpl(stockQueryService,
+        parser);
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
-        stockQueryService, viewFactory);
+        stockQueryService, parser, viewFactory);
     pageController = new MainPageController(stockQueryService, pageControllerFactory, viewFactory);
   }
 
@@ -45,7 +50,7 @@ public class MainPageControllerTest {
   public void failToInit() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
-        stockQueryService, viewFactory);
+        stockQueryService, parser, viewFactory);
     pageController = new MainPageController(stockQueryService, pageControllerFactory, viewFactory);
 
     pageController.getView();
@@ -63,7 +68,7 @@ public class MainPageControllerTest {
   @Test
   public void handleInput_toCreate() {
     PageController nextPage = pageController.handleInput("1");
-    assertEquals(CreatePageController.class, nextPage.getClass());
+    assertEquals(InflexibleCreatePageController.class, nextPage.getClass());
   }
 
   @Test

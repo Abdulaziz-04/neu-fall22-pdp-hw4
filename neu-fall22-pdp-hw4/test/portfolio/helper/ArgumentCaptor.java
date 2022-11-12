@@ -1,4 +1,4 @@
-package portfolio.mock;
+package portfolio.helper;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,7 @@
-package portfolio;
+package portfolio.controllers.impl;
 
 import java.util.Scanner;
+import portfolio.controllers.FrontController;
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.views.View;
@@ -8,7 +9,7 @@ import portfolio.views.View;
 /**
  * This is class represent event loop, which will continue to run the program.
  */
-public class EventLoopImpl implements EventLoop {
+public class FrontControllerImpl implements FrontController {
   private final Scanner scan = new Scanner(System.in);
 
   private PageController pageController;
@@ -18,7 +19,7 @@ public class EventLoopImpl implements EventLoop {
    *
    * @param pageControllerFactory the controller factory to run the program
    */
-  public EventLoopImpl(PageControllerFactory pageControllerFactory) {
+  public FrontControllerImpl(PageControllerFactory pageControllerFactory) {
     this.pageController = pageControllerFactory.newMainPageController();
   }
 
