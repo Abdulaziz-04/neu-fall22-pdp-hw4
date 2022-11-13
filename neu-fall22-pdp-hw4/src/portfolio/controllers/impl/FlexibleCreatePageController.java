@@ -106,7 +106,7 @@ public class FlexibleCreatePageController implements PageController {
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
       try {
-        portfolio = portfolioService.create(PortfolioFormat.FLEXIBLE, transactions);
+        portfolio = portfolioService.create("aa", PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
         return this;
       }

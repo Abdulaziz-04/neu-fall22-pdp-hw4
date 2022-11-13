@@ -16,8 +16,8 @@ public class FlexiblePortfolio extends PortfolioAbs {
    *
    * @param transactions a list of PortfolioEntry
    */
-  public FlexiblePortfolio(List<Transaction> transactions) {
-    super(transactions);
+  public FlexiblePortfolio(String name, List<Transaction> transactions) {
+    super(name, transactions);
   }
 
   @Override
@@ -27,7 +27,7 @@ public class FlexiblePortfolio extends PortfolioAbs {
 
   @Override
   public Portfolio create(List<Transaction> transactions) {
-    return new FlexiblePortfolio(transactions);
+    return new FlexiblePortfolio(name, transactions);
   }
 
   @Override

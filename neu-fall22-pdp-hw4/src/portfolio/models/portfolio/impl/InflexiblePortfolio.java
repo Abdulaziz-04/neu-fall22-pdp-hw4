@@ -19,8 +19,8 @@ public class InflexiblePortfolio extends PortfolioAbs {
    *
    * @param transactions a list of PortfolioEntry
    */
-  public InflexiblePortfolio(List<Transaction> transactions) {
-    super(transactions);
+  public InflexiblePortfolio(String name, List<Transaction> transactions) {
+    super(name, transactions);
   }
 
   @Override

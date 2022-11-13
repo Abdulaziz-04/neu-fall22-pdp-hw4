@@ -20,7 +20,10 @@ public abstract class PortfolioAbs implements Portfolio {
   protected final List<Transaction> transactions;
   protected Map<String, Integer> stocks;
 
-  protected PortfolioAbs(List<Transaction> transactions) {
+  protected final String name;
+
+  protected PortfolioAbs(String name, List<Transaction> transactions) {
+    this.name = name;
     this.transactions = transactions;
     if (transactions.get(0).getDate() != null) {
       transactions.sort(Comparator.comparing(Transaction::getDate));
@@ -45,6 +48,10 @@ public abstract class PortfolioAbs implements Portfolio {
     return stocks;
   }
 
+  @Override
+  public String getName(){
+    return name;
+  }
   /**
    * Get a list of PortfolioEntry in this portfolio.
    *
