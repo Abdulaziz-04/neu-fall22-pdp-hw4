@@ -2,6 +2,7 @@ package portfolio.models.portfolio;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.PortfolioWithValue;
@@ -26,5 +27,5 @@ public interface PortfolioService {
 
   PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception;
 
-  List<PortfolioWithValue> getValues(LocalDate from, LocalDate to) throws Exception;
+  Map<String, PortfolioWithValue> getValues(LocalDate from, LocalDate to) throws Exception;
 }
