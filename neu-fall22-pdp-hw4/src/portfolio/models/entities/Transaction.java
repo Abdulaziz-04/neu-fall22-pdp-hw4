@@ -1,7 +1,6 @@
 package portfolio.models.entities;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 /**
  * This is a class for portfolio entry.
@@ -12,6 +11,7 @@ public class Transaction {
   private final String symbol;
   private final int amount;
   private final LocalDate date;
+  private final Double commissionFee;
 
   /**
    * This is a constructor to construct a portfolio entry, which contains the symbol and amount. The
@@ -25,13 +25,15 @@ public class Transaction {
     this.symbol = symbol;
     this.amount = amount;
     this.date = null;
+    this.commissionFee = null;
   }
 
-  public Transaction(TransactionType txType, String symbol, int amount, LocalDate date) throws Exception {
+  public Transaction(TransactionType txType, String symbol, int amount, LocalDate date, double commissionFee) throws Exception {
     this.txType = txType;
     this.symbol = symbol;
     this.amount = amount;
     this.date = date;
+    this.commissionFee = commissionFee;
   }
 
   public TransactionType getType() {
@@ -58,5 +60,8 @@ public class Transaction {
 
   public LocalDate getDate() {
     return date;
+  }
+  public Double getCommissionFee(){
+    return commissionFee;
   }
 }

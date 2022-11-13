@@ -29,8 +29,8 @@ public class InflexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
-  public Portfolio create(List<Transaction> transactions) {
-    return new InflexiblePortfolio(transactions);
+  public Portfolio create(List<Transaction> transactions) throws Exception {
+    throw new Exception("Modifying inflexible portfolio is not supported.");
   }
 
 

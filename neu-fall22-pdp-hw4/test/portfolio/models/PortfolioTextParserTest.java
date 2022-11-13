@@ -54,11 +54,11 @@ public class PortfolioTextParserTest {
 
   @Test
   public void parseTransaction_fourArguments() throws Exception {
-    String str = "2022-10-10,BUY,a,100\r\n2022-10-11,SELL,b,100\r\n";
+    String str = "2022-10-10,BUY,a,100,12\r\n2022-10-11,SELL,b,100,34\r\n";
     List<Transaction> actual = portfolioParser.parseTransaction(str);
     List<Transaction> expected = new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10")));
-    expected.add(new Transaction(TransactionType.SELL, "b", 100, LocalDate.parse("2022-10-11")));
+    expected.add(new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10"),12));
+    expected.add(new Transaction(TransactionType.SELL, "b", 100, LocalDate.parse("2022-10-11"), 34));
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {
@@ -66,12 +66,13 @@ public class PortfolioTextParserTest {
       assertEquals(actual.get(i).getSymbol(), expected.get(i).getSymbol());
       assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount());
       assertEquals(actual.get(i).getDate(), expected.get(i).getDate());
+      assertEquals(actual.get(i).getCommissionFee(), expected.get(i).getCommissionFee(), 0.000001);
     }
   }
 
   @Test
   public void parseTransaction_parseTypeError() throws Exception {
-    String str = "2022-10-10,ABC,a,100";
+    String str = "2022-10-10,ABC,a,100,12";
     try {
       portfolioParser.parseTransaction(str);
       fail("should fail");
@@ -82,7 +83,7 @@ public class PortfolioTextParserTest {
 
   @Test
   public void parseTransaction_parseDateError() {
-    String str = "10/10/2022,BUY,a,100";
+    String str = "10/10/2022,BUY,a,100,12";
     try {
       portfolioParser.parseTransaction(str);
       fail("should fail");
@@ -103,13 +104,13 @@ public class PortfolioTextParserTest {
   }
 
   @Test
-  public void toString_fourArguments() throws Exception {
+  public void toString_fiveArguments() throws Exception {
     List<Transaction> transactions = new ArrayList<>();
-    transactions.add(new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10")));
+    transactions.add(new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10"), 12));
     transactions.add(
-        new Transaction(TransactionType.SELL, "a", 50, LocalDate.parse("2022-10-11")));
+        new Transaction(TransactionType.SELL, "a", 50, LocalDate.parse("2022-10-11"), 34));
 
-    assertEquals("FORMAT=FLEXIBLE\n2022-10-10,BUY,a,100\n2022-10-11,SELL,a,50\n",
+    assertEquals("FORMAT=FLEXIBLE\n2022-10-10,BUY,a,100,12.0\n2022-10-11,SELL,a,50,34.0\n",
         portfolioParser.toString(new FlexiblePortfolio(transactions)));
   }
 

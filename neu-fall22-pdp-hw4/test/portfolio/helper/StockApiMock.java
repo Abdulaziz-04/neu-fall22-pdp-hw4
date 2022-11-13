@@ -1,5 +1,6 @@
 package portfolio.helper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,8 +44,8 @@ public class StockApiMock implements StockPriceApi {
     if (shouldFail) {
       throw new RuntimeException("Something wrong.");
     }
-    list.add(new StockListEntry("AAPL", "Apple", "a", "b", "c", "d", "e"));
-    list.add(new StockListEntry("AAA", "Apple", "a", "b", "c", "d", "e"));
+    list.add(new StockListEntry("AAPL", "Apple", "a", "b", LocalDate.parse("2022-10-10"), "d", "e"));
+    list.add(new StockListEntry("AAA", "Apple", "a", "b", LocalDate.parse("2022-10-10"), "d", "e"));
     return list;
   }
 }

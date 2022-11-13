@@ -31,7 +31,7 @@ public enum TransactionType {
 
   public static int getMultiplier(TransactionType txType) {
     if (txType == null) {
-      return 0;
+      return 1;
     }
     switch (txType) {
       case BUY:

@@ -15,7 +15,7 @@ import portfolio.models.entities.StockPrice;
 public interface Portfolio {
 
   PortfolioFormat getFormat();
-  Portfolio create(List<Transaction> transactions);
+  Portfolio create(List<Transaction> transactions) throws Exception;
 
   /**
    * This is a method to get the portfolio list. Return a list with the portfolio entry.
@@ -23,6 +23,8 @@ public interface Portfolio {
    * @return a list with the portfolio entry.
    */
   Map<String, Integer> getStocks();
+
+  Map<String, Integer> getStocks(LocalDate date);
 
   List<Transaction> getTransaction();
 

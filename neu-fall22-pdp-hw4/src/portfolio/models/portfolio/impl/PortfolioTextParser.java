@@ -33,10 +33,10 @@ public class PortfolioTextParser implements PortfolioParser {
       if (stock.length == 1) {
         continue;
       }
-      if (stock.length == 4) {
+      if (stock.length == 5) {
         transactions.add(
             new Transaction(TransactionType.parse(stock[1]), stock[2], Integer.parseInt(stock[3]),
-                LocalDate.parse(stock[0])));
+                LocalDate.parse(stock[0]), Double.parseDouble(stock[4])));
       } else if (stock.length == 2) {
         transactions.add(new Transaction(stock[0], Integer.parseInt(stock[1])));
       } else {
@@ -59,13 +59,15 @@ public class PortfolioTextParser implements PortfolioParser {
     builder.append("FORMAT=").append(portfolio.getFormat()).append("\n");
 
     for (var entry : transactions) {
-      String[] list = new String[]{entry.getDate() == null ? null : String.valueOf(entry.getDate()),
+      String[] list = new String[]{
+          entry.getDate() == null ? null : String.valueOf(entry.getDate()),
           TransactionType.toString(entry.getType()), entry.getSymbol(),
-          String.valueOf(entry.getAmount())};
+          String.valueOf(entry.getAmount()),
+          entry.getCommissionFee() == null ? null : String.valueOf(entry.getCommissionFee())
+      };
       String joined = Arrays.stream(list).filter(Objects::nonNull).collect(Collectors.joining(","));
       builder.append(joined).append("\n");
     }
-
     return builder.toString();
   }
 }

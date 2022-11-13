@@ -25,23 +25,24 @@ public abstract class PortfolioAbs implements Portfolio {
     if (transactions.get(0).getDate() != null) {
       transactions.sort(Comparator.comparing(Transaction::getDate));
     }
-    setStocks();
+    this.stocks = getStocks(null);
   }
 
-  private void setStocks() {
+  public Map<String, Integer> getStocks(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
+      if (date != null && tx.getDate().compareTo(date) > 0) {
+        break;
+      }
       int current = stocks.getOrDefault(tx.getSymbol(), 0);
       int newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
       if (newShare >= 0) {
         stocks.put(tx.getSymbol(), newShare);
-      }
-      else {
+      } else {
         throw new RuntimeException("There is a conflict in the input transaction.");
       }
     }
-    this.stocks = stocks;
-
+    return stocks;
   }
 
   /**
@@ -53,6 +54,7 @@ public abstract class PortfolioAbs implements Portfolio {
   public Map<String, Integer> getStocks() {
     return Collections.unmodifiableMap(stocks);
   }
+
 
   @Override
   public List<Transaction> getTransaction() {
@@ -66,10 +68,8 @@ public abstract class PortfolioAbs implements Portfolio {
    */
   @Override
   public List<String> getSymbols() {
-    return transactions.stream().map(Transaction::getSymbol)
-        .collect(Collectors.toUnmodifiableList());
+    return stocks.keySet().stream().collect(Collectors.toUnmodifiableList());
   }
-
 
 
   /**

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +102,7 @@ public class AlphaVantageApi implements StockPriceApi {
           line[1],
           line[2],
           line[3],
-          line[4],
+          LocalDate.parse(line[4]),
           line[6],
           line[5]
       );

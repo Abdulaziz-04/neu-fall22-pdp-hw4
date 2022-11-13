@@ -20,13 +20,11 @@ public interface PortfolioService {
 
   void load(String text) throws Exception;
 
-  void modify(List<Transaction> newTransactions) throws Exception;
+  void addTransactions(List<Transaction> newTransactions) throws Exception;
 
   PortfolioWithValue getValue(LocalDate date) throws Exception;
 
   PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception;
 
   List<PortfolioWithValue> getValues(LocalDate from, LocalDate to) throws Exception;
-
-  void setCommissionFee(double amount);
 }

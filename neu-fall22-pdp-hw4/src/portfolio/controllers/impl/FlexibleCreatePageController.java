@@ -85,11 +85,18 @@ public class FlexibleCreatePageController implements PageController {
           errorMessage = "The share is not a number.";
           return this;
         }
+        double commissionFee = 0;
+        try {
+          commissionFee = Double.parseDouble(cmd[4]);
+        } catch (Exception e) {
+          errorMessage = "Commission fee input is incorrect.";
+          return this;
+        }
         if (amount <= 0) {
           errorMessage = "The shares cannot be negative and 0.";
           return this;
         }
-        transactions.add(new Transaction(TransactionType.parse(cmd[1]), symbol, amount, LocalDate.parse(cmd[0])));
+        transactions.add(new Transaction(TransactionType.parse(cmd[1]), symbol, amount, LocalDate.parse(cmd[0]), commissionFee));
       } catch (Exception e) {
         errorMessage = e.getMessage();
         return this;
