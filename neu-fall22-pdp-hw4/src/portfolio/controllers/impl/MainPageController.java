@@ -2,7 +2,7 @@ package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
-import portfolio.services.stockprice.StockQueryService;
+import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -48,8 +48,10 @@ public class MainPageController implements PageController {
     errorMessage = null;
     switch (input) {
       case "1":
-        return controllerFactory.newCreatePageController();
+        return controllerFactory.newInflexibleCreatePageController();
       case "2":
+        return controllerFactory.newFlexibleCreatePageController();
+      case "3":
         return controllerFactory.newLoadPageController();
       default:
         errorMessage = "Please enter the correct number!";

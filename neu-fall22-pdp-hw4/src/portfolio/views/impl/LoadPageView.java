@@ -1,7 +1,8 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import portfolio.entities.Portfolio;
+import portfolio.models.portfolio.Portfolio;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.views.ViewAbs;
 
 /**
@@ -19,7 +20,7 @@ public class LoadPageView extends ViewAbs {
    * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
-  public LoadPageView(PrintStream printStream, Portfolio portfolio, String errorMessage) {
+  public LoadPageView(PrintStream printStream, InflexiblePortfolio portfolio, String errorMessage) {
     super(printStream);
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;
@@ -54,8 +55,8 @@ public class LoadPageView extends ViewAbs {
       printStream.println("           +---------+---------------+");
       printStream.println("Portfolio: |    Stock|  No. of shares|");
       printStream.println("           +---------+---------------+");
-      for (var entry : portfolio.getStocks()) {
-        printStream.printf("           |%9s|%15d|%n", entry.getSymbol(), entry.getAmount());
+      for (var entry : portfolio.getStocks().entrySet()) {
+        printStream.printf("           |%9s|%15d|%n", entry.getKey(), entry.getValue());
       }
       printStream.println("           +---------+---------------+");
       printStream.println("Do you want to determine the total value of current portfolio?");

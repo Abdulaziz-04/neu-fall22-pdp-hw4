@@ -1,12 +1,14 @@
 package portfolio.controllers;
 
-import portfolio.controllers.impl.CreatePageController;
+import portfolio.controllers.impl.FlexibleCreatePageController;
+import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.entities.Portfolio;
-import portfolio.services.portfolio.PortfolioService;
-import portfolio.services.stockprice.StockQueryService;
+import portfolio.models.portfolio.Portfolio;
+import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 
 /**
@@ -15,6 +17,7 @@ import portfolio.views.ViewFactory;
 public class PageControllerFactory {
 
   private final PortfolioService portfolioService;
+  private final PortfolioParser portfolioParser;
   private final StockQueryService stockQueryService;
   private final ViewFactory viewFactory;
 
@@ -27,10 +30,11 @@ public class PageControllerFactory {
    * @param viewFactory       factory for creating View
    */
   public PageControllerFactory(
-      PortfolioService portfolioService, StockQueryService stockQueryService,
+      PortfolioService portfolioService, StockQueryService stockQueryService, PortfolioParser portfolioParser,
       ViewFactory viewFactory) {
     this.stockQueryService = stockQueryService;
     this.portfolioService = portfolioService;
+    this.portfolioParser = portfolioParser;
     this.viewFactory = viewFactory;
   }
 
@@ -49,8 +53,12 @@ public class PageControllerFactory {
    *
    * @return a new CreatePageController object
    */
-  public PageController newCreatePageController() {
-    return new CreatePageController(stockQueryService, portfolioService, this, viewFactory);
+  public PageController newInflexibleCreatePageController() {
+    return new InflexibleCreatePageController(portfolioService, portfolioParser, this, viewFactory);
+  }
+
+  public PageController newFlexibleCreatePageController() {
+    return new FlexibleCreatePageController(portfolioService, portfolioParser, this, viewFactory);
   }
 
   /**

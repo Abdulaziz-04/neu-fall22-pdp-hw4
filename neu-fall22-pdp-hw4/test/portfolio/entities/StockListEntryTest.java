@@ -2,8 +2,10 @@ package portfolio.entities;
 
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import portfolio.models.entities.StockListEntry;
 
 
 /**
@@ -16,7 +18,7 @@ public class StockListEntryTest {
   @Before
   public void setup() {
     stockListEntry = new StockListEntry("AAA", "AAA", "100",
-        "type", "2009-11-11", "2010-11-12", "good");
+        "type", LocalDate.parse("2009-11-11"), "2010-11-12", "good");
   }
 
   @Test

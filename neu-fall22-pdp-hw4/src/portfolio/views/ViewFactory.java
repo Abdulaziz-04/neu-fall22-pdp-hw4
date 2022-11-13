@@ -1,8 +1,10 @@
 package portfolio.views;
 
+import java.util.List;
 import java.util.Map;
-import portfolio.entities.Portfolio;
-import portfolio.entities.PortfolioWithValue;
+import portfolio.models.entities.PortfolioWithValue;
+import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.Portfolio;
 
 /**
  * This is the interface that will generate different views.
@@ -24,12 +26,15 @@ public interface ViewFactory {
    *
    * @param isEnd the user finish input the portfolio or not
    * @param isNamed the user named the portfolio or not
-   * @param map the map that store the symbol and shares for portfolio.
+   * @param transactions the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message will show to the user
    * @return a new view of create page
    */
-  View newCreatePageView(Boolean isEnd, Boolean isNamed,
-      Map<String, Integer> map, String errorMessage);
+  View newInflexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+      Map<String, Integer> transactions, String errorMessage);
+
+  View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+      List<Transaction> transactions, String errorMessage);
 
   /**
    * To generate the view of examine page.

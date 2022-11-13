@@ -1,7 +1,7 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import portfolio.entities.PortfolioWithValue;
+import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.ViewAbs;
 
 /**
