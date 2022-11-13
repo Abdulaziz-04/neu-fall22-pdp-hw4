@@ -100,7 +100,7 @@ public class InflexibleCreatePageController implements PageController {
           .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
               Collectors.toList());
       try {
-        portfolio = portfolioService.create(PortfolioFormat.INFLEXIBLE, transactions);
+        portfolio = portfolioService.create("aa", PortfolioFormat.INFLEXIBLE, transactions);
         isEnd = true;
         return this;
       }

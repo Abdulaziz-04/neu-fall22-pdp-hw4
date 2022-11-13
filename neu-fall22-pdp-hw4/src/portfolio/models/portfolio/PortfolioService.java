@@ -15,11 +15,11 @@ public interface PortfolioService {
 
   Portfolio getPortfolio();
 
-  Portfolio create(PortfolioFormat format, List<Transaction> transactions) throws Exception;
+  Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception;
 
-  void createAndSet(PortfolioFormat format, List<Transaction> transactions) throws Exception;
+  void createAndSet(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception;
 
-  void load(String text) throws Exception;
+  void load(String name, String text) throws Exception;
 
   void addTransactions(List<Transaction> newTransactions) throws Exception;
 
@@ -27,5 +27,5 @@ public interface PortfolioService {
 
   PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception;
 
-  Map<String, PortfolioWithValue> getValues(LocalDate from, LocalDate to) throws Exception;
+  Map<LocalDate, Double> getValues(LocalDate from, LocalDate to) throws Exception;
 }

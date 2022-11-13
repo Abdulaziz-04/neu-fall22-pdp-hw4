@@ -42,7 +42,7 @@ public class PortfolioServiceImpl implements PortfolioService {
   }
 
   @Override
-  public Portfolio create(PortfolioFormat format, List<Transaction> transactions) throws Exception {
+  public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception {
     Map<String, LocalDate> map = new HashMap<>();
     for (var stock : stockQueryService.getStockList()) {
       map.put(stock.getSymbol(), stock.getIpoDate());
@@ -58,23 +58,23 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     switch (format) {
       case INFLEXIBLE:
-        return new InflexiblePortfolio(transactions);
+        return new InflexiblePortfolio(name, transactions);
       case FLEXIBLE:
-        return new FlexiblePortfolio(transactions);
+        return new FlexiblePortfolio(name, transactions);
     }
     return null;
   }
 
   @Override
-  public void createAndSet(PortfolioFormat format, List<Transaction> transactions)
+  public void createAndSet(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception {
-    portfolio = create(format, transactions);
+    portfolio = create(name, format, transactions);
   }
 
   @Override
-  public void load(String text) throws Exception {
+  public void load(String name, String text) throws Exception {
     var format = portfolioParser.parseFormat(text);
-    createAndSet(format, portfolioParser.parseTransaction(text));
+    createAndSet(name, format, portfolioParser.parseTransaction(text));
   }
 
   private List<Transaction> mergeTransactions(List<Transaction> transactions,
@@ -118,13 +118,13 @@ public class PortfolioServiceImpl implements PortfolioService {
   }
 
   @Override
-  public Map<String, PortfolioWithValue> getValues(LocalDate from, LocalDate to) {
-    Map<String, PortfolioWithValue> map = new HashMap<>();
+  public Map<LocalDate, Double> getValues(LocalDate from, LocalDate to) {
+    Map<LocalDate, Double> map = new HashMap<>();
     for (LocalDate date = from; date.isBefore(to.plusDays(1)); date = date.plusDays(1)) {
       Map<String, StockPrice> prices;
       try {
         prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
-        map.put(date.toString(), portfolio.getPortfolioWithValue(date, prices));
+        map.put(date, portfolio.getPortfolioWithValue(date, prices).getTotalValue());
       } catch (Exception ignored) {
       }
     }

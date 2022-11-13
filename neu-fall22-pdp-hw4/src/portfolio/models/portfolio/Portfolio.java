@@ -14,6 +14,7 @@ import portfolio.models.entities.StockPrice;
  */
 public interface Portfolio {
 
+  String getName();
   PortfolioFormat getFormat();
   Portfolio create(List<Transaction> transactions) throws Exception;
 

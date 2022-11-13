@@ -60,7 +60,7 @@ public class LoadPageController implements PageController {
       if (portfolio == null) {
         //get portfolio
         String str = ioService.read(input + ".txt");
-        portfolioService.load(str);
+        portfolioService.load(input, str);
         portfolio = portfolioService.getPortfolio();
         return this;
       } else {
