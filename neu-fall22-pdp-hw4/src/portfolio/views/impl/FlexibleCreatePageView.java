@@ -57,14 +57,14 @@ public class FlexibleCreatePageView extends ViewAbs {
   }
 
   private void printSelectedStocks() {
-    printStream.println("             +-----------+------+---------+---------------+");
-    printStream.println("Transaction: |       Date|  Type|    Stock|  No. of shares|");
-    printStream.println("             +-----------+------+---------+---------------+");
+    printStream.println("             +-----------+------+---------+---------------+---------------+");
+    printStream.println("Transaction: |       Date|  Type|    Stock|  No. of shares| Commission fee|");
+    printStream.println("             +-----------+------+---------+---------------+---------------+");
     for (var entry : transactions) {
-      printStream.printf("             |%11s|%6s|%9s|%15d|%n", entry.getDate(),entry.getType(),
-          entry.getSymbol(), entry.getAmount());
+      printStream.printf("             |%11s|%6s|%9s|%15d|%15f|%n", entry.getDate(),entry.getType(),
+          entry.getSymbol(), entry.getAmount(), entry.getCommissionFee());
     }
-    printStream.println("             +-----------+------+---------+---------------+");
+    printStream.println("             +-----------+------+---------+---------------+---------------+");
   }
 
   @Override
@@ -83,7 +83,7 @@ public class FlexibleCreatePageView extends ViewAbs {
       printStream.println("!!! If you enter back, you will back to the main menu.");
       printStream.println("*********************************************************");
       printStream.println("Enter symbol and number of shares for one stock. "
-          + "The format is: 2022-10-10,BUY,AAPL,100.");
+          + "The format is: [yyyy-MM-dd,transaction_type,symbol,commission_fee] ex. 2022-10-10,BUY,AAPL,100,123.45.");
       printStream.println("--The symbol must be capital letters and "
           + "the shares need to be numbers.");
       printStream.println("--The shares cannot be 0 and "

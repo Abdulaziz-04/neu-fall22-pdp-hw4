@@ -89,7 +89,7 @@ public class InflexiblePortfolioTest {
 
   @Test
   public void getSymbols() {
-    List<String> symbols = portfolio.getSymbols();
+    List<String> symbols = portfolio.getSymbols(null);
     assertEquals("[AAA, AAPL]", symbols.toString());
   }
 

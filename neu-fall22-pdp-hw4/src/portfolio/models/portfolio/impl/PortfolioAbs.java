@@ -18,14 +18,13 @@ import portfolio.models.portfolio.Portfolio;
 public abstract class PortfolioAbs implements Portfolio {
 
   protected final List<Transaction> transactions;
-  protected Map<String, Integer> stocks;
 
   protected PortfolioAbs(List<Transaction> transactions) {
     this.transactions = transactions;
     if (transactions.get(0).getDate() != null) {
       transactions.sort(Comparator.comparing(Transaction::getDate));
     }
-    this.stocks = getStocks(null);
+    getStocks(null);
   }
 
   public Map<String, Integer> getStocks(LocalDate date) {
@@ -36,9 +35,13 @@ public abstract class PortfolioAbs implements Portfolio {
       }
       int current = stocks.getOrDefault(tx.getSymbol(), 0);
       int newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
-      if (newShare >= 0) {
+      if (newShare > 0) {
         stocks.put(tx.getSymbol(), newShare);
-      } else {
+      }
+      else if (newShare == 0) {
+        stocks.remove(tx.getSymbol());
+      }
+      else {
         throw new RuntimeException("There is a conflict in the input transaction.");
       }
     }
@@ -52,7 +55,7 @@ public abstract class PortfolioAbs implements Portfolio {
    */
   @Override
   public Map<String, Integer> getStocks() {
-    return Collections.unmodifiableMap(stocks);
+    return Collections.unmodifiableMap(getStocks(null));
   }
 
 
@@ -67,8 +70,8 @@ public abstract class PortfolioAbs implements Portfolio {
    * @return an immutable list of stock symbol string
    */
   @Override
-  public List<String> getSymbols() {
-    return stocks.keySet().stream().collect(Collectors.toUnmodifiableList());
+  public List<String> getSymbols(LocalDate date) {
+    return getStocks(date).keySet().stream().collect(Collectors.toUnmodifiableList());
   }
 
 
@@ -83,7 +86,7 @@ public abstract class PortfolioAbs implements Portfolio {
     List<PortfolioEntryWithValue> portfolioEntryWithValues = new ArrayList<>();
     double total = 0;
 
-    for (var entry : stocks.entrySet()) {
+    for (var entry : getStocks(date).entrySet()) {
       Double value = null;
       StockPrice price = prices.get(entry.getKey());
       if (price != null) {

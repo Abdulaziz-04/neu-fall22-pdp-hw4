@@ -109,7 +109,7 @@ public class FlexiblePortfolioTest {
 
   @Test
   public void getSymbols() {
-    List<String> symbols = portfolio.getSymbols();
+    List<String> symbols = portfolio.getSymbols(null);
     assertEquals("[AAA, AAPL]", symbols.toString());
   }
 
@@ -118,19 +118,18 @@ public class FlexiblePortfolioTest {
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
     assertEquals(date, portfolioWithValue.getDate());
-    assertEquals(44400.0, portfolioWithValue.getTotalValue(), EPSILON);
+    assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
     List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
     assertEquals(400, list.get(0).getValue(), EPSILON);
-    assertEquals(44000, list.get(1).getValue(), EPSILON);
   }
 
   @Test
   public void getPortfolioWithPrice_withNull() throws Exception {
-    transactions.add(new Transaction(TransactionType.BUY, "ABC", 1000, LocalDate.parse("2022-10-12"), 12));
+    transactions.add(new Transaction(TransactionType.BUY, "ABC", 1000, LocalDate.parse("2022-10-11"), 12));
     prices.put("ABC", null);
     portfolio = new FlexiblePortfolio(transactions);
-    LocalDate date = LocalDate.parse("2022-10-10");
+    LocalDate date = LocalDate.parse("2022-10-11");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 
     List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();

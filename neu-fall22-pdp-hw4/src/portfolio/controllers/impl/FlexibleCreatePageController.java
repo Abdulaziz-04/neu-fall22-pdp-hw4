@@ -74,7 +74,7 @@ public class FlexibleCreatePageController implements PageController {
       try {
         String[] cmd = input.split(",");
         String symbol = cmd[2];
-        if (cmd.length != 4) {
+        if (cmd.length != 5) {
           errorMessage = "Error Format!";
           return this;
         }

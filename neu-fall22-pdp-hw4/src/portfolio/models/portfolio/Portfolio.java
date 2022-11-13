@@ -33,7 +33,7 @@ public interface Portfolio {
    *
    * @return the symbol list of the portfolio.
    */
-  List<String> getSymbols();
+  List<String> getSymbols(LocalDate date);
 
   /**
    * This is the method to calculate the portfolio price on a certain date. It will return

@@ -43,13 +43,17 @@ public class PortfolioServiceImpl implements PortfolioService {
 
   @Override
   public Portfolio create(PortfolioFormat format, List<Transaction> transactions) throws Exception {
-    List<String> stockSymbolList = stockQueryService.getStockList().stream().map(
-        StockListEntry::getSymbol).collect(
-        Collectors.toList());
+    Map<String, LocalDate> map = new HashMap<>();
+    for (var stock : stockQueryService.getStockList()) {
+      map.put(stock.getSymbol(), stock.getIpoDate());
+    }
     for (var entry : transactions) {
-      if (!stockSymbolList.contains(entry.getSymbol())) {
+      List<String> symbols = new ArrayList<>();
+      symbols.add(entry.getSymbol());
+      if (!map.containsKey(entry.getSymbol())) {
         throw new IllegalArgumentException("Symbol [" + entry.getSymbol() + "] not found.");
       }
+      stockQueryService.getStockPrice(entry.getDate(), symbols).containsKey(entry.getSymbol());
     }
 
     switch (format) {
@@ -103,13 +107,13 @@ public class PortfolioServiceImpl implements PortfolioService {
 
   @Override
   public PortfolioWithValue getValue(LocalDate date) throws Exception {
-    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
+    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
     return portfolio.getPortfolioWithValue(date, prices);
   }
 
   @Override
   public PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception {
-    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
+    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
     return portfolio.getCostBasis(date, prices, commissionFee);
   }
 
@@ -119,7 +123,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     for (LocalDate date = from; date.isBefore(to.plusDays(1)); date = date.plusDays(1)) {
       Map<String, StockPrice> prices;
       try {
-        prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
+        prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
         map.put(date.toString(), portfolio.getPortfolioWithValue(date, prices));
       } catch (Exception ignored) {
       }

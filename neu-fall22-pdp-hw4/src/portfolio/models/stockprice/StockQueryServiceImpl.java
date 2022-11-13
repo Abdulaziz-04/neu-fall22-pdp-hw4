@@ -53,7 +53,7 @@ public class StockQueryServiceImpl implements StockQueryService {
       if (isInList(symbol)) {
         price = stockPriceCache.get(symbol, x -> api.getStockPrice(symbol)).get(date.toString());
         if (price == null) {
-          throw new IllegalArgumentException("Date not found.");
+          throw new IllegalArgumentException("Stock [" + symbol + "] is not available at date "+ date + ".");
         }
       }
       map.put(symbol, price);

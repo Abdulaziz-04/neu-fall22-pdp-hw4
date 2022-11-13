@@ -48,7 +48,7 @@ public class InfoPageController implements PageController {
    * @throws Exception cannot get the price on that date
    */
   private void updatePortfolioWithValue(LocalDate date) throws Exception {
-    var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
+    var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
     portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
   }
 
