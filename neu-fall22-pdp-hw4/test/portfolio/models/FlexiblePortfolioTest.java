@@ -41,7 +41,7 @@ public class FlexiblePortfolioTest {
     transactions.add(new Transaction(TransactionType.BUY, "AAPL", 1000, LocalDate.parse("2022-10-11"), 56));
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
-    portfolio = new FlexiblePortfolio(transactions);
+    portfolio = new FlexiblePortfolio("name", transactions);
   }
 
   @Test
@@ -128,7 +128,7 @@ public class FlexiblePortfolioTest {
   public void getPortfolioWithPrice_withNull() throws Exception {
     transactions.add(new Transaction(TransactionType.BUY, "ABC", 1000, LocalDate.parse("2022-10-11"), 12));
     prices.put("ABC", null);
-    portfolio = new FlexiblePortfolio(transactions);
+    portfolio = new FlexiblePortfolio("name", transactions);
     LocalDate date = LocalDate.parse("2022-10-11");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 

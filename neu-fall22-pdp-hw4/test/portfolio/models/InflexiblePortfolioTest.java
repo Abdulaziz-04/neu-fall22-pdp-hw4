@@ -36,7 +36,7 @@ public class InflexiblePortfolioTest {
     stocks.put("AAPL", 1000);
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
-    portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
+    portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
   }
 
   @Test
@@ -109,7 +109,7 @@ public class InflexiblePortfolioTest {
   public void getPortfolioWithPrice_withNull() {
     stocks.put("ABC", 1000);
     prices.put("ABC", null);
-    portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
+    portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 

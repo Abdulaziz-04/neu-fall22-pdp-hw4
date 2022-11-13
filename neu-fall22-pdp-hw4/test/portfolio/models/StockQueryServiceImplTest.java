@@ -94,7 +94,7 @@ public class StockQueryServiceImplTest {
       stockQueryService.getStockPrice(LocalDate.parse("2022-10-12"), list);
       fail("should fail");
     } catch (Exception e) {
-      assertEquals("Date not found.", e.getMessage());
+      assertEquals("Stock [AAPL] is not available at date 2022-10-12.", e.getMessage());
     }
   }
 

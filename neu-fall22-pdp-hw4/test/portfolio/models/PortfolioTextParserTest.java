@@ -111,7 +111,7 @@ public class PortfolioTextParserTest {
         new Transaction(TransactionType.SELL, "a", 50, LocalDate.parse("2022-10-11"), 34));
 
     assertEquals("FORMAT=FLEXIBLE\n2022-10-10,BUY,a,100,12.0\n2022-10-11,SELL,a,50,34.0\n",
-        portfolioParser.toString(new FlexiblePortfolio(transactions)));
+        portfolioParser.toString(new FlexiblePortfolio("name", transactions)));
   }
 
   @Test
@@ -122,6 +122,6 @@ public class PortfolioTextParserTest {
         new Transaction("b", 100));
 
     assertEquals("FORMAT=INFLEXIBLE\na,100\nb,100\n",
-        portfolioParser.toString(new InflexiblePortfolio(transactions)));
+        portfolioParser.toString(new InflexiblePortfolio("name", transactions)));
   }
 }

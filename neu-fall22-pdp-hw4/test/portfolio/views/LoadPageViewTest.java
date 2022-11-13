@@ -90,7 +90,7 @@ public class LoadPageViewTest {
     setUp();
     stocks.put("AAA", 100);
     stocks.put("AA", 1000);
-    InflexiblePortfolio portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
+    InflexiblePortfolio portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
     View view = new LoadPageView(printStream, portfolio,
         null);
     view.render();

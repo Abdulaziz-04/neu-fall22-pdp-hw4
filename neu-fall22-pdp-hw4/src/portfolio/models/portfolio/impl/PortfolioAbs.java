@@ -33,7 +33,7 @@ public abstract class PortfolioAbs implements Portfolio {
   public Map<String, Integer> getStocks(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
-      if (date != null && tx.getDate().compareTo(date) > 0) {
+      if (date != null && tx.getDate() != null && tx.getDate().compareTo(date) > 0) {
         break;
       }
       int current = stocks.getOrDefault(tx.getSymbol(), 0);

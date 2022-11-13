@@ -55,7 +55,7 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void create_flexible() throws Exception {
-    Portfolio actualPortfolio = portfolioService.create(PortfolioFormat.FLEXIBLE, transactions);
+    Portfolio actualPortfolio = portfolioService.create("name", PortfolioFormat.FLEXIBLE, transactions);
 
     List<Transaction> actual = actualPortfolio.getTransaction();
 
@@ -73,7 +73,7 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void create_inflexible() throws Exception {
-    Portfolio actualPortfolio = portfolioService.create(PortfolioFormat.INFLEXIBLE, transactions);
+    Portfolio actualPortfolio = portfolioService.create("name", PortfolioFormat.INFLEXIBLE, transactions);
 
     List<Transaction> actual = actualPortfolio.getTransaction();
 
@@ -91,11 +91,11 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void getPortfolio() throws Exception {
-    portfolioService.create(PortfolioFormat.INFLEXIBLE, transactions);
+    portfolioService.create("name", PortfolioFormat.INFLEXIBLE, transactions);
     Portfolio actual = portfolioService.getPortfolio();
     assertNull(actual);
 
-    portfolioService.createAndSet(PortfolioFormat.INFLEXIBLE, transactions);
+    portfolioService.createAndSet("name", PortfolioFormat.INFLEXIBLE, transactions);
     actual = portfolioService.getPortfolio();
     assertNotNull(actual);
   }
@@ -107,7 +107,7 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void modify_flexible() throws Exception {
-    portfolioService.createAndSet(PortfolioFormat.FLEXIBLE, transactions);
+    portfolioService.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
     portfolioService.addTransactions(transactions2);
 
     List<Transaction> actual = portfolioService.getPortfolio().getTransaction();
@@ -116,7 +116,7 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void modify_flexible_error() throws Exception {
-    portfolioService.createAndSet(PortfolioFormat.FLEXIBLE, transactions);
+    portfolioService.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
     transactions2.add(
         new Transaction(TransactionType.SELL, "AAPL", 10000, LocalDate.parse("2022-10-12"),123));
     try {
@@ -128,7 +128,7 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void modify_inflexible() throws Exception {
-    portfolioService.createAndSet(PortfolioFormat.INFLEXIBLE, transactions);
+    portfolioService.createAndSet("name", PortfolioFormat.INFLEXIBLE, transactions);
     try {
       portfolioService.addTransactions(transactions2);
       fail("should fail");
@@ -139,33 +139,37 @@ public class PortfolioServiceImplTest {
 
   @Test
   public void getValue() throws Exception {
-    portfolioService.createAndSet(PortfolioFormat.FLEXIBLE, transactions);
+    portfolioService.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
     PortfolioWithValue portfolioWithValue = portfolioService.getValue(
         LocalDate.parse("2022-10-10"));
 
-    assertEquals(8400.0, portfolioWithValue.getTotalValue(), EPSILON);
+    assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
     List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
-    assertEquals(4400, list.get(0).getValue(), EPSILON);
-    assertEquals(4000, list.get(1).getValue(), EPSILON);
+    assertEquals(1, list.size());
+    assertEquals(400, list.get(0).getValue(), EPSILON);
+  }
+
+  @Test
+  public void getValue_noStock() throws Exception {
+    portfolioService.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    PortfolioWithValue portfolioWithValue = portfolioService.getValue(
+        LocalDate.parse("2022-10-09"));
+
+    assertEquals(0.0, portfolioWithValue.getTotalValue(), EPSILON);
+
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    assertEquals(0, list.size());
   }
 
   @Test
   public void getValues() throws Exception {
-    portfolioService.createAndSet(PortfolioFormat.FLEXIBLE, transactions);
-    Map<String, PortfolioWithValue> portfolioWithValue = portfolioService.getValues(
+    portfolioService.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    Map<LocalDate, Double> portfolioWithValue = portfolioService.getValues(
         LocalDate.parse("2022-10-10"), LocalDate.parse("2022-10-11"));
 
-    assertEquals(8400.0, portfolioWithValue.get("2022-10-10").getTotalValue(), EPSILON);
-    assertEquals(9900.0, portfolioWithValue.get("2022-10-11").getTotalValue(), EPSILON);
-
-    List<PortfolioEntryWithValue> list = portfolioWithValue.get("2022-10-10").getStocks();
-    assertEquals(4400, list.get(0).getValue(), EPSILON);
-    assertEquals(4000, list.get(1).getValue(), EPSILON);
-
-    list = portfolioWithValue.get("2022-10-11").getStocks();
-    assertEquals(900, list.get(0).getValue(), EPSILON);
-    assertEquals(9000, list.get(1).getValue(), EPSILON);
+    assertEquals(400.0, portfolioWithValue.get(LocalDate.parse("2022-10-10")), EPSILON);
+    assertEquals(9900.0, portfolioWithValue.get(LocalDate.parse("2022-10-11")), EPSILON);
   }
 
 }

@@ -54,7 +54,7 @@ public class InfoPageControllerTest {
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    portfolio = new InflexiblePortfolio(TransactionConverter.convert(map));
+    portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
 
     pageController = new InfoPageController(stockQueryService, portfolio, pageControllerFactory,
         viewFactory);

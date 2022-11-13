@@ -48,7 +48,7 @@ public class InflexibleCreatePageControllerTest {
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    InflexiblePortfolio portfolio = new InflexiblePortfolio(TransactionConverter.convert(map));
+    InflexiblePortfolio portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
 
     pageController = new InflexibleCreatePageController(portfolioService, parser,
         pageControllerFactory,

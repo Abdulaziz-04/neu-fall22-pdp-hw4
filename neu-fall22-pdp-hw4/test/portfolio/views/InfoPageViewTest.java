@@ -41,7 +41,7 @@ public class InfoPageViewTest {
         new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL",
         new StockPrice(11, 22, 33, 44, 55));
-    portfolio = new InflexiblePortfolio(TransactionConverter.convert(stocks));
+    portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
     date = LocalDate.parse("2022-10-10");
     portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
   }

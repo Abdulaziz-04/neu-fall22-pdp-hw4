@@ -64,7 +64,7 @@ public class LoadPageControllerTest {
     Map<String, Integer> map = new HashMap<>();
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    List<Transaction> expected = new InflexiblePortfolio(TransactionConverter.convert(map)).getTransaction();
+    List<Transaction> expected = new InflexiblePortfolio("name", TransactionConverter.convert(map)).getTransaction();
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {
