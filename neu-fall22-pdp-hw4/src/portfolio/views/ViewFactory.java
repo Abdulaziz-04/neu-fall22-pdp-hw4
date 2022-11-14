@@ -1,5 +1,6 @@
 package portfolio.views;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioWithValue;
@@ -53,4 +54,6 @@ public interface ViewFactory {
    * @return return a new view of main menu page
    */
   View newMainPageView(String errorMessage, boolean isInitFailed);
+
+  View newPerformacePageView(String portfolioName, LocalDate startDate, LocalDate endDate, List<String> list, List<String> listStar, String scale, String errorMessage);
 }

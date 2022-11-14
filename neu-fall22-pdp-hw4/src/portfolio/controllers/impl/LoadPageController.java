@@ -71,7 +71,7 @@ public class LoadPageController implements PageController {
           case "1":
             return new InfoPageController(portfolioModel, viewFactory);
           case "2":
-            return new MainPageController(portfolioModel, viewFactory);
+            return new PerformancePageController(portfolioModel, viewFactory);
           case "3":
             return new FlexibleCreatePageController(portfolioModel, viewFactory);
           default:

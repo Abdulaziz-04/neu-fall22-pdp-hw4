@@ -1,5 +1,6 @@
 package portfolio.views.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.Transaction;
@@ -40,6 +41,17 @@ public class DefaultSysOutViewFactory implements ViewFactory {
   @Override
   public View newMainPageView(String errorMessage, boolean isInitFailed) {
     return new MainPageView(errorMessage, isInitFailed);
+  }
+
+  @Override
+  public View newPerformacePageView(String portfolioName,
+      LocalDate startDate,
+      LocalDate endDate,
+      List<String> list,
+      List<String> listStar,
+      String scale, String errorMessage) {
+    return new PerformancePageView(portfolioName, startDate, endDate, list,
+        listStar, scale, errorMessage);
   }
 
 }
