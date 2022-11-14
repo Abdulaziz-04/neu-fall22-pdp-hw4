@@ -145,7 +145,7 @@ public class PortfolioModelImplTest {
 
     assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
     assertEquals(1, list.size());
     assertEquals(400, list.get(0).getValue(), EPSILON);
   }
@@ -158,7 +158,7 @@ public class PortfolioModelImplTest {
 
     assertEquals(0.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
     assertEquals(0, list.size());
   }
 

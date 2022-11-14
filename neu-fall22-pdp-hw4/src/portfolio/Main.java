@@ -38,7 +38,7 @@ public class Main {
 
     // Controller
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        stockQueryService, portfolioParser, viewFactory);
+        portfolioParser, viewFactory);
     FrontController frontController = new FrontControllerImpl(pageControllerFactory, System.in);
 
     // Run controller

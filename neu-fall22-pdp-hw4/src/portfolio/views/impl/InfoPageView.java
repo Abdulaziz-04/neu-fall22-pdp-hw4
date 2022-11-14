@@ -11,19 +11,22 @@ public class InfoPageView extends ViewAbs {
 
   private final PortfolioWithValue portfolioWithPrice;
   private final String errorMessage;
+  private final Double costOfBasis;
 
   /**
    * This is a constructor that construct a determine page view.
    *
-   * @param printStream  a PrintStream object to where the output will be directed to
+   * @param printStream        a PrintStream object to where the output will be directed to
    * @param portfolioWithPrice the object of PortfolioWithValue
    * @param errorMessage       the error message we want to show to the user
    */
-  public InfoPageView(PrintStream printStream, PortfolioWithValue portfolioWithPrice,
+  public InfoPageView(PrintStream printStream, Double costOfBasis,
+      PortfolioWithValue portfolioWithPrice,
       String errorMessage) {
     super(printStream);
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;
+    this.costOfBasis = costOfBasis;
   }
 
   /**
@@ -32,9 +35,11 @@ public class InfoPageView extends ViewAbs {
    * @param portfolioWithPrice the object of PortfolioWithValue
    * @param errorMessage       the error message we want to show to the user
    */
-  public InfoPageView(PortfolioWithValue portfolioWithPrice, String errorMessage) {
+  public InfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
+      String errorMessage) {
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;
+    this.costOfBasis = costOfBasis;
   }
 
   @Override
@@ -46,28 +51,34 @@ public class InfoPageView extends ViewAbs {
       printStream.println("----------------------------------------------------------");
     }
     printStream.println("*********************************************************");
-    printStream.println("!!! If you enter back, you will back to the main menu.");
+    printStream.println("!!! If you enter back, you will back to the portfolio page.");
     printStream.println("*********************************************************");
     if (portfolioWithPrice != null) {
       printStream.println(
           "If stock price not found, the value with be N/A and "
               + "will not be include in the total value.");
       printStream.println("");
-      printStream.println("Portfolio value as of: "
+      printStream.println("Portfolio composition and value as of: "
           + portfolioWithPrice.getDate());
       printStream.println("+---------+---------------+--------------------+");
       printStream.println("|    Stock|  No. of shares|       Current value|");
       printStream.println("+---------+---------------+--------------------+");
-      for (var entry : portfolioWithPrice.getStocks()) {
+      for (var entry : portfolioWithPrice.getComposition()) {
         String symbol = entry.getSymbol();
         int amount = entry.getAmount();
         String value = entry.getValue() ==
-            null ? "N/A" : entry.getValue().toString();
+            null ? "N/A" : "$" + entry.getValue().toString();
         printStream.printf("|%9s|%15d|%20s|%n", symbol, amount, value);
       }
       printStream.println("+---------+---------------+--------------------+");
-      printStream.println("Total value: " + portfolioWithPrice.getTotalValue());
-      printStream.println("");
+      printStream.println("Total value: " + "$" + portfolioWithPrice.getTotalValue());
+      if (costOfBasis != null) {
+        printStream.println("Cost of basis as of "
+            + portfolioWithPrice.getDate() + ": " + "$" + costOfBasis);
+      } else {
+        printStream.println("Cost of basis is not available for this portfolio.");
+      }
+      printStream.println();
       printStream.println("Please enter the date again if "
           + "you want to determine value for another date. "
           + "The format is year-month-day, ex: 2022-10-11");

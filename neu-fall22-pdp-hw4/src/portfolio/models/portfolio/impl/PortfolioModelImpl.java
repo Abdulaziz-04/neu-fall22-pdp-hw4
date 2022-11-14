@@ -27,7 +27,6 @@ public class PortfolioModelImpl implements PortfolioModel {
   private final StockQueryService stockQueryService;
   private final PortfolioParser portfolioParser;
   private Portfolio portfolio = null;
-  private double commissionFee = 0;
 
   public PortfolioModelImpl(StockQueryService stockQueryService,
       PortfolioParser portfolioParser) {
@@ -39,7 +38,6 @@ public class PortfolioModelImpl implements PortfolioModel {
   public Portfolio getPortfolio() {
     return portfolio;
   }
-
 
   @Override
   public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception {
@@ -53,7 +51,9 @@ public class PortfolioModelImpl implements PortfolioModel {
       if (!map.containsKey(entry.getSymbol())) {
         throw new IllegalArgumentException("Symbol [" + entry.getSymbol() + "] not found.");
       }
-      stockQueryService.getStockPrice(entry.getDate(), symbols).containsKey(entry.getSymbol());
+      if (entry.getDate() != null) {
+        stockQueryService.getStockPrice(entry.getDate(), symbols).containsKey(entry.getSymbol());
+      }
     }
 
     switch (format) {
@@ -66,9 +66,16 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public void createAndSet(String name, PortfolioFormat format, List<Transaction> transactions)
+  public Portfolio createAndSet(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception {
     portfolio = create(name, format, transactions);
+    return portfolio;
+  }
+
+  @Override
+  public void init() throws Exception {
+    portfolio = null;
+    stockQueryService.getStockList();
   }
 
   @Override

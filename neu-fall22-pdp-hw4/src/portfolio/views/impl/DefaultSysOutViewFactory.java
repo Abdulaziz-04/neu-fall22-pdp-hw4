@@ -15,9 +15,9 @@ import portfolio.views.ViewFactory;
 public class DefaultSysOutViewFactory implements ViewFactory {
 
   @Override
-  public View newInfoPageView(PortfolioWithValue portfolioWithPrice,
+  public View newInfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
       String errorMessage) {
-    return new InfoPageView(portfolioWithPrice, errorMessage);
+    return new InfoPageView(portfolioWithPrice, costOfBasis, errorMessage);
   }
 
   @Override
@@ -27,14 +27,14 @@ public class DefaultSysOutViewFactory implements ViewFactory {
   }
 
   @Override
-  public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+  public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
       List<Transaction> transactions, String errorMessage) {
-    return new FlexibleCreatePageView(isEnd, isNamed, transactions, errorMessage);
+    return new FlexibleCreatePageView(isEnd, isNamed, stage, transactions, errorMessage);
   }
 
   @Override
-  public View newLoadPageView(Portfolio portfolio, String errorMessage) {
-    return new LoadPageView(portfolio, errorMessage);
+  public View newLoadPageView(Portfolio portfolio, boolean showModifyMenu, String errorMessage) {
+    return new LoadPageView(portfolio, showModifyMenu, errorMessage);
   }
 
   @Override

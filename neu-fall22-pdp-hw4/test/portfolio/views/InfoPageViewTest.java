@@ -49,7 +49,7 @@ public class InfoPageViewTest {
   @Test
   public void testRender_First() {
     setUp();
-    View view = new InfoPageView(printStream, null, null);
+    View view = new InfoPageView(printStream, null, null, null);
     view.render();
     assertEquals("*********************"
         + "************************************\r\n"
@@ -64,7 +64,7 @@ public class InfoPageViewTest {
   @Test
   public void testRender_Error() {
     setUp();
-    View view = new InfoPageView(printStream, null,
+    View view = new InfoPageView(printStream, null, null,
         "Error! Please input the correct date.");
     view.render();
     assertEquals("---------------------ERROR----------"
@@ -84,7 +84,7 @@ public class InfoPageViewTest {
   public void testRender_Show() {
     setUp();
 
-    View view = new InfoPageView(printStream, portfolioWithValue,
+    View view = new InfoPageView(printStream, null, portfolioWithValue,
         null);
     view.render();
     assertEquals("***********************************************"

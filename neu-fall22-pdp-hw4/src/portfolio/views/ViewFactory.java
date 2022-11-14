@@ -15,17 +15,17 @@ public interface ViewFactory {
    * To generate the view of determine page.
    *
    * @param portfolioWithPrice the portfolio with price
-   * @param errorMessage the error message will show to the user
+   * @param errorMessage       the error message will show to the user
    * @return a new view of determine page
    */
-  View newInfoPageView(PortfolioWithValue portfolioWithPrice,
+  View newInfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
       String errorMessage);
 
   /**
    * To generate the view of create page.
    *
-   * @param isEnd the user finish input the portfolio or not
-   * @param isNamed the user named the portfolio or not
+   * @param isEnd        the user finish input the portfolio or not
+   * @param isNamed      the user named the portfolio or not
    * @param transactions the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message will show to the user
    * @return a new view of create page
@@ -33,17 +33,17 @@ public interface ViewFactory {
   View newInflexibleCreatePageView(Boolean isEnd, Boolean isNamed,
       Map<String, Integer> transactions, String errorMessage);
 
-  View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+  View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
       List<Transaction> transactions, String errorMessage);
 
   /**
    * To generate the view of examine page.
    *
-   * @param portfolio the portfolio that we want to examine
+   * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message will show to the user
    * @return a new view of examine page
    */
-  View newLoadPageView(Portfolio portfolio, String errorMessage);
+  View newLoadPageView(Portfolio portfolio, boolean showModifyMenu, String errorMessage);
 
   /**
    * To generate the view of main menu page.

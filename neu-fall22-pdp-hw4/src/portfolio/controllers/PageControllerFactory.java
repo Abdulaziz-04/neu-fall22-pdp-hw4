@@ -5,10 +5,8 @@ import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
-import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.portfolio.PortfolioParser;
 import portfolio.views.ViewFactory;
 
 /**
@@ -18,7 +16,6 @@ public class PageControllerFactory {
 
   private final PortfolioModel portfolioModel;
   private final PortfolioParser portfolioParser;
-  private final StockQueryService stockQueryService;
   private final ViewFactory viewFactory;
 
   /**
@@ -30,9 +27,8 @@ public class PageControllerFactory {
    * @param viewFactory       factory for creating View
    */
   public PageControllerFactory(
-      PortfolioModel portfolioModel, StockQueryService stockQueryService, PortfolioParser portfolioParser,
+      PortfolioModel portfolioModel, PortfolioParser portfolioParser,
       ViewFactory viewFactory) {
-    this.stockQueryService = stockQueryService;
     this.portfolioModel = portfolioModel;
     this.portfolioParser = portfolioParser;
     this.viewFactory = viewFactory;
@@ -44,8 +40,8 @@ public class PageControllerFactory {
    * @param portfolio the portfolio that we want to determine.
    * @return a new InfoPageController object
    */
-  public PageController newInfoPageController(Portfolio portfolio) {
-    return new InfoPageController(stockQueryService, portfolio, this, viewFactory);
+  public PageController newInfoPageController() {
+    return new InfoPageController(portfolioModel,this, viewFactory);
   }
 
   /**
@@ -76,7 +72,7 @@ public class PageControllerFactory {
    * @return a new MainPageController.
    */
   public PageController newMainPageController() {
-    return new MainPageController(stockQueryService, this, viewFactory);
+    return new MainPageController(portfolioModel, this, viewFactory);
   }
 
 }

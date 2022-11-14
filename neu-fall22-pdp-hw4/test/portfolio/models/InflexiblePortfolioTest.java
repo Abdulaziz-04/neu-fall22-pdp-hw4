@@ -100,7 +100,7 @@ public class InflexiblePortfolioTest {
     assertEquals(date, portfolioWithValue.getDate());
     assertEquals(44400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
     assertEquals(400, list.get(0).getValue(), EPSILON);
     assertEquals(44000, list.get(1).getValue(), EPSILON);
   }
@@ -113,7 +113,7 @@ public class InflexiblePortfolioTest {
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
     assertNull(list.get(2).getValue());
   }
 

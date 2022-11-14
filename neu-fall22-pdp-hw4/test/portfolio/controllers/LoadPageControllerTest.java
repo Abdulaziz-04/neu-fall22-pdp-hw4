@@ -36,7 +36,7 @@ public class LoadPageControllerTest {
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PortfolioModel portfolioModel = new PortfolioModelImpl(null, parser);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        null, parser, viewFactory);
+        parser, viewFactory);
     pageController = new LoadPageController(portfolioModel, pageControllerFactory, viewFactory);
   }
 

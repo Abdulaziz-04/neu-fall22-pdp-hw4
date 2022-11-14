@@ -41,16 +41,16 @@ public class MainPageControllerTest {
         parser);
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        stockQueryService, parser, viewFactory);
-    pageController = new MainPageController(stockQueryService, pageControllerFactory, viewFactory);
+         parser, viewFactory);
+    pageController = new MainPageController(portfolioModel, pageControllerFactory, viewFactory);
   }
 
   @Test
   public void failToInit() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        stockQueryService, parser, viewFactory);
-    pageController = new MainPageController(stockQueryService, pageControllerFactory, viewFactory);
+        parser, viewFactory);
+    pageController = new MainPageController(portfolioModel, pageControllerFactory, viewFactory);
 
     pageController.getView();
     assertNull(argumentCaptor.getArguments().get(0));

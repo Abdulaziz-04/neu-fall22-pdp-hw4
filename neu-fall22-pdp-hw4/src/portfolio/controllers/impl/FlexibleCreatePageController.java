@@ -31,10 +31,11 @@ public class FlexibleCreatePageController implements PageController {
   private final PageControllerFactory pageControllerFactory;
   private final ViewFactory viewFactory;
   private String errorMessage;
-  private Boolean isEnd = false;
-  private Boolean isNamed = false;
-  private Portfolio portfolio;
-  private final List<Transaction> transactions = new ArrayList<>();
+  private boolean isEnd = false;
+  private boolean isNamed = false;
+  private final boolean modifyMode;
+  private List<Transaction> transactions;
+  private final List<String> inputBuffer = new ArrayList<>();
 
   public FlexibleCreatePageController(
       PortfolioModel portfolioModel, PortfolioParser portfolioParser,
@@ -44,11 +45,20 @@ public class FlexibleCreatePageController implements PageController {
     this.pageControllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
     this.portfolioParser = portfolioParser;
+    if (portfolioModel.getPortfolio() != null) {
+      this.transactions = new ArrayList<>(portfolioModel.getPortfolio().getTransaction());
+      isNamed = true;
+      modifyMode = true;
+    } else {
+      this.transactions = new ArrayList<>();
+      modifyMode = false;
+    }
   }
 
   @Override
   public View getView() {
-    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, transactions, errorMessage);
+    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), transactions,
+        errorMessage);
   }
 
   /**
@@ -64,71 +74,85 @@ public class FlexibleCreatePageController implements PageController {
   public PageController handleInput(String input) {
     input = input.trim();
     errorMessage = null;
+
     if (input.equals("back")) {
       return pageControllerFactory.newMainPageController();
     }
     if (!isEnd && !input.equals("end")) {
       try {
-        String[] cmd = input.split(",");
-        String symbol = cmd[2];
-        if (cmd.length != 5) {
-          errorMessage = "Error Format!";
+        int size = inputBuffer.size();
+        if (size == 0) {
+          LocalDate.parse(input);
+          inputBuffer.add(input);
           return this;
-        }
-        int amount = 0;
-        try {
-          amount = Integer.parseInt(cmd[3]);
-        } catch (Exception e) {
-          errorMessage = "The share is not a number.";
+        } else if (size == 1) {
+          TransactionType.parse(input);
+          inputBuffer.add(input);
           return this;
-        }
-        double commissionFee = 0;
-        try {
-          commissionFee = Double.parseDouble(cmd[4]);
-        } catch (Exception e) {
-          errorMessage = "Commission fee input is incorrect.";
+        } else if (size == 2) {
+          inputBuffer.add(input);
           return this;
-        }
-        if (amount <= 0) {
-          errorMessage = "The shares cannot be negative and 0.";
+        } else if (size == 3) {
+          try {
+            if (Integer.parseInt(input) <= 0) {
+              errorMessage = "The shares cannot be negative and 0.";
+              return this;
+            }
+            inputBuffer.add(input);
+            return this;
+          } catch (Exception e) {
+            errorMessage = "The share is not a number or an integer.";
+            return this;
+          }
+        } else if (size == 4) {
+          try {
+            if (Double.parseDouble(input) < 0) {
+              errorMessage = "Commission cannot be negative.";
+
+            }
+            inputBuffer.add(input);
+          } catch (Exception e) {
+            errorMessage = "Commission fee input is not a number.";
+            return this;
+          }
+          transactions.add(
+              new Transaction(
+                  TransactionType.parse(inputBuffer.get(1)),
+                  inputBuffer.get(2),
+                  Integer.parseInt(inputBuffer.get(3)),
+                  LocalDate.parse(inputBuffer.get(0)),
+                  Double.parseDouble(inputBuffer.get(4))
+              )
+          );
           return this;
+        } else if (size == 5) {
+          if (input.equals("Y")) {
+            inputBuffer.clear();
+            return this;
+          }
         }
-        transactions.add(new Transaction(TransactionType.parse(cmd[1]), symbol, amount, LocalDate.parse(cmd[0]), commissionFee));
       } catch (Exception e) {
         errorMessage = e.getMessage();
-        return this;
       }
-    } else if (input.equals("end") && transactions.size() == 0) {
-      errorMessage = "No stock entered. Please input stock.";
-      return this;
-    } else if (input.equals("end") && !isEnd && !isNamed) {
+    }
+    Portfolio portfolio;
+    if (inputBuffer.size() == 5 && !isEnd) {
       try {
-        portfolio = portfolioModel.create("aa", PortfolioFormat.FLEXIBLE, transactions);
+        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
-        return this;
+      } catch (Exception e) {
+        errorMessage = e.getMessage() + " Please enter transaction list again.";
+        inputBuffer.clear();
+        transactions = portfolioModel.getPortfolio().getTransaction();
       }
-      catch (Exception e) {
-        errorMessage = e.getMessage();
-        transactions.clear();
-        return this;
-      }
-    } else if (isEnd && !isNamed) {
-      //save to file
-      if (input.equals("end") || input.equals("yes") || input.equals("no")) {
-        errorMessage = "The name cannot be end, back, no and yes.";
-        return this;
-      }
+    } else if (inputBuffer.size() == 5) {
+      String name = isNamed ? portfolioModel.getPortfolio().getName() : input;
       try {
-        isNamed = ioService.saveTo(portfolioParser.toString(portfolio), input + ".txt");
+        portfolio = portfolioModel.createAndSet(name, PortfolioFormat.FLEXIBLE, transactions);
+        ioService.saveTo(portfolioParser.toString(portfolio), name + ".txt", modifyMode);
+        return pageControllerFactory.newLoadPageController();
       } catch (Exception e) {
         errorMessage = e.getMessage();
-      }
-      return this;
-    } else {
-      if (input.equals("yes")) {
-        return pageControllerFactory.newInfoPageController(portfolio);
-      } else {
-        return pageControllerFactory.newMainPageController();
       }
     }
     return this;

@@ -6,6 +6,7 @@ import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.entities.PortfolioWithValue;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
@@ -16,45 +17,29 @@ import portfolio.views.View;
  * input date.
  */
 public class InfoPageController implements PageController {
-
-  private final StockQueryService stockQueryService;
   private final PageControllerFactory controllerFactory;
+  private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
-  private final Portfolio portfolio;
   private String errorMessage;
   private PortfolioWithValue portfolioWithValue;
+  private Double costOfBasis;
 
   /**
    * This is a constructor that construct a InfoPageController, which is for determining a portfolio
    * on a certain date.
    *
-   * @param stockQueryService the stock price data that we get from the external source
-   * @param portfolio         the portfolio that we want to determine
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public InfoPageController(StockQueryService stockQueryService, Portfolio portfolio,
-      PageControllerFactory controllerFactory, ViewFactory viewFactory) {
-    this.portfolio = portfolio;
-    this.stockQueryService = stockQueryService;
+  public InfoPageController(PortfolioModel portfolioModel, PageControllerFactory controllerFactory, ViewFactory viewFactory) {
+    this.portfolioModel = portfolioModel;
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
   }
 
-  /**
-   * This is a helper function that to help us the get the portfolio value from the model.
-   *
-   * @param date the date that we want to determine
-   * @throws Exception cannot get the price on that date
-   */
-  private void updatePortfolioWithValue(LocalDate date) throws Exception {
-    var prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
-    portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
-  }
-
   @Override
   public View getView() {
-    return viewFactory.newInfoPageView(portfolioWithValue, errorMessage);
+    return viewFactory.newInfoPageView(portfolioWithValue, costOfBasis, errorMessage);
   }
 
   /**
@@ -69,14 +54,28 @@ public class InfoPageController implements PageController {
   public PageController handleInput(String input) {
     errorMessage = null;
     if (input.equals("back")) {
-      return controllerFactory.newMainPageController();
+      return controllerFactory.newLoadPageController();
     }
+
+    LocalDate date;
+
     try {
-      LocalDate date = LocalDate.parse(input);
-      updatePortfolioWithValue(date);
+      date = LocalDate.parse(input);
+
     } catch (DateTimeParseException e) {
       errorMessage = "Error! Please input the correct date.";
-    } catch (Exception e) {
+      return this;
+    }
+
+    try {
+      costOfBasis = portfolioModel.getCostBasis(date);
+    }
+    catch (Exception ignored) {}
+
+    try {
+      portfolioWithValue = portfolioModel.getValue(date);
+    }
+    catch (Exception e) {
       errorMessage = e.getMessage();
     }
     return this;

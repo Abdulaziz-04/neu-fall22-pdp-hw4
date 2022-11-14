@@ -36,7 +36,7 @@ public class LoadPageViewTest {
   @Test
   public void testRender_First() {
     setUp();
-    View view = new LoadPageView(printStream, null, null);
+    View view = new LoadPageView(printStream, null, false, null);
     view.render();
     assertEquals("*************************************************"
         + "********\r\n"
@@ -51,7 +51,7 @@ public class LoadPageViewTest {
   @Test
   public void testRender_Error1() {
     setUp();
-    View view = new LoadPageView(printStream, null,
+    View view = new LoadPageView(printStream, null, false,
         "Cannot read portfolio. It may have a wrong format.");
     view.render();
     assertEquals("---------------------ERROR-----------------"
@@ -70,7 +70,7 @@ public class LoadPageViewTest {
   @Test
   public void testRender_Error2() {
     setUp();
-    View view = new LoadPageView(printStream, null,
+    View view = new LoadPageView(printStream, null, false,
         "file not found.");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -91,7 +91,7 @@ public class LoadPageViewTest {
     stocks.put("AAA", 100);
     stocks.put("AA", 1000);
     InflexiblePortfolio portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
-    View view = new LoadPageView(printStream, portfolio,
+    View view = new LoadPageView(printStream, portfolio, false,
         null);
     view.render();
     assertEquals("*********************************************************\r\n" +

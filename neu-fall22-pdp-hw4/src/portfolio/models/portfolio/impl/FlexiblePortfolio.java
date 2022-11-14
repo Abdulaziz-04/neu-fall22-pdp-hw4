@@ -1,11 +1,15 @@
 package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioFormat;
+import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
+import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 
 public class FlexiblePortfolio extends PortfolioAbs {
@@ -33,10 +37,12 @@ public class FlexiblePortfolio extends PortfolioAbs {
   public double getCostBasis(LocalDate date, Map<String, StockPrice> prices) {
     double total = 0;
     for (var entry : transactions) {
-      StockPrice price = prices.get(entry.getSymbol());
-      if (price != null) {
-        double value = price.getClose() * entry.getAmount();
-        total = total + value - entry.getCommissionFee();
+      if (entry.getDate().compareTo(date) < 0) {
+        StockPrice price = prices.get(entry.getSymbol());
+        if (entry.getType() == TransactionType.BUY && price != null) {
+          double value = price.getClose() * entry.getAmount();
+          total = total + value + entry.getCommissionFee();
+        }
       }
     }
     return total;

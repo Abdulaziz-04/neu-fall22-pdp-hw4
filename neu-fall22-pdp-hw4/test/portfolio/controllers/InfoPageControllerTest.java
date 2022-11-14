@@ -48,14 +48,14 @@ public class InfoPageControllerTest {
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
-    pageControllerFactory = new PageControllerFactory(portfolioModel, stockQueryService, parser,
+    pageControllerFactory = new PageControllerFactory(portfolioModel, parser,
         viewFactory);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
     portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
 
-    pageController = new InfoPageController(stockQueryService, portfolio, pageControllerFactory,
+    pageController = new InfoPageController(portfolioModel, pageControllerFactory,
         viewFactory);
   }
 
@@ -80,7 +80,7 @@ public class InfoPageControllerTest {
     assertEquals(date, actual.getDate());
     assertEquals(440400.0, actual.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = actual.getStocks();
+    List<PortfolioEntryWithValue> list = actual.getComposition();
     assertEquals(440000, list.get(0).getValue(), EPSILON);
     assertEquals(400, list.get(1).getValue(), EPSILON);
 
@@ -106,7 +106,8 @@ public class InfoPageControllerTest {
   @Test
   public void handelInput_serviceFail() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    pageController = new InfoPageController(stockQueryService, portfolio, pageControllerFactory,
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    pageController = new InfoPageController(portfolioModel, pageControllerFactory,
         viewFactory);
 
     PageController nextPage = pageController.handleInput("2022-10-10");

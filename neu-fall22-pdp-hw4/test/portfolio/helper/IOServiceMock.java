@@ -30,15 +30,18 @@ public class IOServiceMock implements IOService {
   }
 
   @Override
-  public boolean saveTo(String text, String path) throws IllegalArgumentException {
+  public boolean saveTo(String text, String path, boolean allowOverride) throws IllegalArgumentException {
     argumentCaptor.addArgument(text);
     if (path.equals("a.txt")) {
       return true;
     } else if (path.equals("otherioerror.txt")) {
       // Other IOException
       return false;
-    } else {
+    } else if (!allowOverride){
       throw new IllegalArgumentException("File already exists.");
+    }
+    else {
+      throw new IllegalArgumentException("Something went wrong.");
     }
   }
 

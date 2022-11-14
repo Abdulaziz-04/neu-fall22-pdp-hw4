@@ -34,7 +34,7 @@ public class FileIOServiceTest {
 
   @Test
   public void testReadWriteFile() throws IOException {
-    ioService.saveTo("abc", "a.txt");
+    ioService.saveTo("abc", "a.txt", false);
     String str = ioService.read("a.txt");
     assertEquals("abc\r\n", str);
   }
@@ -42,7 +42,7 @@ public class FileIOServiceTest {
   @Test
   public void testWriteFileWithSameName() throws IOException {
     try {
-      ioService.saveTo("abc", "b.txt");
+      ioService.saveTo("abc", "b.txt", false);
       fail("should throw exception");
     } catch (IllegalArgumentException e) {
       assertEquals("There is a file or a directory exists with filename: b.txt", e.getMessage());

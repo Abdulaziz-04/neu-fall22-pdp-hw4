@@ -34,9 +34,9 @@ public class FileIOService implements IOService {
   }
 
   @Override
-  public boolean saveTo(String text, String fileName) throws IllegalArgumentException {
+  public boolean saveTo(String text, String fileName, boolean allowOverride) throws IllegalArgumentException {
     File f = new File(fileName);
-    if (f.exists() && !f.isDirectory()) {
+    if (!allowOverride && f.exists() && !f.isDirectory()) {
       throw new IllegalArgumentException(
           "There is a file or a directory exists with filename: " + fileName);
     }

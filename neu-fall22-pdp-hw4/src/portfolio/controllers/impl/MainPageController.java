@@ -2,7 +2,7 @@ package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
-import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -21,17 +21,16 @@ public class MainPageController implements PageController {
   /**
    * This is a constructor that construct a main menu page controller.
    *
-   * @param stockQueryService StockQueryService
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public MainPageController(StockQueryService stockQueryService,
+  public MainPageController(PortfolioModel portfolioModel,
       PageControllerFactory controllerFactory, ViewFactory viewFactory) {
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
     try {
       // Init cache
-      stockQueryService.getStockList();
+      portfolioModel.init();
       isInitFailed = false;
     } catch (Exception e) {
       isInitFailed = true;

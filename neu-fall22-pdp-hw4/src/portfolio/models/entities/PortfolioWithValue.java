@@ -44,7 +44,7 @@ public class PortfolioWithValue {
    *
    * @return PortfolioEntryWithValue object
    */
-  public List<PortfolioEntryWithValue> getStocks() {
+  public List<PortfolioEntryWithValue> getComposition() {
     return Collections.unmodifiableList(stocks);
   }
 

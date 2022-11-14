@@ -44,7 +44,7 @@ public class InflexibleCreatePageControllerTest {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        stockQueryService, parser, viewFactory);
+        parser, viewFactory);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);

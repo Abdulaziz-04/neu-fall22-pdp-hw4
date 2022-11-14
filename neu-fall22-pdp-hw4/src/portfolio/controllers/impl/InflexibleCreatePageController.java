@@ -33,8 +33,8 @@ public class InflexibleCreatePageController implements PageController {
   private String errorMessage;
   private Boolean isEnd = false;
   private Boolean isNamed = false;
-  private Portfolio portfolio;
   private final Map<String, Integer> stockList = new LinkedHashMap<>();
+  private List<Transaction> transactions;
 
   public InflexibleCreatePageController(
       PortfolioModel portfolioModel, PortfolioParser portfolioParser,
@@ -67,6 +67,7 @@ public class InflexibleCreatePageController implements PageController {
     if (input.equals("back")) {
       return pageControllerFactory.newMainPageController();
     }
+    Portfolio portfolio;
     if (!isEnd && !input.equals("end")) {
       try {
         String[] cmd = input.split(",");
@@ -95,11 +96,11 @@ public class InflexibleCreatePageController implements PageController {
       errorMessage = "No stock entered. Please input stock.";
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
-      List<Transaction> transactions = stockList.entrySet().stream()
+      transactions = stockList.entrySet().stream()
           .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
               Collectors.toList());
       try {
-        portfolio = portfolioModel.create("aa", PortfolioFormat.INFLEXIBLE, transactions);
+        portfolio = portfolioModel.create(null, PortfolioFormat.INFLEXIBLE, transactions);
         isEnd = true;
         return this;
       }
@@ -115,14 +116,15 @@ public class InflexibleCreatePageController implements PageController {
         return this;
       }
       try {
-        isNamed = ioService.saveTo(portfolioParser.toString(portfolio), input + ".txt");
+        portfolio = portfolioModel.create(input, PortfolioFormat.INFLEXIBLE, transactions);
+        isNamed = ioService.saveTo(portfolioParser.toString(portfolio), input + ".txt", false);
       } catch (Exception e) {
         errorMessage = e.getMessage();
       }
       return this;
     } else {
       if (input.equals("yes")) {
-        return pageControllerFactory.newInfoPageController(portfolio);
+        return pageControllerFactory.newInfoPageController();
       } else {
         return pageControllerFactory.newMainPageController();
       }

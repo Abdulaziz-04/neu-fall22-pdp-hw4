@@ -15,18 +15,19 @@ import portfolio.views.ViewFactory;
  * creating a view to show portfolio content.
  */
 public class LoadPageController implements PageController {
+
   private final IOService ioService = new FileIOService();
   private final PortfolioModel portfolioModel;
   private final PageControllerFactory controllerFactory;
   private final ViewFactory viewFactory;
   private String errorMessage;
-  private Portfolio portfolio;
+  private boolean showModifyMenu = false;
 
   /**
    * This is a constructor that construct a LoadPageController, which is examining the composition
    * of a portfolio.
    *
-   * @param portfolioModel  the service for portfolio
+   * @param portfolioModel    the service for portfolio
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
@@ -35,11 +36,14 @@ public class LoadPageController implements PageController {
     this.portfolioModel = portfolioModel;
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
+    showModifyMenu =
+        portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
   }
 
   @Override
   public View getView() {
-    return viewFactory.newLoadPageView(portfolio, errorMessage);
+    return viewFactory.newLoadPageView(portfolioModel.getPortfolio(),
+        showModifyMenu, errorMessage);
   }
 
   /**
@@ -61,13 +65,23 @@ public class LoadPageController implements PageController {
         //get portfolio
         String str = ioService.read(input + ".txt");
         portfolioModel.load(input, str);
-        portfolio = portfolioModel.getPortfolio();
+        showModifyMenu = !portfolioModel.getPortfolio().isReadOnly();
         return this;
       } else {
-        if (input.equals("yes")) {
-          return controllerFactory.newInfoPageController(portfolio);
-        } else {
-          return controllerFactory.newMainPageController();
+        if (!showModifyMenu && input.equals("3")) {
+          errorMessage = "Please input valid number.";
+          return this;
+        }
+        switch (input) {
+          case "1":
+            return controllerFactory.newInfoPageController();
+          case "2":
+            return controllerFactory.newMainPageController();
+          case "3":
+            return controllerFactory.newFlexibleCreatePageController();
+          default:
+            errorMessage = "Please input valid number.";
+            return this;
         }
       }
     } catch (Exception e) {
