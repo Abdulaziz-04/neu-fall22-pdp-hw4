@@ -79,7 +79,7 @@ public abstract class PortfolioAbs implements Portfolio {
    */
   @Override
   public List<String> getSymbols(LocalDate date) {
-    return getStocks(date).keySet().stream().collect(Collectors.toUnmodifiableList());
+    return getComposition(date).keySet().stream().collect(Collectors.toUnmodifiableList());
   }
 
 
@@ -94,7 +94,7 @@ public abstract class PortfolioAbs implements Portfolio {
     List<PortfolioEntryWithValue> portfolioEntryWithValues = new ArrayList<>();
     double total = 0;
 
-    for (var entry : getStocks(date).entrySet()) {
+    for (var entry : getComposition(date).entrySet()) {
       Double value = null;
       StockPrice price = prices.get(entry.getKey());
       if (price != null) {

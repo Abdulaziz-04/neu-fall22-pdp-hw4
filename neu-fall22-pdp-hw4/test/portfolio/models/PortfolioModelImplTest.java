@@ -152,8 +152,8 @@ public class PortfolioModelImplTest {
 
   @Test
   public void getValue_noStock() throws Exception {
-    portfolioService.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
-    PortfolioWithValue portfolioWithValue = portfolioService.getValue(
+    portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    PortfolioWithValue portfolioWithValue = portfolioModel.getValue(
         LocalDate.parse("2022-10-09"));
 
     assertEquals(0.0, portfolioWithValue.getTotalValue(), EPSILON);
@@ -165,7 +165,7 @@ public class PortfolioModelImplTest {
   @Test
   public void getValues() throws Exception {
     portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
-    Map<String, PortfolioWithValue> portfolioWithValue = portfolioModel.getValues(
+    Map<LocalDate, Double> portfolioWithValue = portfolioModel.getValues(
         LocalDate.parse("2022-10-10"), LocalDate.parse("2022-10-11"));
 
     assertEquals(400.0, portfolioWithValue.get(LocalDate.parse("2022-10-10")), EPSILON);

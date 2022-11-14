@@ -66,14 +66,9 @@ public class FlexiblePortfolioTest {
   }
 
   @Test
-  public void getCostBasis() {
-    try {
-      portfolio.getCostBasis(LocalDate.now(), null);
-      fail("should fail");
-    }
-    catch (Exception e) {
-      assertEquals("Cost basis function is not supported.", e.getMessage());
-    }
+  public void getCostBasis() throws Exception {
+    double actual = portfolio.getCostBasis(LocalDate.now(), prices);
+    assertEquals(44378.0, actual, EPSILON);
   }
 
   @Test

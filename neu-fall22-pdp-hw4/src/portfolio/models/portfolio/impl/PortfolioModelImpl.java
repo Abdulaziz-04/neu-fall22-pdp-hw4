@@ -113,7 +113,7 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public double getCostBasis(LocalDate date) throws Exception {
-    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
+    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
     return portfolio.getCostBasis(date, prices);
   }
 
