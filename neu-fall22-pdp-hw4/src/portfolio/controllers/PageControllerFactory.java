@@ -5,6 +5,7 @@ import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
+import portfolio.controllers.impl.PerformancePageController;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioService;
@@ -77,6 +78,10 @@ public class PageControllerFactory {
    */
   public PageController newMainPageController() {
     return new MainPageController(stockQueryService, this, viewFactory);
+  }
+
+  public PageController newPerformacePageController(Portfolio portfolio) {
+    return new PerformancePageController(portfolioService, this, viewFactory);
   }
 
 }

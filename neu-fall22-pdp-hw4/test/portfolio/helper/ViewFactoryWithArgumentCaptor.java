@@ -1,5 +1,6 @@
 package portfolio.helper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.controllers.PageController;
@@ -61,6 +62,11 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
     argumentCaptor.addArgument(errorMessage);
     argumentCaptor.addArgument(isInitFailed);
     return new MainPageView(errorMessage, isInitFailed);
+  }
+
+  @Override
+  public View newPerformacePageView(String portfolioName, LocalDate startDate, LocalDate endDate, List<String> list, List<String> listStar, String scale, String errorMessage) {
+    return null;
   }
 
 }

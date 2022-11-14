@@ -64,8 +64,10 @@ public class LoadPageController implements PageController {
         portfolio = portfolioService.getPortfolio();
         return this;
       } else {
-        if (input.equals("yes")) {
+        if(input.equals("1")){
           return controllerFactory.newInfoPageController(portfolio);
+        } else if (input.equals("2")) {
+          return controllerFactory.newPerformacePageController(portfolio);
         } else {
           return controllerFactory.newMainPageController();
         }
