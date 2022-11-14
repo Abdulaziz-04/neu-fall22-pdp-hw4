@@ -18,6 +18,7 @@ import portfolio.models.portfolio.Portfolio;
 public abstract class PortfolioAbs implements Portfolio {
 
   protected final List<Transaction> transactions;
+  protected Map<String, Integer> stocks;
 
   protected final String name;
 
@@ -27,10 +28,10 @@ public abstract class PortfolioAbs implements Portfolio {
     if (transactions.get(0).getDate() != null) {
       transactions.sort(Comparator.comparing(Transaction::getDate));
     }
-    getStocks(null);
+    getComposition(null);
   }
 
-  public Map<String, Integer> getStocks(LocalDate date) {
+  public Map<String, Integer> getComposition(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
       if (date != null && tx.getDate() != null && tx.getDate().compareTo(date) > 0) {
@@ -61,8 +62,8 @@ public abstract class PortfolioAbs implements Portfolio {
    * @return an immutable list of PortfolioEntry
    */
   @Override
-  public Map<String, Integer> getStocks() {
-    return Collections.unmodifiableMap(getStocks(null));
+  public Map<String, Integer> getComposition() {
+    return Collections.unmodifiableMap(getComposition(null));
   }
 
 

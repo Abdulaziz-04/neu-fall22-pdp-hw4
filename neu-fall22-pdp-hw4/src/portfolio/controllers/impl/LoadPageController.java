@@ -5,7 +5,7 @@ import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -16,7 +16,7 @@ import portfolio.views.ViewFactory;
  */
 public class LoadPageController implements PageController {
   private final IOService ioService = new FileIOService();
-  private final PortfolioService portfolioService;
+  private final PortfolioModel portfolioModel;
   private final PageControllerFactory controllerFactory;
   private final ViewFactory viewFactory;
   private String errorMessage;
@@ -26,13 +26,13 @@ public class LoadPageController implements PageController {
    * This is a constructor that construct a LoadPageController, which is examining the composition
    * of a portfolio.
    *
-   * @param portfolioService  the service for portfolio
+   * @param portfolioModel  the service for portfolio
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public LoadPageController(PortfolioService portfolioService,
+  public LoadPageController(PortfolioModel portfolioModel,
       PageControllerFactory controllerFactory, ViewFactory viewFactory) {
-    this.portfolioService = portfolioService;
+    this.portfolioModel = portfolioModel;
     this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
   }
@@ -57,11 +57,11 @@ public class LoadPageController implements PageController {
       return controllerFactory.newMainPageController();
     }
     try {
-      if (portfolio == null) {
+      if (portfolioModel.getPortfolio() == null) {
         //get portfolio
         String str = ioService.read(input + ".txt");
-        portfolioService.load(input, str);
-        portfolio = portfolioService.getPortfolio();
+        portfolioModel.load(input, str);
+        portfolio = portfolioModel.getPortfolio();
         return this;
       } else {
         if (input.equals("yes")) {

@@ -1,6 +1,5 @@
 package portfolio.controllers.impl;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,7 @@ import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -26,7 +25,7 @@ import portfolio.views.View;
  */
 public class InflexibleCreatePageController implements PageController {
 
-  private final PortfolioService portfolioService;
+  private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
   private final PortfolioParser portfolioParser;
   private final PageControllerFactory pageControllerFactory;
@@ -38,10 +37,10 @@ public class InflexibleCreatePageController implements PageController {
   private final Map<String, Integer> stockList = new LinkedHashMap<>();
 
   public InflexibleCreatePageController(
-      PortfolioService portfolioService, PortfolioParser portfolioParser,
+      PortfolioModel portfolioModel, PortfolioParser portfolioParser,
       PageControllerFactory controllerFactory,
       ViewFactory viewFactory) {
-    this.portfolioService = portfolioService;
+    this.portfolioModel = portfolioModel;
     this.pageControllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
     this.portfolioParser = portfolioParser;
@@ -100,7 +99,7 @@ public class InflexibleCreatePageController implements PageController {
           .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
               Collectors.toList());
       try {
-        portfolio = portfolioService.create("aa", PortfolioFormat.INFLEXIBLE, transactions);
+        portfolio = portfolioModel.create("aa", PortfolioFormat.INFLEXIBLE, transactions);
         isEnd = true;
         return this;
       }

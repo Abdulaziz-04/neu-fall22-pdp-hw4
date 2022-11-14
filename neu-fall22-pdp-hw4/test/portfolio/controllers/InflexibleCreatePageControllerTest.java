@@ -18,8 +18,8 @@ import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.helper.ArgumentCaptor;
 import portfolio.helper.StockApiMock;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
-import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
@@ -39,18 +39,18 @@ public class InflexibleCreatePageControllerTest {
   public void setUp() {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    PortfolioService portfolioService = new PortfolioServiceImpl(stockQueryService,parser
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService,parser
         );
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
+    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
         stockQueryService, parser, viewFactory);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
     InflexiblePortfolio portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
 
-    pageController = new InflexibleCreatePageController(portfolioService, parser,
+    pageController = new InflexibleCreatePageController(portfolioModel, parser,
         pageControllerFactory,
         viewFactory);
   }

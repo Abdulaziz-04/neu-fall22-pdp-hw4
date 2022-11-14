@@ -11,19 +11,15 @@ import org.junit.Test;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.helper.StockApiMock;
 import portfolio.helper.TransactionConverter;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.Transaction;
 import portfolio.helper.ArgumentCaptor;
-import portfolio.helper.IOServiceMock;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
-import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
-import portfolio.models.stockprice.StockQueryService;
-import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
 /**
@@ -38,10 +34,10 @@ public class LoadPageControllerTest {
   public void setUp() {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    PortfolioService portfolioService = new PortfolioServiceImpl(null, parser);
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
+    PortfolioModel portfolioModel = new PortfolioModelImpl(null, parser);
+    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
         null, parser, viewFactory);
-    pageController = new LoadPageController(portfolioService, pageControllerFactory, viewFactory);
+    pageController = new LoadPageController(portfolioModel, pageControllerFactory, viewFactory);
   }
 
 
