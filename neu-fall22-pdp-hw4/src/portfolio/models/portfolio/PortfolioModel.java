@@ -3,14 +3,13 @@ package portfolio.models.portfolio;
 import java.time.LocalDate;
 import java.util.List;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 
 /**
  * Service interface for creating and retrieving Portfolio.
  */
-public interface PortfolioService {
+public interface PortfolioModel {
 
   Portfolio getPortfolio();
 
@@ -24,7 +23,7 @@ public interface PortfolioService {
 
   PortfolioWithValue getValue(LocalDate date) throws Exception;
 
-  PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception;
+  double getCostBasis(LocalDate date) throws Exception;
 
   List<PortfolioWithValue> getValues(LocalDate from, LocalDate to) throws Exception;
 }

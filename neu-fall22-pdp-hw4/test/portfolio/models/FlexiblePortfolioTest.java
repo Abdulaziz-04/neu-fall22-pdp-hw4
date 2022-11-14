@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.controllers.impl.LoadPageController;
-import portfolio.helper.TransactionConverter;
 import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithValue;
@@ -62,15 +60,15 @@ public class FlexiblePortfolioTest {
       assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount());
       assertEquals(actual.get(i).getDate(), expected.get(i).getDate());
     }
-    Map<String,Integer> expectedMap = portfolio.getStocks();
-    Map<String,Integer> actualMap = actualPortfolio.getStocks();
+    Map<String,Integer> expectedMap = portfolio.getComposition();
+    Map<String,Integer> actualMap = actualPortfolio.getComposition();
     assertEquals(expectedMap.size(), actualMap.size());
   }
 
   @Test
   public void getCostBasis() {
     try {
-      portfolio.getCostBasis(LocalDate.now(), null, 0.0);
+      portfolio.getCostBasis(LocalDate.now(), null);
       fail("should fail");
     }
     catch (Exception e) {
@@ -85,7 +83,7 @@ public class FlexiblePortfolioTest {
 
   @Test
   public void getStocks() {
-    Map<String, Integer> portfolioEntries = portfolio.getStocks();
+    Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
   }
 

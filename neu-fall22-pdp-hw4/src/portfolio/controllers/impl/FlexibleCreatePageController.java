@@ -2,10 +2,7 @@ package portfolio.controllers.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import portfolio.controllers.PageController;
 import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
@@ -15,7 +12,7 @@ import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -28,7 +25,7 @@ import portfolio.views.ViewFactory;
  */
 public class FlexibleCreatePageController implements PageController {
 
-  private final PortfolioService portfolioService;
+  private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
   private final PortfolioParser portfolioParser;
   private final PageControllerFactory pageControllerFactory;
@@ -40,10 +37,10 @@ public class FlexibleCreatePageController implements PageController {
   private final List<Transaction> transactions = new ArrayList<>();
 
   public FlexibleCreatePageController(
-      PortfolioService portfolioService, PortfolioParser portfolioParser,
+      PortfolioModel portfolioModel, PortfolioParser portfolioParser,
       PageControllerFactory controllerFactory,
       ViewFactory viewFactory) {
-    this.portfolioService = portfolioService;
+    this.portfolioModel = portfolioModel;
     this.pageControllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
     this.portfolioParser = portfolioParser;
@@ -106,7 +103,7 @@ public class FlexibleCreatePageController implements PageController {
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
       try {
-        portfolio = portfolioService.create(PortfolioFormat.FLEXIBLE, transactions);
+        portfolio = portfolioModel.create(PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
         return this;
       }

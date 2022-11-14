@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
@@ -22,9 +21,9 @@ public interface Portfolio {
    *
    * @return a list with the portfolio entry.
    */
-  Map<String, Integer> getStocks();
+  Map<String, Integer> getComposition();
 
-  Map<String, Integer> getStocks(LocalDate date);
+  Map<String, Integer> getComposition(LocalDate date);
 
   List<Transaction> getTransaction();
 
@@ -45,8 +44,7 @@ public interface Portfolio {
    */
   PortfolioWithValue getPortfolioWithValue(LocalDate date, Map<String, StockPrice> prices);
 
-  PortfolioWithCostBasis getCostBasis(LocalDate date, Map<String, StockPrice> prices, Double commissionFee)
-      throws Exception;
+  double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception;
 
   boolean isReadOnly();
 

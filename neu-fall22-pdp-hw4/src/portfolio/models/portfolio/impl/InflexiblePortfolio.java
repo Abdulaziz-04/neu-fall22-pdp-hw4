@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
@@ -33,10 +32,8 @@ public class InflexiblePortfolio extends PortfolioAbs {
     throw new Exception("Modifying inflexible portfolio is not supported.");
   }
 
-
   @Override
-  public PortfolioWithCostBasis getCostBasis(LocalDate date, Map<String, StockPrice> prices,
-      Double commissionFee) throws Exception {
+  public double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception {
     throw new Exception("Cost basis function is not supported.");
   }
 

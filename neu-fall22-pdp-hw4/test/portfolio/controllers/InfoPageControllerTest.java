@@ -17,11 +17,10 @@ import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.helper.ArgumentCaptor;
-import portfolio.helper.IOServiceMock;
 import portfolio.helper.StockApiMock;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
-import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
@@ -48,8 +47,8 @@ public class InfoPageControllerTest {
     argumentCaptor = new ArgumentCaptor<>();
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    PortfolioService portfolioService = new PortfolioServiceImpl(stockQueryService, parser);
-    pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService, parser,
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    pageControllerFactory = new PageControllerFactory(portfolioModel, stockQueryService, parser,
         viewFactory);
 
     map.put("AAPL", 100);

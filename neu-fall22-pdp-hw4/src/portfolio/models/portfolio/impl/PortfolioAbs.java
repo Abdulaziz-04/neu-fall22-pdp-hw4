@@ -25,10 +25,10 @@ public abstract class PortfolioAbs implements Portfolio {
     if (transactions.get(0).getDate() != null) {
       transactions.sort(Comparator.comparing(Transaction::getDate));
     }
-    this.stocks = getStocks(null);
+    this.stocks = getComposition(null);
   }
 
-  public Map<String, Integer> getStocks(LocalDate date) {
+  public Map<String, Integer> getComposition(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
       if (date != null && tx.getDate().compareTo(date) > 0) {
@@ -51,7 +51,7 @@ public abstract class PortfolioAbs implements Portfolio {
    * @return an immutable list of PortfolioEntry
    */
   @Override
-  public Map<String, Integer> getStocks() {
+  public Map<String, Integer> getComposition() {
     return Collections.unmodifiableMap(stocks);
   }
 

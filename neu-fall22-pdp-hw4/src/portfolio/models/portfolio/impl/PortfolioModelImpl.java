@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
@@ -17,20 +16,20 @@ import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.stockprice.StockQueryService;
 
 /**
  * This is a class that represent a portfolio service, which creating and retrieving portfolio.
  */
-public class PortfolioServiceImpl implements PortfolioService {
+public class PortfolioModelImpl implements PortfolioModel {
 
   private final StockQueryService stockQueryService;
   private final PortfolioParser portfolioParser;
   private Portfolio portfolio = null;
   private double commissionFee = 0;
 
-  public PortfolioServiceImpl(StockQueryService stockQueryService,
+  public PortfolioModelImpl(StockQueryService stockQueryService,
       PortfolioParser portfolioParser) {
     this.stockQueryService = stockQueryService;
     this.portfolioParser = portfolioParser;
@@ -40,6 +39,7 @@ public class PortfolioServiceImpl implements PortfolioService {
   public Portfolio getPortfolio() {
     return portfolio;
   }
+
 
   @Override
   public Portfolio create(PortfolioFormat format, List<Transaction> transactions) throws Exception {
@@ -108,9 +108,9 @@ public class PortfolioServiceImpl implements PortfolioService {
   }
 
   @Override
-  public PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception {
+  public double getCostBasis(LocalDate date) throws Exception {
     Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
-    return portfolio.getCostBasis(date, prices, commissionFee);
+    return portfolio.getCostBasis(date, prices);
   }
 
   @Override

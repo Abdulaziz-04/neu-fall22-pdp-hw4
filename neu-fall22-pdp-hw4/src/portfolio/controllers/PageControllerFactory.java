@@ -7,7 +7,7 @@ import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 
@@ -16,7 +16,7 @@ import portfolio.views.ViewFactory;
  */
 public class PageControllerFactory {
 
-  private final PortfolioService portfolioService;
+  private final PortfolioModel portfolioModel;
   private final PortfolioParser portfolioParser;
   private final StockQueryService stockQueryService;
   private final ViewFactory viewFactory;
@@ -25,15 +25,15 @@ public class PageControllerFactory {
    * Construct a page controller factory. Constructor takes dependencies of all controllers
    * including PortfolioService, StockQueryService and ViewFactory.
    *
-   * @param portfolioService  the service for Portfolio
+   * @param portfolioModel  the service for Portfolio
    * @param stockQueryService the service for getting stock list
    * @param viewFactory       factory for creating View
    */
   public PageControllerFactory(
-      PortfolioService portfolioService, StockQueryService stockQueryService, PortfolioParser portfolioParser,
+      PortfolioModel portfolioModel, StockQueryService stockQueryService, PortfolioParser portfolioParser,
       ViewFactory viewFactory) {
     this.stockQueryService = stockQueryService;
-    this.portfolioService = portfolioService;
+    this.portfolioModel = portfolioModel;
     this.portfolioParser = portfolioParser;
     this.viewFactory = viewFactory;
   }
@@ -54,11 +54,11 @@ public class PageControllerFactory {
    * @return a new CreatePageController object
    */
   public PageController newInflexibleCreatePageController() {
-    return new InflexibleCreatePageController(portfolioService, portfolioParser, this, viewFactory);
+    return new InflexibleCreatePageController(portfolioModel, portfolioParser, this, viewFactory);
   }
 
   public PageController newFlexibleCreatePageController() {
-    return new FlexibleCreatePageController(portfolioService, portfolioParser, this, viewFactory);
+    return new FlexibleCreatePageController(portfolioModel, portfolioParser, this, viewFactory);
   }
 
   /**
@@ -67,7 +67,7 @@ public class PageControllerFactory {
    * @return a new LoadPageController object
    */
   public PageController newLoadPageController() {
-    return new LoadPageController(portfolioService, this, viewFactory);
+    return new LoadPageController(portfolioModel, this, viewFactory);
   }
 
   /**

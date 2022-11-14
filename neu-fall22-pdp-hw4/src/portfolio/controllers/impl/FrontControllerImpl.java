@@ -1,5 +1,6 @@
 package portfolio.controllers.impl;
 
+import java.io.InputStream;
 import java.util.Scanner;
 import portfolio.controllers.FrontController;
 import portfolio.controllers.PageController;
@@ -10,8 +11,7 @@ import portfolio.views.View;
  * This is class represent event loop, which will continue to run the program.
  */
 public class FrontControllerImpl implements FrontController {
-  private final Scanner scan = new Scanner(System.in);
-
+  private final Scanner scan;
   private PageController pageController;
 
   /**
@@ -19,8 +19,9 @@ public class FrontControllerImpl implements FrontController {
    *
    * @param pageControllerFactory the controller factory to run the program
    */
-  public FrontControllerImpl(PageControllerFactory pageControllerFactory) {
+  public FrontControllerImpl(PageControllerFactory pageControllerFactory, InputStream inputStream) {
     this.pageController = pageControllerFactory.newMainPageController();
+    this.scan = new Scanner(inputStream);
   }
 
   /**
@@ -34,7 +35,11 @@ public class FrontControllerImpl implements FrontController {
       view.render();
 
       // Receive for user command and redirect to next page
-      pageController = pageController.handleInput(scan.nextLine());
+      String input = scan.nextLine();
+      if (input.equals("exit")) {
+        break;
+      }
+      pageController = pageController.handleInput(input);
     }
   }
 }

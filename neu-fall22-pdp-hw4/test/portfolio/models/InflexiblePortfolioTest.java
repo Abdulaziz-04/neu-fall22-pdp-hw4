@@ -58,7 +58,7 @@ public class InflexiblePortfolioTest {
   @Test
   public void getCostBasis() {
     try {
-      portfolio.getCostBasis(LocalDate.now(), null, 0.0);
+      portfolio.getCostBasis(LocalDate.now(), null);
       fail("should fail");
     }
     catch (Exception e) {
@@ -73,7 +73,7 @@ public class InflexiblePortfolioTest {
 
   @Test
   public void getStocks() {
-    Map<String, Integer> portfolioEntries = portfolio.getStocks();
+    Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
   }
 

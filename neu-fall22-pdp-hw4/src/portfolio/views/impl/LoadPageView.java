@@ -55,7 +55,7 @@ public class LoadPageView extends ViewAbs {
       printStream.println("           +---------+---------------+");
       printStream.println("Portfolio: |    Stock|  No. of shares|");
       printStream.println("           +---------+---------------+");
-      for (var entry : portfolio.getStocks().entrySet()) {
+      for (var entry : portfolio.getComposition().entrySet()) {
         printStream.printf("           |%9s|%15d|%n", entry.getKey(), entry.getValue());
       }
       printStream.println("           +---------+---------------+");
