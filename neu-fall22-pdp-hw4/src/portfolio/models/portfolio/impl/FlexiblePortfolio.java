@@ -6,7 +6,6 @@ import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
-import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 
 public class FlexiblePortfolio extends PortfolioAbs {
@@ -36,10 +35,10 @@ public class FlexiblePortfolio extends PortfolioAbs {
     for (var entry : transactions) {
       if (entry.getDate().compareTo(date) < 0) {
         StockPrice price = prices.get(entry.getSymbol());
-        if (entry.getType() == TransactionType.BUY && price != null) {
-          double value = price.getClose() * entry.getAmount();
-          total = total + value + entry.getCommissionFee();
+        if (price != null) {
+          total = total + price.getClose() * entry.getAmount();
         }
+        total = total + entry.getCommissionFee();
       }
     }
     return total;
