@@ -4,15 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
-import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -27,8 +26,7 @@ public class FlexibleCreatePageController implements PageController {
 
   private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
-  private final PortfolioParser portfolioParser;
-  private final PageControllerFactory pageControllerFactory;
+  private final PortfolioParser portfolioParser = new PortfolioTextParser();
   private final ViewFactory viewFactory;
   private String errorMessage;
   private boolean isEnd = false;
@@ -38,15 +36,12 @@ public class FlexibleCreatePageController implements PageController {
   private final List<String> inputBuffer = new ArrayList<>();
 
   public FlexibleCreatePageController(
-      PortfolioModel portfolioModel, PortfolioParser portfolioParser,
-      PageControllerFactory controllerFactory,
+      PortfolioModel portfolioModel,
       ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
-    this.pageControllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
-    this.portfolioParser = portfolioParser;
     if (portfolioModel.getPortfolio() != null) {
-      this.transactions = new ArrayList<>(portfolioModel.getPortfolio().getTransaction());
+      this.transactions = new ArrayList<>(portfolioModel.getPortfolio().getTransactions());
       isNamed = true;
       modifyMode = true;
     } else {
@@ -76,7 +71,7 @@ public class FlexibleCreatePageController implements PageController {
     errorMessage = null;
 
     if (input.equals("back")) {
-      return pageControllerFactory.newMainPageController();
+      return new MainPageController(portfolioModel, viewFactory);
     }
     if (!isEnd && !input.equals("end")) {
       try {
@@ -135,7 +130,6 @@ public class FlexibleCreatePageController implements PageController {
         errorMessage = e.getMessage();
       }
     }
-    Portfolio portfolio;
     if (inputBuffer.size() == 5 && !isEnd) {
       try {
         portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
@@ -143,14 +137,16 @@ public class FlexibleCreatePageController implements PageController {
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
         inputBuffer.clear();
-        transactions = portfolioModel.getPortfolio().getTransaction();
+        if (portfolioModel.getPortfolio() != null) {
+          transactions = portfolioModel.getPortfolio().getTransactions();
+        }
       }
     } else if (inputBuffer.size() == 5) {
       String name = isNamed ? portfolioModel.getPortfolio().getName() : input;
       try {
-        portfolio = portfolioModel.createAndSet(name, PortfolioFormat.FLEXIBLE, transactions);
-        ioService.saveTo(portfolioParser.toString(portfolio), name + ".txt", modifyMode);
-        return pageControllerFactory.newLoadPageController();
+        portfolioModel.set(name, PortfolioFormat.FLEXIBLE, transactions);
+        ioService.saveTo(portfolioParser.toString(portfolioModel.getPortfolio()), name + ".txt", modifyMode);
+        return new LoadPageController(portfolioModel, viewFactory);
       } catch (Exception e) {
         errorMessage = e.getMessage();
       }

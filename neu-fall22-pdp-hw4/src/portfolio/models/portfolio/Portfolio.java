@@ -14,6 +14,7 @@ import portfolio.models.entities.StockPrice;
 public interface Portfolio {
 
   String getName();
+
   PortfolioFormat getFormat();
   Portfolio create(List<Transaction> transactions) throws Exception;
 
@@ -26,7 +27,7 @@ public interface Portfolio {
 
   Map<String, Integer> getComposition(LocalDate date);
 
-  List<Transaction> getTransaction();
+  List<Transaction> getTransactions();
 
   /**
    * This is the method to get the symbol list for a portfolio.
@@ -36,10 +37,10 @@ public interface Portfolio {
   List<String> getSymbols(LocalDate date);
 
   /**
-   * This is the method to calculate the portfolio price on a certain date. It will return
-   * a PortfolioWithValue class that has the total value of this portfolio.
+   * This is the method to calculate the portfolio price on a certain date. It will return a
+   * PortfolioWithValue class that has the total value of this portfolio.
    *
-   * @param date the date that we want to determine the price
+   * @param date   the date that we want to determine the price
    * @param prices the price for every stock in this portfolio
    * @return PortfolioWithValue object that has the total value of this portfolio
    */

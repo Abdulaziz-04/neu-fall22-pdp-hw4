@@ -1,10 +1,8 @@
 package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
-import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -18,7 +16,6 @@ public class LoadPageController implements PageController {
 
   private final IOService ioService = new FileIOService();
   private final PortfolioModel portfolioModel;
-  private final PageControllerFactory controllerFactory;
   private final ViewFactory viewFactory;
   private String errorMessage;
   private boolean showModifyMenu = false;
@@ -31,10 +28,8 @@ public class LoadPageController implements PageController {
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public LoadPageController(PortfolioModel portfolioModel,
-      PageControllerFactory controllerFactory, ViewFactory viewFactory) {
+  public LoadPageController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
-    this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
     showModifyMenu =
         portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
@@ -58,7 +53,7 @@ public class LoadPageController implements PageController {
     input = input.trim();
     errorMessage = null;
     if (input.equals("back")) {
-      return controllerFactory.newMainPageController();
+      return new MainPageController(portfolioModel, viewFactory);
     }
     try {
       if (portfolioModel.getPortfolio() == null) {
@@ -74,11 +69,11 @@ public class LoadPageController implements PageController {
         }
         switch (input) {
           case "1":
-            return controllerFactory.newInfoPageController();
+            return new InfoPageController(portfolioModel, viewFactory);
           case "2":
-            return controllerFactory.newMainPageController();
+            return new MainPageController(portfolioModel, viewFactory);
           case "3":
-            return controllerFactory.newFlexibleCreatePageController();
+            return new FlexibleCreatePageController(portfolioModel, viewFactory);
           default:
             errorMessage = "Please input valid number.";
             return this;

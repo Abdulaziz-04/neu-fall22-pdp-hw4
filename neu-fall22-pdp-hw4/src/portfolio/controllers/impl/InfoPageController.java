@@ -3,11 +3,8 @@ package portfolio.controllers.impl;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
-import portfolio.models.portfolio.Portfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.portfolio.PortfolioModel;
-import portfolio.models.stockprice.StockQueryService;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -17,7 +14,6 @@ import portfolio.views.View;
  * input date.
  */
 public class InfoPageController implements PageController {
-  private final PageControllerFactory controllerFactory;
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   private String errorMessage;
@@ -28,12 +24,11 @@ public class InfoPageController implements PageController {
    * This is a constructor that construct a InfoPageController, which is for determining a portfolio
    * on a certain date.
    *
-   * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public InfoPageController(PortfolioModel portfolioModel, PageControllerFactory controllerFactory, ViewFactory viewFactory) {
+  public InfoPageController(PortfolioModel portfolioModel,
+      ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
-    this.controllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
   }
 
@@ -54,7 +49,7 @@ public class InfoPageController implements PageController {
   public PageController handleInput(String input) {
     errorMessage = null;
     if (input.equals("back")) {
-      return controllerFactory.newLoadPageController();
+      return new LoadPageController(portfolioModel, viewFactory);
     }
 
     LocalDate date;
@@ -69,14 +64,15 @@ public class InfoPageController implements PageController {
 
     try {
       costOfBasis = portfolioModel.getCostBasis(date);
+    } catch (Exception e) {
+      costOfBasis = null;
     }
-    catch (Exception ignored) {}
 
     try {
       portfolioWithValue = portfolioModel.getValue(date);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       errorMessage = e.getMessage();
+      portfolioWithValue = null;
     }
     return this;
   }

@@ -79,7 +79,7 @@ public class InflexiblePortfolioTest {
 
   @Test
   public void getTransactions() {
-    List<Transaction> portfolioEntries = portfolio.getTransaction();
+    List<Transaction> portfolioEntries = portfolio.getTransactions();
     assertEquals(2, portfolioEntries.size());
     assertEquals("AAA", portfolioEntries.get(0).getSymbol());
     assertEquals("AAPL", portfolioEntries.get(1).getSymbol());

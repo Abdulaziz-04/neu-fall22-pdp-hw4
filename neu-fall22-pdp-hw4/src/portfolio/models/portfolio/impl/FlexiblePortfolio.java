@@ -1,12 +1,9 @@
 package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;

@@ -4,23 +4,24 @@ import java.io.InputStream;
 import java.util.Scanner;
 import portfolio.controllers.FrontController;
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
+import portfolio.views.ViewFactory;
 
 /**
  * This is class represent event loop, which will continue to run the program.
  */
 public class FrontControllerImpl implements FrontController {
+
   private final Scanner scan;
   private PageController pageController;
 
   /**
    * This is a constructor to construct a EventLoopImpl object.
    *
-   * @param pageControllerFactory the controller factory to run the program
    */
-  public FrontControllerImpl(PageControllerFactory pageControllerFactory, InputStream inputStream) {
-    this.pageController = pageControllerFactory.newMainPageController();
+  public FrontControllerImpl(PortfolioModel portfolioModel, ViewFactory viewFactory, InputStream inputStream) {
+    this.pageController = new MainPageController(portfolioModel, viewFactory);
     this.scan = new Scanner(inputStream);
   }
 

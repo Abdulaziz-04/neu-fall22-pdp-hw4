@@ -11,12 +11,16 @@ import portfolio.models.entities.Transaction;
  * Service interface for creating and retrieving Portfolio.
  */
 public interface PortfolioModel {
+
   void init() throws Exception;
+
   Portfolio getPortfolio();
 
-  Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception;
+  Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
+      throws Exception;
 
-  Portfolio createAndSet(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception;
+  void set(String name, PortfolioFormat format, List<Transaction> transactions)
+      throws Exception;
 
   void load(String name, String text) throws Exception;
 

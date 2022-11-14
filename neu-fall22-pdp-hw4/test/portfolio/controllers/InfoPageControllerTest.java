@@ -36,7 +36,6 @@ public class InfoPageControllerTest {
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
   private StockQueryService stockQueryService;
-  private PageControllerFactory pageControllerFactory;
   private final Map<String, Integer> map = new HashMap<>();
   private InflexiblePortfolio portfolio;
 
@@ -48,15 +47,12 @@ public class InfoPageControllerTest {
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
-    pageControllerFactory = new PageControllerFactory(portfolioModel, parser,
-        viewFactory);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
     portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
 
-    pageController = new InfoPageController(portfolioModel, pageControllerFactory,
-        viewFactory);
+    pageController = new InfoPageController(portfolioModel,viewFactory);
   }
 
 
@@ -107,8 +103,7 @@ public class InfoPageControllerTest {
   public void handelInput_serviceFail() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
     PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
-    pageController = new InfoPageController(portfolioModel, pageControllerFactory,
-        viewFactory);
+    pageController = new InfoPageController(portfolioModel, viewFactory);
 
     PageController nextPage = pageController.handleInput("2022-10-10");
     assertEquals(pageController, nextPage);

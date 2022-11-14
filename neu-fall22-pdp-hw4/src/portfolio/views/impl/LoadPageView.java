@@ -75,11 +75,11 @@ public class LoadPageView extends ViewAbs {
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
     if (portfolio == null) {
-      printStream.println("Please enter the name of the portfolio that you want to examine. " +
+      printStream.println("Please enter the name of the portfolio that you want to load. " +
           "The name cannot be back.");
     } else {
       printStream.println("Portfolio: " + portfolio.getName());
-      printTransaction(portfolio.getTransaction());
+      printTransaction(portfolio.getTransactions());
       printStream.println("Menu:");
       printStream.println("1. View composition, value, cost of basis for specific date");
       printStream.println("2. View performance over time");

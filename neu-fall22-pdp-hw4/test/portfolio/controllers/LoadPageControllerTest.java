@@ -26,6 +26,7 @@ import portfolio.views.ViewFactory;
  * This is a test class to test LoadPageController class.
  */
 public class LoadPageControllerTest {
+
   private final PortfolioParser parser = new PortfolioTextParser();
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
@@ -35,9 +36,7 @@ public class LoadPageControllerTest {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PortfolioModel portfolioModel = new PortfolioModelImpl(null, parser);
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        parser, viewFactory);
-    pageController = new LoadPageController(portfolioModel, pageControllerFactory, viewFactory);
+    pageController = new LoadPageController(portfolioModel, viewFactory);
   }
 
 
@@ -56,11 +55,13 @@ public class LoadPageControllerTest {
 
     pageController.getView();
 
-    List<Transaction> actual = ((InflexiblePortfolio) argumentCaptor.getArguments().get(0)).getTransaction();
+    List<Transaction> actual = ((InflexiblePortfolio) argumentCaptor.getArguments()
+        .get(0)).getTransactions();
     Map<String, Integer> map = new HashMap<>();
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    List<Transaction> expected = new InflexiblePortfolio("name", TransactionConverter.convert(map)).getTransaction();
+    List<Transaction> expected = new InflexiblePortfolio("name",
+        TransactionConverter.convert(map)).getTransactions();
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
@@ -13,6 +12,7 @@ import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -27,8 +27,7 @@ public class InflexibleCreatePageController implements PageController {
 
   private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
-  private final PortfolioParser portfolioParser;
-  private final PageControllerFactory pageControllerFactory;
+  private final PortfolioParser portfolioParser = new PortfolioTextParser();
   private final ViewFactory viewFactory;
   private String errorMessage;
   private Boolean isEnd = false;
@@ -37,13 +36,10 @@ public class InflexibleCreatePageController implements PageController {
   private List<Transaction> transactions;
 
   public InflexibleCreatePageController(
-      PortfolioModel portfolioModel, PortfolioParser portfolioParser,
-      PageControllerFactory controllerFactory,
+      PortfolioModel portfolioModel,
       ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
-    this.pageControllerFactory = controllerFactory;
     this.viewFactory = viewFactory;
-    this.portfolioParser = portfolioParser;
   }
 
   @Override
@@ -65,7 +61,7 @@ public class InflexibleCreatePageController implements PageController {
     input = input.trim();
     errorMessage = null;
     if (input.equals("back")) {
-      return pageControllerFactory.newMainPageController();
+      return new MainPageController(portfolioModel, viewFactory);
     }
     Portfolio portfolio;
     if (!isEnd && !input.equals("end")) {
@@ -100,11 +96,10 @@ public class InflexibleCreatePageController implements PageController {
           .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
               Collectors.toList());
       try {
-        portfolio = portfolioModel.create(null, PortfolioFormat.INFLEXIBLE, transactions);
+        portfolioModel.create(null, PortfolioFormat.INFLEXIBLE, transactions);
         isEnd = true;
         return this;
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         errorMessage = e.getMessage();
         stockList.clear();
         return this;
@@ -124,9 +119,9 @@ public class InflexibleCreatePageController implements PageController {
       return this;
     } else {
       if (input.equals("yes")) {
-        return pageControllerFactory.newInfoPageController();
+        return new InfoPageController(portfolioModel, viewFactory);
       } else {
-        return pageControllerFactory.newMainPageController();
+        return new MainPageController(portfolioModel, viewFactory);
       }
     }
     return this;

@@ -2,7 +2,6 @@ package portfolio;
 
 import portfolio.controllers.FrontController;
 import portfolio.controllers.impl.FrontControllerImpl;
-import portfolio.controllers.PageControllerFactory;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
@@ -37,9 +36,8 @@ public class Main {
     ViewFactory viewFactory = new DefaultSysOutViewFactory();
 
     // Controller
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        portfolioParser, viewFactory);
-    FrontController frontController = new FrontControllerImpl(pageControllerFactory, System.in);
+    FrontController frontController = new FrontControllerImpl(portfolioModel, viewFactory,
+        System.in);
 
     // Run controller
     frontController.run();

@@ -41,11 +41,9 @@ public abstract class PortfolioAbs implements Portfolio {
       int newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
       if (newShare > 0) {
         stocks.put(tx.getSymbol(), newShare);
-      }
-      else if (newShare == 0) {
+      } else if (newShare == 0) {
         stocks.remove(tx.getSymbol());
-      }
-      else {
+      } else {
         throw new RuntimeException("There is a conflict in the input transaction.");
       }
     }
@@ -53,9 +51,10 @@ public abstract class PortfolioAbs implements Portfolio {
   }
 
   @Override
-  public String getName(){
+  public String getName() {
     return name;
   }
+
   /**
    * Get a list of PortfolioEntry in this portfolio.
    *
@@ -68,7 +67,7 @@ public abstract class PortfolioAbs implements Portfolio {
 
 
   @Override
-  public List<Transaction> getTransaction() {
+  public List<Transaction> getTransactions() {
     return Collections.unmodifiableList(transactions);
   }
 

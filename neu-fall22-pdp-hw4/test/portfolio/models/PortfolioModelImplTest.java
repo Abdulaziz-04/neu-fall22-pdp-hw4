@@ -57,7 +57,7 @@ public class PortfolioModelImplTest {
   public void create_flexible() throws Exception {
     Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
 
-    List<Transaction> actual = actualPortfolio.getTransaction();
+    List<Transaction> actual = actualPortfolio.getTransactions();
 
     assertEquals(PortfolioFormat.FLEXIBLE, actualPortfolio.getFormat());
     assertEquals(transactions.size(), actual.size());
@@ -75,7 +75,7 @@ public class PortfolioModelImplTest {
   public void create_inflexible() throws Exception {
     Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
 
-    List<Transaction> actual = actualPortfolio.getTransaction();
+    List<Transaction> actual = actualPortfolio.getTransactions();
 
     assertEquals(PortfolioFormat.INFLEXIBLE, actualPortfolio.getFormat());
     assertEquals(transactions.size(), actual.size());
@@ -95,7 +95,7 @@ public class PortfolioModelImplTest {
     Portfolio actual = portfolioModel.getPortfolio();
     assertNull(actual);
 
-    portfolioModel.createAndSet("name", PortfolioFormat.INFLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.INFLEXIBLE, transactions);
     actual = portfolioModel.getPortfolio();
     assertNotNull(actual);
   }
@@ -107,16 +107,16 @@ public class PortfolioModelImplTest {
 
   @Test
   public void modify_flexible() throws Exception {
-    portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.FLEXIBLE, transactions);
     portfolioModel.addTransactions(transactions2);
 
-    List<Transaction> actual = portfolioModel.getPortfolio().getTransaction();
+    List<Transaction> actual = portfolioModel.getPortfolio().getTransactions();
     assertEquals(5, actual.size());
   }
 
   @Test
   public void modify_flexible_error() throws Exception {
-    portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.FLEXIBLE, transactions);
     transactions2.add(
         new Transaction(TransactionType.SELL, "AAPL", 10000, LocalDate.parse("2022-10-12"),123));
     try {
@@ -128,7 +128,7 @@ public class PortfolioModelImplTest {
 
   @Test
   public void modify_inflexible() throws Exception {
-    portfolioModel.createAndSet("name", PortfolioFormat.INFLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.INFLEXIBLE, transactions);
     try {
       portfolioModel.addTransactions(transactions2);
       fail("should fail");
@@ -139,7 +139,7 @@ public class PortfolioModelImplTest {
 
   @Test
   public void getValue() throws Exception {
-    portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.FLEXIBLE, transactions);
     PortfolioWithValue portfolioWithValue = portfolioModel.getValue(
         LocalDate.parse("2022-10-10"));
 
@@ -152,7 +152,7 @@ public class PortfolioModelImplTest {
 
   @Test
   public void getValue_noStock() throws Exception {
-    portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.FLEXIBLE, transactions);
     PortfolioWithValue portfolioWithValue = portfolioModel.getValue(
         LocalDate.parse("2022-10-09"));
 
@@ -164,7 +164,7 @@ public class PortfolioModelImplTest {
 
   @Test
   public void getValues() throws Exception {
-    portfolioModel.createAndSet("name", PortfolioFormat.FLEXIBLE, transactions);
+    portfolioModel.set("name", PortfolioFormat.FLEXIBLE, transactions);
     Map<LocalDate, Double> portfolioWithValue = portfolioModel.getValues(
         LocalDate.parse("2022-10-10"), LocalDate.parse("2022-10-11"));
 

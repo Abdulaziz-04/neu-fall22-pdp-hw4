@@ -29,6 +29,7 @@ import portfolio.views.ViewFactory;
  * This is a test class to test CreatePageController class.
  */
 public class InflexibleCreatePageControllerTest {
+
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
   private final Map<String, Integer> map = new HashMap<>();
@@ -39,19 +40,16 @@ public class InflexibleCreatePageControllerTest {
   public void setUp() {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService,parser
-        );
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser
+    );
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioModel,
-        parser, viewFactory);
-
     map.put("AAPL", 100);
     map.put("AAA", 10000);
-    InflexiblePortfolio portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
+    InflexiblePortfolio portfolio = new InflexiblePortfolio("name",
+        TransactionConverter.convert(map));
 
-    pageController = new InflexibleCreatePageController(portfolioModel, parser,
-        pageControllerFactory,
+    pageController = new InflexibleCreatePageController(portfolioModel,
         viewFactory);
   }
 

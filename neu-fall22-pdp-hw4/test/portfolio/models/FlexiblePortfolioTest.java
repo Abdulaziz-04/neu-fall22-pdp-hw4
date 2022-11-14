@@ -50,8 +50,8 @@ public class FlexiblePortfolioTest {
   @Test
   public void create() throws Exception {
     Portfolio actualPortfolio = portfolio.create(transactions);
-    List<Transaction> expected = portfolio.getTransaction();
-    List<Transaction> actual = actualPortfolio.getTransaction();
+    List<Transaction> expected = portfolio.getTransactions();
+    List<Transaction> actual = actualPortfolio.getTransactions();
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {
@@ -84,7 +84,7 @@ public class FlexiblePortfolioTest {
 
   @Test
   public void getTransactions() {
-    List<Transaction> portfolioEntries = portfolio.getTransaction();
+    List<Transaction> portfolioEntries = portfolio.getTransactions();
     assertEquals(3, portfolioEntries.size());
     assertEquals("AAA", portfolioEntries.get(0).getSymbol());
     assertEquals("AAA", portfolioEntries.get(1).getSymbol());
