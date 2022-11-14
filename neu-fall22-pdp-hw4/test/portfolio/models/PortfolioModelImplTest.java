@@ -153,17 +153,17 @@ public class PortfolioModelImplTest {
   @Test
   public void getValues() throws Exception {
     portfolioModel.createAndSet(PortfolioFormat.FLEXIBLE, transactions);
-    List<PortfolioWithValue> portfolioWithValue = portfolioModel.getValues(
+    Map<String, PortfolioWithValue> portfolioWithValue = portfolioModel.getValues(
         LocalDate.parse("2022-10-10"), LocalDate.parse("2022-10-11"));
 
-    assertEquals(8400.0, portfolioWithValue.get(0).getTotalValue(), EPSILON);
-    assertEquals(9900.0, portfolioWithValue.get(1).getTotalValue(), EPSILON);
+    assertEquals(8400.0, portfolioWithValue.get("2022-10-10").getTotalValue(), EPSILON);
+    assertEquals(9900.0, portfolioWithValue.get("2022-10-11").getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.get(0).getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.get("2022-10-10").getStocks();
     assertEquals(4400, list.get(0).getValue(), EPSILON);
     assertEquals(4000, list.get(1).getValue(), EPSILON);
 
-    list = portfolioWithValue.get(1).getStocks();
+    list = portfolioWithValue.get("2022-10-11").getStocks();
     assertEquals(900, list.get(0).getValue(), EPSILON);
     assertEquals(9000, list.get(1).getValue(), EPSILON);
   }

@@ -114,16 +114,16 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public List<PortfolioWithValue> getValues(LocalDate from, LocalDate to) {
-    List<PortfolioWithValue> list = new ArrayList<>();
+  public Map<String, PortfolioWithValue> getValues(LocalDate from, LocalDate to) {
+    Map<String, PortfolioWithValue> map = new HashMap<>();
     for (LocalDate date = from; date.isBefore(to.plusDays(1)); date = date.plusDays(1)) {
       Map<String, StockPrice> prices;
       try {
         prices = stockQueryService.getStockPrice(date, portfolio.getSymbols());
-        list.add(portfolio.getPortfolioWithValue(date, prices));
+        map.put(date.toString(), portfolio.getPortfolioWithValue(date, prices));
       } catch (Exception ignored) {
       }
     }
-    return list;
+    return map;
   }
 }
