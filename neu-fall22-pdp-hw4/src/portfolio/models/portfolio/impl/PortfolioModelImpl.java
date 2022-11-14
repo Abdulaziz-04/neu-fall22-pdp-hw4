@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
@@ -17,20 +16,19 @@ import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.stockprice.StockQueryService;
 
 /**
  * This is a class that represent a portfolio service, which creating and retrieving portfolio.
  */
-public class PortfolioServiceImpl implements PortfolioService {
+public class PortfolioModelImpl implements PortfolioModel {
 
   private final StockQueryService stockQueryService;
   private final PortfolioParser portfolioParser;
   private Portfolio portfolio = null;
-  private double commissionFee = 0;
 
-  public PortfolioServiceImpl(StockQueryService stockQueryService,
+  public PortfolioModelImpl(StockQueryService stockQueryService,
       PortfolioParser portfolioParser) {
     this.stockQueryService = stockQueryService;
     this.portfolioParser = portfolioParser;
@@ -42,7 +40,8 @@ public class PortfolioServiceImpl implements PortfolioService {
   }
 
   @Override
-  public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception {
+  public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
+      throws Exception {
     Map<String, LocalDate> map = new HashMap<>();
     for (var stock : stockQueryService.getStockList()) {
       map.put(stock.getSymbol(), stock.getIpoDate());
@@ -53,7 +52,9 @@ public class PortfolioServiceImpl implements PortfolioService {
       if (!map.containsKey(entry.getSymbol())) {
         throw new IllegalArgumentException("Symbol [" + entry.getSymbol() + "] not found.");
       }
-      stockQueryService.getStockPrice(entry.getDate(), symbols).containsKey(entry.getSymbol());
+      if (entry.getDate() != null) {
+        stockQueryService.getStockPrice(entry.getDate(), symbols).containsKey(entry.getSymbol());
+      }
     }
 
     switch (format) {
@@ -66,32 +67,21 @@ public class PortfolioServiceImpl implements PortfolioService {
   }
 
   @Override
-  public void createAndSet(String name, PortfolioFormat format, List<Transaction> transactions)
+  public void set(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception {
     portfolio = create(name, format, transactions);
   }
 
   @Override
-  public void load(String name, String text) throws Exception {
-    var format = portfolioParser.parseFormat(text);
-    createAndSet(name, format, portfolioParser.parseTransaction(text));
+  public void init() throws Exception {
+    portfolio = null;
+    stockQueryService.getStockList();
   }
 
-  private List<Transaction> mergeTransactions(List<Transaction> transactions,
-      List<Transaction> newTransaction) {
-    Map<String, Integer> stocks = new HashMap<>();
-    List<Transaction> list = Stream.concat(transactions.stream(), newTransaction.stream())
-        .sorted(Comparator.comparing(Transaction::getDate)).collect(Collectors.toList());
-    for (var tx : list) {
-      int current = stocks.getOrDefault(tx.getSymbol(), 0);
-      int multiplier = tx.getType() == TransactionType.BUY ? 1 : -1;
-      int newShare = current + multiplier * tx.getAmount();
-      if (newShare < 0) {
-        throw new IllegalArgumentException("Transaction invalid.");
-      }
-      stocks.put(tx.getSymbol(), newShare);
-    }
-    return list;
+  @Override
+  public void load(String name, String text) throws Exception {
+    var format = portfolioParser.parseFormat(text);
+    set(name, format, portfolioParser.parseTransaction(text));
   }
 
   @Override
@@ -99,22 +89,24 @@ public class PortfolioServiceImpl implements PortfolioService {
     if (portfolio.isReadOnly()) {
       throw new IllegalArgumentException("Portfolio is not modifiable.");
     }
-    List<Transaction> transactions = portfolio.getTransaction();
+    List<Transaction> transactions = portfolio.getTransactions();
 
     // Create same class of portfolio with new set of transactions
-    portfolio = portfolio.create(mergeTransactions(transactions, newTransactions));
+    portfolio = portfolio.create(newTransactions);
   }
 
   @Override
   public PortfolioWithValue getValue(LocalDate date) throws Exception {
-    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
+    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date,
+        portfolio.getSymbols(date));
     return portfolio.getPortfolioWithValue(date, prices);
   }
 
   @Override
-  public PortfolioWithCostBasis getCostBasis(LocalDate date) throws Exception {
-    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date, portfolio.getSymbols(date));
-    return portfolio.getCostBasis(date, prices, commissionFee);
+  public double getCostBasis(LocalDate date) throws Exception {
+    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date,
+        portfolio.getSymbols(date));
+    return portfolio.getCostBasis(date, prices);
   }
 
   @Override

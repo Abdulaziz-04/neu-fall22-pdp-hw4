@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.controllers.impl.LoadPageController;
-import portfolio.helper.TransactionConverter;
 import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithValue;
@@ -52,8 +50,8 @@ public class FlexiblePortfolioTest {
   @Test
   public void create() throws Exception {
     Portfolio actualPortfolio = portfolio.create(transactions);
-    List<Transaction> expected = portfolio.getTransaction();
-    List<Transaction> actual = actualPortfolio.getTransaction();
+    List<Transaction> expected = portfolio.getTransactions();
+    List<Transaction> actual = actualPortfolio.getTransactions();
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {
@@ -62,20 +60,15 @@ public class FlexiblePortfolioTest {
       assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount());
       assertEquals(actual.get(i).getDate(), expected.get(i).getDate());
     }
-    Map<String,Integer> expectedMap = portfolio.getStocks();
-    Map<String,Integer> actualMap = actualPortfolio.getStocks();
+    Map<String,Integer> expectedMap = portfolio.getComposition();
+    Map<String,Integer> actualMap = actualPortfolio.getComposition();
     assertEquals(expectedMap.size(), actualMap.size());
   }
 
   @Test
-  public void getCostBasis() {
-    try {
-      portfolio.getCostBasis(LocalDate.now(), null, 0.0);
-      fail("should fail");
-    }
-    catch (Exception e) {
-      assertEquals("Cost basis function is not supported.", e.getMessage());
-    }
+  public void getCostBasis() throws Exception {
+    double actual = portfolio.getCostBasis(LocalDate.now(), prices);
+    assertEquals(44378.0, actual, EPSILON);
   }
 
   @Test
@@ -85,13 +78,13 @@ public class FlexiblePortfolioTest {
 
   @Test
   public void getStocks() {
-    Map<String, Integer> portfolioEntries = portfolio.getStocks();
+    Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
   }
 
   @Test
   public void getTransactions() {
-    List<Transaction> portfolioEntries = portfolio.getTransaction();
+    List<Transaction> portfolioEntries = portfolio.getTransactions();
     assertEquals(3, portfolioEntries.size());
     assertEquals("AAA", portfolioEntries.get(0).getSymbol());
     assertEquals("AAA", portfolioEntries.get(1).getSymbol());
@@ -120,7 +113,7 @@ public class FlexiblePortfolioTest {
     assertEquals(date, portfolioWithValue.getDate());
     assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
     assertEquals(400, list.get(0).getValue(), EPSILON);
   }
 
@@ -132,7 +125,7 @@ public class FlexiblePortfolioTest {
     LocalDate date = LocalDate.parse("2022-10-11");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getStocks();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
     assertNull(list.get(2).getValue());
   }
 

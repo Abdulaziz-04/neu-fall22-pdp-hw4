@@ -1,8 +1,7 @@
 package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
-import portfolio.models.stockprice.StockQueryService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
@@ -13,7 +12,7 @@ import portfolio.views.View;
  */
 public class MainPageController implements PageController {
 
-  private final PageControllerFactory controllerFactory;
+  private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   private String errorMessage;
   private boolean isInitFailed;
@@ -21,17 +20,15 @@ public class MainPageController implements PageController {
   /**
    * This is a constructor that construct a main menu page controller.
    *
-   * @param stockQueryService StockQueryService
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public MainPageController(StockQueryService stockQueryService,
-      PageControllerFactory controllerFactory, ViewFactory viewFactory) {
-    this.controllerFactory = controllerFactory;
+  public MainPageController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
     this.viewFactory = viewFactory;
+    this.portfolioModel = portfolioModel;
     try {
       // Init cache
-      stockQueryService.getStockList();
+      portfolioModel.init();
       isInitFailed = false;
     } catch (Exception e) {
       isInitFailed = true;
@@ -48,11 +45,11 @@ public class MainPageController implements PageController {
     errorMessage = null;
     switch (input) {
       case "1":
-        return controllerFactory.newInflexibleCreatePageController();
+        return new InflexibleCreatePageController(portfolioModel, viewFactory);
       case "2":
-        return controllerFactory.newFlexibleCreatePageController();
+        return new FlexibleCreatePageController(portfolioModel, viewFactory);
       case "3":
-        return controllerFactory.newLoadPageController();
+        return new LoadPageController(portfolioModel, viewFactory);
       default:
         errorMessage = "Please enter the correct number!";
         return this;

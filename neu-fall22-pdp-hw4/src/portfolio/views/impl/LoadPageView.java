@@ -1,6 +1,8 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
+import java.util.List;
+import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.views.ViewAbs;
@@ -12,6 +14,7 @@ public class LoadPageView extends ViewAbs {
 
   private final String errorMessage;
   private final Portfolio portfolio;
+  private final boolean showModifyMenu;
 
   /**
    * This is a constructor that construct a determine page view.
@@ -20,10 +23,12 @@ public class LoadPageView extends ViewAbs {
    * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
-  public LoadPageView(PrintStream printStream, InflexiblePortfolio portfolio, String errorMessage) {
+  public LoadPageView(PrintStream printStream, InflexiblePortfolio portfolio,
+      boolean showModifyMenu, String errorMessage) {
     super(printStream);
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;
+    this.showModifyMenu = showModifyMenu;
   }
 
   /**
@@ -32,9 +37,30 @@ public class LoadPageView extends ViewAbs {
    * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user
    */
-  public LoadPageView(Portfolio portfolio, String errorMessage) {
+  public LoadPageView(Portfolio portfolio, boolean showModifyMenu, String errorMessage) {
     this.errorMessage = errorMessage;
     this.portfolio = portfolio;
+    this.showModifyMenu = showModifyMenu;
+  }
+
+  private void printTransaction(List<Transaction> transactions) {
+    printStream.println(
+        "             +-----------+------+---------+---------------+---------------+");
+    printStream.println(
+        "Transaction: |       Date|  Type|    Stock|  No. of shares| Commission fee|");
+    printStream.println(
+        "             +-----------+------+---------+---------------+---------------+");
+    for (var entry : transactions) {
+      printStream.printf("             |%11s|%6s|%9s|%15d|%15s|%n",
+          entry.getDate() == null ? "N/A" : entry.getDate(),
+          entry.getType() == null ? "N/A" : entry.getType(),
+          entry.getSymbol(),
+          entry.getAmount(),
+          entry.getCommissionFee() == null ? "N/A" : "$" + entry.getCommissionFee()
+      );
+    }
+    printStream.println(
+        "             +-----------+------+---------+---------------+---------------+");
   }
 
   @Override
@@ -49,19 +75,17 @@ public class LoadPageView extends ViewAbs {
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
     if (portfolio == null) {
-      printStream.println("--Please enter the name of the portfolio that you want to examine. " +
-          "The name cannot be end,yes,no,back.--");
+      printStream.println("Please enter the name of the portfolio that you want to load. " +
+          "The name cannot be back.");
     } else {
-      printStream.println("           +---------+---------------+");
-      printStream.println("Portfolio: |    Stock|  No. of shares|");
-      printStream.println("           +---------+---------------+");
-      for (var entry : portfolio.getStocks().entrySet()) {
-        printStream.printf("           |%9s|%15d|%n", entry.getKey(), entry.getValue());
+      printStream.println("Portfolio: " + portfolio.getName());
+      printTransaction(portfolio.getTransactions());
+      printStream.println("Menu:");
+      printStream.println("1. View composition, value, cost of basis for specific date");
+      printStream.println("2. View performance over time");
+      if (showModifyMenu) {
+        printStream.println("3. Modify portfolio (Add transaction to portfolio)");
       }
-      printStream.println("           +---------+---------------+");
-      printStream.println("Do you want to determine the total value of current portfolio?");
-      printStream.println("Please enter yes if you want to determine. " +
-          "Other input will be back to the main menu.");
     }
     printStream.print("input > ");
   }

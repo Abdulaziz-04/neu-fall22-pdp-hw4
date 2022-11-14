@@ -1,11 +1,9 @@
 package portfolio.controllers.impl;
 
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
-import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -15,31 +13,32 @@ import portfolio.views.ViewFactory;
  * creating a view to show portfolio content.
  */
 public class LoadPageController implements PageController {
+
   private final IOService ioService = new FileIOService();
-  private final PortfolioService portfolioService;
-  private final PageControllerFactory controllerFactory;
+  private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   private String errorMessage;
-  private Portfolio portfolio;
+  private boolean showModifyMenu = false;
 
   /**
    * This is a constructor that construct a LoadPageController, which is examining the composition
    * of a portfolio.
    *
-   * @param portfolioService  the service for portfolio
+   * @param portfolioModel    the service for portfolio
    * @param controllerFactory PageControllerFactory for creating PageController
    * @param viewFactory       ViewFactor for creating a view
    */
-  public LoadPageController(PortfolioService portfolioService,
-      PageControllerFactory controllerFactory, ViewFactory viewFactory) {
-    this.portfolioService = portfolioService;
-    this.controllerFactory = controllerFactory;
+  public LoadPageController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
+    this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
+    showModifyMenu =
+        portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
   }
 
   @Override
   public View getView() {
-    return viewFactory.newLoadPageView(portfolio, errorMessage);
+    return viewFactory.newLoadPageView(portfolioModel.getPortfolio(),
+        showModifyMenu, errorMessage);
   }
 
   /**
@@ -54,22 +53,30 @@ public class LoadPageController implements PageController {
     input = input.trim();
     errorMessage = null;
     if (input.equals("back")) {
-      return controllerFactory.newMainPageController();
+      return new MainPageController(portfolioModel, viewFactory);
     }
     try {
-      if (portfolio == null) {
+      if (portfolioModel.getPortfolio() == null) {
         //get portfolio
         String str = ioService.read(input + ".txt");
-        portfolioService.load(input, str);
-        portfolio = portfolioService.getPortfolio();
+        portfolioModel.load(input, str);
+        showModifyMenu = !portfolioModel.getPortfolio().isReadOnly();
         return this;
       } else {
-        if(input.equals("1")){
-          return controllerFactory.newInfoPageController(portfolio);
-        } else if (input.equals("2")) {
-          return controllerFactory.newPerformacePageController(portfolio);
-        } else {
-          return controllerFactory.newMainPageController();
+        if (!showModifyMenu && input.equals("3")) {
+          errorMessage = "Please input valid number.";
+          return this;
+        }
+        switch (input) {
+          case "1":
+            return new InfoPageController(portfolioModel, viewFactory);
+          case "2":
+            return new PerformancePageController(portfolioModel, viewFactory);
+          case "3":
+            return new FlexibleCreatePageController(portfolioModel, viewFactory);
+          default:
+            errorMessage = "Please input valid number.";
+            return this;
         }
       }
     } catch (Exception e) {

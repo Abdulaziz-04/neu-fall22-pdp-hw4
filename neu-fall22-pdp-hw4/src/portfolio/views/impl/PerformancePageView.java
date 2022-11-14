@@ -11,16 +11,16 @@ import portfolio.views.ViewAbs;
 
 public class PerformancePageView extends ViewAbs {
 
-  private String errorMessage;
+  private final String errorMessage;
 
-  private String portfolioName;
+  private final String portfolioName;
 
-  private LocalDate startDate;
-  private LocalDate endDate;
+  private final LocalDate startDate;
+  private final LocalDate endDate;
 
-  private List<String> listStar = new ArrayList<>();
-  private List<String> list = new ArrayList<>();
-  private String scale;
+  private final List<String> listStar;
+  private final List<String> list;
+  private final String scale;
 
 
   public PerformancePageView(String portfolioName,

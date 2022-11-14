@@ -11,12 +11,11 @@ import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
 import portfolio.helper.ArgumentCaptor;
-import portfolio.helper.IOServiceMock;
 import portfolio.helper.StockApiMock;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
 import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
@@ -28,7 +27,7 @@ import portfolio.views.ViewFactory;
 public class MainPageControllerTest {
 
   private final PortfolioParser parser = new PortfolioTextParser();
-  private PortfolioService portfolioService;
+  private PortfolioModel portfolioModel;
   private ViewFactory viewFactory;
   private StockQueryService stockQueryService;
   private ArgumentCaptor<Object> argumentCaptor;
@@ -38,20 +37,16 @@ public class MainPageControllerTest {
   public void setUp() {
     argumentCaptor = new ArgumentCaptor<>();
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioService = new PortfolioServiceImpl(stockQueryService,
+    portfolioModel = new PortfolioModelImpl(stockQueryService,
         parser);
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
-        stockQueryService, parser, viewFactory);
-    pageController = new MainPageController(stockQueryService, pageControllerFactory, viewFactory);
+    pageController = new MainPageController(portfolioModel, viewFactory);
   }
 
   @Test
   public void failToInit() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    PageControllerFactory pageControllerFactory = new PageControllerFactory(portfolioService,
-        stockQueryService, parser, viewFactory);
-    pageController = new MainPageController(stockQueryService, pageControllerFactory, viewFactory);
+    pageController = new MainPageController(portfolioModel, viewFactory);
 
     pageController.getView();
     assertNull(argumentCaptor.getArguments().get(0));

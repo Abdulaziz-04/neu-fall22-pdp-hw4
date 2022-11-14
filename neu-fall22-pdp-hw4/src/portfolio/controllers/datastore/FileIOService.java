@@ -11,8 +11,8 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 /**
- * This is a class that represent the file service, which implements the IOService interface.
- * This class will read and write string to file.
+ * This is a class that represent the file service, which implements the IOService interface. This
+ * class will read and write string to file.
  */
 public class FileIOService implements IOService {
 
@@ -34,9 +34,10 @@ public class FileIOService implements IOService {
   }
 
   @Override
-  public boolean saveTo(String text, String fileName) throws IllegalArgumentException {
+  public boolean saveTo(String text, String fileName, boolean allowOverride)
+      throws IllegalArgumentException {
     File f = new File(fileName);
-    if (f.exists() && !f.isDirectory()) {
+    if (!allowOverride && f.exists() && !f.isDirectory()) {
       throw new IllegalArgumentException(
           "There is a file or a directory exists with filename: " + fileName);
     }

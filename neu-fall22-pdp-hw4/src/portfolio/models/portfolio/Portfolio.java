@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.PortfolioWithCostBasis;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
@@ -15,6 +14,7 @@ import portfolio.models.entities.StockPrice;
 public interface Portfolio {
 
   String getName();
+
   PortfolioFormat getFormat();
   Portfolio create(List<Transaction> transactions) throws Exception;
 
@@ -23,11 +23,11 @@ public interface Portfolio {
    *
    * @return a list with the portfolio entry.
    */
-  Map<String, Integer> getStocks();
+  Map<String, Integer> getComposition();
 
-  Map<String, Integer> getStocks(LocalDate date);
+  Map<String, Integer> getComposition(LocalDate date);
 
-  List<Transaction> getTransaction();
+  List<Transaction> getTransactions();
 
   /**
    * This is the method to get the symbol list for a portfolio.
@@ -37,17 +37,16 @@ public interface Portfolio {
   List<String> getSymbols(LocalDate date);
 
   /**
-   * This is the method to calculate the portfolio price on a certain date. It will return
-   * a PortfolioWithValue class that has the total value of this portfolio.
+   * This is the method to calculate the portfolio price on a certain date. It will return a
+   * PortfolioWithValue class that has the total value of this portfolio.
    *
-   * @param date the date that we want to determine the price
+   * @param date   the date that we want to determine the price
    * @param prices the price for every stock in this portfolio
    * @return PortfolioWithValue object that has the total value of this portfolio
    */
   PortfolioWithValue getPortfolioWithValue(LocalDate date, Map<String, StockPrice> prices);
 
-  PortfolioWithCostBasis getCostBasis(LocalDate date, Map<String, StockPrice> prices, Double commissionFee)
-      throws Exception;
+  double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception;
 
   boolean isReadOnly();
 

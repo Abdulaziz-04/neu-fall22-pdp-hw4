@@ -54,7 +54,7 @@ public class PortfolioTextParser implements PortfolioParser {
    * @return the portfolio in a string format
    */
   public String toString(Portfolio portfolio) {
-    List<Transaction> transactions = portfolio.getTransaction();
+    List<Transaction> transactions = portfolio.getTransactions();
     StringBuilder builder = new StringBuilder();
     builder.append("FORMAT=").append(portfolio.getFormat()).append("\n");
 

@@ -17,11 +17,10 @@ import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.PortfolioEntryWithValue;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.helper.ArgumentCaptor;
-import portfolio.helper.IOServiceMock;
 import portfolio.helper.StockApiMock;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
-import portfolio.models.portfolio.PortfolioService;
-import portfolio.models.portfolio.impl.PortfolioServiceImpl;
+import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
@@ -37,7 +36,6 @@ public class InfoPageControllerTest {
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
   private StockQueryService stockQueryService;
-  private PageControllerFactory pageControllerFactory;
   private final Map<String, Integer> map = new HashMap<>();
   private InflexiblePortfolio portfolio;
 
@@ -48,16 +46,13 @@ public class InfoPageControllerTest {
     argumentCaptor = new ArgumentCaptor<>();
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    PortfolioService portfolioService = new PortfolioServiceImpl(stockQueryService, parser);
-    pageControllerFactory = new PageControllerFactory(portfolioService, stockQueryService, parser,
-        viewFactory);
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
     portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(map));
 
-    pageController = new InfoPageController(stockQueryService, portfolio, pageControllerFactory,
-        viewFactory);
+    pageController = new InfoPageController(portfolioModel,viewFactory);
   }
 
 
@@ -81,7 +76,7 @@ public class InfoPageControllerTest {
     assertEquals(date, actual.getDate());
     assertEquals(440400.0, actual.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = actual.getStocks();
+    List<PortfolioEntryWithValue> list = actual.getComposition();
     assertEquals(440000, list.get(0).getValue(), EPSILON);
     assertEquals(400, list.get(1).getValue(), EPSILON);
 
@@ -107,8 +102,8 @@ public class InfoPageControllerTest {
   @Test
   public void handelInput_serviceFail() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    pageController = new InfoPageController(stockQueryService, portfolio, pageControllerFactory,
-        viewFactory);
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    pageController = new InfoPageController(portfolioModel, viewFactory);
 
     PageController nextPage = pageController.handleInput("2022-10-10");
     assertEquals(pageController, nextPage);

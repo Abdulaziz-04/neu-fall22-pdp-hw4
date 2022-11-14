@@ -18,6 +18,7 @@ import portfolio.models.portfolio.Portfolio;
 public abstract class PortfolioAbs implements Portfolio {
 
   protected final List<Transaction> transactions;
+  protected Map<String, Integer> stocks;
 
   protected final String name;
 
@@ -27,10 +28,10 @@ public abstract class PortfolioAbs implements Portfolio {
     if (transactions.get(0).getDate() != null) {
       transactions.sort(Comparator.comparing(Transaction::getDate));
     }
-    getStocks(null);
+    getComposition(null);
   }
 
-  public Map<String, Integer> getStocks(LocalDate date) {
+  public Map<String, Integer> getComposition(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
       if (date != null && tx.getDate() != null && tx.getDate().compareTo(date) > 0) {
@@ -40,11 +41,9 @@ public abstract class PortfolioAbs implements Portfolio {
       int newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
       if (newShare > 0) {
         stocks.put(tx.getSymbol(), newShare);
-      }
-      else if (newShare == 0) {
+      } else if (newShare == 0) {
         stocks.remove(tx.getSymbol());
-      }
-      else {
+      } else {
         throw new RuntimeException("There is a conflict in the input transaction.");
       }
     }
@@ -52,22 +51,23 @@ public abstract class PortfolioAbs implements Portfolio {
   }
 
   @Override
-  public String getName(){
+  public String getName() {
     return name;
   }
+
   /**
    * Get a list of PortfolioEntry in this portfolio.
    *
    * @return an immutable list of PortfolioEntry
    */
   @Override
-  public Map<String, Integer> getStocks() {
-    return Collections.unmodifiableMap(getStocks(null));
+  public Map<String, Integer> getComposition() {
+    return Collections.unmodifiableMap(getComposition(null));
   }
 
 
   @Override
-  public List<Transaction> getTransaction() {
+  public List<Transaction> getTransactions() {
     return Collections.unmodifiableList(transactions);
   }
 
@@ -78,7 +78,7 @@ public abstract class PortfolioAbs implements Portfolio {
    */
   @Override
   public List<String> getSymbols(LocalDate date) {
-    return getStocks(date).keySet().stream().collect(Collectors.toUnmodifiableList());
+    return getComposition(date).keySet().stream().collect(Collectors.toUnmodifiableList());
   }
 
 
@@ -93,7 +93,7 @@ public abstract class PortfolioAbs implements Portfolio {
     List<PortfolioEntryWithValue> portfolioEntryWithValues = new ArrayList<>();
     double total = 0;
 
-    for (var entry : getStocks(date).entrySet()) {
+    for (var entry : getComposition(date).entrySet()) {
       Double value = null;
       StockPrice price = prices.get(entry.getKey());
       if (price != null) {

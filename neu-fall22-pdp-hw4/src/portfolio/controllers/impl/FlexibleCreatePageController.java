@@ -2,20 +2,16 @@ package portfolio.controllers.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import portfolio.controllers.PageController;
-import portfolio.controllers.PageControllerFactory;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
-import portfolio.models.portfolio.Portfolio;
+import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.PortfolioService;
+import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -28,30 +24,36 @@ import portfolio.views.ViewFactory;
  */
 public class FlexibleCreatePageController implements PageController {
 
-  private final PortfolioService portfolioService;
+  private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
-  private final PortfolioParser portfolioParser;
-  private final PageControllerFactory pageControllerFactory;
+  private final PortfolioParser portfolioParser = new PortfolioTextParser();
   private final ViewFactory viewFactory;
   private String errorMessage;
-  private Boolean isEnd = false;
-  private Boolean isNamed = false;
-  private Portfolio portfolio;
-  private final List<Transaction> transactions = new ArrayList<>();
+  private boolean isEnd = false;
+  private boolean isNamed = false;
+  private final boolean modifyMode;
+  private List<Transaction> transactions;
+  private final List<String> inputBuffer = new ArrayList<>();
 
   public FlexibleCreatePageController(
-      PortfolioService portfolioService, PortfolioParser portfolioParser,
-      PageControllerFactory controllerFactory,
+      PortfolioModel portfolioModel,
       ViewFactory viewFactory) {
-    this.portfolioService = portfolioService;
-    this.pageControllerFactory = controllerFactory;
+    this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
-    this.portfolioParser = portfolioParser;
+    if (portfolioModel.getPortfolio() != null) {
+      this.transactions = new ArrayList<>(portfolioModel.getPortfolio().getTransactions());
+      isNamed = true;
+      modifyMode = true;
+    } else {
+      this.transactions = new ArrayList<>();
+      modifyMode = false;
+    }
   }
 
   @Override
   public View getView() {
-    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, transactions, errorMessage);
+    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), transactions,
+        errorMessage);
   }
 
   /**
@@ -67,71 +69,86 @@ public class FlexibleCreatePageController implements PageController {
   public PageController handleInput(String input) {
     input = input.trim();
     errorMessage = null;
+
     if (input.equals("back")) {
-      return pageControllerFactory.newMainPageController();
+      return new MainPageController(portfolioModel, viewFactory);
     }
     if (!isEnd && !input.equals("end")) {
       try {
-        String[] cmd = input.split(",");
-        String symbol = cmd[2];
-        if (cmd.length != 5) {
-          errorMessage = "Error Format!";
+        int size = inputBuffer.size();
+        if (size == 0) {
+          LocalDate.parse(input);
+          inputBuffer.add(input);
           return this;
-        }
-        int amount = 0;
-        try {
-          amount = Integer.parseInt(cmd[3]);
-        } catch (Exception e) {
-          errorMessage = "The share is not a number.";
+        } else if (size == 1) {
+          TransactionType.parse(input);
+          inputBuffer.add(input);
           return this;
-        }
-        double commissionFee = 0;
-        try {
-          commissionFee = Double.parseDouble(cmd[4]);
-        } catch (Exception e) {
-          errorMessage = "Commission fee input is incorrect.";
+        } else if (size == 2) {
+          inputBuffer.add(input);
           return this;
-        }
-        if (amount <= 0) {
-          errorMessage = "The shares cannot be negative and 0.";
+        } else if (size == 3) {
+          try {
+            if (Integer.parseInt(input) <= 0) {
+              errorMessage = "The shares cannot be negative and 0.";
+              return this;
+            }
+            inputBuffer.add(input);
+            return this;
+          } catch (Exception e) {
+            errorMessage = "The share is not a number or an integer.";
+            return this;
+          }
+        } else if (size == 4) {
+          try {
+            if (Double.parseDouble(input) < 0) {
+              errorMessage = "Commission cannot be negative.";
+
+            }
+            inputBuffer.add(input);
+          } catch (Exception e) {
+            errorMessage = "Commission fee input is not a number.";
+            return this;
+          }
+          transactions.add(
+              new Transaction(
+                  TransactionType.parse(inputBuffer.get(1)),
+                  inputBuffer.get(2),
+                  Integer.parseInt(inputBuffer.get(3)),
+                  LocalDate.parse(inputBuffer.get(0)),
+                  Double.parseDouble(inputBuffer.get(4))
+              )
+          );
           return this;
+        } else if (size == 5) {
+          if (input.equals("Y")) {
+            inputBuffer.clear();
+            return this;
+          }
         }
-        transactions.add(new Transaction(TransactionType.parse(cmd[1]), symbol, amount, LocalDate.parse(cmd[0]), commissionFee));
       } catch (Exception e) {
         errorMessage = e.getMessage();
-        return this;
       }
-    } else if (input.equals("end") && transactions.size() == 0) {
-      errorMessage = "No stock entered. Please input stock.";
-      return this;
-    } else if (input.equals("end") && !isEnd && !isNamed) {
+    }
+    if (inputBuffer.size() == 5 && !isEnd) {
       try {
-        portfolio = portfolioService.create("aa", PortfolioFormat.FLEXIBLE, transactions);
+        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
-        return this;
+      } catch (Exception e) {
+        errorMessage = e.getMessage() + " Please enter transaction list again.";
+        inputBuffer.clear();
+        if (portfolioModel.getPortfolio() != null) {
+          transactions = portfolioModel.getPortfolio().getTransactions();
+        }
       }
-      catch (Exception e) {
-        errorMessage = e.getMessage();
-        transactions.clear();
-        return this;
-      }
-    } else if (isEnd && !isNamed) {
-      //save to file
-      if (input.equals("end") || input.equals("yes") || input.equals("no")) {
-        errorMessage = "The name cannot be end, back, no and yes.";
-        return this;
-      }
+    } else if (inputBuffer.size() == 5) {
+      String name = isNamed ? portfolioModel.getPortfolio().getName() : input;
       try {
-        isNamed = ioService.saveTo(portfolioParser.toString(portfolio), input + ".txt");
+        portfolioModel.set(name, PortfolioFormat.FLEXIBLE, transactions);
+        ioService.saveTo(portfolioParser.toString(portfolioModel.getPortfolio()), name + ".txt", modifyMode);
+        return new LoadPageController(portfolioModel, viewFactory);
       } catch (Exception e) {
         errorMessage = e.getMessage();
-      }
-      return this;
-    } else {
-      if (input.equals("yes")) {
-        return pageControllerFactory.newInfoPageController(portfolio);
-      } else {
-        return pageControllerFactory.newMainPageController();
       }
     }
     return this;

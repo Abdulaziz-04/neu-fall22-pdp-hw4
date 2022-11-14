@@ -14,6 +14,7 @@ import portfolio.views.impl.InflexibleCreatePageView;
 import portfolio.views.impl.InfoPageView;
 import portfolio.views.impl.LoadPageView;
 import portfolio.views.impl.MainPageView;
+import portfolio.views.impl.PerformancePageView;
 
 /**
  * ViewFactory using ArgumentCaptor.
@@ -27,11 +28,12 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newInfoPageView(PortfolioWithValue portfolioWithPrice,
+  public View newInfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
       String errorMessage) {
     argumentCaptor.addArgument(portfolioWithPrice);
+    argumentCaptor.addArgument(costOfBasis);
     argumentCaptor.addArgument(errorMessage);
-    return new InfoPageView(portfolioWithPrice, errorMessage);
+    return new InfoPageView(portfolioWithPrice, costOfBasis, errorMessage);
   }
 
   @Override
@@ -45,16 +47,17 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed,
+  public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int state,
       List<Transaction> transactions, String errorMessage) {
     return null;
   }
 
   @Override
-  public View newLoadPageView(Portfolio portfolio, String errorMessage) {
+  public View newLoadPageView(Portfolio portfolio, boolean showModifyMenu,String errorMessage) {
     argumentCaptor.addArgument(portfolio);
+    argumentCaptor.addArgument(showModifyMenu);
     argumentCaptor.addArgument(errorMessage);
-    return new LoadPageView(portfolio, errorMessage);
+    return new LoadPageView(portfolio, showModifyMenu, errorMessage);
   }
 
   @Override
@@ -65,8 +68,20 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newPerformacePageView(String portfolioName, LocalDate startDate, LocalDate endDate, List<String> list, List<String> listStar, String scale, String errorMessage) {
-    return null;
+  public View newPerformacePageView(String portfolioName,
+      LocalDate startDate,
+      LocalDate endDate,
+      List<String> list,
+      List<String> listStar,
+      String scale, String errorMessage) {
+    argumentCaptor.addArgument(startDate);
+    argumentCaptor.addArgument(endDate);
+    argumentCaptor.addArgument(list);
+    argumentCaptor.addArgument(listStar);
+    argumentCaptor.addArgument(scale);
+    argumentCaptor.addArgument(errorMessage);
+    return new PerformancePageView(portfolioName, startDate, endDate, list,
+        listStar, scale, errorMessage);
   }
 
 }
