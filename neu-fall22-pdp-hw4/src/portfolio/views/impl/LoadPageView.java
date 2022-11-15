@@ -71,9 +71,9 @@ public class LoadPageView extends ViewAbs {
       printStream.println("! Error message: " + errorMessage);
       printStream.println("----------------------------------------------------------");
     }
-    printStream.println("*********************************************************");
+    printStream.println("-------------------------Tips-----------------------------");
     printStream.println("!!! If you enter back, you will back to the main menu.");
-    printStream.println("*********************************************************");
+    printStream.println("----------------------------------------------------------");
     if (portfolio == null) {
       printStream.println("Please enter the name of the portfolio that you want to load. " +
           "The name cannot be back.");
@@ -86,6 +86,7 @@ public class LoadPageView extends ViewAbs {
       if (showModifyMenu) {
         printStream.println("3. Modify portfolio (Add transaction to portfolio)");
       }
+      printStream.println("--Please enter the number in above");
     }
     printStream.print("input > ");
   }

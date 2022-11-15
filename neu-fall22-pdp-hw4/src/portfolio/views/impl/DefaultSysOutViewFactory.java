@@ -49,9 +49,9 @@ public class DefaultSysOutViewFactory implements ViewFactory {
       LocalDate endDate,
       List<String> list,
       List<String> listStar,
-      String scale, String errorMessage) {
+      String scale, boolean isFinish, String errorMessage) {
     return new PerformancePageView(portfolioName, startDate, endDate, list,
-        listStar, scale, errorMessage);
+        listStar, scale, isFinish, errorMessage);
   }
 
 }

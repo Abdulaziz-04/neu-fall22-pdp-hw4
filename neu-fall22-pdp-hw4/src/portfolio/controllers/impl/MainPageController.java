@@ -5,6 +5,8 @@ import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
+import static java.lang.System.exit;
+
 /**
  * This is a controller for handling the first page. It implements PageController.
  * MainPageController handles input from user and is responsible for redirecting user to others
@@ -20,8 +22,8 @@ public class MainPageController implements PageController {
   /**
    * This is a constructor that construct a main menu page controller.
    *
-   * @param controllerFactory PageControllerFactory for creating PageController
-   * @param viewFactory       ViewFactor for creating a view
+   * @param portfolioModel the model of portfolio
+   * @param viewFactory    ViewFactor for creating a view
    */
   public MainPageController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
     this.viewFactory = viewFactory;

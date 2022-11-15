@@ -24,7 +24,7 @@ public class PortfolioWithValue {
    * @param totalValue the total value of the portfolio
    */
   public PortfolioWithValue(LocalDate date, List<PortfolioEntryWithValue> stocks,
-      double totalValue) {
+                            double totalValue) {
     this.date = date;
     this.stocks = stocks;
     this.totalValue = totalValue;

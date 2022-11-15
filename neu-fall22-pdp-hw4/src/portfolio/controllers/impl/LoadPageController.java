@@ -24,21 +24,20 @@ public class LoadPageController implements PageController {
    * This is a constructor that construct a LoadPageController, which is examining the composition
    * of a portfolio.
    *
-   * @param portfolioModel    the service for portfolio
-   * @param controllerFactory PageControllerFactory for creating PageController
-   * @param viewFactory       ViewFactor for creating a view
+   * @param portfolioModel the model of portfolio
+   * @param viewFactory    ViewFactor for creating a view
    */
   public LoadPageController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
     showModifyMenu =
-        portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
+            portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
   }
 
   @Override
   public View getView() {
     return viewFactory.newLoadPageView(portfolioModel.getPortfolio(),
-        showModifyMenu, errorMessage);
+            showModifyMenu, errorMessage);
   }
 
   /**

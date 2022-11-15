@@ -3,10 +3,9 @@ package portfolio.helper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import portfolio.controllers.PageController;
+
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -69,19 +68,20 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
 
   @Override
   public View newPerformacePageView(String portfolioName,
-      LocalDate startDate,
-      LocalDate endDate,
-      List<String> list,
-      List<String> listStar,
-      String scale, String errorMessage) {
+                                    LocalDate startDate,
+                                    LocalDate endDate,
+                                    List<String> list,
+                                    List<String> listStar,
+                                    String scale, boolean isFinish, String errorMessage) {
     argumentCaptor.addArgument(startDate);
     argumentCaptor.addArgument(endDate);
     argumentCaptor.addArgument(list);
     argumentCaptor.addArgument(listStar);
     argumentCaptor.addArgument(scale);
+    argumentCaptor.addArgument(isFinish);
     argumentCaptor.addArgument(errorMessage);
     return new PerformancePageView(portfolioName, startDate, endDate, list,
-        listStar, scale, errorMessage);
+        listStar, scale, isFinish, errorMessage);
   }
 
 }

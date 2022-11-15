@@ -24,7 +24,8 @@ public class InfoPageController implements PageController {
    * This is a constructor that construct a InfoPageController, which is for determining a portfolio
    * on a certain date.
    *
-   * @param viewFactory       ViewFactor for creating a view
+   * @param portfolioModel the model of portfolio
+   * @param viewFactory ViewFactor for creating a view
    */
   public InfoPageController(PortfolioModel portfolioModel,
       ViewFactory viewFactory) {

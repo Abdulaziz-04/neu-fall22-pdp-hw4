@@ -22,6 +22,8 @@ public class PerformancePageView extends ViewAbs {
   private final List<String> list;
   private final String scale;
 
+  private boolean isFinish;
+
 
   public PerformancePageView(String portfolioName,
                              LocalDate startDate,
@@ -29,6 +31,7 @@ public class PerformancePageView extends ViewAbs {
                              List<String> list,
                              List<String> listStar,
                              String scale,
+                             boolean isFinish,
                              String errorMessage) {
     this.portfolioName = portfolioName;
     this.startDate = startDate;
@@ -36,6 +39,7 @@ public class PerformancePageView extends ViewAbs {
     this.list = list;
     this.listStar = listStar;
     this.scale = scale;
+    this.isFinish = isFinish;
     this.errorMessage = errorMessage;
   }
 
@@ -45,21 +49,28 @@ public class PerformancePageView extends ViewAbs {
     printStream.println("*************This is the interface for Performance**************");
     if (errorMessage != null) {
       printStream.println("---------------------ERROR--------------------------------");
+
       printStream.println("! Error message: " + errorMessage);
       printStream.println("----------------------------------------------------------");
     }
-    printStream.println("*********************************************************");
+    printStream.println("-------------------------Tips-----------------------------");
     printStream.println("!!! If you enter back, you will back to the main menu.");
-    printStream.println("*********************************************************");
-    printStream.println("Please enter another scale of the timespan " +
-            "that you want to performance.");
-    printStream.println("--EX.2020-10-09,2022-10-09");
-    printStream.println("--The format of date needs to be 2022-10-11");
-    printStream.println("--There is a comma between the two date and no space between them.");
-    printStream.print("input > ");
-    //printStream.println("--Other input except back will be error.");
+    printStream.println("----------------------------------------------------------");
 
-    if (startDate != null && endDate != null) {
+    if(startDate != null && endDate == null && isFinish == false) {
+      printStream.println("+---------------+");
+      printStream.println("|     start date|");
+      printStream.println("+---------------+");
+      printStream.printf("|%15s|%n",startDate.toString());
+      printStream.println("+---------------+");
+      printStream.println("Please enter the end date of the timespan " +
+              "that you want to performance.");
+      printStream.println("--EX.2022-10-09");
+      printStream.println("--The format of date needs to be 2022-10-11");
+      printStream.print("input > ");
+    }
+
+    if (startDate != null && endDate != null && isFinish == true) {
       printStream.println("Performance of portfolio " + portfolioName
               + " from " + startDate + " to " + endDate);
       for (int i = 0; i < list.size(); i++) {
@@ -67,14 +78,19 @@ public class PerformancePageView extends ViewAbs {
       }
       printStream.println("scale: " + scale);
       printStream.println("----------------------------------------------------------");
-      printStream.println("Please enter the scale of the timespan " +
+      printStream.println("Please enter the the start date of the timespan " +
               "that you want to performance.");
-      printStream.println("--EX.2020-10-09,2022-10-09");
+      printStream.println("--EX.2020-10-09");
       printStream.println("--The format of date needs to be 2022-10-11");
-      printStream.println("--There is a comma between the two date and no space between them.");
       printStream.print("input > ");
     }
-
+    if(startDate == null) {
+      printStream.println("Please enter the the start date of the timespan " +
+              "that you want to performance.");
+      printStream.println("--EX.2020-10-09");
+      printStream.println("--The format of date needs to be 2022-10-11");
+      printStream.print("input > ");
+    }
   }
 }
 

@@ -24,7 +24,7 @@ public class StockListEntry {
    * @param status        the status of this entry
    */
   public StockListEntry(String symbol, String name, String exchange, String assetType,
-      LocalDate ipoDate, String delistingDate, String status) {
+                        LocalDate ipoDate, String delistingDate, String status) {
     this.symbol = symbol;
     this.ipoDate = ipoDate;
   }

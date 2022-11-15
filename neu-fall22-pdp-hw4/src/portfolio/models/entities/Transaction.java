@@ -3,7 +3,7 @@ package portfolio.models.entities;
 import java.time.LocalDate;
 
 /**
- * This is a class for portfolio entry.
+ * This is a class for portfolio transaction entry.
  */
 public class Transaction {
 
@@ -14,8 +14,9 @@ public class Transaction {
   private final Double commissionFee;
 
   /**
-   * This is a constructor to construct a portfolio entry, which contains the symbol and amount. The
-   * amount means shares.
+   * This is a constructor to construct a portfolio entry, which contains the symbol and amount.
+   * The amount means shares. It will initialize the type of transaction, date
+   * and commission fee to null.
    *
    * @param symbol the symbol of stock
    * @param amount the share for this stock
@@ -28,6 +29,18 @@ public class Transaction {
     this.commissionFee = null;
   }
 
+  /**
+   * This is a constructor to construct a portfolio entry, which contains the symbol and amount.
+   * The amount means shares. It will initialize the type of transaction, date
+   * and commission fee to null.
+   *
+   * @param txType the type of transaction
+   * @param symbol the symbol of a stock
+   * @param amount the shares of a stock
+   * @param date the date to do the transaction
+   * @param commissionFee the commission fee
+   * @throws Exception
+   */
   public Transaction(TransactionType txType, String symbol, int amount, LocalDate date, double commissionFee) throws Exception {
     this.txType = txType;
     this.symbol = symbol;
@@ -36,6 +49,11 @@ public class Transaction {
     this.commissionFee = commissionFee;
   }
 
+  /**
+   * This is the method that return the transaction type.
+   *
+   * @return the type of transaction.
+   */
   public TransactionType getType() {
     return txType;
   }
@@ -58,10 +76,21 @@ public class Transaction {
     return amount;
   }
 
+  /**
+   * This is the method that return the date to do the transaction.
+   *
+   * @return the date of the transaction
+   */
   public LocalDate getDate() {
     return date;
   }
-  public Double getCommissionFee(){
+
+  /**
+   * This is the method that return the commission fee of this transaction.
+   *
+   * @return the commission fee of this transaction
+   */
+  public Double getCommissionFee() {
     return commissionFee;
   }
 }

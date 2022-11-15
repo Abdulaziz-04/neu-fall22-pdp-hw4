@@ -2,6 +2,7 @@ package portfolio.controllers.impl;
 
 import java.io.InputStream;
 import java.util.Scanner;
+
 import portfolio.controllers.FrontController;
 import portfolio.controllers.PageController;
 import portfolio.models.portfolio.PortfolioModel;
@@ -10,6 +11,7 @@ import portfolio.views.ViewFactory;
 
 /**
  * This is class represent event loop, which will continue to run the program.
+ * This class implements the FrontController interface.
  */
 public class FrontControllerImpl implements FrontController {
 
@@ -18,7 +20,6 @@ public class FrontControllerImpl implements FrontController {
 
   /**
    * This is a constructor to construct a EventLoopImpl object.
-   *
    */
   public FrontControllerImpl(PortfolioModel portfolioModel, ViewFactory viewFactory, InputStream inputStream) {
     this.pageController = new MainPageController(portfolioModel, viewFactory);

@@ -15,7 +15,7 @@ public class PortfolioEntryWithValue {
    * This is a constructor to construct a PortfolioEntryWithValue object.
    *
    * @param symbol PortfolioEntry object containing symbol and shares
-   * @param value          the value of this stock
+   * @param value  the value of this stock
    */
   public PortfolioEntryWithValue(String symbol, int amount, Double value) {
     this.value = value;

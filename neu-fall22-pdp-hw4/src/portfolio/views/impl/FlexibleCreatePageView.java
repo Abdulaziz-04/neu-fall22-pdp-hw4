@@ -87,9 +87,9 @@ public class FlexibleCreatePageView extends ViewAbs {
       if (!transactions.isEmpty()) {
         printSelectedStocks();
       }
-      printStream.println("*********************************************************");
+      printStream.println("-------------------------Tips-----------------------------");
       printStream.println("!!! If you enter back, you will back to the main menu.");
-      printStream.println("*********************************************************");
+      printStream.println("----------------------------------------------------------");
 
       if (state == 0) {
         printStream.println(
@@ -117,15 +117,15 @@ public class FlexibleCreatePageView extends ViewAbs {
         if (transactions.size() > 0) {
           printSelectedStocks();
         }
-        printStream.println("*********************************************************");
+        printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
-        printStream.println("*********************************************************");
+        printStream.println("----------------------------------------------------------");
         printStream.println("Please enter the name of this portfolio." +
             "The name cannot be end, back, no and yes");
       } else {
-        printStream.println("*********************************************************");
+        printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
-        printStream.println("*********************************************************");
+        printStream.println("----------------------------------------------------------");
         printStream.println("Portfolio has been saved.");
         printStream.println(
             "Please enter any key to continue or enter \"back\" to go back to main menu.");

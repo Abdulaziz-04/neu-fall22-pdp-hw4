@@ -50,9 +50,9 @@ public class InfoPageView extends ViewAbs {
       printStream.println("! Error message: " + errorMessage);
       printStream.println("----------------------------------------------------------");
     }
-    printStream.println("*********************************************************");
-    printStream.println("!!! If you enter back, you will back to the portfolio page.");
-    printStream.println("*********************************************************");
+    printStream.println("-------------------------Tips-----------------------------");
+    printStream.println("!!! If you enter back, you will back to the main menu.");
+    printStream.println("----------------------------------------------------------");
     if (portfolioWithPrice != null) {
       printStream.println(
           "If stock price not found, the value with be N/A and "

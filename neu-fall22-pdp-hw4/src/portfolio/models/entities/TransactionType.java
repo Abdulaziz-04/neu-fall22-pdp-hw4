@@ -1,9 +1,21 @@
 package portfolio.models.entities;
 
 public enum TransactionType {
+  /**
+   * The type is buy.
+   */
   BUY,
+  /**
+   * The type is sell.
+   */
   SELL;
 
+  /**
+   *
+   * @param str
+   * @return
+   * @throws Exception
+   */
   public static TransactionType parse(String str) throws Exception {
     switch (str) {
       case "BUY":

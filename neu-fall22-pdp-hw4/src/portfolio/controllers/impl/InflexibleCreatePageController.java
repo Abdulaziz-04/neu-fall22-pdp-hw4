@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import portfolio.controllers.PageController;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
@@ -17,9 +18,11 @@ import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
 /**
- * This is a page controller for the create page, which is implement the page controller.
- * CreatePageController handles input from user and is responsible for checking valid stock input,
- * creating portfolio, saving portfolio and generate View. The controller can hold states while user
+ * This is a page controller for the inflexible create page,
+ * which is implement the page controller.
+ * CreatePageController handles input from user and is responsible
+ * for checking valid stock input, creating portfolio, saving portfolio and generate View.
+ * The controller can hold states while user
  * creating their portfolio. The states are stock selection, naming portfolio and portfolio
  * confirmation.
  */
@@ -36,8 +39,8 @@ public class InflexibleCreatePageController implements PageController {
   private List<Transaction> transactions;
 
   public InflexibleCreatePageController(
-      PortfolioModel portfolioModel,
-      ViewFactory viewFactory) {
+          PortfolioModel portfolioModel,
+          ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
   }
@@ -93,8 +96,8 @@ public class InflexibleCreatePageController implements PageController {
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
       transactions = stockList.entrySet().stream()
-          .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
-              Collectors.toList());
+              .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+                      Collectors.toList());
       try {
         portfolioModel.create(null, PortfolioFormat.INFLEXIBLE, transactions);
         isEnd = true;

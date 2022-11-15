@@ -55,5 +55,5 @@ public interface ViewFactory {
    */
   View newMainPageView(String errorMessage, boolean isInitFailed);
 
-  View newPerformacePageView(String portfolioName, LocalDate startDate, LocalDate endDate, List<String> list, List<String> listStar, String scale, String errorMessage);
+  View newPerformacePageView(String portfolioName, LocalDate startDate, LocalDate endDate, List<String> list, List<String> listStar, String scale, boolean isFinish, String errorMessage);
 }

@@ -80,9 +80,9 @@ public class InflexibleCreatePageView extends ViewAbs {
       if (!map.isEmpty()) {
         printSelectedStocks();
       }
-      printStream.println("*********************************************************");
+      printStream.println("-------------------------Tips-----------------------------");
       printStream.println("!!! If you enter back, you will back to the main menu.");
-      printStream.println("*********************************************************");
+      printStream.println("----------------------------------------------------------");
       printStream.println("Enter symbol and number of shares for one stock. "
           + "The format is: AAPL,100.");
       printStream.println("--The symbol must be capital letters and "
@@ -98,15 +98,15 @@ public class InflexibleCreatePageView extends ViewAbs {
         if (map.size() > 0) {
           printSelectedStocks();
         }
-        printStream.println("*********************************************************");
+        printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
-        printStream.println("*********************************************************");
+        printStream.println("----------------------------------------------------------");
         printStream.println("Please enter the file name of this portfolio." +
             "The name cannot be end, back, no and yes");
       } else {
-        printStream.println("*********************************************************");
+        printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
-        printStream.println("*********************************************************");
+        printStream.println("----------------------------------------------------------");
         printStream.println("Do you want to determine the total value of this portfolio?");
         printStream.println("--Please enter yes if you want to determine. " +
             "Other input will be back to the main menu.");
