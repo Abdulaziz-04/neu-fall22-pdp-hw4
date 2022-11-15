@@ -38,6 +38,11 @@ public class StockListEntry {
     return symbol;
   }
 
+  /**
+   * Return the ipo date of this stock.
+   *
+   * @return the ipo date of this stock
+   */
   public LocalDate getIpoDate() {
     return ipoDate;
   }

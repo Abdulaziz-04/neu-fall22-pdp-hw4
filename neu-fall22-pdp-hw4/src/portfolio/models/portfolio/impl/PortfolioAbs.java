@@ -15,12 +15,17 @@ import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 
+/**
+ * This is an abstract class for FlexiblePortfolio and InflexiblePortfolio, which implement
+ * the interface of Portfolio.
+ */
 public abstract class PortfolioAbs implements Portfolio {
 
   protected final List<Transaction> transactions;
   protected Map<String, Integer> stocks;
 
   protected final String name;
+
 
   protected PortfolioAbs(String name, List<Transaction> transactions) {
     this.name = name;
@@ -31,6 +36,8 @@ public abstract class PortfolioAbs implements Portfolio {
     getComposition(null);
   }
 
+
+  @Override
   public Map<String, Integer> getComposition(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
@@ -55,11 +62,7 @@ public abstract class PortfolioAbs implements Portfolio {
     return name;
   }
 
-  /**
-   * Get a list of PortfolioEntry in this portfolio.
-   *
-   * @return an immutable list of PortfolioEntry
-   */
+
   @Override
   public Map<String, Integer> getComposition() {
     return Collections.unmodifiableMap(getComposition(null));
@@ -71,10 +74,12 @@ public abstract class PortfolioAbs implements Portfolio {
     return Collections.unmodifiableList(transactions);
   }
 
+
   /**
-   * Get a list of stock symbol in this portfolio.
+   * Get a list of stock symbol in this portfolio on a certain date.
    *
-   * @return an immutable list of stock symbol string
+   * @param date the date that we want to find the symbol list
+   * @return a list of stock symbol in this portfolio on a certain date
    */
   @Override
   public List<String> getSymbols(LocalDate date) {

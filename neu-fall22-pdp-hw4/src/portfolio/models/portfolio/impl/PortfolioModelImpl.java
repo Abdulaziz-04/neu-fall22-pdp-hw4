@@ -20,7 +20,7 @@ import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.stockprice.StockQueryService;
 
 /**
- * This is a class that represent a portfolio service, which creating and retrieving portfolio.
+ * This is a class that represent a portfolio model, which implement the PortfolioModel interface.
  */
 public class PortfolioModelImpl implements PortfolioModel {
 

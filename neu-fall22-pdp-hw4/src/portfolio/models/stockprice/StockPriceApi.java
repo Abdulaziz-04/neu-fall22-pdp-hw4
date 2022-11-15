@@ -2,6 +2,7 @@ package portfolio.models.stockprice;
 
 import java.util.List;
 import java.util.Map;
+
 import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
 

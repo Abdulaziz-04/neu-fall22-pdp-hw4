@@ -5,8 +5,6 @@ import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.ViewFactory;
 import portfolio.views.View;
 
-import static java.lang.System.exit;
-
 /**
  * This is a controller for handling the first page. It implements PageController.
  * MainPageController handles input from user and is responsible for redirecting user to others

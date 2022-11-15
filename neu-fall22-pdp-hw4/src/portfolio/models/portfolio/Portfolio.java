@@ -9,24 +9,53 @@ import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 
 /**
- * This is an interface for the portfolio class. The portfolio class will implement this class.
+ * This is an interface for the portfolio class. The InflexiblePortfolio class,
+ *  FlexiblePortfolio and PortfolioAbs class will implement it.
  */
 public interface Portfolio {
 
+  /**
+   * Return the name of this portfolio.
+   *
+   * @return the name of this portfolio
+   */
   String getName();
 
+  /**
+   * Return the format of this portfolio.
+   *
+   * @return the format of this portfolio
+   */
   PortfolioFormat getFormat();
+
+  /**
+   *
+   * @param transactions
+   * @return
+   * @throws Exception
+   */
   Portfolio create(List<Transaction> transactions) throws Exception;
 
   /**
-   * This is a method to get the portfolio list. Return a list with the portfolio entry.
+   * This is a method to get the composition list of a portfolio. Return a list with the
+   * symbol and amount.
    *
-   * @return a list with the portfolio entry.
+   * @return a list with the symbol and amount.
    */
   Map<String, Integer> getComposition();
 
+  /**
+   *
+   * @param date
+   * @return
+   */
   Map<String, Integer> getComposition(LocalDate date);
 
+  /**
+   * This is a method to return a list of transaction entry.
+   *
+   * @return a list of transaction entry
+   */
   List<Transaction> getTransactions();
 
   /**
@@ -48,6 +77,11 @@ public interface Portfolio {
 
   double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception;
 
+  /**
+   * This is a method to determine if this portfolio can only read after creating or not.
+   *
+   * @return true for inflexible portfolio, false for flexible portfolio
+   */
   boolean isReadOnly();
 
 }

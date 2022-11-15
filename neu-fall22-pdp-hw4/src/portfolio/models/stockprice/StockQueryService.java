@@ -3,6 +3,7 @@ package portfolio.models.stockprice;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
 import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
 
@@ -15,7 +16,7 @@ public interface StockQueryService {
    * Get all time daily prices of the stock. The result will be in a format of a map of (symbol:
    * String, price: StockPrice).
    *
-   * @param date date
+   * @param date    date
    * @param symbols stock symbol
    * @return a map of date and StockPrice
    * @throws Exception is there is any error

@@ -6,6 +6,12 @@ import portfolio.models.entities.Transaction;
 
 public interface PortfolioParser {
 
+  /**
+   *
+   * @param str
+   * @return
+   * @throws Exception
+   */
   PortfolioFormat parseFormat(String str) throws Exception;
   List<Transaction> parseTransaction(String str) throws Exception;
 

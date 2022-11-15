@@ -9,14 +9,16 @@ import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 
 /**
- * This is a class that represent a portfolio object, which contains a list of portfolio entry.
+ * This is a class that represent a portfolio object, which extends the PortfolioAbs class.
  */
 public class InflexiblePortfolio extends PortfolioAbs {
 
   /**
-   * This is a constructor to a portfolio object from list of PortfolioEntry.
+   * This is a constructor to an inflexible portfolio object, which will contain the name of this
+   * portfolio and a list of transaction entry.
    *
-   * @param transactions a list of PortfolioEntry
+   * @param name the name of a portfolio
+   * @param transactions a list of transaction entry
    */
   public InflexiblePortfolio(String name, List<Transaction> transactions) {
     super(name, transactions);
@@ -26,6 +28,7 @@ public class InflexiblePortfolio extends PortfolioAbs {
   public PortfolioFormat getFormat() {
     return PortfolioFormat.INFLEXIBLE;
   }
+
 
   @Override
   public Portfolio create(List<Transaction> transactions) throws Exception {

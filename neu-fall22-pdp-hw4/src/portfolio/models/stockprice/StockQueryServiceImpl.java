@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.cache.Cache;
@@ -53,7 +54,7 @@ public class StockQueryServiceImpl implements StockQueryService {
       if (isInList(symbol)) {
         price = stockPriceCache.get(symbol, x -> api.getStockPrice(symbol)).get(date.toString());
         if (price == null) {
-          throw new IllegalArgumentException("Stock [" + symbol + "] is not available at date "+ date + ".");
+          throw new IllegalArgumentException("Stock [" + symbol + "] is not available at date " + date + ".");
         }
       }
       map.put(symbol, price);

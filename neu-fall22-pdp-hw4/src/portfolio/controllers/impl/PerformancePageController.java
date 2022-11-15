@@ -14,6 +14,12 @@ import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
+/**
+ * This is a class that represent the performance over time page controller, which implement
+ * the PageController interface. PerformancePageController handles input from user
+ * and is responsible for performing the performance of a portfolio in a timespan and
+ * creating a view to show it performance.
+ */
 public class PerformancePageController implements PageController {
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
@@ -32,7 +38,6 @@ public class PerformancePageController implements PageController {
   private boolean isFinish;
 
 
-
   /**
    * This is a constructor that construct a performance page controller.
    *
@@ -48,7 +53,7 @@ public class PerformancePageController implements PageController {
    * This is a helper method to find the last day of the quarter
    * which the given date falls.
    *
-   * @param localDate the date to find
+   * @param localDate the date that we want to check
    * @returnthe last day of the quarter which the given date falls.
    */
   private static LocalDate getQuarterEnd(LocalDate localDate) {
@@ -93,8 +98,8 @@ public class PerformancePageController implements PageController {
    * Divide the timespan into timestamps, which is a list.
    * Calculate the scale and then add the amount of "*" to star list.
    *
-   * @param startDate
-   * @param endDate
+   * @param startDate the start date to performance
+   * @param endDate   the end date to performance
    */
   private void updateLists(LocalDate startDate, LocalDate endDate) {
     list = new ArrayList<>();
@@ -275,6 +280,13 @@ public class PerformancePageController implements PageController {
             listStar, scale, isFinish, errorMessage);
   }
 
+  /**
+   * Handle user input for loading portfolio. User can enter the start date and the end date. The
+   * method return the next page controller that user should be navigated to.
+   *
+   * @param input user input as a string
+   * @return PageController as a next page to be redirected
+   */
   @Override
   public PageController handleInput(String input) {
     input = input.trim();
@@ -284,44 +296,13 @@ public class PerformancePageController implements PageController {
     if (input.equals("back")) {
       return new MainPageController(portfolioModel, viewFactory);
     }
-    /*try {
-      startDate = null;
-      endDate = null;
-      String[] cmd = input.split(",");
-      if (cmd.length != 2) {
-        errorMessage = "Error Format!";
-        return this;
-      }
-      startDate = LocalDate.parse(cmd[0]);
-      endDate = LocalDate.parse(cmd[1]);
 
-      if (endDate.isBefore(startDate)) {
-        errorMessage = "Error: The start date cannot after the end date!";
-      }
-      map = portfolioModel.getValues(startDate, endDate);
-
-      // how to know the start date and end date have value?
-      if (!map.containsKey(startDate)) {
-        errorMessage = "Error: Please choose input new timespan."
-                + "This start date maybe the holiday or weekend!";
-        startDate = null;
-        endDate = null;
-        map = new HashMap<>();
-        return this;
-      }
-    } catch (Exception e) {
-      errorMessage = "Error Date!";
-      startDate = null;
-      endDate = null;
-      map = new HashMap<>();
-      return this;
-    }*/
-    if(isFinish == true) {
+    if (isFinish == true) {
       startDate = null;
       endDate = null;
     }
     isFinish = false;
-    if(startDate == null && endDate == null) {
+    if (startDate == null && endDate == null) {
       try {
         startDate = LocalDate.parse(input);
         map = portfolioModel.getValues(startDate, startDate);
@@ -335,18 +316,18 @@ public class PerformancePageController implements PageController {
         }
         return this;
       } catch (Exception e) {
-        errorMessage = "Error startDate!";
+        errorMessage = "Error start date!";
         startDate = null;
         endDate = null;
         map = new HashMap<>();
         return this;
       }
-    } else if (startDate != null  && endDate == null) {
+    } else if (startDate != null && endDate == null) {
       try {
         endDate = LocalDate.parse(input);
         map = portfolioModel.getValues(startDate, endDate);
       } catch (Exception e) {
-        errorMessage = "Error endDate!";
+        errorMessage = "Error end date!";
         endDate = null;
         map = new HashMap<>();
         return this;

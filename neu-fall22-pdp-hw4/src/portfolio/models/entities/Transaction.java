@@ -30,18 +30,23 @@ public class Transaction {
   }
 
   /**
-   * This is a constructor to construct a portfolio entry, which contains the symbol and amount.
+   * This is a constructor to construct a portfolio entry, which contains the type of
+   * transaction, symbol, amount, transaction date, commission fee.
+   * amount,
    * The amount means shares. It will initialize the type of transaction, date
    * and commission fee to null.
    *
-   * @param txType the type of transaction
-   * @param symbol the symbol of a stock
-   * @param amount the shares of a stock
-   * @param date the date to do the transaction
+   * @param txType        the type of transaction
+   * @param symbol        the symbol of a stock
+   * @param amount        the shares of a stock
+   * @param date          the date to do the transaction
    * @param commissionFee the commission fee
-   * @throws Exception
    */
-  public Transaction(TransactionType txType, String symbol, int amount, LocalDate date, double commissionFee) throws Exception {
+  public Transaction(TransactionType txType,
+                     String symbol,
+                     int amount,
+                     LocalDate date,
+                     double commissionFee) {
     this.txType = txType;
     this.symbol = symbol;
     this.amount = amount;
