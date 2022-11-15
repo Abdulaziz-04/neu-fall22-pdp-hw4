@@ -51,21 +51,28 @@ public class PerformancePageView extends ViewAbs {
     printStream.println("*********************************************************");
     printStream.println("!!! If you enter back, you will back to the main menu.");
     printStream.println("*********************************************************");
-    printStream.println("Please enter the scale of the timespan " +
+    printStream.println("Please enter another scale of the timespan " +
             "that you want to performance.");
-    printStream.println("--EX.2020-10-11,2022-10-11");
+    printStream.println("--EX.2020-10-09,2022-10-09");
     printStream.println("--The format of date needs to be 2022-10-11");
     printStream.println("--There is a comma between the two date and no space between them.");
     printStream.print("input > ");
     //printStream.println("--Other input except back will be error.");
 
     if (startDate != null && endDate != null) {
-      printStream.println("Performance of portfolio" + portfolioName
-              + "from" + startDate + "to" + endDate);
+      printStream.println("Performance of portfolio " + portfolioName
+              + " from " + startDate + " to " + endDate);
       for (int i = 0; i < list.size(); i++) {
         printStream.println(list.get(i) + listStar.get(i));
       }
-      printStream.println("scale: $" + scale);
+      printStream.println("scale: " + scale);
+      printStream.println("----------------------------------------------------------");
+      printStream.println("Please enter the scale of the timespan " +
+              "that you want to performance.");
+      printStream.println("--EX.2020-10-09,2022-10-09");
+      printStream.println("--The format of date needs to be 2022-10-11");
+      printStream.println("--There is a comma between the two date and no space between them.");
+      printStream.print("input > ");
     }
 
   }
