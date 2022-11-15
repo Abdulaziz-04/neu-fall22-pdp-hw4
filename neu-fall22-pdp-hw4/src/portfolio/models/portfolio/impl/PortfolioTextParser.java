@@ -14,6 +14,7 @@ import portfolio.models.portfolio.PortfolioParser;
 
 public class PortfolioTextParser implements PortfolioParser {
 
+  @Override
   public PortfolioFormat parseFormat(String str) throws Exception {
     String[] line = str.split("\n");
     line[0] = line[0].replace("\r", "");
@@ -24,6 +25,7 @@ public class PortfolioTextParser implements PortfolioParser {
     return PortfolioFormat.INFLEXIBLE;
   }
 
+  @Override
   public List<Transaction> parseTransaction(String str) throws Exception {
     String[] line = str.split("\n");
     List<Transaction> transactions = new ArrayList<>();

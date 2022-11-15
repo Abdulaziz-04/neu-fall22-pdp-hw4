@@ -55,5 +55,24 @@ public interface ViewFactory {
    */
   View newMainPageView(String errorMessage, boolean isInitFailed);
 
-  View newPerformacePageView(String portfolioName, LocalDate startDate, LocalDate endDate, List<String> list, List<String> listStar, String scale, boolean isFinish, String errorMessage);
+  /**
+   * To generate the view of performance page.
+   *
+   * @param portfolioName the name of portfolio
+   * @param startDate the start date to performance
+   * @param endDate the end date to performance
+   * @param list the list of timestamps
+   * @param listStar the list of stars
+   * @param scale the scale of performance
+   * @param isFinish finish current performance is true. Otherwise, false.
+   * @param errorMessage the error message will show to the user
+   * @return a new view of performance page
+   */
+  View newPerformacePageView(String portfolioName,
+                             LocalDate startDate,
+                             LocalDate endDate,
+                             List<String> list,
+                             List<String> listStar,
+                             String scale, boolean isFinish,
+                             String errorMessage);
 }

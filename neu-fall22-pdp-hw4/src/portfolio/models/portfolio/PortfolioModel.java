@@ -13,7 +13,7 @@ import portfolio.models.entities.Transaction;
 public interface PortfolioModel {
 
   /**
-   * To initialize the model of portfolio.
+   * Initialize the model of portfolio.
    *
    * @throws Exception is there any error
    */
@@ -28,6 +28,7 @@ public interface PortfolioModel {
 
   /**
    * This is a method to modify a portfolio.
+   *
    * @param name the name of this portfolio
    * @param format the format of this portfolio
    * @param transactions the list of transaction
@@ -42,10 +43,31 @@ public interface PortfolioModel {
 
   void load(String name, String text) throws Exception;
 
+  /**
+   * This is a method to add the transactions to a flexible portfolio.
+   *
+   * @param newTransactions the new transactions
+   * @throws Exception the portfolio is inflexible
+   */
   void addTransactions(List<Transaction> newTransactions) throws Exception;
 
+
+  /**
+   * This is a method to get the portfolio with value on a certain date.
+   *
+   * @param date the date to get the value
+   * @return PortfolioWithValue object that have the value on that date
+   * @throws Exception
+   */
   PortfolioWithValue getValue(LocalDate date) throws Exception;
 
+  /**
+   * This is a method to get the cost of basis of a portfolio on a certain date.
+   *
+   * @param date the date that we want to get
+   * @return the cost of basis in a double format
+   * @throws Exception
+   */
   double getCostBasis(LocalDate date) throws Exception;
 
   /**

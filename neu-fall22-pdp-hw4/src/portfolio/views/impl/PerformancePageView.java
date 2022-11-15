@@ -1,5 +1,6 @@
 package portfolio.views.impl;
 
+import java.io.PrintStream;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
@@ -9,6 +10,9 @@ import java.util.List;
 
 import portfolio.views.ViewAbs;
 
+/**
+ * This is a class that represent a performance view page, which implement the View interface.
+ */
 public class PerformancePageView extends ViewAbs {
 
   private final String errorMessage;
@@ -24,7 +28,50 @@ public class PerformancePageView extends ViewAbs {
 
   private boolean isFinish;
 
+  /**
+   * This is a constructor to construct a performance page view.
+   *
+   * @param printStream the print stream of the
+   * @param portfolioName the name of portfolio
+   * @param startDate the start date to performance
+   * @param endDate the end date to performance
+   * @param list the list of timestamps
+   * @param listStar the list of stars
+   * @param scale the scale of performance
+   * @param isFinish finish current performance is true. Otherwise, false.
+   * @param errorMessage the error message will show to the user
+   */
+  public PerformancePageView(PrintStream printStream, String portfolioName,
+                             LocalDate startDate,
+                             LocalDate endDate,
+                             List<String> list,
+                             List<String> listStar,
+                             String scale,
+                             boolean isFinish,
+                             String errorMessage) {
+    super(printStream);
+    this.portfolioName = portfolioName;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.list = list;
+    this.listStar = listStar;
+    this.scale = scale;
+    this.isFinish = isFinish;
+    this.errorMessage = errorMessage;
+  }
 
+  /**
+   * This is a constructor to construct a performance page view. The output stream is System.out.
+   *
+   * @param portfolioName the name of portfolio
+   * @param startDate the start date to performance
+   * @param endDate the end date to performance
+   * @param list the list of timestamps
+   * @param listStar the list of stars
+   * @param scale the scale of performance
+   * @param isFinish finish current performance is true. Otherwise, false.
+   * @param errorMessage the error message will show to the user
+   */
   public PerformancePageView(String portfolioName,
                              LocalDate startDate,
                              LocalDate endDate,

@@ -37,17 +37,19 @@ public interface Portfolio {
   Portfolio create(List<Transaction> transactions) throws Exception;
 
   /**
-   * This is a method to get the composition list of a portfolio. Return a list with the
-   * symbol and amount.
+   * This is a method to get the composition map of a portfolio. Return a map with the
+   * symbol and amount(shares).
    *
    * @return a list with the symbol and amount.
    */
   Map<String, Integer> getComposition();
 
   /**
+   * This is a method to get the composition map of a portfolio on a given date. Return a map with
+   * the symbol and amount(shares).
    *
-   * @param date
-   * @return
+   * @param date the date that we want to get the composition
+   * @return map with the symbol and amount(shares).
    */
   Map<String, Integer> getComposition(LocalDate date);
 
@@ -75,6 +77,16 @@ public interface Portfolio {
    */
   PortfolioWithValue getPortfolioWithValue(LocalDate date, Map<String, StockPrice> prices);
 
+  /**
+   * To calculate the cost of basis for a portfolio on a certain date and then return the cost of
+   * basis in a double.
+   *
+   * @param date the date that we want to calculate
+   * @param prices the stock price map
+   * @return the value of cost of basis
+   *
+   * @throws Exception do not have cost of basis
+   */
   double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception;
 
   /**

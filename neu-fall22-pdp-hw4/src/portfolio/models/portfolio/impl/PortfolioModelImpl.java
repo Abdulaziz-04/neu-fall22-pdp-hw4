@@ -28,6 +28,13 @@ public class PortfolioModelImpl implements PortfolioModel {
   private final PortfolioParser portfolioParser;
   private Portfolio portfolio = null;
 
+  /**
+   *  This is a constructor to construct the portfolio model, which will get the stock list and
+   *  parse the portfolio to given format.
+   *
+   * @param stockQueryService service for getting stock list
+   * @param portfolioParser parse portfolio
+   */
   public PortfolioModelImpl(StockQueryService stockQueryService,
       PortfolioParser portfolioParser) {
     this.stockQueryService = stockQueryService;

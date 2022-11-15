@@ -1,13 +1,13 @@
 package portfolio.models.entities;
 
+/**
+ * This enumerated type represents  transaction type for a flexible portfolio.
+ */
 public enum TransactionType {
   /**
-   * The transaction type is buy.
+   * Transaction type.
    */
   BUY,
-  /**
-   * The transaction type is sell.
-   */
   SELL;
 
   /**

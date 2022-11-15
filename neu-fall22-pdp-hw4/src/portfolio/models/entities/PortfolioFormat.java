@@ -1,16 +1,14 @@
 package portfolio.models.entities;
 
 /**
- * This is a class to determine the portfolio is flexible or inflexible.
+ * This enumerated type represents the portfolio format, which is flexible or inflexible.
  */
 public enum PortfolioFormat {
+
   /**
-   * Represent a flexible portfolio
+   * Portfolio type.
    */
   FLEXIBLE,
-  /**
-   * Represent a inflexible portfolio
-   */
   INFLEXIBLE;
 
   /**
