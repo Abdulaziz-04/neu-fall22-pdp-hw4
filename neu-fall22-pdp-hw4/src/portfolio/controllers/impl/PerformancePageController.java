@@ -294,7 +294,7 @@ public class PerformancePageController implements PageController {
     portfolioName = portfolioModel.getPortfolio().getName();
 
     if (input.equals("back")) {
-      return new MainPageController(portfolioModel, viewFactory);
+      return new LoadPageController(portfolioModel, viewFactory);
     }
 
     if (isFinish == true) {

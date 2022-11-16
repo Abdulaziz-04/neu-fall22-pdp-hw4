@@ -96,7 +96,7 @@ public class FlexibleCreatePageController implements PageController {
         } else if (size == 3) {
           try {
             if (Integer.parseInt(input) <= 0) {
-              errorMessage = "The shares cannot be negative and 0.";
+              errorMessage = "The shares cannot be negative.";
               return this;
             }
             inputBuffer.add(input);

@@ -51,7 +51,8 @@ public class InfoPageView extends ViewAbs {
       printStream.println("----------------------------------------------------------");
     }
     printStream.println("-------------------------Tips-----------------------------");
-    printStream.println("!!! If you enter back, you will back to the main menu.");
+    printStream.println("!!! If you enter back, you will back to the load page.");
+    printStream.println("!!! If you want to exit, please input exit");
     printStream.println("----------------------------------------------------------");
     if (portfolioWithPrice != null) {
       printStream.println(

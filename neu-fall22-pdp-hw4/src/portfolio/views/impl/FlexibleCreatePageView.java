@@ -89,6 +89,7 @@ public class FlexibleCreatePageView extends ViewAbs {
       }
       printStream.println("-------------------------Tips-----------------------------");
       printStream.println("!!! If you enter back, you will back to the main menu.");
+      printStream.println("!!! If you want to exit, please input exit");
       printStream.println("----------------------------------------------------------");
 
       if (state == 0) {
@@ -109,7 +110,7 @@ public class FlexibleCreatePageView extends ViewAbs {
             "Please enter commission fee for this transaction. Format: Non-negative double, Ex: 123.45");
       }
       if (state == 5) {
-        printStream.println("Do you want to enter another transaction? (Y/N)");
+        printStream.println("Do you want to enter another transaction? (yes/no)");
       }
 
     } else {
@@ -119,12 +120,14 @@ public class FlexibleCreatePageView extends ViewAbs {
         }
         printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
+        printStream.println("!!! If you want to exit, please input exit");
         printStream.println("----------------------------------------------------------");
         printStream.println("Please enter the name of this portfolio." +
             "The name cannot be end, back, no and yes");
       } else {
         printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
+        printStream.println("!!! If you want to exit, please input exit");
         printStream.println("----------------------------------------------------------");
         printStream.println("Portfolio has been saved.");
         printStream.println(

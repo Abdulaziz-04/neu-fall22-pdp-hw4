@@ -82,6 +82,7 @@ public class InflexibleCreatePageView extends ViewAbs {
       }
       printStream.println("-------------------------Tips-----------------------------");
       printStream.println("!!! If you enter back, you will back to the main menu.");
+      printStream.println("!!! If you want to exit, please input exit");
       printStream.println("----------------------------------------------------------");
       printStream.println("Enter symbol and number of shares for one stock. "
           + "The format is: AAPL,100.");
@@ -100,12 +101,14 @@ public class InflexibleCreatePageView extends ViewAbs {
         }
         printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
+        printStream.println("!!! If you want to exit, please input exit");
         printStream.println("----------------------------------------------------------");
         printStream.println("Please enter the file name of this portfolio." +
             "The name cannot be end, back, no and yes");
       } else {
         printStream.println("-------------------------Tips-----------------------------");
         printStream.println("!!! If you enter back, you will back to the main menu.");
+        printStream.println("!!! If you want to exit, please input exit");
         printStream.println("----------------------------------------------------------");
         printStream.println("Do you want to determine the total value of this portfolio?");
         printStream.println("--Please enter yes if you want to determine. " +

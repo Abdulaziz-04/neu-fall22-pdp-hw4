@@ -73,6 +73,7 @@ public class LoadPageView extends ViewAbs {
     }
     printStream.println("-------------------------Tips-----------------------------");
     printStream.println("!!! If you enter back, you will back to the main menu.");
+    printStream.println("!!! If you want to exit, please input exit");
     printStream.println("----------------------------------------------------------");
     if (portfolio == null) {
       printStream.println("Please enter the name of the portfolio that you want to load. " +
