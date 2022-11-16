@@ -2,6 +2,7 @@ package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +30,11 @@ public class PortfolioModelImpl implements PortfolioModel {
   private Portfolio portfolio = null;
 
   /**
-   *  This is a constructor to construct the portfolio model, which will get the stock list and
-   *  parse the portfolio to given format.
+   * This is a constructor to construct the portfolio model, which will get the stock list and parse
+   * the portfolio to given format.
    *
    * @param stockQueryService service for getting stock list
-   * @param portfolioParser parse portfolio
+   * @param portfolioParser   parse portfolio
    */
   public PortfolioModelImpl(StockQueryService stockQueryService,
       PortfolioParser portfolioParser) {
@@ -49,6 +50,37 @@ public class PortfolioModelImpl implements PortfolioModel {
   @Override
   public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception {
+
+    checkTransactions(format, transactions);
+    switch (format) {
+      case INFLEXIBLE:
+        return new InflexiblePortfolio(name, transactions);
+      case FLEXIBLE:
+        return new FlexiblePortfolio(name, transactions);
+    }
+    return portfolio;
+  }
+
+  @Override
+  public void init() throws Exception {
+    portfolio = null;
+    stockQueryService.getStockList();
+  }
+
+  @Override
+  public void load(String name, String text) throws Exception {
+    var format = portfolioParser.parseFormat(text);
+    portfolio = create(name, format, portfolioParser.parseTransaction(text));
+  }
+
+  @Override
+  public void checkTransaction(LocalDate date, String symbol) throws Exception {
+    stockQueryService.getStockPrice(date, List.of(symbol));
+  }
+
+  @Override
+  public void checkTransactions(PortfolioFormat format, List<Transaction> transactions)
+      throws Exception {
     Map<String, LocalDate> map = new HashMap<>();
     for (var stock : stockQueryService.getStockList()) {
       map.put(stock.getSymbol(), stock.getIpoDate());
@@ -63,32 +95,6 @@ public class PortfolioModelImpl implements PortfolioModel {
         stockQueryService.getStockPrice(entry.getDate(), symbols).containsKey(entry.getSymbol());
       }
     }
-
-    switch (format) {
-      case INFLEXIBLE:
-        return new InflexiblePortfolio(name, transactions);
-      case FLEXIBLE:
-        return new FlexiblePortfolio(name, transactions);
-    }
-    return null;
-  }
-
-  @Override
-  public void set(String name, PortfolioFormat format, List<Transaction> transactions)
-      throws Exception {
-    portfolio = create(name, format, transactions);
-  }
-
-  @Override
-  public void init() throws Exception {
-    portfolio = null;
-    stockQueryService.getStockList();
-  }
-
-  @Override
-  public void load(String name, String text) throws Exception {
-    var format = portfolioParser.parseFormat(text);
-    set(name, format, portfolioParser.parseTransaction(text));
   }
 
   @Override
@@ -96,7 +102,9 @@ public class PortfolioModelImpl implements PortfolioModel {
     if (portfolio.isReadOnly()) {
       throw new IllegalArgumentException("Portfolio is not modifiable.");
     }
-    List<Transaction> transactions = portfolio.getTransactions();
+
+    List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
+    newTransactions.addAll(transactions);
 
     // Create same class of portfolio with new set of transactions
     portfolio = portfolio.create(newTransactions);
@@ -128,5 +136,10 @@ public class PortfolioModelImpl implements PortfolioModel {
       }
     }
     return map;
+  }
+
+  @Override
+  public String getString() throws Exception {
+    return portfolioParser.toString(portfolio);
   }
 }

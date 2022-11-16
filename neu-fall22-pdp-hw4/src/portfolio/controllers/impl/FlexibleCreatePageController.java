@@ -10,8 +10,6 @@ import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.PortfolioModel;
-import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -26,13 +24,12 @@ public class FlexibleCreatePageController implements PageController {
 
   private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
-  private final PortfolioParser portfolioParser = new PortfolioTextParser();
   private final ViewFactory viewFactory;
   private String errorMessage;
   private boolean isEnd = false;
   private boolean isNamed = false;
   private final boolean modifyMode;
-  private List<Transaction> transactions;
+  private List<Transaction> transactions= new ArrayList<>();;
   private final List<String> inputBuffer = new ArrayList<>();
 
   /**
@@ -47,17 +44,20 @@ public class FlexibleCreatePageController implements PageController {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
     if (portfolioModel.getPortfolio() != null) {
-      this.transactions = new ArrayList<>(portfolioModel.getPortfolio().getTransactions());
       isNamed = true;
       modifyMode = true;
     } else {
-      this.transactions = new ArrayList<>();
       modifyMode = false;
     }
   }
 
   @Override
   public View getView() {
+    List<Transaction> transactions = new ArrayList<>();
+    if (portfolioModel.getPortfolio() != null) {
+      transactions.addAll(new ArrayList<>(portfolioModel.getPortfolio().getTransactions()));
+    }
+    transactions.addAll(this.transactions);
     return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), transactions,
         errorMessage);
   }
@@ -87,10 +87,17 @@ public class FlexibleCreatePageController implements PageController {
           inputBuffer.add(input);
           return this;
         } else if (size == 1) {
-          TransactionType.parse(input);
-          inputBuffer.add(input);
+          try {
+            portfolioModel.checkTransaction(LocalDate.parse(inputBuffer.get(0)), input);
+            inputBuffer.add(input);
+          }
+          catch (Exception e) {
+            errorMessage = e.getMessage();
+            inputBuffer.clear();
+          }
           return this;
         } else if (size == 2) {
+          TransactionType.parse(input);
           inputBuffer.add(input);
           return this;
         } else if (size == 3) {
@@ -118,8 +125,8 @@ public class FlexibleCreatePageController implements PageController {
           }
           transactions.add(
               new Transaction(
-                  TransactionType.parse(inputBuffer.get(1)),
-                  inputBuffer.get(2),
+                  TransactionType.parse(inputBuffer.get(2)),
+                  inputBuffer.get(1),
                   Integer.parseInt(inputBuffer.get(3)),
                   LocalDate.parse(inputBuffer.get(0)),
                   Double.parseDouble(inputBuffer.get(4))
@@ -127,7 +134,7 @@ public class FlexibleCreatePageController implements PageController {
           );
           return this;
         } else if (size == 5) {
-          if (input.equals("Y")) {
+          if (input.equals("yes")) {
             inputBuffer.clear();
             return this;
           }
@@ -138,20 +145,24 @@ public class FlexibleCreatePageController implements PageController {
     }
     if (inputBuffer.size() == 5 && !isEnd) {
       try {
-        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
+        // Check amount valid
+        portfolioModel.checkTransactions(PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
         inputBuffer.clear();
-        if (portfolioModel.getPortfolio() != null) {
-          transactions = portfolioModel.getPortfolio().getTransactions();
-        }
+        transactions.clear();
       }
     } else if (inputBuffer.size() == 5) {
       String name = isNamed ? portfolioModel.getPortfolio().getName() : input;
       try {
-        portfolioModel.set(name, PortfolioFormat.FLEXIBLE, transactions);
-        ioService.saveTo(portfolioParser.toString(portfolioModel.getPortfolio()), name + ".txt", modifyMode);
+        if (modifyMode) {
+          portfolioModel.addTransactions(transactions);
+        }
+        else {
+          portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
+        }
+        ioService.saveTo(portfolioModel.getString(), name + ".txt", modifyMode);
         return new LoadPageController(portfolioModel, viewFactory);
       } catch (Exception e) {
         errorMessage = e.getMessage();

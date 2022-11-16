@@ -4,18 +4,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import portfolio.controllers.PageController;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
-import portfolio.models.portfolio.impl.PortfolioTextParser;
-import portfolio.views.ViewFactory;
 import portfolio.views.View;
+import portfolio.views.ViewFactory;
 
 /**
  * This is a page controller for the inflexible create page,
@@ -30,7 +27,6 @@ public class InflexibleCreatePageController implements PageController {
 
   private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
-  private final PortfolioParser portfolioParser = new PortfolioTextParser();
   private final ViewFactory viewFactory;
   private String errorMessage;
   private Boolean isEnd = false;
@@ -114,8 +110,8 @@ public class InflexibleCreatePageController implements PageController {
         return this;
       }
       try {
-        portfolio = portfolioModel.create(input, PortfolioFormat.INFLEXIBLE, transactions);
-        isNamed = ioService.saveTo(portfolioParser.toString(portfolio), input + ".txt", false);
+        portfolioModel.create(input, PortfolioFormat.INFLEXIBLE, transactions);
+        isNamed = ioService.saveTo(portfolioModel.getString(), input + ".txt", false);
       } catch (Exception e) {
         errorMessage = e.getMessage();
       }

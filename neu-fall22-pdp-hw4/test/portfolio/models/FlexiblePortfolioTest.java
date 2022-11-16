@@ -68,7 +68,7 @@ public class FlexiblePortfolioTest {
   @Test
   public void getCostBasis() throws Exception {
     double actual = portfolio.getCostBasis(LocalDate.now(), prices);
-    assertEquals(44378.0, actual, EPSILON);
+    assertEquals(44582.0, actual, EPSILON);
   }
 
   @Test
@@ -77,7 +77,7 @@ public class FlexiblePortfolioTest {
   }
 
   @Test
-  public void getStocks() {
+  public void getComposition() {
     Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
   }

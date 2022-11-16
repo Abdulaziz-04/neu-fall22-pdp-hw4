@@ -96,20 +96,20 @@ public class FlexibleCreatePageView extends ViewAbs {
         printStream.println(
             "Please enter the date of transaction. Format: yyyy-MM-dd, Ex: 2022-10-10");
       }
-      if (state == 1) {
-        printStream.println("Please enter transaction type (BUY/SELL)");
-      }
-      if (state == 2) {
+      else if (state == 1) {
         printStream.println("Please enter stock symbol. Format: All capital letters, Ex: AAPL");
       }
-      if (state == 3) {
+      else if (state == 2) {
+        printStream.println("Please enter transaction type (BUY/SELL)");
+      }
+      else if (state == 3) {
         printStream.println("Please enter number of shares. Format: Positive integer, Ex: 100");
       }
-      if (state == 4) {
+      else if (state == 4) {
         printStream.println(
             "Please enter commission fee for this transaction. Format: Non-negative double, Ex: 123.45");
       }
-      if (state == 5) {
+      else if (state == 5) {
         printStream.println("Do you want to enter another transaction? (yes/no)");
       }
 

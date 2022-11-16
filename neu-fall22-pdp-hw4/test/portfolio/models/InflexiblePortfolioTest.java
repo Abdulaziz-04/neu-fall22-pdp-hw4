@@ -72,7 +72,7 @@ public class InflexiblePortfolioTest {
   }
 
   @Test
-  public void getStocks() {
+  public void getComposition() {
     Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
   }

@@ -38,19 +38,18 @@ public interface PortfolioModel {
   Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception;
 
-  void set(String name, PortfolioFormat format, List<Transaction> transactions)
-      throws Exception;
-
   void load(String name, String text) throws Exception;
 
+  void checkTransaction(LocalDate date, String symbol) throws Exception;
+
+  void checkTransactions(PortfolioFormat format, List<Transaction> transactions) throws Exception;
   /**
    * This is a method to add the transactions to a flexible portfolio.
    *
-   * @param newTransactions the new transactions
+   * @param transactions the new transactions
    * @throws Exception the portfolio is inflexible
    */
-  void addTransactions(List<Transaction> newTransactions) throws Exception;
-
+  void addTransactions(List<Transaction> transactions) throws Exception;
 
   /**
    * This is a method to get the portfolio with value on a certain date.
@@ -79,4 +78,6 @@ public interface PortfolioModel {
    * @throws Exception is there some error
    */
   Map<LocalDate, Double> getValues(LocalDate from, LocalDate to) throws Exception;
+
+  String getString() throws Exception;
 }

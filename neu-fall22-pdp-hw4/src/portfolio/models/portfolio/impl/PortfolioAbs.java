@@ -16,13 +16,12 @@ import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 
 /**
- * This is an abstract class for FlexiblePortfolio and InflexiblePortfolio, which implement
- * the interface of Portfolio.
+ * This is an abstract class for FlexiblePortfolio and InflexiblePortfolio, which implement the
+ * interface of Portfolio.
  */
 public abstract class PortfolioAbs implements Portfolio {
 
   protected final List<Transaction> transactions;
-  protected Map<String, Integer> stocks;
 
   protected final String name;
 
@@ -31,7 +30,10 @@ public abstract class PortfolioAbs implements Portfolio {
     this.name = name;
     this.transactions = transactions;
     if (transactions.get(0).getDate() != null) {
-      transactions.sort(Comparator.comparing(Transaction::getDate));
+      transactions.sort(
+          Comparator.comparing(Transaction::getDate)
+              .thenComparing(Transaction::getSymbol)
+              .thenComparing(Transaction::getType));
     }
     getComposition(null);
   }
