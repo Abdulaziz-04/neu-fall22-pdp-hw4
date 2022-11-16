@@ -180,9 +180,9 @@ quotes)
 
 ### Query the value and cost basis of that portfolio on two specific dates
 
-1. User input "2018-10-11". (It will show cost and basis and value together)
+1. User input "2018-10-11". (It will show cost of basis and value together)
 
-2. User input "2021-09-16". (It will show cost and basis and value together)
+2. User input "2021-09-16". (It will show cost of basis and value together)
 
 ## List of available stock and date
 - List of the valid stock symbol is attached in the Excel file listing_status.csv in this folder.
