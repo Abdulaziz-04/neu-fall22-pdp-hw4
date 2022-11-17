@@ -1,9 +1,11 @@
 package portfolio.models.portfolio;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
+import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 
@@ -11,13 +13,6 @@ import portfolio.models.entities.Transaction;
  * This is an interface for Portfolio model.
  */
 public interface PortfolioModel {
-
-  /**
-   * Initialize the model of portfolio.
-   *
-   * @throws Exception is there any error
-   */
-  void init() throws Exception;
 
   /**
    * Return the portfolio that we want to get.
@@ -78,6 +73,8 @@ public interface PortfolioModel {
    * @throws Exception is there some error
    */
   Map<LocalDate, Double> getValues(LocalDate from, LocalDate to) throws Exception;
+
+  PortfolioPerformance getPerformance(LocalDate from, LocalDate to);
 
   String getString() throws Exception;
 }

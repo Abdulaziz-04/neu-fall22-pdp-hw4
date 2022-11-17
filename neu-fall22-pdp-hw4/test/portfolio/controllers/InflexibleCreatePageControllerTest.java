@@ -37,7 +37,7 @@ public class InflexibleCreatePageControllerTest {
   private final double EPSILON = 0.000000001;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
     PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser

@@ -38,7 +38,6 @@ public abstract class PortfolioAbs implements Portfolio {
     getComposition(null);
   }
 
-
   @Override
   public Map<String, Integer> getComposition(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
@@ -67,7 +66,7 @@ public abstract class PortfolioAbs implements Portfolio {
 
   @Override
   public Map<String, Integer> getComposition() {
-    return Collections.unmodifiableMap(getComposition(null));
+    return getComposition(null);
   }
 
 

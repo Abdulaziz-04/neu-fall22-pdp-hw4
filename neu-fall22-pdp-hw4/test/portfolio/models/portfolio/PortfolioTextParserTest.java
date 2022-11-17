@@ -1,4 +1,4 @@
-package portfolio.models;
+package portfolio.models.portfolio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
-import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.impl.FlexiblePortfolio;
 import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.portfolio.impl.PortfolioTextParser;

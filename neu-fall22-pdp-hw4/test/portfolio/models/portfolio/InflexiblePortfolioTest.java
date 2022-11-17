@@ -1,4 +1,4 @@
-package portfolio.models;
+package portfolio.models.portfolio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -12,13 +12,12 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import portfolio.helper.TransactionConverter;
-import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.impl.InflexiblePortfolio;
-import portfolio.models.entities.Transaction;
 import portfolio.models.entities.PortfolioEntryWithValue;
+import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
+import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 
 /**
  * This is a test class to test Portfolio class.
@@ -37,6 +36,11 @@ public class InflexiblePortfolioTest {
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
     portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
+  }
+
+  @Test
+  public void getName(){
+    assertEquals("name", portfolio.getName());
   }
 
   @Test
@@ -75,6 +79,16 @@ public class InflexiblePortfolioTest {
   public void getComposition() {
     Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
+    assertEquals(100, (int) portfolioEntries.get("AAA"));
+    assertEquals(1000, (int) portfolioEntries.get("AAPL"));
+  }
+
+  @Test
+  public void getComposition_anyDate() {
+    Map<String, Integer> portfolioEntries = portfolio.getComposition(LocalDate.parse("2050-10-10"));
+    assertEquals(2, portfolioEntries.size());
+    assertEquals(100, (int) portfolioEntries.get("AAA"));
+    assertEquals(1000, (int) portfolioEntries.get("AAPL"));
   }
 
   @Test
@@ -94,13 +108,13 @@ public class InflexiblePortfolioTest {
   }
 
   @Test
-  public void getPortfolioWithPrice() {
+  public void getPortfolioWithValue() {
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
     assertEquals(date, portfolioWithValue.getDate());
     assertEquals(44400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertEquals(400, list.get(0).getValue(), EPSILON);
     assertEquals(44000, list.get(1).getValue(), EPSILON);
   }
@@ -113,7 +127,7 @@ public class InflexiblePortfolioTest {
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertNull(list.get(2).getValue());
   }
 

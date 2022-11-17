@@ -63,7 +63,7 @@ public class StockQueryServiceImplTest {
   }
 
   @Test
-  public void getStockPrice_StockNotFound() throws Exception {
+  public void getStockPrice_StockNotFound() {
     stockPriceApi = new StockApiMock(false);
     stockQueryService = new StockQueryServiceImpl(stockPriceApi);
 
@@ -71,14 +71,12 @@ public class StockQueryServiceImplTest {
     list.add("AAPL");
     list.add("ABC");
 
-    Map<String, StockPrice> map = new HashMap<>();
-    map.put("ABC", null);
-    map.put("AAPL", new StockPrice(1, 2, 3, 4, 5));
-
-    var actual = stockQueryService.getStockPrice(LocalDate.parse("2022-10-10"), list);
-
-    assertEquals(map.size(), actual.size());
-    assertEquals(map.get("ABC"), actual.get("ABC"));
+    try {
+      stockQueryService.getStockPrice(LocalDate.parse("2022-10-10"), list);
+      fail("should fail");
+    } catch (Exception e) {
+      assertEquals("[ABC] is not a valid stock symbol.", e.getMessage());
+    }
   }
 
   @Test

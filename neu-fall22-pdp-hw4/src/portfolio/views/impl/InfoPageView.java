@@ -64,7 +64,7 @@ public class InfoPageView extends ViewAbs {
       printStream.println("+---------+---------------+--------------------+");
       printStream.println("|    Stock|  No. of shares|       Current value|");
       printStream.println("+---------+---------------+--------------------+");
-      for (var entry : portfolioWithPrice.getComposition()) {
+      for (var entry : portfolioWithPrice.getValues()) {
         String symbol = entry.getSymbol();
         int amount = entry.getAmount();
         String value = entry.getValue() ==

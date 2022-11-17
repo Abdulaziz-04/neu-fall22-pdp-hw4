@@ -42,7 +42,7 @@ public class InfoPageControllerTest {
   private final double EPSILON = 0.000000001;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
@@ -76,7 +76,7 @@ public class InfoPageControllerTest {
     assertEquals(date, actual.getDate());
     assertEquals(440400.0, actual.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = actual.getComposition();
+    List<PortfolioEntryWithValue> list = actual.getValues();
     assertEquals(440000, list.get(0).getValue(), EPSILON);
     assertEquals(400, list.get(1).getValue(), EPSILON);
 
@@ -100,7 +100,7 @@ public class InfoPageControllerTest {
   }
 
   @Test
-  public void handelInput_serviceFail() {
+  public void handelInput_serviceFail() throws Exception {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
     PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
     pageController = new InfoPageController(portfolioModel, viewFactory);

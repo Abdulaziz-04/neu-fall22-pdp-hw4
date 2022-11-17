@@ -34,7 +34,7 @@ public class MainPageControllerTest {
   private PageController pageController;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     portfolioModel = new PortfolioModelImpl(stockQueryService,

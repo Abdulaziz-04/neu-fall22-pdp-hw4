@@ -1,9 +1,8 @@
-package portfolio.models;
+package portfolio.models.portfolio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
@@ -19,7 +18,6 @@ import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
-import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.impl.FlexiblePortfolio;
 
 /**
@@ -40,6 +38,11 @@ public class FlexiblePortfolioTest {
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
     portfolio = new FlexiblePortfolio("name", transactions);
+  }
+
+  @Test
+  public void getName(){
+    assertEquals("name", portfolio.getName());
   }
 
   @Test
@@ -66,9 +69,33 @@ public class FlexiblePortfolioTest {
   }
 
   @Test
-  public void getCostBasis() throws Exception {
+  public void create_fail(){
+    transactions.add(new Transaction(TransactionType.SELL, "AAPL", 2000, LocalDate.parse("2022-10-11"), 56));
+    try {
+     portfolio.create(transactions);
+     fail("should fail");
+    }
+   catch (Exception e){
+      assertEquals("There is a conflict in the input transaction.", e.getMessage());
+   }
+  }
+
+  @Test
+  public void getCostBasis_latest() throws Exception {
     double actual = portfolio.getCostBasis(LocalDate.now(), prices);
     assertEquals(44582.0, actual, EPSILON);
+  }
+
+  @Test
+  public void getCostBasis_mid() throws Exception {
+    double actual = portfolio.getCostBasis(LocalDate.parse("2022-10-10"), prices);
+    assertEquals(0.0, actual, EPSILON);
+  }
+
+  @Test
+  public void getCostBasis_noStock() throws Exception {
+    double actual = portfolio.getCostBasis(LocalDate.parse("1999-01-01"), prices);
+    assertEquals(0.0, actual, EPSILON);
   }
 
   @Test
@@ -77,9 +104,24 @@ public class FlexiblePortfolioTest {
   }
 
   @Test
-  public void getComposition() {
+  public void getComposition_latest() {
     Map<String, Integer> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
+    assertEquals(100, (int) portfolioEntries.get("AAA"));
+    assertEquals(1000, (int) portfolioEntries.get("AAPL"));
+  }
+
+  @Test
+  public void getComposition_mid() {
+    Map<String, Integer> portfolioEntries = portfolio.getComposition(LocalDate.parse("2022-10-10"));
+    assertEquals(1, portfolioEntries.size());
+    assertEquals(100, (int) portfolioEntries.get("AAA"));
+  }
+
+  @Test
+  public void getComposition_noStock() {
+    Map<String, Integer> portfolioEntries = portfolio.getComposition(LocalDate.parse("1999-01-01"));
+    assertEquals(0, portfolioEntries.size());
   }
 
   @Test
@@ -101,31 +143,43 @@ public class FlexiblePortfolioTest {
   }
 
   @Test
-  public void getSymbols() {
+  public void getSymbols_latest() {
     List<String> symbols = portfolio.getSymbols(null);
     assertEquals("[AAA, AAPL]", symbols.toString());
   }
 
   @Test
-  public void getPortfolioWithPrice() {
+  public void getSymbols_mid() {
+    List<String> symbols = portfolio.getSymbols(LocalDate.parse("2022-10-10"));
+    assertEquals("[AAA]", symbols.toString());
+  }
+
+  @Test
+  public void getSymbols_noStock() {
+    List<String> symbols = portfolio.getSymbols(LocalDate.parse("1999-01-01"));
+    assertEquals("[]", symbols.toString());
+  }
+
+  @Test
+  public void getPortfolioWithValue() {
     LocalDate date = LocalDate.parse("2022-10-10");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
     assertEquals(date, portfolioWithValue.getDate());
     assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertEquals(400, list.get(0).getValue(), EPSILON);
   }
 
   @Test
-  public void getPortfolioWithPrice_withNull() throws Exception {
+  public void getPortfolioWithPrice_withNull() {
     transactions.add(new Transaction(TransactionType.BUY, "ABC", 1000, LocalDate.parse("2022-10-11"), 12));
     prices.put("ABC", null);
     portfolio = new FlexiblePortfolio("name", transactions);
     LocalDate date = LocalDate.parse("2022-10-11");
     PortfolioWithValue portfolioWithValue = portfolio.getPortfolioWithValue(date, prices);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertNull(list.get(2).getValue());
   }
 

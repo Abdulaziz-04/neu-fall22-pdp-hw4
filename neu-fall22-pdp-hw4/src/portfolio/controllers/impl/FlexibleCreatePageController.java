@@ -116,7 +116,7 @@ public class FlexibleCreatePageController implements PageController {
           try {
             if (Double.parseDouble(input) < 0) {
               errorMessage = "Commission cannot be negative.";
-
+              return this;
             }
             inputBuffer.add(input);
           } catch (Exception e) {

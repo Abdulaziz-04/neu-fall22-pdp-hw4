@@ -1,4 +1,4 @@
-package portfolio.models;
+package portfolio.models.portfolio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,8 +18,6 @@ import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
-import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
@@ -51,6 +49,17 @@ public class PortfolioModelImplTest {
         new Transaction(TransactionType.SELL, "AAPL", 123, LocalDate.parse("2022-10-12"), 40));
     transactions2.add(
         new Transaction(TransactionType.BUY, "AA", 45, LocalDate.parse("2022-10-11"), 50));
+  }
+
+  @Test
+  public void getPortfolio() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+    Portfolio actual = portfolioModel.getPortfolio();
+    assertNull(actual);
+
+    portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+    actual = portfolioModel.getPortfolio();
+    assertNotNull(actual);
   }
 
   @Test
@@ -90,15 +99,7 @@ public class PortfolioModelImplTest {
   }
 
   @Test
-  public void getPortfolio() throws Exception {
-    portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
-    Portfolio actual = portfolioModel.getPortfolio();
-    assertNull(actual);
-
-    portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
-    actual = portfolioModel.getPortfolio();
-    assertNotNull(actual);
-  }
+  public void create_transactionConflict() throws Exception {}
 
   @Test
   public void load() {
@@ -106,7 +107,37 @@ public class PortfolioModelImplTest {
   }
 
   @Test
-  public void modify_flexible() throws Exception {
+  public void checkTransaction_noPriceOnThatDate() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+  }
+
+  @Test
+  public void checkTransaction_symbolInvalid() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+  }
+
+  @Test
+  public void checkTransaction_apiUnavailable() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+  }
+
+  @Test
+  public void checkTransactions_noPriceOnThatDate() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+  }
+
+  @Test
+  public void checkTransactions_symbolInvalid() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+  }
+
+  @Test
+  public void checkTransactions_apiUnavailable() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
+  }
+
+  @Test
+  public void addTransactions_flexible() throws Exception {
     portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
     portfolioModel.addTransactions(transactions2);
 
@@ -115,7 +146,7 @@ public class PortfolioModelImplTest {
   }
 
   @Test
-  public void modify_flexible_error() throws Exception {
+  public void addTransactions_flexible_error() throws Exception {
     portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
     transactions2.add(
         new Transaction(TransactionType.SELL, "AAPL", 10000, LocalDate.parse("2022-10-12"),123));
@@ -127,7 +158,7 @@ public class PortfolioModelImplTest {
   }
 
   @Test
-  public void modify_inflexible() throws Exception {
+  public void addTransactions_inflexible() throws Exception {
     portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, transactions);
     try {
       portfolioModel.addTransactions(transactions2);
@@ -145,7 +176,7 @@ public class PortfolioModelImplTest {
 
     assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertEquals(1, list.size());
     assertEquals(400, list.get(0).getValue(), EPSILON);
   }
@@ -158,7 +189,19 @@ public class PortfolioModelImplTest {
 
     assertEquals(0.0, portfolioWithValue.getTotalValue(), EPSILON);
 
-    List<PortfolioEntryWithValue> list = portfolioWithValue.getComposition();
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
+    assertEquals(0, list.size());
+  }
+
+  @Test
+  public void getValue_apiFail() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    PortfolioWithValue portfolioWithValue = portfolioModel.getValue(
+        LocalDate.parse("2022-10-09"));
+
+    assertEquals(0.0, portfolioWithValue.getTotalValue(), EPSILON);
+
+    List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertEquals(0, list.size());
   }
 
@@ -170,6 +213,41 @@ public class PortfolioModelImplTest {
 
     assertEquals(400.0, portfolioWithValue.get(LocalDate.parse("2022-10-10")), EPSILON);
     assertEquals(9900.0, portfolioWithValue.get(LocalDate.parse("2022-10-11")), EPSILON);
+  }
+
+  @Test
+  public void getPerformance_days() {
+
+  }
+
+  @Test
+  public void getPerformance_lengthInsufficient() {
+
+  }
+
+  @Test
+  public void getPerformance_week() {
+
+  }
+
+  @Test
+  public void getPerformance_month() {
+
+  }
+
+  @Test
+  public void getPerformance_quarter() {
+
+  }
+
+  @Test
+  public void getPerformance_years() {
+
+  }
+
+  @Test
+  public void getPerformance_others() {
+
   }
 
 }

@@ -1,4 +1,4 @@
-package portfolio.entities;
+package portfolio.models.entities;
 
 import static org.junit.Assert.assertEquals;
 

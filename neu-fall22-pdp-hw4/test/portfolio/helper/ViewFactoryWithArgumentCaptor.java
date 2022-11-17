@@ -52,7 +52,7 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
-  public View newLoadPageView(Portfolio portfolio, boolean showModifyMenu,String errorMessage) {
+  public View newLoadPageView(Portfolio portfolio, boolean showModifyMenu, String errorMessage) {
     argumentCaptor.addArgument(portfolio);
     argumentCaptor.addArgument(showModifyMenu);
     argumentCaptor.addArgument(errorMessage);
@@ -68,20 +68,18 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
 
   @Override
   public View newPerformacePageView(String portfolioName,
-                                    LocalDate startDate,
-                                    LocalDate endDate,
-                                    List<String> list,
-                                    List<String> listStar,
-                                    String scale, boolean isFinish, String errorMessage) {
+      LocalDate startDate,
+      LocalDate endDate,
+      Map<String, Integer> performance,
+      String scale, boolean isFinish, String errorMessage) {
     argumentCaptor.addArgument(startDate);
     argumentCaptor.addArgument(endDate);
-    argumentCaptor.addArgument(list);
-    argumentCaptor.addArgument(listStar);
+    argumentCaptor.addArgument(performance);
     argumentCaptor.addArgument(scale);
     argumentCaptor.addArgument(isFinish);
     argumentCaptor.addArgument(errorMessage);
-    return new PerformancePageView(portfolioName, startDate, endDate, list,
-        listStar, scale, isFinish, errorMessage);
+    return new PerformancePageView(portfolioName, startDate, endDate, performance, scale, isFinish,
+        errorMessage);
   }
 
 }
