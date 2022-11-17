@@ -31,9 +31,13 @@ public class InfoPageViewTest {
   private Map<String, Integer> stocks;
   private Map<String, StockPrice> prices;
   private LocalDate date;
+  private LocalDate date2;
   private InflexiblePortfolio portfolio;
   private FlexiblePortfolio portfolio2;
   private PortfolioWithValue portfolioWithValue;
+
+  private PortfolioWithValue portfolioWithValue2;
+  private PortfolioWithValue portfolioWithValue3;
 
   private final List<Transaction> transactions = new ArrayList<>();
 
@@ -60,6 +64,9 @@ public class InfoPageViewTest {
             LocalDate.parse("2022-10-11"), 56));
 
     portfolio2 = new FlexiblePortfolio("name2", transactions);
+    date2 = LocalDate.parse("2022-10-12");
+    portfolioWithValue2 = portfolio2.getPortfolioWithValue(date, prices);
+    portfolioWithValue3 = portfolio2.getPortfolioWithValue(date2, prices);
   }
 
   @Test
@@ -128,10 +135,10 @@ public class InfoPageViewTest {
   }
 
   @Test
-  public void testRender_ShowFlexible() {
+  public void testRender_ShowFlexible1() {
     setUp();
 
-    View view = new InfoPageView(printStream, 1000.0, portfolioWithValue,
+    View view = new InfoPageView(printStream, 1000.0, portfolioWithValue2,
             null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
@@ -145,11 +152,40 @@ public class InfoPageViewTest {
             +  "+---------+---------------+--------------------+\r\n"
             +  "|    Stock|  No. of shares|       Current value|\r\n"
             + "+---------+---------------+--------------------+\r\n"
-            + "|      AAA|            100|              $400.0|\r\n"
-            + "|     AAPL|           1000|            $44000.0|\r\n"
+            + "|      AAA|            200|              $800.0|\r\n"
             + "+---------+---------------+--------------------+\r\n"
-            + "Total value: $44400.0\r\n"
+            + "Total value: $800.0\r\n"
             + "Cost of basis as of 2022-10-10: $1000.0\r\n"
+            + "\r\n"
+            + "Please enter the date again if you want to determine value "
+            + "for another date. "
+            + "The format is year-month-day, ex: 2022-10-11\r\n"
+            + "input > ", outputStreamCaptor.toString());
+  }
+
+  @Test
+  public void testRender_ShowFlexible2() {
+    setUp();
+
+    View view = new InfoPageView(printStream, 1000.0, portfolioWithValue3,
+            null);
+    view.render();
+    assertEquals("-------------------------Tips-----------------------------\r\n"
+            +  "!!! If you enter back, you will go to the load page.\r\n"
+            + "!!! If you want to exit, please input exit\r\n"
+            +  "----------------------------------------------------------\r\n"
+            + "If stock price not found, the value with be N/A and will not be "
+            + "include in the total value.\r\n"
+            + "\r\n"
+            + "Portfolio composition and value as of: 2022-10-12\r\n"
+            +  "+---------+---------------+--------------------+\r\n"
+            +  "|    Stock|  No. of shares|       Current value|\r\n"
+            + "+---------+---------------+--------------------+\r\n"
+            + "|      AAA|            200|              $800.0|\r\n"
+            + "|     AAPL|           2000|            $88000.0|\r\n"
+            + "+---------+---------------+--------------------+\r\n"
+            + "Total value: $88800.0\r\n"
+            + "Cost of basis as of 2022-10-12: $1000.0\r\n"
             + "\r\n"
             + "Please enter the date again if you want to determine value "
             + "for another date. "
