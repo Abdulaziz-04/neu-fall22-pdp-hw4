@@ -141,6 +141,7 @@ public class FlexibleCreatePageController implements PageController {
         }
       } catch (Exception e) {
         errorMessage = e.getMessage();
+        return this;
       }
     }
     if (inputBuffer.size() == 5 && !isEnd) {

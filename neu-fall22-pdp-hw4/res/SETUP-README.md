@@ -46,23 +46,24 @@ The user will see inflexible create page.
 The user will see flexible create page.
 
 1. User inputs the date to do the transaction. The format is "2022-10-10". Other input will 
-   be error which will show in the end.
+   be error which will show in the end.(If the format is error, it will show it.)
 
-2. User inputs the date to the type of transaction: "BUY" or "SELL".
+2. User inputs a symbol of the stock that they want to do this transaction. (If there is any 
+   error,it will show it.)
 
-3. User inputs a symbol of the stock that they want to do this transaction.
+3. User inputs the date to the type of transaction: "BUY" or "SELL".
 
-4. User inputs a shares of stocks.
+4. User inputs a shares of stocks.(If the input is negative and not an integer, it will show error.)
 
-5. User inputs the commission fee for this transaction, which needs to be double format.
+5. User inputs the commission fee for this transaction, which needs to be double format.(If it 
+   is not a double, it will show error)
 
-6. User can choose to input next stock transaction or not. If yes, enter Y. If no, enter N. (If 
-   there is some error message. It will show after user choosing no. And user need to input 
-   entire list again.)
+6. User can choose to input next stock transaction or not. If yes, enter yes. Other input will 
+   end of input transaction. 
 
-7. User can input next stock and shares if user chose yes before. If user chose no before and 
-   there wasn't error message, the user can input the portfolio name. (If the name is valid, it 
-   will create the portfolio successfully. Otherwise, it will fail to create.)
+7. If user chose yes before do 1-5 again. If user chose no before and the user can input the 
+   portfolio name. (If the name is valid, it will create the portfolio successfully. Otherwise, 
+   we need to input name again.
 
 8. User inputs any input except back will go to load page.
 
@@ -77,7 +78,8 @@ User can see Load page.
 2. For existing portfolio, there are three options for user:
    1. Determine the value and cost of basis. 
    2. Show the performance of the portfolio.
-   3. Modify the portfolio (Buy or sell the stock)
+   3. Modify the portfolio (Buy or sell the stock for this portfolio) --This option only show if 
+      the portfolio is flexible.
    
    User inputs "1", it will go to determine page. User input "2", it will go to performance page. 
    User inputs "3", it will go to create page to modify the transaction. (after modify, it will  
@@ -85,18 +87,21 @@ User can see Load page.
 
 3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the main page.
 
-## Determine Page
+#### Option 1 for Load Page: Determine Page
 
-User can see the determine page.(It will show the value and cost of basis together)
+User can see the determine page. (It will show the value and cost of basis together)
 
-1. User inputs the date that they want to determine in giving format. The format is yyyy-MM-dd ex."2022-10-11". User can see the error message when the format is error or if there is price available for that day. Otherwise, it will show the total value of the portfolio.
+1. User inputs the date that they want to determine in giving format. The format is yyyy-MM-dd 
+   ex."2022-10-11". User can see the error message when the format is error or if there is 
+   price available for that day. Otherwise, it will show the total value of the portfolio and 
+   the cost of basis on that day.
 
 2. User can repeatedly enter the different date to see portfolio value.
 
 3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the 
    load page.
 
-## Performance Page
+#### Option 2 for Load Page: Performance Page
 
 User can see the performance page.
 
@@ -109,6 +114,61 @@ User can see the performance page.
 
 4. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the
       load page.
+
+#### Option 3 for Load Page: Flexible Create Page to modify it.
+
+User will see the flexible create page again to buy or sell the stocks.
+
+1. User inputs the date to do the transaction. The format is "2022-10-10". Other input will
+   be error which will show in the end.(If the format is error, it will show it.)
+
+2. User inputs a symbol of the stock that they want to do this transaction. (If there is any
+   error,it will show it.)
+
+3. User inputs the date to the type of transaction: "BUY" or "SELL".
+
+4. User inputs a shares of stocks.(If the input is negative and not an integer, it will show error.)
+
+5. User inputs the commission fee for this transaction, which needs to be double format.(If it
+   is not a double, it will show error)
+
+6. User can choose to input next stock transaction or not. If yes, enter yes. Other input will
+   end of input transaction. It will automatically back to the load page.
+
+## Create a flexible portfolio
+### purchase 3 different stocks at different dates
+The procedure to create a flexible portfolio with 3 different stocks at different date. (The input
+will without
+quotes)
+1. After neu-fall22-pdp-hw4.jar file execute, user inputs "2". Press enter.
+
+2. After create page show, user inputs "2014-01-02". Press enter. 
+
+3. User inputs "AAPL". Press enter.
+
+4. User inputs "BUY". Press enter
+
+5. User inputs "100". Press enter.
+
+6. User inputs "123.45". Press enter.
+
+7. User inputs "yes". Press enter.
+
+8. Do the 2 to 7 again. For 2: input "2017-11-15". For 3: input "AA". For 4: input "BUY".
+   For 5: input "1000". For 6: input "125.2:. For 7: input "yes".
+
+9. Do the 2 to 7 again. For 2: input "2021-10-13". For 3: input "AAA" For 4: input "BUY".
+   For 5: input "1000". For 6: input "100.2:. For 7: input "no".
+
+10. User inputs the portfolio name, ex: "ppp". Press enter.
+
+11. User can input "yes" to go to the determine page.
+
+### Query the value and cost basis of that portfolio on two specific dates
+
+1. User input "2018-10-11". (It will show cost of basis and value together)
+
+2. User input "2021-09-16". (It will show cost of basis and value together)
 
 ## Create an inflexible portfolio
 
@@ -127,13 +187,13 @@ AAA, AA and A are valid stock symbol.
 
   4. User inputs "A,200". Press enter.
 
-  5. User inputs "end"( must be lower case). Press enter.
+  5. User inputs "end" (must be lower case). Press enter.
 
   6. User inputs the portfolio name, ex: "love". Press enter.
 
   7. User can choose go to determine or not. If yes, user inputs "yes". Other input will go back to main menu. Press enter.
 
-## 2 different stocks
+### 2 different stocks
 
 The procedure to create an inflexible portfolio with 2 different stocks.
 
@@ -149,40 +209,6 @@ The procedure to create an inflexible portfolio with 2 different stocks.
 
   6. User can choose go to determine or not. If yes, user inputs "yes". Other input will go back to main menu. Press enter.
 
-## Create a flexible portfolio  
-### purchase 3 different stocks at different dates 
-The procedure to create a flexible portfolio with 3 different stocks at different date. (The input 
-will without 
-quotes)
-1. After neu-fall22-pdp-hw4.jar file execute, user inputs "2". Press enter.
-
-2. After create page show, user inputs "2014-01-02". Press enter.
-
-3. User inputs "BUY". Press enter
-
-4. User inputs "AAPL". Press enter.
-
-5. User inputs "100". Press enter.
-
-6. User inputs "123.45". Press enter.
-
-7. User inputs "Y". Press enter.
-
-8. Do the 2 to 7 again. For 2: input "2017-11-15". For 3: input "BUY" For 4: input "AA". 
-   For 5: input "1000". For 6: input "125.2:. For 7: input "Y".
-
-9. Do the 2 to 7 again. For 2: input "2019-03-13". For 3: input "BUY" For 4: input "AAA".
-   For 5: input "1000". For 6: input "100.2:. For 7: input "N".
-
-10. User inputs the portfolio name, ex: "ppp". Press enter.
-
-11. User can input "yes" to go to the determine page. 
-
-### Query the value and cost basis of that portfolio on two specific dates
-
-1. User input "2018-10-11". (It will show cost of basis and value together)
-
-2. User input "2021-09-16". (It will show cost of basis and value together)
 
 ## List of available stock and date
 - List of the valid stock symbol is attached in the Excel file listing_status.csv in this folder.
