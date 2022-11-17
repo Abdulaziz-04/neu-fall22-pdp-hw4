@@ -115,13 +115,7 @@ public class InflexibleCreatePageController implements PageController {
       } catch (Exception e) {
         errorMessage = e.getMessage();
       }
-      return this;
-    } else {
-      if (input.equals("yes")) {
-        return new InfoPageController(portfolioModel, viewFactory);
-      } else {
-        return new MainPageController(portfolioModel, viewFactory);
-      }
+      return new LoadPageController(portfolioModel, viewFactory);
     }
     return this;
   }

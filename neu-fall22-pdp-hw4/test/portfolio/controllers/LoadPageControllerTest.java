@@ -32,7 +32,7 @@ public class LoadPageControllerTest {
   private PageController pageController;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     PortfolioModel portfolioModel = new PortfolioModelImpl(null, parser);

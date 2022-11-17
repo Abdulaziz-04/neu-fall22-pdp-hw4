@@ -28,10 +28,12 @@ public class StockApiMock implements StockPriceApi {
       throw new RuntimeException("Something wrong.");
     }
     if (symbol.equals("AAPL")) {
+      map.put("2022-10-05", new StockPrice(9, 9, 9, 9, 9));
       map.put("2022-10-10", new StockPrice(1, 2, 3, 4, 5));
       map.put("2022-10-11", new StockPrice(6, 7, 8, 9, 10));
       return map;
     } else if (symbol.equals("AAA")) {
+      map.put("2022-10-05", new StockPrice(100, 100, 100, 100, 100));
       map.put("2022-10-10", new StockPrice(11, 22, 33, 44, 55));
       map.put("2022-10-11", new StockPrice(66, 77, 88, 99, 0));
       return map;

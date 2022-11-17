@@ -50,12 +50,15 @@ public class StockQueryServiceImpl implements StockQueryService {
     Map<String, StockPrice> map = new HashMap<>();
     for (var symbol : symbols
     ) {
-      StockPrice price = null;
+      StockPrice price;
       if (isInList(symbol)) {
         price = stockPriceCache.get(symbol, x -> api.getStockPrice(symbol)).get(date.toString());
         if (price == null) {
-          throw new IllegalArgumentException("Stock [" + symbol + "] is not available at date " + date + ".");
+          throw new IllegalArgumentException(
+              "Stock [" + symbol + "] is not available at date " + date + ".");
         }
+      } else {
+        throw new IllegalArgumentException("[" + symbol + "] is not a valid stock symbol.");
       }
       map.put(symbol, price);
     }

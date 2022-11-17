@@ -12,7 +12,6 @@ import java.util.List;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.views.impl.FlexibleCreatePageView;
-import portfolio.views.impl.InflexibleCreatePageView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -323,7 +322,7 @@ public class FlexibleCreatePageViewTest {
             + "!!! If you want to exit, please input exit\r\n"
             + "----------------------------------------------------------\r\n"
             + "Portfolio has been saved.\r\n"
-            + "Please enter any key to continue or enter \"back\" to go back to main menu.\r\n"
+            + "Please enter any key to load page or enter \"back\" to go back to main menu.\r\n"
             + "input > ", outputStreamCaptor.toString());
   }
 

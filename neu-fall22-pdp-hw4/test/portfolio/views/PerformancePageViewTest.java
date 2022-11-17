@@ -1,29 +1,22 @@
 package portfolio.views;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.LinkedHashMap;
+import java.util.Map;
+import org.junit.Before;
+import org.junit.Test;
 import portfolio.views.impl.PerformancePageView;
-
-import static org.junit.Assert.*;
 
 
 /**
  * This is a test for performance page.
  */
 public class PerformancePageViewTest {
-
-
-
-  private List<String> listStar;
-  private List<String> list;
-
+  private Map<String, Integer> map;
 
   private final ByteArrayOutputStream outputStreamCaptor =
           new ByteArrayOutputStream();
@@ -31,14 +24,13 @@ public class PerformancePageViewTest {
   @Before
   public void setUp() {
     printStream = new PrintStream(outputStreamCaptor);
-    list = new ArrayList<>();
-    listStar = new ArrayList<>();
+    map = new LinkedHashMap<>();
   }
 
   @Test
   public void testRender_First() {
     View view = new PerformancePageView(printStream,"name1",
-            null,null,null,null,null,false,
+            null,null,null,null,false,
             null);
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"
@@ -57,7 +49,7 @@ public class PerformancePageViewTest {
   public void testRender_startDate() {
     View view = new PerformancePageView(printStream,"name1",
             LocalDate.parse("2013-01-10"),
-            null,null,null,null,false,
+            null,null,null,false,
             null);
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"
@@ -80,29 +72,19 @@ public class PerformancePageViewTest {
   @Test
   public void testRender_Year() {
     setUp();
-    list.add("2013: ");
-    list.add("2014: ");
-    list.add("2015: ");
-    list.add("2016: ");
-    list.add("2017: ");
-    list.add("2018: ");
-    list.add("2019: ");
-    list.add("2020: ");
-    list.add("2021: ");
-    list.add("2022: ");
-    listStar.add("*****");
-    listStar.add("**************");
-    listStar.add("***************");
-    listStar.add("**************");
-    listStar.add("**********");
-    listStar.add("*******");
-    listStar.add("*********************");
-    listStar.add("********************************");
-    listStar.add("*****************");
-    listStar.add("***************");
+    map.put("2013: ",5);
+    map.put("2014: ",14);
+    map.put("2015: ",15);
+    map.put("2016: ",14);
+    map.put("2017: ",10);
+    map.put("2018: ",7);
+    map.put("2019: ",21);
+    map.put("2020: ",32);
+    map.put("2021: ",17);
+    map.put("2022: ",15);
     View view = new PerformancePageView(printStream,"name1",
             LocalDate.parse("2013-01-10"),LocalDate.parse("2022-10-11"),
-            list, listStar,
+            map,
             "one asterisk is $ 100 more than a base amount of $100000",true,
             null);
     view.render();
@@ -133,29 +115,19 @@ public class PerformancePageViewTest {
   @Test
   public void testRender_Month() {
     setUp();
-    list.add("2022-01: ");
-    list.add("2022-02: ");
-    list.add("2022-03: ");
-    list.add("2022-04: ");
-    list.add("2022-05: ");
-    list.add("2022-06: ");
-    list.add("2022-07: ");
-    list.add("2022-08: ");
-    list.add("2022-09: ");
-    list.add("2022-10: ");
-    listStar.add("*****");
-    listStar.add("**************");
-    listStar.add("***************");
-    listStar.add("**************");
-    listStar.add("**********");
-    listStar.add("*******");
-    listStar.add("*********************");
-    listStar.add("********************************");
-    listStar.add("*****************");
-    listStar.add("***************");
+    map.put("2022-01: ", 5);
+    map.put("2022-02: ", 14);
+    map.put("2022-03: ", 15);
+    map.put("2022-04: ", 14);
+    map.put("2022-05: ", 10);
+    map.put("2022-06: ", 7);
+    map.put("2022-07: ", 21);
+    map.put("2022-08: ", 32);
+    map.put("2022-09: ", 17);
+    map.put("2022-10: ", 15);
     View view = new PerformancePageView(printStream,"name1",
             LocalDate.parse("2022-01-05"),LocalDate.parse("2022-10-11"),
-            list, listStar,
+            map,
             "one asterisk is $ 100 more than a base amount of $100000",true,
             null);
     view.render();
@@ -186,29 +158,19 @@ public class PerformancePageViewTest {
   @Test
   public void testRender_Day() {
     setUp();
-    list.add("2022-02-01: ");
-    list.add("2022-02-02: ");
-    list.add("2022-02-03: ");
-    list.add("2022-02-04: ");
-    list.add("2022-02-05: ");
-    list.add("2022-02-06: ");
-    list.add("2022-02-07: ");
-    list.add("2022-02-08: ");
-    list.add("2022-02-09: ");
-    list.add("2022-02-10: ");
-    listStar.add("*****");
-    listStar.add("**************");
-    listStar.add("***************");
-    listStar.add("**************");
-    listStar.add("**********");
-    listStar.add("*******");
-    listStar.add("*********************");
-    listStar.add("********************************");
-    listStar.add("*****************");
-    listStar.add("***************");
+    map.put("2022-02-01: ", 5);
+    map.put("2022-02-02: ", 14);
+    map.put("2022-02-03: ", 15);
+    map.put("2022-02-04: ", 14);
+    map.put("2022-02-05: ", 10);
+    map.put("2022-02-06: ", 7);
+    map.put("2022-02-07: ", 21);
+    map.put("2022-02-08: ", 32);
+    map.put("2022-02-09: ", 17);
+    map.put("2022-02-10: ", 15);
     View view = new PerformancePageView(printStream,"name1",
             LocalDate.parse("2022-02-01"),LocalDate.parse("2022-02-10"),
-            list, listStar,
+            map,
             "one asterisk is $ 100 more than a base amount of $100000",true,
             null);
     view.render();
@@ -240,7 +202,7 @@ public class PerformancePageViewTest {
   public void testRender_Error1() {
     setUp();
     View view = new PerformancePageView(printStream,"name1",
-            null,null,null,null,
+            null,null,null,
             null,false,
             "Error: Please choose input new timespan. "
                     + "This start date maybe the holiday or "
@@ -265,7 +227,7 @@ public class PerformancePageViewTest {
   public void testRender_Error2() {
     setUp();
     View view = new PerformancePageView(printStream,"name1",
-            null,null,null,null,
+            null,null,null,
             null,false,
             "Error start date format!");
     view.render();
@@ -288,7 +250,7 @@ public class PerformancePageViewTest {
     setUp();
     View view = new PerformancePageView(printStream,"name1",
             LocalDate.parse("2013-01-10"),
-            null,null,null,null,false,
+            null,null,null,false,
             "Error end date format!");
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"

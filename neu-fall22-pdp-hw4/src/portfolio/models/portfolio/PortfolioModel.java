@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
+import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 
@@ -40,9 +41,9 @@ public interface PortfolioModel {
 
   void load(String name, String text) throws Exception;
 
-  void checkTransaction(LocalDate date, String symbol) throws Exception;
+  boolean checkTransaction(LocalDate date, String symbol) throws Exception;
 
-  void checkTransactions(PortfolioFormat format, List<Transaction> transactions) throws Exception;
+  void checkTransactions(List<Transaction> transactions) throws Exception;
   /**
    * This is a method to add the transactions to a flexible portfolio.
    *
@@ -78,6 +79,8 @@ public interface PortfolioModel {
    * @throws Exception is there some error
    */
   Map<LocalDate, Double> getValues(LocalDate from, LocalDate to) throws Exception;
+
+  PortfolioPerformance getPerformance(LocalDate from, LocalDate to);
 
   String getString() throws Exception;
 }

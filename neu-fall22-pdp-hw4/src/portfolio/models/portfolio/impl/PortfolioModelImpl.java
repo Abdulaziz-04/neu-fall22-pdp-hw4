@@ -1,23 +1,22 @@
 package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import portfolio.models.entities.PortfolioFormat;
+import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
-import portfolio.models.entities.StockListEntry;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
-import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.stockprice.StockQueryService;
 
 /**
@@ -42,6 +41,11 @@ public class PortfolioModelImpl implements PortfolioModel {
     this.portfolioParser = portfolioParser;
   }
 
+  public void init() throws Exception {
+    portfolio = null;
+    stockQueryService.getStockList();
+  }
+
   @Override
   public Portfolio getPortfolio() {
     return portfolio;
@@ -50,23 +54,16 @@ public class PortfolioModelImpl implements PortfolioModel {
   @Override
   public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception {
-
-    checkTransactions(format, transactions);
+    checkTransactions(transactions);
     switch (format) {
       case INFLEXIBLE:
         portfolio = new InflexiblePortfolio(name, transactions);
-        //return new InflexiblePortfolio(name, transactions);
+        break;
       case FLEXIBLE:
         portfolio = new FlexiblePortfolio(name, transactions);
-        //return new FlexiblePortfolio(name, transactions);
+        break;
     }
     return portfolio;
-  }
-
-  @Override
-  public void init() throws Exception {
-    portfolio = null;
-    stockQueryService.getStockList();
   }
 
   @Override
@@ -76,12 +73,13 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public void checkTransaction(LocalDate date, String symbol) throws Exception {
+  public boolean checkTransaction(LocalDate date, String symbol) throws Exception {
     stockQueryService.getStockPrice(date, List.of(symbol));
+    return true;
   }
 
   @Override
-  public void checkTransactions(PortfolioFormat format, List<Transaction> transactions)
+  public void checkTransactions(List<Transaction> transactions)
       throws Exception {
     Map<String, LocalDate> map = new HashMap<>();
     for (var stock : stockQueryService.getStockList()) {
@@ -138,6 +136,188 @@ public class PortfolioModelImpl implements PortfolioModel {
       }
     }
     return map;
+  }
+
+  @Override
+  public PortfolioPerformance getPerformance(LocalDate from, LocalDate to) {
+    if (to.compareTo(from) < 0) {
+      throw new IllegalArgumentException("endDate cannot be before than startDate");
+    }
+    Map<LocalDate, Double> map = getValues(from.minusDays(7), to);
+    Map<String, Double> perf = new LinkedHashMap<>();
+    Map<String, Integer> scaledPerf = new LinkedHashMap<>();
+    String scale;
+    long dayCount = ChronoUnit.DAYS.between(from, to) + 1;
+    long weekCount = ChronoUnit.WEEKS.between(from, to) + 1;
+    long monthCount = ChronoUnit.MONTHS.between(from, to) + 1;
+    long yearCount = ChronoUnit.YEARS.between(from, to) + 1;
+    LocalDate currentDate = from;
+
+    // divide the time span
+    if (dayCount >= 5 && dayCount <= 30) {
+      //output the list
+      while (!currentDate.isAfter(to)) {
+        if (map.containsKey(currentDate)) {
+          perf.put(currentDate + ": ", map.get(currentDate));
+          currentDate = currentDate.plusDays(1);
+        } else {
+          LocalDate currentGet = currentDate.minusDays(1);
+          while (!map.containsKey(currentGet)) {
+            currentGet = currentGet.minusDays(1);
+          }
+          perf.put(currentDate + ": ", map.get(currentGet));
+          currentDate = currentDate.plusDays(1);
+        }
+      }
+    } else if (weekCount >= 5 && weekCount <= 23) {
+      //split it to weeks
+      // find the last working day of this week
+      while (!currentDate.isAfter(to)) {
+        LocalDate currentWeekEnd = currentDate.with(ChronoField.DAY_OF_WEEK, 7);
+        LocalDate currentWeekGet = currentDate.with(ChronoField.DAY_OF_WEEK, 5);
+        if (currentWeekEnd.isAfter(to)) {
+          currentWeekEnd = to;
+          currentWeekGet = to;
+        }
+        while (!map.containsKey(currentWeekGet)) {
+          currentWeekGet = currentWeekGet.minusDays(1);
+        }
+        perf.put("Week: " + currentDate + " to " + currentWeekEnd + ": ", map.get(currentWeekGet));
+        currentDate = currentWeekEnd.plusDays(1);
+      }
+    } else if (monthCount >= 5 && monthCount <= 30) {
+      //split it to month
+      // find the last working day of this month
+      while (!currentDate.isAfter(to)) {
+        LocalDate currentMonthEnd = currentDate.withDayOfMonth(currentDate.lengthOfMonth());
+        LocalDate currentMonthGet = currentMonthEnd;
+        if (currentMonthEnd.isAfter(to)) {
+          currentMonthEnd = to;
+          currentMonthGet = to;
+        }
+        while (!map.containsKey(currentMonthGet)) {
+          currentMonthGet = currentMonthGet.minusDays(1);
+        }
+        perf.put(currentMonthEnd.getYear() +
+            "-" + currentMonthEnd.getMonthValue() + ": ", map.get(currentMonthGet));
+        currentDate = currentMonthEnd.plusDays(1);
+      }
+    } else if ((monthCount/3) >=5 && (monthCount / 3) < 29) {
+      // split it to quarter
+      // find the last working day of this month
+      while (!currentDate.isAfter(to)) {
+        LocalDate currentMonthEnd = getQuarterEnd(currentDate);
+        LocalDate currentMonthGet = currentMonthEnd;
+        if (currentMonthEnd.isAfter(to)) {
+          currentMonthEnd = to;
+          currentMonthGet = to;
+        }
+        while (!map.containsKey(currentMonthGet)) {
+          currentMonthGet = currentMonthGet.minusDays(1);
+        }
+        perf.put(currentMonthEnd.getYear() + "-Quarter " +
+            (currentMonthEnd.getMonthValue() / 3 + 1) + ": ", map.get(currentMonthGet));
+        currentDate = currentMonthEnd.plusDays(1);
+        //monthCount = monthCount -3;
+      }
+    } else if (yearCount >= 5 && yearCount <= 30) {
+      //split it to year
+      //fins the last working day of this year
+      while (!currentDate.isAfter(to)) {
+        LocalDate currentYearEnd = currentDate.withDayOfYear(currentDate.lengthOfYear());
+        LocalDate currentYearGet = currentYearEnd;
+        if (currentYearEnd.isAfter(to)) {
+          currentYearEnd = to;
+          currentYearGet = to;
+        }
+        while (!map.containsKey(currentYearGet)) {
+          currentYearGet = currentYearGet.minusDays(1);
+        }
+        perf.put(currentDate.getYear() + ": ", map.get(currentYearGet));
+        currentDate = currentYearEnd.plusDays(1);
+        //yearCount--;
+      }
+    } else {
+      throw new IllegalArgumentException("Date range is too short.");
+    }
+
+    // prepare for calculate scale
+    List<Double> listAmount = new ArrayList<>(perf.values());
+    Double maxAmount = Collections.max(listAmount);
+    Double minAmount = Collections.min(listAmount);
+    // the timespan is before the date of its first purchase
+    if (maxAmount.equals(0.0) && minAmount.equals(0.0)) {
+      scale = "all the performance are 0";
+      for (var entry : perf.entrySet()) {
+        scaledPerf.put(entry.getKey(), 0);
+      }
+      return new PortfolioPerformance(scaledPerf, scale);
+    }
+    // the min can not be zero when we calculate the scale
+    if (minAmount.equals(0.0)) {
+      for (Double aDouble : listAmount) {
+        if (aDouble.equals(0.0)) {
+          continue;
+        } else if (minAmount.equals(0.0)) {
+          minAmount = aDouble;
+        } else {
+          if (aDouble < minAmount) {
+            minAmount = aDouble;
+          }
+        }
+      }
+    }
+
+    // calculate the scale and add "*" to star list
+    if (maxAmount.equals(minAmount)) {
+      scale = "one asterisk is $" + maxAmount;
+      for (var entry : perf.entrySet()) {
+        int star = !entry.getValue().equals(0.0) ? 1 : 0;
+        scaledPerf.put(entry.getKey(), star);
+      }
+    } else {
+      double more = (maxAmount - minAmount) / 45;
+      double base = minAmount - more - 1;
+
+      scale = "one asterisk is $ " + more + " more than a base amount of $" + base;
+
+      for (var entry : perf.entrySet()) {
+        int star = 0;
+        if (!entry.getValue().equals(0.0)) {
+          for (int j = 0; j < (int) ((entry.getValue() - base) / more); j++) {
+            star = star + 1;
+          }
+        }
+        scaledPerf.put(entry.getKey(), star);
+      }
+    }
+    return new PortfolioPerformance(scaledPerf, scale);
+  }
+
+
+  /**
+   * This is a helper method to find the last day of the quarter which the given date falls.
+   *
+   * @param localDate the date that we want to check
+   * @returnthe last day of the quarter which the given date falls.
+   */
+  private static LocalDate getQuarterEnd(LocalDate localDate) {
+    localDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
+    long month = localDate.getMonth().getValue();
+    if (month <= 3) {
+      localDate = localDate.withMonth(3);
+      localDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
+    } else if (month <= 6) {
+      localDate = localDate.withMonth(6);
+      localDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
+    } else if (month <= 9) {
+      localDate = localDate.withMonth(9);
+      localDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
+    } else {
+      localDate = localDate.withMonth(12);
+      localDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
+    }
+    return localDate;
   }
 
   @Override

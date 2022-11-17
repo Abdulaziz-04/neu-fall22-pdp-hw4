@@ -117,7 +117,7 @@ public class FlexibleCreatePageController implements PageController {
           try {
             if (Double.parseDouble(input) < 0) {
               errorMessage = "Commission cannot be negative.";
-
+              return this;
             }
             inputBuffer.add(input);
           } catch (Exception e) {
@@ -148,7 +148,7 @@ public class FlexibleCreatePageController implements PageController {
     if (/*inputBuffer.size() == 5 && */!isEnd) {
       try {
         // Check amount valid
-        portfolioModel.checkTransactions(PortfolioFormat.FLEXIBLE, transactions);
+        portfolioModel.checkTransactions(transactions);
         isEnd = true;
         return this;
       } catch (Exception e) {
