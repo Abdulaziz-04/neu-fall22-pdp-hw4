@@ -131,7 +131,7 @@ public class FlexibleCreatePageView extends ViewAbs {
         printStream.println("----------------------------------------------------------");
         printStream.println("Portfolio has been saved.");
         printStream.println(
-            "Please enter any key to continue or enter \"back\" to go back to main menu.");
+            "Please enter any key to load page or enter \"back\" to go back to main menu.");
       }
     }
     printStream.print("input > ");

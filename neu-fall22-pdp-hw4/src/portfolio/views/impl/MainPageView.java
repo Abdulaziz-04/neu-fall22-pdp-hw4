@@ -59,8 +59,9 @@ public class MainPageView extends ViewAbs {
             "*******************************");
     printStream.println("-------------------------Tips-----------------------------");
     printStream.println("!!! If you want to determine portfolio's value");
-    printStream.println("    or modify a portfolio, you need to load or");
-    printStream.println("    create a portfolio first.");
+    printStream.println("    or modify a portfolio, you need to load");
+    printStream.println("    (for both) or create (for inflexible) a");
+    printStream.println("    portfolio first.");
     printStream.println("!!! If you want to show the performance, you");
     printStream.println("    need to load or create a portfolio first.");
     printStream.println("!!! If you want to exit, please input exit");

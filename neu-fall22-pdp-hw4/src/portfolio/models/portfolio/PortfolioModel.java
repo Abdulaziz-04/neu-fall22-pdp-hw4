@@ -1,7 +1,6 @@
 package portfolio.models.portfolio;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
@@ -14,6 +13,11 @@ import portfolio.models.entities.Transaction;
  */
 public interface PortfolioModel {
 
+  /**
+   * Initialize the model of portfolio.
+   *
+   * @throws Exception is there any error
+   */
   void init() throws Exception;
 
   /**
