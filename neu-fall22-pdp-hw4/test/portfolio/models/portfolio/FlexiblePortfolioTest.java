@@ -89,7 +89,7 @@ public class FlexiblePortfolioTest {
   @Test
   public void getCostBasis_mid() throws Exception {
     double actual = portfolio.getCostBasis(LocalDate.parse("2022-10-10"), prices);
-    assertEquals(0.0, actual, EPSILON);
+    assertEquals(526.0, actual, EPSILON);
   }
 
   @Test

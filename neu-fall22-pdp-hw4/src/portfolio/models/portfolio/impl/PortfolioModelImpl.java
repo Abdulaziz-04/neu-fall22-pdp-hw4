@@ -87,6 +87,9 @@ public class PortfolioModelImpl implements PortfolioModel {
     }
     for (var entry : transactions) {
       List<String> symbols = new ArrayList<>();
+      if (entry.getDate() != null) {
+        checkTransaction(entry.getDate(), entry.getSymbol());
+      }
       symbols.add(entry.getSymbol());
       if (!map.containsKey(entry.getSymbol())) {
         throw new IllegalArgumentException("Symbol [" + entry.getSymbol() + "] not found.");
@@ -202,7 +205,7 @@ public class PortfolioModelImpl implements PortfolioModel {
             "-" + currentMonthEnd.getMonthValue() + ": ", map.get(currentMonthGet));
         currentDate = currentMonthEnd.plusDays(1);
       }
-    } else if ((monthCount/3) >=5 && (monthCount / 3) < 29) {
+    } else if ((monthCount / 3) >= 5 && (monthCount / 3) < 29) {
       // split it to quarter
       // find the last working day of this month
       while (!currentDate.isAfter(to)) {

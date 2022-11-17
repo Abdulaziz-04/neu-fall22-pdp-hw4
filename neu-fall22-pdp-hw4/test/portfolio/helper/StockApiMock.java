@@ -24,6 +24,7 @@ public class StockApiMock implements StockPriceApi {
 
   @Override
   public Map<String, StockPrice> getStockPrice(String symbol) {
+    Map<String, StockPrice> map = new HashMap<>();
     if (shouldFail) {
       throw new RuntimeException("Something wrong.");
     }

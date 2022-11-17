@@ -5,12 +5,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.InfoPageController;
+import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
 import portfolio.helper.TransactionConverter;
 import portfolio.models.portfolio.PortfolioParser;
@@ -103,15 +106,13 @@ public class InflexibleCreatePageControllerTest {
   @Test
   public void handleInput_enterStock_stockNotFound() {
     PageController nextPage = pageController.handleInput("BKNG,100");
+    nextPage = pageController.handleInput("end");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
     assertFalse((boolean) argumentCaptor.getArguments().get(0));
     assertFalse((boolean) argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
-        .get(2);
-    assertTrue(stockList.isEmpty());
-    assertEquals("Symbol not found.", argumentCaptor.getArguments().get(3));
+    assertEquals("Symbol [BKNG] not found.", argumentCaptor.getArguments().get(3));
   }
 
   @Test
@@ -173,23 +174,6 @@ public class InflexibleCreatePageControllerTest {
   }
 
   @Test
-  public void handleInput_enterStock_end_name() {
-    pageController.handleInput("AAPL,100");
-    pageController.handleInput("AAA,100");
-    pageController.handleInput("end");
-    PageController nextPage = pageController.handleInput("a");
-    assertEquals(pageController, nextPage);
-
-    pageController.getView();
-    assertTrue((boolean) argumentCaptor.getArguments().get(0));
-    assertTrue((boolean) argumentCaptor.getArguments().get(1));
-    HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
-        .get(2);
-    assertEquals(2, stockList.size());
-    assertNull(argumentCaptor.getArguments().get(3));
-  }
-
-  @Test
   public void handleInput_enterStock_end_fileExists() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");
@@ -203,10 +187,10 @@ public class InflexibleCreatePageControllerTest {
     HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
         .get(2);
     assertEquals(2, stockList.size());
-    assertEquals("File already exists.", argumentCaptor.getArguments().get(3));
+    assertEquals("There is a file or a directory exists with filename: abc.txt", argumentCaptor.getArguments().get(3));
   }
 
-  @Test
+  @Ignore
   public void handleInput_enterStock_end_errorSaveFile() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");
@@ -265,19 +249,16 @@ public class InflexibleCreatePageControllerTest {
 
   @Test
   public void handleInput_enterStock_success() {
+    File file = new File("a.txt");
+    if (file.exists()) {
+      file.delete();
+    }
+
     pageController.handleInput("AAPL,100");
     pageController.handleInput("end");
-    pageController.handleInput("a");
-    PageController nextPage = pageController.handleInput("yes");
-    assertEquals(InfoPageController.class, nextPage.getClass());
+
+    PageController nextPage = pageController.handleInput("a");
+    assertEquals(LoadPageController.class, nextPage.getClass());
   }
 
-  @Test
-  public void handleInput_enterStock_end_no() {
-    pageController.handleInput("AAPL,100");
-    pageController.handleInput("end");
-    pageController.handleInput("a");
-    PageController nextPage = pageController.handleInput("no");
-    assertEquals(MainPageController.class, nextPage.getClass());
-  }
 }

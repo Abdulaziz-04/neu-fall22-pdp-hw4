@@ -114,6 +114,7 @@ public class InflexibleCreatePageController implements PageController {
         isNamed = ioService.saveTo(portfolioModel.getString(), input + ".txt", false);
       } catch (Exception e) {
         errorMessage = e.getMessage();
+        return this;
       }
       return new LoadPageController(portfolioModel, viewFactory);
     }

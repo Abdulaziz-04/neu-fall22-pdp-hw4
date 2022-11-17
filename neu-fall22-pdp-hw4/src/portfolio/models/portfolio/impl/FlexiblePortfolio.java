@@ -40,7 +40,7 @@ public class FlexiblePortfolio extends PortfolioAbs {
   public double getCostBasis(LocalDate date, Map<String, StockPrice> prices) {
     double total = 0;
     for (var entry : transactions) {
-      if (entry.getDate().compareTo(date) < 0) {
+      if (entry.getDate().compareTo(date) <= 0) {
         StockPrice price = prices.get(entry.getSymbol());
         if (price != null) {
           total = total + price.getClose() * entry.getAmount();

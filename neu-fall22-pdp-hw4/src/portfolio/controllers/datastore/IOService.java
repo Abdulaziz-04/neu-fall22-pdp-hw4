@@ -24,5 +24,5 @@ public interface IOService {
    * @return boolean true if successfully wrote to the file otherwise false
    * @throws IllegalArgumentException if path is not valid
    */
-  boolean saveTo(String text, String path, boolean allowOverride) throws IllegalArgumentException;
+  boolean saveTo(String text, String path, boolean allowOverride) throws IOException;
 }

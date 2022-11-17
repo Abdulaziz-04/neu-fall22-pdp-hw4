@@ -34,11 +34,10 @@ public class FileIOService implements IOService {
   }
 
   @Override
-  public boolean saveTo(String text, String fileName, boolean allowOverride)
-          throws IllegalArgumentException {
+  public boolean saveTo(String text, String fileName, boolean allowOverride) throws IOException {
     File f = new File(fileName);
     if (!allowOverride && f.exists() && !f.isDirectory()) {
-      throw new IllegalArgumentException(
+      throw new IOException(
               "There is a file or a directory exists with filename: " + fileName);
     }
     try (Writer writer = new BufferedWriter(new OutputStreamWriter(

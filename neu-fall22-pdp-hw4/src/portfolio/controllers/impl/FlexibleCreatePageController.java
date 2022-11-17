@@ -29,14 +29,15 @@ public class FlexibleCreatePageController implements PageController {
   private boolean isEnd = false;
   private boolean isNamed = false;
   private final boolean modifyMode;
-  private List<Transaction> transactions= new ArrayList<>();;
+  private List<Transaction> transactions = new ArrayList<>();
+  ;
   private final List<String> inputBuffer = new ArrayList<>();
 
   /**
    * This is a constructor to construct a FlexibleCreatePageController.
    *
    * @param portfolioModel the model of portfolio
-   * @param viewFactory ViewFactor for creating a view
+   * @param viewFactory    ViewFactor for creating a view
    */
   public FlexibleCreatePageController(
       PortfolioModel portfolioModel,
@@ -90,8 +91,7 @@ public class FlexibleCreatePageController implements PageController {
           try {
             portfolioModel.checkTransaction(LocalDate.parse(inputBuffer.get(0)), input);
             inputBuffer.add(input);
-          }
-          catch (Exception e) {
+          } catch (Exception e) {
             errorMessage = e.getMessage();
             inputBuffer.clear();
           }
@@ -159,13 +159,20 @@ public class FlexibleCreatePageController implements PageController {
       try {
         if (modifyMode) {
           portfolioModel.addTransactions(transactions);
-        }
-        else {
+        } else {
           portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
         }
         ioService.saveTo(portfolioModel.getString(), name + ".txt", modifyMode);
         return new LoadPageController(portfolioModel, viewFactory);
+      } catch (RuntimeException e) {
+        errorMessage = e.getMessage() + " Please enter transaction list again.";
+        inputBuffer.clear();
+        transactions.clear();
       } catch (Exception e) {
+        try {
+          portfolioModel.init();
+        } catch (Exception ignored) {
+        }
         errorMessage = e.getMessage();
       }
     }
