@@ -39,7 +39,7 @@ public class InfoPageViewTest {
   private PortfolioWithValue portfolioWithValue2;
   private PortfolioWithValue portfolioWithValue3;
 
-  private final List<Transaction> transactions = new ArrayList<>();
+  private  List<Transaction> transactions = new ArrayList<>();
 
 
   @Before

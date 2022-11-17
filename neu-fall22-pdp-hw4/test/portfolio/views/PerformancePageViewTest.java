@@ -14,7 +14,9 @@ import portfolio.views.impl.PerformancePageView;
 import static org.junit.Assert.*;
 
 
-
+/**
+ * This is a test for performance page.
+ */
 public class PerformancePageViewTest {
 
 
