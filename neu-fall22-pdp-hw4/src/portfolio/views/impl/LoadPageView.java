@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.util.List;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.views.ViewAbs;
 
 /**
@@ -17,13 +16,14 @@ public class LoadPageView extends ViewAbs {
   private final boolean showModifyMenu;
 
   /**
-   * This is a constructor that construct a determine page view.
+   * This is a constructor that construct a load page view.
    *
    * @param printStream  a PrintStream object to where the output will be directed to
-   * @param portfolio    the portfolio that we want to examine
+   * @param portfolio    the portfolio that we want to load
+   * @param showModifyMenu show modify menu or not
    * @param errorMessage the error message we want to show to the user
    */
-  public LoadPageView(PrintStream printStream, InflexiblePortfolio portfolio,
+  public LoadPageView(PrintStream printStream, Portfolio portfolio,
       boolean showModifyMenu, String errorMessage) {
     super(printStream);
     this.errorMessage = errorMessage;
@@ -32,7 +32,7 @@ public class LoadPageView extends ViewAbs {
   }
 
   /**
-   * This is a constructor that construct a determine page view. The output stream is System.out.
+   * This is a constructor that construct a load page view. The output stream is System.out.
    *
    * @param portfolio    the portfolio that we want to examine
    * @param errorMessage the error message we want to show to the user

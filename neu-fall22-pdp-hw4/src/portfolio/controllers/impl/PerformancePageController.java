@@ -316,7 +316,7 @@ public class PerformancePageController implements PageController {
         }
         return this;
       } catch (Exception e) {
-        errorMessage = "Error start date!";
+        errorMessage = "Error start date format!";
         startDate = null;
         endDate = null;
         map = new HashMap<>();
@@ -327,7 +327,7 @@ public class PerformancePageController implements PageController {
         endDate = LocalDate.parse(input);
         map = portfolioModel.getValues(startDate, endDate);
       } catch (Exception e) {
-        errorMessage = "Error end date!";
+        errorMessage = "Error end date format!";
         endDate = null;
         map = new HashMap<>();
         return this;

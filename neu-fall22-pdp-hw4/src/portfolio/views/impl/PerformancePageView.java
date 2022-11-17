@@ -113,7 +113,7 @@ public class PerformancePageView extends ViewAbs {
       printStream.println("+---------------+");
       printStream.println("Please enter the end date of the timespan " +
               "that you want to performance.");
-      printStream.println("--EX.2022-10-09");
+      printStream.println("--EX.2022-10-11");
       printStream.println("--The format of date needs to be 2022-10-11");
       printStream.print("input > ");
     }
@@ -126,14 +126,14 @@ public class PerformancePageView extends ViewAbs {
       }
       printStream.println("scale: " + scale);
       printStream.println("----------------------------------------------------------");
-      printStream.println("Please enter the the start date of the timespan " +
+      printStream.println("Please enter the start date of the timespan " +
               "that you want to performance.");
       printStream.println("--EX.2020-10-09");
       printStream.println("--The format of date needs to be 2022-10-11");
       printStream.print("input > ");
     }
     if(startDate == null) {
-      printStream.println("Please enter the the start date of the timespan " +
+      printStream.println("Please enter the start date of the timespan " +
               "that you want to performance.");
       printStream.println("--EX.2020-10-09");
       printStream.println("--The format of date needs to be 2022-10-11");
