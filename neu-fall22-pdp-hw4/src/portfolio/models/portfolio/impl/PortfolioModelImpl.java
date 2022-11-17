@@ -36,9 +36,12 @@ public class PortfolioModelImpl implements PortfolioModel {
    * @param portfolioParser   parse portfolio
    */
   public PortfolioModelImpl(StockQueryService stockQueryService,
-      PortfolioParser portfolioParser) throws Exception {
+      PortfolioParser portfolioParser) {
     this.stockQueryService = stockQueryService;
     this.portfolioParser = portfolioParser;
+  }
+
+  public void init() throws Exception {
     portfolio = null;
     stockQueryService.getStockList();
   }
@@ -51,7 +54,7 @@ public class PortfolioModelImpl implements PortfolioModel {
   @Override
   public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
       throws Exception {
-    checkTransactions(format, transactions);
+    checkTransactions(transactions);
     switch (format) {
       case INFLEXIBLE:
         portfolio = new InflexiblePortfolio(name, transactions);
@@ -70,12 +73,13 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public void checkTransaction(LocalDate date, String symbol) throws Exception {
+  public boolean checkTransaction(LocalDate date, String symbol) throws Exception {
     stockQueryService.getStockPrice(date, List.of(symbol));
+    return true;
   }
 
   @Override
-  public void checkTransactions(PortfolioFormat format, List<Transaction> transactions)
+  public void checkTransactions(List<Transaction> transactions)
       throws Exception {
     Map<String, LocalDate> map = new HashMap<>();
     for (var stock : stockQueryService.getStockList()) {
@@ -136,7 +140,10 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public PortfolioPerformance getPerformance(LocalDate from, LocalDate to) {
-    Map<LocalDate, Double> map = getValues(from, to);
+    if (to.compareTo(from) < 0) {
+      throw new IllegalArgumentException("endDate cannot be before than startDate");
+    }
+    Map<LocalDate, Double> map = getValues(from.minusDays(7), to);
     Map<String, Double> perf = new LinkedHashMap<>();
     Map<String, Integer> scaledPerf = new LinkedHashMap<>();
     String scale;
@@ -147,7 +154,7 @@ public class PortfolioModelImpl implements PortfolioModel {
     LocalDate currentDate = from;
 
     // divide the time span
-    if (dayCount <= 30) {
+    if (dayCount >= 5 && dayCount <= 30) {
       //output the list
       while (!currentDate.isAfter(to)) {
         if (map.containsKey(currentDate)) {
@@ -158,11 +165,11 @@ public class PortfolioModelImpl implements PortfolioModel {
           while (!map.containsKey(currentGet)) {
             currentGet = currentGet.minusDays(1);
           }
-          perf.put(currentDate + ": ", map.get(currentDate));
+          perf.put(currentDate + ": ", map.get(currentGet));
           currentDate = currentDate.plusDays(1);
         }
       }
-    } else if (weekCount <= 23) {
+    } else if (weekCount >= 5 && weekCount <= 23) {
       //split it to weeks
       // find the last working day of this week
       while (!currentDate.isAfter(to)) {
@@ -178,7 +185,7 @@ public class PortfolioModelImpl implements PortfolioModel {
         perf.put("Week: " + currentDate + " to " + currentWeekEnd + ": ", map.get(currentWeekGet));
         currentDate = currentWeekEnd.plusDays(1);
       }
-    } else if (monthCount <= 30 && monthCount >= 5) {
+    } else if (monthCount >= 5 && monthCount <= 30) {
       //split it to month
       // find the last working day of this month
       while (!currentDate.isAfter(to)) {
@@ -195,7 +202,7 @@ public class PortfolioModelImpl implements PortfolioModel {
             "-" + currentMonthEnd.getMonthValue() + ": ", map.get(currentMonthGet));
         currentDate = currentMonthEnd.plusDays(1);
       }
-    } else if ((monthCount / 3) < 29) {
+    } else if ((monthCount/3) >=5 && (monthCount / 3) < 29) {
       // split it to quarter
       // find the last working day of this month
       while (!currentDate.isAfter(to)) {
@@ -213,7 +220,7 @@ public class PortfolioModelImpl implements PortfolioModel {
         currentDate = currentMonthEnd.plusDays(1);
         //monthCount = monthCount -3;
       }
-    } else if (yearCount <= 30) {
+    } else if (yearCount >= 5 && yearCount <= 30) {
       //split it to year
       //fins the last working day of this year
       while (!currentDate.isAfter(to)) {
@@ -226,26 +233,12 @@ public class PortfolioModelImpl implements PortfolioModel {
         while (!map.containsKey(currentYearGet)) {
           currentYearGet = currentYearGet.minusDays(1);
         }
-        perf.put(currentDate.getYear() + ":", map.get(currentYearGet));
+        perf.put(currentDate.getYear() + ": ", map.get(currentYearGet));
         currentDate = currentYearEnd.plusDays(1);
         //yearCount--;
       }
     } else {
-      while (!currentDate.isAfter(to)) {
-        LocalDate currentYearEnd =
-            currentDate.withDayOfYear(currentDate.lengthOfYear()).plusYears(1);
-        LocalDate currentYearGet = currentYearEnd;
-        if (currentYearEnd.isAfter(to)) {
-          currentYearEnd = to;
-          currentYearGet = to;
-        }
-        while (!map.containsKey(currentYearGet)) {
-          currentYearGet = currentYearGet.minusDays(1);
-        }
-        perf.put(currentDate.getYear() + " to "
-            + currentYearEnd.getYear() + " : ", map.get(currentYearGet));
-        currentDate = currentYearEnd.plusDays(1);
-      }
+      throw new IllegalArgumentException("Date range is too short.");
     }
 
     // prepare for calculate scale

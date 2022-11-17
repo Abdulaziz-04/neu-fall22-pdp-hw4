@@ -14,6 +14,8 @@ import portfolio.models.entities.Transaction;
  */
 public interface PortfolioModel {
 
+  void init() throws Exception;
+
   /**
    * Return the portfolio that we want to get.
    *
@@ -35,9 +37,9 @@ public interface PortfolioModel {
 
   void load(String name, String text) throws Exception;
 
-  void checkTransaction(LocalDate date, String symbol) throws Exception;
+  boolean checkTransaction(LocalDate date, String symbol) throws Exception;
 
-  void checkTransactions(PortfolioFormat format, List<Transaction> transactions) throws Exception;
+  void checkTransactions(List<Transaction> transactions) throws Exception;
   /**
    * This is a method to add the transactions to a flexible portfolio.
    *

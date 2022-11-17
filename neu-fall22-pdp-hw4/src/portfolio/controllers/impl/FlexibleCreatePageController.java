@@ -147,7 +147,7 @@ public class FlexibleCreatePageController implements PageController {
     if (inputBuffer.size() == 5 && !isEnd) {
       try {
         // Check amount valid
-        portfolioModel.checkTransactions(PortfolioFormat.FLEXIBLE, transactions);
+        portfolioModel.checkTransactions(transactions);
         isEnd = true;
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
