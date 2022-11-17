@@ -54,9 +54,11 @@ public class PortfolioModelImpl implements PortfolioModel {
     checkTransactions(format, transactions);
     switch (format) {
       case INFLEXIBLE:
-        return new InflexiblePortfolio(name, transactions);
+        portfolio = new InflexiblePortfolio(name, transactions);
+        //return new InflexiblePortfolio(name, transactions);
       case FLEXIBLE:
-        return new FlexiblePortfolio(name, transactions);
+        portfolio = new FlexiblePortfolio(name, transactions);
+        //return new FlexiblePortfolio(name, transactions);
     }
     return portfolio;
   }

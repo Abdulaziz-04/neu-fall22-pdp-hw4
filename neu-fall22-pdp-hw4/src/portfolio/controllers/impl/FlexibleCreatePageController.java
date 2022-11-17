@@ -10,6 +10,7 @@ import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.impl.FlexiblePortfolio;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -79,7 +80,7 @@ public class FlexibleCreatePageController implements PageController {
     if (input.equals("back")) {
       return new MainPageController(portfolioModel, viewFactory);
     }
-    if (!isEnd && !input.equals("end")) {
+    if (!isEnd) {
       try {
         int size = inputBuffer.size();
         if (size == 0) {
@@ -144,29 +145,43 @@ public class FlexibleCreatePageController implements PageController {
         return this;
       }
     }
-    if (inputBuffer.size() == 5 && !isEnd) {
+    if (/*inputBuffer.size() == 5 && */!isEnd) {
       try {
         // Check amount valid
         portfolioModel.checkTransactions(PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
+        return this;
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
         inputBuffer.clear();
         transactions.clear();
+        return this;
       }
-    } else if (inputBuffer.size() == 5) {
-      String name = isNamed ? portfolioModel.getPortfolio().getName() : input;
-      try {
-        if (modifyMode) {
-          portfolioModel.addTransactions(transactions);
+    } else if (/*inputBuffer.size() == 5*/ isEnd) {
+      /*String name = isNamed ? portfolioModel.getPortfolio().getName() : input;*/
+      if(isNamed) {
+        try {
+          if (modifyMode) {
+            String name = portfolioModel.getPortfolio().getName();
+            portfolioModel.addTransactions(transactions);
+            ioService.saveTo(portfolioModel.getString(), name + ".txt", modifyMode);
+            return new LoadPageController(portfolioModel, viewFactory);
+          } else {
+            return new LoadPageController(portfolioModel, viewFactory);
+          }
+        } catch (Exception e) {
+          errorMessage = e.getMessage();
+          return this;
         }
-        else {
-          portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
+      } else {
+        try{
+          portfolioModel.create(input, PortfolioFormat.FLEXIBLE, transactions);
+          ioService.saveTo(portfolioModel.getString(), input + ".txt", modifyMode);
+          isNamed = true;
+        } catch (Exception e) {
+          errorMessage = e.getMessage();
+          return this;
         }
-        ioService.saveTo(portfolioModel.getString(), name + ".txt", modifyMode);
-        return new LoadPageController(portfolioModel, viewFactory);
-      } catch (Exception e) {
-        errorMessage = e.getMessage();
       }
     }
     return this;
