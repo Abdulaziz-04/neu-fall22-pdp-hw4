@@ -10,8 +10,8 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is class represent event loop, which will continue to run the program.
- * This class implements the FrontController interface.
+ * This is class represent event loop, which will continue to run the program. This class implements
+ * the FrontController interface.
  */
 public class FrontControllerImpl implements FrontController {
 
@@ -19,9 +19,13 @@ public class FrontControllerImpl implements FrontController {
   private PageController pageController;
 
   /**
-   * This is a constructor to construct a EventLoopImpl object.
+   * Contructs the controller.
+   *
+   * @param portfolioModel PortfolioModel
+   * @param viewFactory    viewFactory
    */
-  public FrontControllerImpl(PortfolioModel portfolioModel, ViewFactory viewFactory, InputStream inputStream) {
+  public FrontControllerImpl(PortfolioModel portfolioModel, ViewFactory viewFactory,
+      InputStream inputStream) {
     this.pageController = new MainPageController(portfolioModel, viewFactory);
     this.scan = new Scanner(inputStream);
   }

@@ -12,20 +12,17 @@ import org.junit.Before;
 import org.junit.Test;
 import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
-import portfolio.controllers.impl.MainPageController;
-import portfolio.helper.TransactionConverter;
-import portfolio.models.entities.PortfolioFormat;
-import portfolio.models.entities.Transaction;
-import portfolio.models.entities.TransactionType;
-import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.impl.FlexiblePortfolio;
-import portfolio.models.portfolio.impl.InflexiblePortfolio;
-import portfolio.models.entities.PortfolioEntryWithValue;
-import portfolio.models.entities.PortfolioWithValue;
 import portfolio.helper.ArgumentCaptor;
 import portfolio.helper.StockApiMock;
+import portfolio.helper.TransactionConverter;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
+import portfolio.models.entities.PortfolioEntryWithValue;
+import portfolio.models.entities.PortfolioFormat;
+import portfolio.models.entities.PortfolioWithValue;
+import portfolio.models.entities.Transaction;
+import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
@@ -38,10 +35,8 @@ import portfolio.views.ViewFactory;
 public class InfoPageControllerTest {
 
   private final PortfolioParser parser = new PortfolioTextParser();
-  private ViewFactory viewFactory;
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;
-  private StockQueryService stockQueryService;
   private PortfolioModel portfolioModel;
   private final Map<String, Integer> map = new HashMap<>();
 
@@ -50,14 +45,14 @@ public class InfoPageControllerTest {
   @Before
   public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
-    viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
-    stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
+    ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
+    StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);
     portfolioModel.create("name", PortfolioFormat.INFLEXIBLE, TransactionConverter.convert(map));
-    pageController = new InfoPageController(portfolioModel,viewFactory);
+    pageController = new InfoPageController(portfolioModel, viewFactory);
   }
 
 

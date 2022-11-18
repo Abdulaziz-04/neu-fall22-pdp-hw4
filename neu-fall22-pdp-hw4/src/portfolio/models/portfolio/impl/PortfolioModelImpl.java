@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
@@ -20,7 +21,8 @@ import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.stockprice.StockQueryService;
 
 /**
- * This is a class that represent a portfolio model, which implement the PortfolioModel interface.
+ * Portfolio model handles all portfolio related operation including querying stock price for
+ * specific date.
  */
 public class PortfolioModelImpl implements PortfolioModel {
 
@@ -62,6 +64,8 @@ public class PortfolioModelImpl implements PortfolioModel {
       case FLEXIBLE:
         portfolio = new FlexiblePortfolio(name, transactions);
         break;
+      default:
+        throw new Exception("Unsupported Portfolio type.");
     }
     return portfolio;
   }
@@ -122,8 +126,15 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public double getCostBasis(LocalDate date) throws Exception {
-    Map<String, StockPrice> prices = stockQueryService.getStockPrice(date,
-        portfolio.getSymbols(date));
+    List<LocalDate> dates = portfolio.getTransactions().stream()
+        .map(Transaction::getDate).collect(Collectors.toList());
+    Map<String, StockPrice> prices = new HashMap<>();
+    for (var entry : dates) {
+      for (var p : stockQueryService.getStockPrice(entry,
+          portfolio.getSymbols(null)).entrySet()) {
+        prices.put(entry + p.getKey(), p.getValue());
+      }
+    }
     return portfolio.getCostBasis(date, prices);
   }
 

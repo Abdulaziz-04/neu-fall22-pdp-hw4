@@ -7,6 +7,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Test class for PortfolioPerformance.
+ */
 public class PortfolioPerformanceTest {
 
   private PortfolioPerformance portfolioPerformance;

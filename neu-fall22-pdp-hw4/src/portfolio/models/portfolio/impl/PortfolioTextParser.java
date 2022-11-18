@@ -12,6 +12,9 @@ import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioParser;
 
+/**
+ * Class for parsing text to transactions or portfolio, implements PortfolioParser.
+ */
 public class PortfolioTextParser implements PortfolioParser {
 
   @Override

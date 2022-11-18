@@ -14,6 +14,9 @@ import portfolio.models.portfolio.impl.FlexiblePortfolio;
 import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 
+/**
+ * This is a test class to test PortfolioTextParser class.
+ */
 public class PortfolioTextParserTest {
 
   PortfolioParser portfolioParser = new PortfolioTextParser();

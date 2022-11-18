@@ -9,8 +9,8 @@ import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 
 /**
- * This is an interface for the portfolio class. The InflexiblePortfolio class,
- *  FlexiblePortfolio and PortfolioAbs class will implement it.
+ * This is an interface for the portfolio class. The InflexiblePortfolio class, FlexiblePortfolio
+ * and PortfolioAbs class will implement it.
  */
 public interface Portfolio {
 
@@ -29,16 +29,17 @@ public interface Portfolio {
   PortfolioFormat getFormat();
 
   /**
+   * Create a portfolio from a list of transaction.
    *
-   * @param transactions
-   * @return
-   * @throws Exception
+   * @param transactions a list of transaction
+   * @return Portfolio object
+   * @throws Exception when transactions are invalid
    */
   Portfolio create(List<Transaction> transactions) throws Exception;
 
   /**
-   * This is a method to get the composition map of a portfolio. Return a map with the
-   * symbol and amount(shares).
+   * This is a method to get the composition map of a portfolio. Return a map with the symbol and
+   * amount(shares).
    *
    * @return a list with the symbol and amount.
    */
@@ -81,10 +82,9 @@ public interface Portfolio {
    * To calculate the cost of basis for a portfolio on a certain date and then return the cost of
    * basis in a double.
    *
-   * @param date the date that we want to calculate
+   * @param date   the date that we want to calculate
    * @param prices the stock price map
    * @return the value of cost of basis
-   *
    * @throws Exception do not have cost of basis
    */
   double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception;

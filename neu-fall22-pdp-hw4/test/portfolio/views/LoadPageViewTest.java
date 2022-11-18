@@ -47,11 +47,11 @@ public class LoadPageViewTest {
     View view = new LoadPageView(printStream, null, false, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
-            +  "!!! If you enter back, you will back to the main menu.\r\n"
-            + "!!! If you want to exit, please input exit\r\n"
-            +  "----------------------------------------------------------\r\n"
-            + "Please enter the name of the portfolio that you want to load. "
-            + "The name cannot be back.\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "!!! If you want to exit, please input exit\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "Please enter the name of the portfolio that you want to load. "
+        + "The name cannot be back.\r\n"
         + "input > ", outputStreamCaptor.toString());
 
   }
@@ -67,11 +67,11 @@ public class LoadPageViewTest {
         + "! Error message: Cannot read portfolio. It may have a wrong format.\r\n"
         + "----------------------------------------------------------\r\n"
         + "-------------------------Tips-----------------------------\r\n"
-            +  "!!! If you enter back, you will back to the main menu.\r\n"
-            + "!!! If you want to exit, please input exit\r\n"
-            +  "----------------------------------------------------------\r\n"
-            + "Please enter the name of the portfolio that you want to load. "
-            + "The name cannot be back.\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "!!! If you want to exit, please input exit\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "Please enter the name of the portfolio that you want to load. "
+        + "The name cannot be back.\r\n"
         + "input > ", outputStreamCaptor.toString());
 
   }
@@ -85,13 +85,13 @@ public class LoadPageViewTest {
     assertEquals("---------------------ERROR--------------------------------\r\n"
         + "! Error message: file not found.\r\n"
         + "----------------------------------------------------------\r\n"
-            + "-------------------------Tips-----------------------------\r\n"
-                    +  "!!! If you enter back, you will back to the main menu.\r\n"
-                    + "!!! If you want to exit, please input exit\r\n"
-                    +  "----------------------------------------------------------\r\n"
-         + "Please enter the name of the portfolio that you want to load. "
-            + "The name cannot be back.\r\n"
-            + "input > ", outputStreamCaptor.toString());
+        + "-------------------------Tips-----------------------------\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "!!! If you want to exit, please input exit\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "Please enter the name of the portfolio that you want to load. "
+        + "The name cannot be back.\r\n"
+        + "input > ", outputStreamCaptor.toString());
 
   }
 
@@ -100,26 +100,27 @@ public class LoadPageViewTest {
     setUp();
     stocks.put("AAA", 100);
     stocks.put("AA", 1000);
-    InflexiblePortfolio portfolio = new InflexiblePortfolio("name", TransactionConverter.convert(stocks));
+    InflexiblePortfolio portfolio = new InflexiblePortfolio("name",
+        TransactionConverter.convert(stocks));
     View view = new LoadPageView(printStream, portfolio, false,
         null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
-                    +  "!!! If you enter back, you will back to the main menu.\r\n"
-                    + "!!! If you want to exit, please input exit\r\n"
-                    +  "----------------------------------------------------------\r\n"
-            + "Portfolio: name\r\n"
-            +  "             +-----------+------+---------+---------------+---------------+\r\n"
-            + "Transaction: |       Date|  Type|    Stock|  No. of shares| Commission fee|\r\n"
-            + "             +-----------+------+---------+---------------+---------------+\r\n"
-            + "             |        N/A|   N/A|       AA|           1000|            N/A|\r\n"
-            + "             |        N/A|   N/A|      AAA|            100|            N/A|\r\n"
-            + "             +-----------+------+---------+---------------+---------------+\r\n"
-            + "Menu:\r\n"
-            + "1. View composition, value, cost of basis for specific date\r\n"
-            + "2. View performance over time\r\n"
-            + "--Please enter the number in above\r\n"
-            + "input > ", outputStreamCaptor.toString());
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "!!! If you want to exit, please input exit\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "Portfolio: name\r\n"
+        + "             +-----------+------+---------+---------------+---------------+\r\n"
+        + "Transaction: |       Date|  Type|    Stock|  No. of shares| Commission fee|\r\n"
+        + "             +-----------+------+---------+---------------+---------------+\r\n"
+        + "             |        N/A|   N/A|       AA|           1000|            N/A|\r\n"
+        + "             |        N/A|   N/A|      AAA|            100|            N/A|\r\n"
+        + "             +-----------+------+---------+---------------+---------------+\r\n"
+        + "Menu:\r\n"
+        + "1. View composition, value, cost of basis for specific date\r\n"
+        + "2. View performance over time\r\n"
+        + "--Please enter the number in above\r\n"
+        + "input > ", outputStreamCaptor.toString());
 
   }
 
@@ -129,35 +130,35 @@ public class LoadPageViewTest {
     stocks.put("AAA", 100);
     stocks.put("AA", 1000);
     transactions.add(new Transaction(TransactionType.BUY, "AAA", 110,
-            LocalDate.parse("2022-10-10"), 12));
+        LocalDate.parse("2022-10-10"), 12));
     transactions.add(new Transaction(TransactionType.SELL, "AAA", 10,
-            LocalDate.parse("2022-10-10"), 34));
+        LocalDate.parse("2022-10-10"), 34));
     transactions.add(new Transaction(TransactionType.BUY, "AAPL", 1000,
-            LocalDate.parse("2022-10-11"), 56));
+        LocalDate.parse("2022-10-11"), 56));
 
     FlexiblePortfolio portfolio2 = new FlexiblePortfolio("name2", transactions);
     View view = new LoadPageView(printStream, portfolio2, true,
-            null);
+        null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
-            +  "!!! If you enter back, you will back to the main menu.\r\n"
-            + "!!! If you want to exit, please input exit\r\n"
-            +  "----------------------------------------------------------\r\n"
-            + "Portfolio: name2\r\n"
-            +  "             +-----------+------+---------+---------------+---------------+\r\n"
-            + "Transaction: |       Date|  Type|    Stock|  No. of shares| Commission fee|\r\n"
-            + "             +-----------+------+---------+---------------+---------------+\r\n"
-            + "             | 2022-10-10|   BUY|      AAA|            110|          $12.0|\r\n"
-            + "             | 2022-10-10|  SELL|      AAA|             10|          $34.0|\r\n"
-            + "             | 2022-10-11|   BUY|     AAPL|           1000|          $56.0|\r\n"
-            + "             +-----------+------+---------+---------------+---------------+\r\n"
-            + "Menu:\r\n"
-            + "1. View composition, value, cost of basis for specific date\r\n"
-            + "2. View performance over time\r\n"
-            + "3. Modify portfolio (Add transaction to portfolio)\r\n"
-            + "--Please enter the number in above\r\n"
+        + "!!! If you enter back, you will back to the main menu.\r\n"
+        + "!!! If you want to exit, please input exit\r\n"
+        + "----------------------------------------------------------\r\n"
+        + "Portfolio: name2\r\n"
+        + "             +-----------+------+---------+---------------+---------------+\r\n"
+        + "Transaction: |       Date|  Type|    Stock|  No. of shares| Commission fee|\r\n"
+        + "             +-----------+------+---------+---------------+---------------+\r\n"
+        + "             | 2022-10-10|   BUY|      AAA|            110|          $12.0|\r\n"
+        + "             | 2022-10-10|  SELL|      AAA|             10|          $34.0|\r\n"
+        + "             | 2022-10-11|   BUY|     AAPL|           1000|          $56.0|\r\n"
+        + "             +-----------+------+---------+---------------+---------------+\r\n"
+        + "Menu:\r\n"
+        + "1. View composition, value, cost of basis for specific date\r\n"
+        + "2. View performance over time\r\n"
+        + "3. Modify portfolio (Add transaction to portfolio)\r\n"
+        + "--Please enter the number in above\r\n"
 
-            + "input > ", outputStreamCaptor.toString());
+        + "input > ", outputStreamCaptor.toString());
 
   }
 

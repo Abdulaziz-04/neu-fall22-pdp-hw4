@@ -3,7 +3,7 @@ package portfolio.controllers.datastore;
 import java.io.IOException;
 
 /**
- * Service interface for reading and writing string to external storage.
+ * Interface for reading and writing string to external storage.
  */
 public interface IOService {
 

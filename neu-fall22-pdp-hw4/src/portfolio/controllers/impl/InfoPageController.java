@@ -14,6 +14,7 @@ import portfolio.views.View;
  * input date.
  */
 public class InfoPageController implements PageController {
+
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   private String errorMessage;
@@ -25,7 +26,7 @@ public class InfoPageController implements PageController {
    * on a certain date.
    *
    * @param portfolioModel the model of portfolio
-   * @param viewFactory ViewFactor for creating a view
+   * @param viewFactory    ViewFactor for creating a view
    */
   public InfoPageController(PortfolioModel portfolioModel,
       ViewFactory viewFactory) {
@@ -40,7 +41,7 @@ public class InfoPageController implements PageController {
 
   /**
    * Handle user input for determining portfolio value. User can input a date as many times as they
-   * want. If the input is 'back', the method will return MainPageController, otherwise return
+   * want. If the input is 'back', the method will return LoadPageController, otherwise return
    * current object.
    *
    * @param input user input as a string

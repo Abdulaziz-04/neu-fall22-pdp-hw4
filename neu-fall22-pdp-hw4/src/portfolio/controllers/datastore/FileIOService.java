@@ -38,10 +38,10 @@ public class FileIOService implements IOService {
     File f = new File(fileName);
     if (!allowOverride && f.exists() && !f.isDirectory()) {
       throw new IOException(
-              "There is a file or a directory exists with filename: " + fileName);
+          "There is a file or a directory exists with filename: " + fileName);
     }
     try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
+        new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
       writer.write(text);
       return true;
     } catch (IOException e) {

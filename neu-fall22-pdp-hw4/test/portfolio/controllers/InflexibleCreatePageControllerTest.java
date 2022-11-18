@@ -9,19 +9,17 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import portfolio.controllers.impl.InflexibleCreatePageController;
-import portfolio.controllers.impl.InfoPageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
-import portfolio.helper.TransactionConverter;
-import portfolio.models.portfolio.PortfolioParser;
-import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.helper.ArgumentCaptor;
 import portfolio.helper.StockApiMock;
+import portfolio.helper.TransactionConverter;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.impl.InflexiblePortfolio;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
@@ -187,10 +185,11 @@ public class InflexibleCreatePageControllerTest {
     HashMap<String, Integer> stockList = (HashMap<String, Integer>) argumentCaptor.getArguments()
         .get(2);
     assertEquals(2, stockList.size());
-    assertEquals("There is a file or a directory exists with filename: abc.txt", argumentCaptor.getArguments().get(3));
+    assertEquals("There is a file or a directory exists with filename: abc.txt",
+        argumentCaptor.getArguments().get(3));
   }
 
-  @Ignore
+  @Test
   public void handleInput_enterStock_end_errorSaveFile() {
     pageController.handleInput("AAPL,100");
     pageController.handleInput("AAA,100");

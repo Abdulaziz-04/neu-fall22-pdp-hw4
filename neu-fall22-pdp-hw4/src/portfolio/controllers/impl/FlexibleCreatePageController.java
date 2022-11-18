@@ -14,11 +14,10 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a page controller for the flexible create page, which is implement the page controller.
- * CreatePageController handles input from user and is responsible for checking valid stock input,
- * creating portfolio, saving portfolio and generate View. The controller can hold states while user
- * creating their portfolio. The states are stock selection, naming portfolio and portfolio
- * confirmation.
+ * This is a page controller for the flexible portfolio create page, which is implement the page
+ * controller. CreatePageController handles input from user and is responsible for checking valid
+ * stock input, creating portfolio, saving portfolio and generate View. The controller can hold
+ * states while user creating their portfolio.
  */
 public class FlexibleCreatePageController implements PageController {
 
@@ -30,7 +29,6 @@ public class FlexibleCreatePageController implements PageController {
   private boolean isNamed = false;
   private final boolean modifyMode;
   private List<Transaction> transactions = new ArrayList<>();
-  ;
   private final List<String> inputBuffer = new ArrayList<>();
 
   /**

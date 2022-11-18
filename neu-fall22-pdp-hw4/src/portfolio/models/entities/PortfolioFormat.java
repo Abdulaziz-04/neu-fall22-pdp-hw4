@@ -12,11 +12,11 @@ public enum PortfolioFormat {
   INFLEXIBLE;
 
   /**
-   * This is a parse the portfolio type is flexible or inflexible
+   * Parse the portfolio type from string.
    *
    * @param str the string that we want to determine
    * @return the format for current portfolio
-   * @throws Exception the format is not flexible or inflexible
+   * @throws Exception when the format is not flexible or inflexible
    */
   public static PortfolioFormat parse(String str) throws Exception {
     switch (str) {

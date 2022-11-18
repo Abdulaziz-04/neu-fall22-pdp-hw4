@@ -1,7 +1,7 @@
 package portfolio.models.entities;
 
 /**
- * This enumerated type represents transaction type for a flexible portfolio.
+ * This enumerated type represents transaction type.
  */
 public enum TransactionType {
   /**
@@ -11,11 +11,10 @@ public enum TransactionType {
   SELL;
 
   /**
-   * This is a method to parse the transaction type in string format to a
-   * TransactionType object.
+   * Parse the transaction type in string format to a TransactionType object.
    *
    * @param str the string that we want to parse
-   * @return a TransactionType object after parsing
+   * @return a TransactionType object
    * @throws Exception Transaction type is not supported.
    */
   public static TransactionType parse(String str) throws Exception {
@@ -50,8 +49,10 @@ public enum TransactionType {
   }
 
   /**
-   * @param txType
-   * @return
+   * Get multipier for TransactionType.
+   *
+   * @param txType TransactionType
+   * @return integer 0, -1 or 1
    */
   public static int getMultiplier(TransactionType txType) {
     if (txType == null) {
@@ -66,6 +67,6 @@ public enum TransactionType {
         return 0;
     }
   }
-};
+}
 
 
