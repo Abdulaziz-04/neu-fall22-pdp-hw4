@@ -9,6 +9,7 @@ import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
+import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -31,6 +32,8 @@ public class FlexibleCreatePageController implements PageController {
   private List<Transaction> transactions = new ArrayList<>();
   private final List<String> inputBuffer = new ArrayList<>();
 
+  private Portfolio portfolioTmp;
+
   /**
    * This is a constructor to construct a FlexibleCreatePageController.
    *
@@ -42,7 +45,8 @@ public class FlexibleCreatePageController implements PageController {
       ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
-    if (portfolioModel.getPortfolio() != null) {
+    portfolioTmp = portfolioModel.getPortfolio();
+    if (portfolioTmp != null) {
       isNamed = true;
       modifyMode = true;
     } else {
@@ -53,8 +57,8 @@ public class FlexibleCreatePageController implements PageController {
   @Override
   public View getView() {
     List<Transaction> transactions = new ArrayList<>();
-    if (portfolioModel.getPortfolio() != null) {
-      transactions.addAll(new ArrayList<>(portfolioModel.getPortfolio().getTransactions()));
+    if (portfolioTmp != null) {
+      transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
     }
     transactions.addAll(this.transactions);
     return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), transactions,
@@ -146,14 +150,16 @@ public class FlexibleCreatePageController implements PageController {
       try {
         // Check amount valid
         portfolioModel.checkTransactions(transactions);
+        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
+        portfolioModel.init();
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
         inputBuffer.clear();
         transactions.clear();
       }
     } else if (inputBuffer.size() == 5) {
-      String name = isNamed ? portfolioModel.getPortfolio().getName() : input;
+      String name = portfolioTmp != null && isNamed ? portfolioTmp.getName() : input;
       try {
         if (modifyMode) {
           portfolioModel.addTransactions(transactions);

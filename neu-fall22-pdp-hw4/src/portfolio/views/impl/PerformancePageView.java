@@ -112,7 +112,7 @@ public class PerformancePageView extends ViewAbs {
       for (var entry : performance.entrySet()) {
         printStream.println(entry.getKey() + "*".repeat(entry.getValue()));
       }
-      printStream.println("scale: " + scale);
+      printStream.println("scale: \n" + scale);
       printStream.println("----------------------------------------------------------");
       printStream.println("Please enter the start date of the timespan " +
           "that you want to performance.");

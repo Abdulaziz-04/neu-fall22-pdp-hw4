@@ -61,8 +61,7 @@ public interface ViewFactory {
    * @param portfolioName the name of portfolio
    * @param startDate     the start date to performance
    * @param endDate       the end date to performance
-   * @param list          the list of timestamps
-   * @param listStar      the list of stars
+   * @param performance   performance map
    * @param scale         the scale of performance
    * @param isFinish      finish current performance is true. Otherwise, false.
    * @param errorMessage  the error message will show to the user

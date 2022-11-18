@@ -59,8 +59,12 @@ public class PortfolioTextParserTest {
     String str = "2022-10-10,BUY,a,100,12\r\n2022-10-11,SELL,b,100,34\r\n";
     List<Transaction> actual = portfolioParser.parseTransaction(str);
     List<Transaction> expected = new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10"),12));
-    expected.add(new Transaction(TransactionType.SELL, "b", 100, LocalDate.parse("2022-10-11"), 34));
+    expected.add(
+        new Transaction(TransactionType.BUY, "a", 100,
+            LocalDate.parse("2022-10-10"), 12));
+    expected.add(
+        new Transaction(TransactionType.SELL, "b", 100,
+            LocalDate.parse("2022-10-11"), 34));
 
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {
@@ -108,7 +112,8 @@ public class PortfolioTextParserTest {
   @Test
   public void toString_fiveArguments() throws Exception {
     List<Transaction> transactions = new ArrayList<>();
-    transactions.add(new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10"), 12));
+    transactions.add(
+        new Transaction(TransactionType.BUY, "a", 100, LocalDate.parse("2022-10-10"), 12));
     transactions.add(
         new Transaction(TransactionType.SELL, "a", 50, LocalDate.parse("2022-10-11"), 34));
 

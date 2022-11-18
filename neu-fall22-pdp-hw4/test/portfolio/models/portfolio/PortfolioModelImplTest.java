@@ -324,7 +324,8 @@ public class PortfolioModelImplTest {
     assertEquals(1, performance.getPerformance().get("2022-10-10: "), EPSILON);
     assertEquals(46, performance.getPerformance().get("2022-10-11: "), EPSILON);
     assertEquals(
-        "one asterisk is $ 322.22222222222223 more than a base amount of $4076.777777777778",
+        "first * = $4076.777777777778\n"
+            + "* = $322.22222222222223",
         performance.getScale());
   }
 

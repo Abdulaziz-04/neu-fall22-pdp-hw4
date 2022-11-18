@@ -297,12 +297,11 @@ public class FlexibleCreatePageControllerTest {
     pageController.handleInput("SELL");
     pageController.handleInput("200");
     pageController.handleInput("1.23");
-    pageController.handleInput("no");
-    PageController nextPage = pageController.handleInput("a");
+    PageController nextPage = pageController.handleInput("no");
     assertEquals(pageController, nextPage);
 
     pageController.getView();
-    assertTrue((boolean) argumentCaptor.getArguments().get(0));
+    assertFalse((boolean) argumentCaptor.getArguments().get(0));
     assertFalse((boolean) argumentCaptor.getArguments().get(1));
     assertEquals(0, (int) argumentCaptor.getArguments().get(2));
     assertEquals(0, ((List<Transaction>) argumentCaptor.getArguments().get(3)).size());

@@ -126,13 +126,11 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public double getCostBasis(LocalDate date) throws Exception {
-    List<LocalDate> dates = portfolio.getTransactions().stream()
-        .map(Transaction::getDate).collect(Collectors.toList());
     Map<String, StockPrice> prices = new HashMap<>();
-    for (var entry : dates) {
-      for (var p : stockQueryService.getStockPrice(entry,
-          portfolio.getSymbols(null)).entrySet()) {
-        prices.put(entry + p.getKey(), p.getValue());
+    for (var entry : portfolio.getTransactions()) {
+      for (var p : stockQueryService.getStockPrice(entry.getDate(), List.of(entry.getSymbol()))
+          .entrySet()) {
+        prices.put(entry.getDate() + p.getKey(), p.getValue());
       }
     }
     return portfolio.getCostBasis(date, prices);
@@ -293,7 +291,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       double more = (maxAmount - minAmount) / 45;
       double base = minAmount - more - 1;
 
-      scale = "one asterisk is $ " + more + " more than a base amount of $" + base;
+      scale = "first * = $" + base + "\n* = $" + more;
 
       for (var entry : perf.entrySet()) {
         int star = 0;
