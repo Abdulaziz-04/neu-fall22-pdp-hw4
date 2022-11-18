@@ -6,11 +6,11 @@ import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
+import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 
 /**
- * This is a class that represent a flexible portfolio, which implement the PortfolioAbs
- * class.
+ * This is a class that represent a flexible portfolio, which implement the PortfolioAbs class.
  */
 public class FlexiblePortfolio extends PortfolioAbs {
 
@@ -19,7 +19,7 @@ public class FlexiblePortfolio extends PortfolioAbs {
    * This is a constructor to a flexible portfolio object, which will contain the name of this
    * portfolio and a list of transaction entry.
    *
-   * @param name the name of a portfolio
+   * @param name         the name of a portfolio
    * @param transactions a list of transaction entry
    */
   public FlexiblePortfolio(String name, List<Transaction> transactions) {
@@ -40,9 +40,9 @@ public class FlexiblePortfolio extends PortfolioAbs {
   public double getCostBasis(LocalDate date, Map<String, StockPrice> prices) {
     double total = 0;
     for (var entry : transactions) {
-      if (entry.getDate().compareTo(date) < 0) {
-        StockPrice price = prices.get(entry.getSymbol());
-        if (price != null) {
+      if (entry.getDate().compareTo(date) <= 0) {
+        StockPrice price = prices.get(entry.getDate() + entry.getSymbol());
+        if (price != null && entry.getType() == TransactionType.BUY) {
           total = total + price.getClose() * entry.getAmount();
         }
         total = total + entry.getCommissionFee();

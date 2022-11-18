@@ -30,8 +30,8 @@ public interface PortfolioModel {
   /**
    * This is a method to modify a portfolio.
    *
-   * @param name the name of this portfolio
-   * @param format the format of this portfolio
+   * @param name         the name of this portfolio
+   * @param format       the format of this portfolio
    * @param transactions the list of transaction
    * @return a portfolio that we want to modify
    * @throws Exception inflexible portfolio cannot modify
@@ -44,6 +44,7 @@ public interface PortfolioModel {
   boolean checkTransaction(LocalDate date, String symbol) throws Exception;
 
   void checkTransactions(List<Transaction> transactions) throws Exception;
+
   /**
    * This is a method to add the transactions to a flexible portfolio.
    *
@@ -57,7 +58,7 @@ public interface PortfolioModel {
    *
    * @param date the date to get the value
    * @return PortfolioWithValue object that have the value on that date
-   * @throws Exception
+   * @throws Exception when date is not valid
    */
   PortfolioWithValue getValue(LocalDate date) throws Exception;
 
@@ -66,7 +67,7 @@ public interface PortfolioModel {
    *
    * @param date the date that we want to get
    * @return the cost of basis in a double format
-   * @throws Exception
+   * @throws Exception when cost of basis is not available
    */
   double getCostBasis(LocalDate date) throws Exception;
 
@@ -74,7 +75,7 @@ public interface PortfolioModel {
    * This is a method that to get the value of a portfolio from a date to another date.
    *
    * @param from the start date to get the value
-   * @param to the end date to get the value
+   * @param to   the end date to get the value
    * @return a map that contain the value from "from" to "to" date
    * @throws Exception is there some error
    */

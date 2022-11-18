@@ -9,6 +9,7 @@ import portfolio.models.portfolio.Portfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
+import portfolio.views.impl.FlexibleCreatePageView;
 import portfolio.views.impl.InflexibleCreatePageView;
 import portfolio.views.impl.InfoPageView;
 import portfolio.views.impl.LoadPageView;
@@ -48,7 +49,13 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int state,
       List<Transaction> transactions, String errorMessage) {
-    return null;
+    argumentCaptor.clear();
+    argumentCaptor.addArgument(isEnd);
+    argumentCaptor.addArgument(isNamed);
+    argumentCaptor.addArgument(state);
+    argumentCaptor.addArgument(transactions);
+    argumentCaptor.addArgument(errorMessage);
+    return new FlexibleCreatePageView(isEnd, isNamed, state, transactions, errorMessage);
   }
 
   @Override

@@ -32,16 +32,19 @@ public class FlexiblePortfolioTest {
 
   @Before
   public void setUp() throws Exception {
-    transactions.add(new Transaction(TransactionType.BUY, "AAA", 110, LocalDate.parse("2022-10-10"), 12));
-    transactions.add(new Transaction(TransactionType.SELL, "AAA", 10, LocalDate.parse("2022-10-10"), 34));
-    transactions.add(new Transaction(TransactionType.BUY, "AAPL", 1000, LocalDate.parse("2022-10-11"), 56));
+    transactions.add(
+        new Transaction(TransactionType.BUY, "AAA", 110, LocalDate.parse("2022-10-10"), 12));
+    transactions.add(
+        new Transaction(TransactionType.SELL, "AAA", 10, LocalDate.parse("2022-10-10"), 34));
+    transactions.add(
+        new Transaction(TransactionType.BUY, "AAPL", 1000, LocalDate.parse("2022-10-11"), 56));
     prices.put("AAA", new StockPrice(1, 2, 3, 4, 5));
     prices.put("AAPL", new StockPrice(11, 22, 33, 44, 55));
     portfolio = new FlexiblePortfolio("name", transactions);
   }
 
   @Test
-  public void getName(){
+  public void getName() {
     assertEquals("name", portfolio.getName());
   }
 
@@ -63,33 +66,33 @@ public class FlexiblePortfolioTest {
       assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount());
       assertEquals(actual.get(i).getDate(), expected.get(i).getDate());
     }
-    Map<String,Integer> expectedMap = portfolio.getComposition();
-    Map<String,Integer> actualMap = actualPortfolio.getComposition();
+    Map<String, Integer> expectedMap = portfolio.getComposition();
+    Map<String, Integer> actualMap = actualPortfolio.getComposition();
     assertEquals(expectedMap.size(), actualMap.size());
   }
 
   @Test
-  public void create_fail(){
-    transactions.add(new Transaction(TransactionType.SELL, "AAPL", 2000, LocalDate.parse("2022-10-11"), 56));
+  public void create_fail() {
+    transactions.add(
+        new Transaction(TransactionType.SELL, "AAPL", 2000, LocalDate.parse("2022-10-11"), 56));
     try {
-     portfolio.create(transactions);
-     fail("should fail");
-    }
-   catch (Exception e){
+      portfolio.create(transactions);
+      fail("should fail");
+    } catch (Exception e) {
       assertEquals("There is a conflict in the input transaction.", e.getMessage());
-   }
+    }
   }
 
   @Test
   public void getCostBasis_latest() throws Exception {
     double actual = portfolio.getCostBasis(LocalDate.now(), prices);
-    assertEquals(44582.0, actual, EPSILON);
+    assertEquals(102.0, actual, EPSILON);
   }
 
   @Test
   public void getCostBasis_mid() throws Exception {
     double actual = portfolio.getCostBasis(LocalDate.parse("2022-10-10"), prices);
-    assertEquals(0.0, actual, EPSILON);
+    assertEquals(46.0, actual, EPSILON);
   }
 
   @Test
@@ -173,7 +176,8 @@ public class FlexiblePortfolioTest {
 
   @Test
   public void getPortfolioWithPrice_withNull() {
-    transactions.add(new Transaction(TransactionType.BUY, "ABC", 1000, LocalDate.parse("2022-10-11"), 12));
+    transactions.add(
+        new Transaction(TransactionType.BUY, "ABC", 1000, LocalDate.parse("2022-10-11"), 12));
     prices.put("ABC", null);
     portfolio = new FlexiblePortfolio("name", transactions);
     LocalDate date = LocalDate.parse("2022-10-11");

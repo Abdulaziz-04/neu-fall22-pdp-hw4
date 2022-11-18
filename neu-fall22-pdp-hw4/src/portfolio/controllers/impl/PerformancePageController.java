@@ -10,20 +10,21 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a class that represent the performance over time page controller, which implement
- * the PageController interface. PerformancePageController handles input from user
- * and is responsible for performing the performance of a portfolio in a timespan and
- * creating a view to show it performance.
+ * This is a class that represent the performance over time page controller, which implement the
+ * PageController interface. PerformancePageController handles input from user and is responsible
+ * for performing the performance of a portfolio in a timespan and creating a view to show it
+ * performance.
  */
 public class PerformancePageController implements PageController {
+
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   private String errorMessage;
-
   private LocalDate startDate = null;
   private LocalDate endDate = null;
 
-  private PortfolioPerformance portfolioPerformance = new PortfolioPerformance(new HashMap<>(), null);
+  private PortfolioPerformance portfolioPerformance = new PortfolioPerformance(new HashMap<>(),
+      null);
   private boolean isFinish;
 
 
@@ -78,7 +79,7 @@ public class PerformancePageController implements PageController {
         map = portfolioModel.getValues(startDate, startDate);
         if (!map.containsKey(startDate)) {
           errorMessage = "Error: Please choose input new timespan."
-                  + "This start date maybe the holiday or weekend!";
+              + "This start date maybe the holiday, weekend, or in the future!";
           startDate = null;
           endDate = null;
           return this;
@@ -87,22 +88,31 @@ public class PerformancePageController implements PageController {
       } catch (Exception e) {
         errorMessage = "Error start date format!";
         startDate = null;
-        endDate = null;
         return this;
       }
     } else if (startDate != null && endDate == null) {
       try {
         endDate = LocalDate.parse(input);
         portfolioModel.getValues(startDate, endDate);
+        if (endDate.compareTo(LocalDate.now()) > 0) {
+          errorMessage = "Error: EndDate cannot be in future.";
+          endDate = null;
+          return this;
+        }
       } catch (Exception e) {
         errorMessage = "Error end date format!";
         endDate = null;
         return this;
       }
     }
-    portfolioPerformance = portfolioModel.getPerformance(startDate, endDate);
-    isFinish = true;
-
+    try {
+      portfolioPerformance = portfolioModel.getPerformance(startDate, endDate);
+      isFinish = true;
+    } catch (Exception e) {
+      errorMessage = e.getMessage();
+      startDate = null;
+      endDate = null;
+    }
     return this;
   }
 }

@@ -39,6 +39,11 @@ public abstract class PortfolioAbs implements Portfolio {
   }
 
   @Override
+  public Map<String, Integer> getComposition() {
+    return getComposition(null);
+  }
+
+  @Override
   public Map<String, Integer> getComposition(LocalDate date) {
     Map<String, Integer> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
@@ -62,13 +67,6 @@ public abstract class PortfolioAbs implements Portfolio {
   public String getName() {
     return name;
   }
-
-
-  @Override
-  public Map<String, Integer> getComposition() {
-    return getComposition(null);
-  }
-
 
   @Override
   public List<Transaction> getTransactions() {

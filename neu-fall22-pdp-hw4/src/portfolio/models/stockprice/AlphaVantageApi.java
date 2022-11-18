@@ -18,7 +18,7 @@ import portfolio.models.entities.StockPrice;
  */
 public class AlphaVantageApi implements StockPriceApi {
 
-  private String apiKey = "E8LCWIHQ1EEYAU63";
+  private final String apiKey = "E8LCWIHQ1EEYAU63";
 
   @Override
   public Map<String, StockPrice> getStockPrice(String symbol) {

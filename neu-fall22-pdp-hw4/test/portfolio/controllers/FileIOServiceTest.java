@@ -40,17 +40,17 @@ public class FileIOServiceTest {
   }
 
   @Test
-  public void testWriteFileWithSameName() throws IOException {
+  public void testWriteFileWithSameName() {
     try {
       ioService.saveTo("abc", "b.txt", false);
       fail("should throw exception");
-    } catch (IllegalArgumentException e) {
+    } catch (IOException e) {
       assertEquals("There is a file or a directory exists with filename: b.txt", e.getMessage());
     }
   }
 
   @Test
-  public void testReadFileNotExist() throws IOException {
+  public void testReadFileNotExist() {
     try {
       ioService.read("c.txt");
       fail("should fail");

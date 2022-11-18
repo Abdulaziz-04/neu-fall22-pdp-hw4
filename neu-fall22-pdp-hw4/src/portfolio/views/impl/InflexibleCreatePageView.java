@@ -1,10 +1,7 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import java.util.List;
-
 import java.util.Map;
-import portfolio.models.entities.Transaction;
 import portfolio.views.ViewAbs;
 
 /**

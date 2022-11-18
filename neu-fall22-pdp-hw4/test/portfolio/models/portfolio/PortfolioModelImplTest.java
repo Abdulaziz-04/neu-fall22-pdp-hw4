@@ -2,7 +2,6 @@ package portfolio.models.portfolio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -215,7 +214,7 @@ public class PortfolioModelImplTest {
       portfolioModel.checkTransactions(transactions);
       fail();
     } catch (Exception e) {
-      assertEquals("Symbol [AAAAA] not found.", e.getMessage());
+      assertEquals("[AAAAA] is not a valid stock symbol.", e.getMessage());
     }
   }
 
@@ -274,11 +273,11 @@ public class PortfolioModelImplTest {
     PortfolioWithValue portfolioWithValue = portfolioModel.getValue(
         LocalDate.parse("2022-10-10"));
 
-    assertEquals(400.0, portfolioWithValue.getTotalValue(), EPSILON);
+    assertEquals(4400.0, portfolioWithValue.getTotalValue(), EPSILON);
 
     List<PortfolioEntryWithValue> list = portfolioWithValue.getValues();
     assertEquals(1, list.size());
-    assertEquals(400, list.get(0).getValue(), EPSILON);
+    assertEquals(4400, list.get(0).getValue(), EPSILON);
   }
 
   @Test
@@ -311,8 +310,8 @@ public class PortfolioModelImplTest {
     Map<LocalDate, Double> portfolioWithValue = portfolioModel.getValues(
         LocalDate.parse("2022-10-10"), LocalDate.parse("2022-10-11"));
 
-    assertEquals(400.0, portfolioWithValue.get(LocalDate.parse("2022-10-10")), EPSILON);
-    assertEquals(9900.0, portfolioWithValue.get(LocalDate.parse("2022-10-11")), EPSILON);
+    assertEquals(4400.0, portfolioWithValue.get(LocalDate.parse("2022-10-10")), EPSILON);
+    assertEquals(18900.0, portfolioWithValue.get(LocalDate.parse("2022-10-11")), EPSILON);
   }
 
   @Test
@@ -325,7 +324,7 @@ public class PortfolioModelImplTest {
     assertEquals(1, performance.getPerformance().get("2022-10-10: "), EPSILON);
     assertEquals(46, performance.getPerformance().get("2022-10-11: "), EPSILON);
     assertEquals(
-        "one asterisk is $ 211.11111111111111 more than a base amount of $187.88888888888889",
+        "one asterisk is $ 322.22222222222223 more than a base amount of $4076.777777777778",
         performance.getScale());
   }
 
@@ -349,7 +348,7 @@ public class PortfolioModelImplTest {
     assertEquals(11, performance.getPerformance().size());
     assertEquals(0, performance.getPerformance().get("Week: 2022-10-08 to 2022-10-09: "), EPSILON);
     assertEquals(1, performance.getPerformance().get("Week: 2022-10-10 to 2022-10-16: "), EPSILON);
-    assertEquals("one asterisk is $9900.0", performance.getScale());
+    assertEquals("one asterisk is $18900.0", performance.getScale());
   }
 
   @Test
@@ -359,7 +358,7 @@ public class PortfolioModelImplTest {
         LocalDate.parse("2023-12-15"));
     assertEquals(15, performance.getPerformance().size());
     assertEquals(1, performance.getPerformance().get("2022-10: "), EPSILON);
-    assertEquals("one asterisk is $9900.0", performance.getScale());
+    assertEquals("one asterisk is $18900.0", performance.getScale());
   }
 
   @Test
@@ -369,7 +368,7 @@ public class PortfolioModelImplTest {
         LocalDate.parse("2025-12-15"));
     assertEquals(13, performance.getPerformance().size());
     assertEquals(1, performance.getPerformance().get("2022-Quarter 5: "), EPSILON);
-    assertEquals("one asterisk is $9900.0", performance.getScale());
+    assertEquals("one asterisk is $18900.0", performance.getScale());
   }
 
   @Test
@@ -379,7 +378,7 @@ public class PortfolioModelImplTest {
         LocalDate.parse("2032-12-15"));
     assertEquals(11, performance.getPerformance().size());
     assertEquals(1, performance.getPerformance().get("2022: "), EPSILON);
-    assertEquals("one asterisk is $9900.0", performance.getScale());
+    assertEquals("one asterisk is $18900.0", performance.getScale());
   }
 
   @Test

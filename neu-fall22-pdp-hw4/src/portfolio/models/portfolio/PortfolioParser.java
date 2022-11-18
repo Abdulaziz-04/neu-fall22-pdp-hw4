@@ -5,8 +5,8 @@ import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 
 /**
- * This is an interface for portfolio parser to parse the format, transactions or portfolio into
- * a given format.
+ * This is an interface for portfolio parser to parse the format, transactions or portfolio into a
+ * given format.
  */
 public interface PortfolioParser {
 
@@ -15,21 +15,21 @@ public interface PortfolioParser {
    *
    * @param str portfolio format as a string
    * @return PortfolioFormat format of the portfolio format
-   * @throws Exception
+   * @throws Exception when format is not supported.
    */
   PortfolioFormat parseFormat(String str) throws Exception;
 
   /**
+   * Parse string into transactions.
    *
-   * @param str
-   * @return
-   * @throws Exception
+   * @param str string
+   * @return a list of transactions
+   * @throws Exception when transaction is invalid.
    */
   List<Transaction> parseTransaction(String str) throws Exception;
 
   /**
-   * Transfer the portfolio into a string format. The format is "symbol,amount". The amount means
-   * shares.
+   * Transfer the portfolio into a string format.
    *
    * @param portfolio the portfolio that we want to transfer
    * @return the portfolio in a string format

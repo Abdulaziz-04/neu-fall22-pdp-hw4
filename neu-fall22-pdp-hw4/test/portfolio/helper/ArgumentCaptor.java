@@ -27,4 +27,8 @@ public class ArgumentCaptor<T> {
   public void addArgument(T arg) {
     arguments.add(arg);
   }
+
+  public void clear() {
+    arguments.clear();
+  }
 }

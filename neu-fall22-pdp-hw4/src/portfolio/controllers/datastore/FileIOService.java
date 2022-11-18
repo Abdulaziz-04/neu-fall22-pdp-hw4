@@ -34,15 +34,14 @@ public class FileIOService implements IOService {
   }
 
   @Override
-  public boolean saveTo(String text, String fileName, boolean allowOverride)
-          throws IllegalArgumentException {
+  public boolean saveTo(String text, String fileName, boolean allowOverride) throws IOException {
     File f = new File(fileName);
     if (!allowOverride && f.exists() && !f.isDirectory()) {
-      throw new IllegalArgumentException(
-              "There is a file or a directory exists with filename: " + fileName);
+      throw new IOException(
+          "There is a file or a directory exists with filename: " + fileName);
     }
     try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
+        new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
       writer.write(text);
       return true;
     } catch (IOException e) {

@@ -3,10 +3,9 @@ package portfolio.views.impl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
-import portfolio.models.portfolio.impl.InflexiblePortfolio;
-import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
@@ -49,7 +48,8 @@ public class DefaultSysOutViewFactory implements ViewFactory {
       LocalDate endDate,
       Map<String, Integer> performance,
       String scale, boolean isFinish, String errorMessage) {
-    return new PerformancePageView(portfolioName, startDate, endDate, performance, scale, isFinish, errorMessage);
+    return new PerformancePageView(portfolioName, startDate, endDate, performance, scale, isFinish,
+        errorMessage);
   }
 
 }

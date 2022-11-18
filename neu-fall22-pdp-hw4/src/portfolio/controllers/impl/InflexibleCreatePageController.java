@@ -15,11 +15,9 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a page controller for the inflexible create page,
- * which is implement the page controller.
- * CreatePageController handles input from user and is responsible
- * for checking valid stock input, creating portfolio, saving portfolio and generate View.
- * The controller can hold states while user
+ * This is a page controller for the inflexible create page, which is implement the page controller.
+ * CreatePageController handles input from user and is responsible for checking valid stock input,
+ * creating portfolio, saving portfolio and generate View. The controller can hold states while user
  * creating their portfolio. The states are stock selection, naming portfolio and portfolio
  * confirmation.
  */
@@ -35,8 +33,8 @@ public class InflexibleCreatePageController implements PageController {
   private List<Transaction> transactions;
 
   public InflexibleCreatePageController(
-          PortfolioModel portfolioModel,
-          ViewFactory viewFactory) {
+      PortfolioModel portfolioModel,
+      ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
   }
@@ -49,8 +47,8 @@ public class InflexibleCreatePageController implements PageController {
   /**
    * Handle user input for creating portfolio. User can select stock symbol and number of shares,
    * after type 'end', user can input the desire portfolio name. Portfolio name cannot be the same
-   * as an existing file in the folder and some keywords such as 'end', 'yes' and 'no'. The method
-   * return the next page controller that user should be navigated to.
+   * as an existing file in the folder and some keywords. The method return the next page controller
+   * that user should be navigated to.
    *
    * @param input user input as a string
    * @return PageController as a next page to be redirected
@@ -92,8 +90,8 @@ public class InflexibleCreatePageController implements PageController {
       return this;
     } else if (input.equals("end") && !isEnd && !isNamed) {
       transactions = stockList.entrySet().stream()
-              .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
-                      Collectors.toList());
+          .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+              Collectors.toList());
       try {
         portfolioModel.create(null, PortfolioFormat.INFLEXIBLE, transactions);
         isEnd = true;
@@ -114,6 +112,7 @@ public class InflexibleCreatePageController implements PageController {
         isNamed = ioService.saveTo(portfolioModel.getString(), input + ".txt", false);
       } catch (Exception e) {
         errorMessage = e.getMessage();
+        return this;
       }
       return new LoadPageController(portfolioModel, viewFactory);
     }

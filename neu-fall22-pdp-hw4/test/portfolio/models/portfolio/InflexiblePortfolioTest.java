@@ -39,7 +39,7 @@ public class InflexiblePortfolioTest {
   }
 
   @Test
-  public void getName(){
+  public void getName() {
     assertEquals("name", portfolio.getName());
   }
 
@@ -53,8 +53,7 @@ public class InflexiblePortfolioTest {
     try {
       portfolio.create(null);
       fail("should fail");
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Modifying inflexible portfolio is not supported.", e.getMessage());
     }
   }
@@ -64,8 +63,7 @@ public class InflexiblePortfolioTest {
     try {
       portfolio.getCostBasis(LocalDate.now(), null);
       fail("should fail");
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Cost basis function is not supported.", e.getMessage());
     }
   }

@@ -24,6 +24,7 @@ public class StockApiMock implements StockPriceApi {
 
   @Override
   public Map<String, StockPrice> getStockPrice(String symbol) {
+    Map<String, StockPrice> map = new HashMap<>();
     if (shouldFail) {
       throw new RuntimeException("Something wrong.");
     }
@@ -46,7 +47,8 @@ public class StockApiMock implements StockPriceApi {
     if (shouldFail) {
       throw new RuntimeException("Something wrong.");
     }
-    list.add(new StockListEntry("AAPL", "Apple", "a", "b", LocalDate.parse("2022-10-10"), "d", "e"));
+    list.add(
+        new StockListEntry("AAPL", "Apple", "a", "b", LocalDate.parse("2022-10-10"), "d", "e"));
     list.add(new StockListEntry("AAA", "Apple", "a", "b", LocalDate.parse("2022-10-10"), "d", "e"));
     return list;
   }

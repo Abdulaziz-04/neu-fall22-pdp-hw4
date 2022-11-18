@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import portfolio.controllers.impl.FlexibleCreatePageController;
 import portfolio.controllers.impl.InflexibleCreatePageController;
 import portfolio.controllers.impl.LoadPageController;
 import portfolio.controllers.impl.MainPageController;
@@ -37,8 +38,7 @@ public class MainPageControllerTest {
   public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioModel = new PortfolioModelImpl(stockQueryService,
-        parser);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     pageController = new MainPageController(portfolioModel, viewFactory);
   }
@@ -46,6 +46,7 @@ public class MainPageControllerTest {
   @Test
   public void failToInit() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
     pageController = new MainPageController(portfolioModel, viewFactory);
 
     pageController.getView();
@@ -61,20 +62,26 @@ public class MainPageControllerTest {
   }
 
   @Test
-  public void handleInput_toCreate() {
+  public void handleInput_toCreateInflexible() {
     PageController nextPage = pageController.handleInput("1");
     assertEquals(InflexibleCreatePageController.class, nextPage.getClass());
   }
 
   @Test
-  public void handleInput_toDetermine() {
+  public void handleInput_toCreateFlexible() {
     PageController nextPage = pageController.handleInput("2");
+    assertEquals(FlexibleCreatePageController.class, nextPage.getClass());
+  }
+
+  @Test
+  public void handleInput_toDetermine() {
+    PageController nextPage = pageController.handleInput("3");
     assertEquals(LoadPageController.class, nextPage.getClass());
   }
 
   @Test
   public void handleInput_wrongInput1() {
-    PageController nextPage = pageController.handleInput("3");
+    PageController nextPage = pageController.handleInput("4");
     assertEquals(MainPageController.class, nextPage.getClass());
     pageController.getView();
     assertEquals("Please enter the correct number!", argumentCaptor.getArguments().get(0));
