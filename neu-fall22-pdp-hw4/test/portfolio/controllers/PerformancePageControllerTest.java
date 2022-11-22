@@ -98,7 +98,8 @@ public class PerformancePageControllerTest {
     pageController.handleInput("2022-11-01");
     pageController.getView();
     assertEquals(
-        "Error: Please choose input new timespan.This start date maybe the holiday, weekend, or in the future!",
+        "Error: Please choose input new timespan.This start date maybe the "
+            + "holiday, weekend, or in the future!",
         argumentCaptor.getArguments().get(6));
   }
 
@@ -118,7 +119,8 @@ public class PerformancePageControllerTest {
     pageController.handleInput("2042-10-10");
     pageController.getView();
     assertEquals(
-        "Error: Please choose input new timespan.This start date maybe the holiday, weekend, or in the future!",
+        "Error: Please choose input new timespan.This start date maybe the "
+            + "holiday, weekend, or in the future!",
         argumentCaptor.getArguments().get(6));
   }
 
