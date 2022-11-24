@@ -1,6 +1,7 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
+import javax.swing.JPanel;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.ViewAbs;
 
@@ -88,6 +89,11 @@ public class InfoPageView extends ViewAbs {
           + "The format is year-month-day, ex: 2022-10-11");
     }
     printStream.print("input > ");
+  }
+
+  @Override
+  public JPanel getJPanel() {
+    return null;
   }
 
 }

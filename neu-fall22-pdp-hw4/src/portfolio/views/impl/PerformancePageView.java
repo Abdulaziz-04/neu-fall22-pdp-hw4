@@ -3,6 +3,7 @@ package portfolio.views.impl;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Map;
+import javax.swing.JPanel;
 import portfolio.views.ViewAbs;
 
 /**
@@ -127,6 +128,11 @@ public class PerformancePageView extends ViewAbs {
       printStream.println("--The format of date needs to be 2022-10-11");
       printStream.print("input > ");
     }
+  }
+
+  @Override
+  public JPanel getJPanel() {
+    return null;
   }
 }
 
