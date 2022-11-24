@@ -2,6 +2,7 @@ package portfolio;
 
 import portfolio.controllers.FrontController;
 import portfolio.controllers.impl.FrontControllerImpl;
+import portfolio.controllers.impl.SwingFrontController;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
@@ -36,11 +37,13 @@ public class Main {
     ViewFactory viewFactory = new DefaultSysOutViewFactory();
 
     // Controller
-    FrontController frontController = new FrontControllerImpl(portfolioModel, viewFactory,
-        System.in);
+//    FrontController frontController = new FrontControllerImpl(portfolioModel, viewFactory,
+//        System.in);
+    SwingFrontController swingFrontController = new SwingFrontController(portfolioModel, viewFactory);
 
     // Run controller
-    frontController.run();
+//    frontController.run();
+    swingFrontController.run();
   }
 
 }

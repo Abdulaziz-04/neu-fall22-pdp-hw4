@@ -79,6 +79,7 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
       LocalDate endDate,
       Map<String, Integer> performance,
       String scale, boolean isFinish, String errorMessage) {
+    argumentCaptor.addArgument(portfolioName);
     argumentCaptor.addArgument(startDate);
     argumentCaptor.addArgument(endDate);
     argumentCaptor.addArgument(performance);

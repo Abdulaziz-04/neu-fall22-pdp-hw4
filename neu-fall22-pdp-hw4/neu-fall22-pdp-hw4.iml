@@ -18,5 +18,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="inheritedJdk" />
+        <orderEntry type="sourceFolder" forTests="false" />
+        <orderEntry type="module" module-name="neu-fall22-pdp-hw4" />
   </component>
 </module>

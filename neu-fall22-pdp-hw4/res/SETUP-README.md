@@ -2,7 +2,7 @@
 
 This is the SETUP-README for our project.
 
-note: Portfolio file will be save to the base location that you run cmd, not the location of JAR file. For example if you run cmd with 
+note: Portfolio file will be save to the base location that you run cmd, not the location of JAR file. For example if you run cmd with
 
 > C:\Users\Myok>java -jar C:\Users\Myok\Desktop\neu-fall22-pdp-hw4\res\neu-fall22-pdp-hw4.jar
 
@@ -18,22 +18,22 @@ The procedure to use this program: (input exit will exit the program)
 
 ## Main Page:
 
-1. After execute jar file, user will see the main menu screen. 
+1. After execute jar file, user will see the main menu screen.
 
 2. Users can choose "1", "2" or "3. If user inputs "1", user will go to the inflexible create page.
-   If user inputs "2", user will go to the flexible create page. If user input "3", user will go 
-   to the load page. (If user wants to determine a portfolio value, the cost of basis, show the 
-   performance of a portfolio, user need to go to load page first. If the number that user 
-   inputted is not "1", "2", or "3" the program will show the error message to user and user 
-   need to input again). 
+   If user inputs "2", user will go to the flexible create page. If user input "3", user will go
+   to the load page. (If user wants to determine a portfolio value, the cost of basis, show the
+   performance of a portfolio, user need to go to load page first. If the number that user
+   inputted is not "1", "2", or "3" the program will show the error message to user and user
+   need to input again).
 
 ### Option 1: Inflexible Create Page
 The user will see inflexible create page.
 
 1. User can input the symbol of a stock and the amount, which is number of shares, in the giving format. The format is (symbol,shares) ex. AA,100 (All the letter need to be in uppercase). If user inputs is not correct, user can see different error messages for why the input is not correct. Otherwise, the user can see the stocks and shares which were inputted before.
-    
+
 2. User can input next stock and shares.
-    
+
 3. If user want to finish input the stock into the portfolio. Please input "end"(in lowercase). And then user can see the portfolio composition and will be asked to input the name of the portfolio.
 
 4. User inputs the name of this portfolio. If the name is valid, it will create the portfolio successfully. Otherwise, it will fail to create. (At this step, it will save the portfolio as a file. The portfolio name have some restrictions, which mentioned in program).
@@ -43,28 +43,28 @@ The user will see inflexible create page.
 ### Option 2: Flexible Create Page
 The user will see flexible create page.
 
-1. User inputs the date to do the transaction. The format is "2022-10-10". Other input will 
+1. User inputs the date to do the transaction. The format is "2022-10-10". Other input will
    be error which will show in the end.(If the format is error, it will show it.)
 
-2. User inputs a symbol of the stock that they want to do this transaction. (If there is any 
+2. User inputs a symbol of the stock that they want to do this transaction. (If there is any
    error,it will show it.)
 
 3. User inputs the date to the type of transaction: "BUY" or "SELL".
 
 4. User inputs a shares of stocks.(If the input is negative and not an integer, it will show error.)
 
-5. User inputs the commission fee for this transaction, which needs to be double format.(If it 
+5. User inputs the commission fee for this transaction, which needs to be double format.(If it
    is not a double, it will show error)
 
-6. User can choose to input next stock transaction or not. If yes, enter yes. Other input will 
-   end of input transaction. 
+6. User can choose to input next stock transaction or not. If yes, enter yes. Other input will
+   end of input transaction.
 
-7. If user chose yes before do 1-5 again. If user chose no before and the user can input the 
-   portfolio name. (If the name is valid, it will create the portfolio successfully and go to 
-   the load page automatically. Otherwise, user need to input name again.) 
+7. If user chose yes before do 1-5 again. If user chose no before and the user can input the
+   portfolio name. (If the name is valid, it will create the portfolio successfully and go to
+   the load page automatically. Otherwise, user need to input name again.)
 
-8. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the 
-main page.
+8. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the
+   main page.
 
 ### Option 3: Load Page
 User can see Load page.
@@ -72,12 +72,12 @@ User can see Load page.
 1. User inputs the name of a portfolio. If it exists, user can see the composition. Otherwise, show the error message to user.
 
 2. For existing portfolio, there are three options for user:
-   1. Determine the value and cost of basis. 
+   1. Determine the value and cost of basis.
    2. Show the performance of the portfolio.
-   3. Modify the portfolio (Buy or sell the stock for this portfolio) --This option only show if 
+   3. Modify the portfolio (Buy or sell the stock for this portfolio) --This option only show if
       the portfolio is flexible.
-   
-   User inputs "1", it will go to determine page. User input "2", it will go to performance page. 
+
+   User inputs "1", it will go to determine page. User input "2", it will go to performance page.
    User inputs "3", it will go to create page to modify the transaction. (after modify, it will  
    automatically go back to the load page)
 
@@ -87,14 +87,14 @@ User can see Load page.
 
 User can see the determine page. (It will show the value and cost of basis together)
 
-1. User inputs the date that they want to determine in giving format. The format is yyyy-MM-dd 
-   ex."2022-10-11". User can see the error message when the format is error or if there is 
-   price available for that day. Otherwise, it will show the total value of the portfolio and 
+1. User inputs the date that they want to determine in giving format. The format is yyyy-MM-dd
+   ex."2022-10-11". User can see the error message when the format is error or if there is
+   price available for that day. Otherwise, it will show the total value of the portfolio and
    the cost of basis on that day.
 
 2. User can repeatedly enter the different date to see portfolio value.
 
-3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the 
+3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the
    load page.
 
 #### Option 2 for Load Page: Performance Page
@@ -109,7 +109,7 @@ User can see the performance page.
 3. User can repeatedly input different start date and end date to perform.
 
 4. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the
-      load page.
+   load page.
 
 #### Option 3 for Load Page: Flexible Create Page to modify it.
 
@@ -138,7 +138,7 @@ will without
 quotes)
 1. After neu-fall22-pdp-hw4.jar file execute, user inputs "2". Press enter.
 
-2. After create page show, user inputs "2014-01-02". Press enter. 
+2. After create page show, user inputs "2014-01-02". Press enter.
 
 3. User inputs "AAPL". Press enter.
 
@@ -172,38 +172,38 @@ quotes)
 
 ### 3 different stocks
 
-The procedure to create an inflexible portfolio with 3 different stocks. (The input will without 
+The procedure to create an inflexible portfolio with 3 different stocks. (The input will without
 quotes)
 
 AAA, AA and A are valid stock symbol.
 
-  1. After neu-fall22-pdp-hw4.jar file execute, user inputs "1". Press enter.
+1. After neu-fall22-pdp-hw4.jar file execute, user inputs "1". Press enter.
 
-  2. After showing the create page, the user inputs "AAA,100". Press enter.
+2. After showing the create page, the user inputs "AAA,100". Press enter.
 
-  3. User inputs "AA,1000". Press enter.
+3. User inputs "AA,1000". Press enter.
 
-  4. User inputs "A,200". Press enter.
+4. User inputs "A,200". Press enter.
 
-  5. User inputs "end" (must be lower case). Press enter.
+5. User inputs "end" (must be lower case). Press enter.
 
-  6. User inputs the portfolio name, ex: "love". Press enter. (It will automatically go to load 
-     page.)
+6. User inputs the portfolio name, ex: "love". Press enter. (It will automatically go to load
+   page.)
 
 ### 2 different stocks
 
 The procedure to create an inflexible portfolio with 2 different stocks.
 
-  1. After neu-fall22-pdp-hw4.jar file execute, user inputs "1". Press enter.
+1. After neu-fall22-pdp-hw4.jar file execute, user inputs "1". Press enter.
 
-  2. After create page show, user inputs "AAPL,100". Press enter.
+2. After create page show, user inputs "AAPL,100". Press enter.
 
-  3. User inputs "A,1000". Press enter.
+3. User inputs "A,1000". Press enter.
 
-  4. User inputs "end"( must be lower case). Press enter.
+4. User inputs "end"( must be lower case). Press enter.
 
-  5. User inputs the portfolio name, ex: "222". Press enter. (It will automatically go to load
-     page.)
+5. User inputs the portfolio name, ex: "222". Press enter. (It will automatically go to load
+   page.)
 
 
 ## List of available stock and date

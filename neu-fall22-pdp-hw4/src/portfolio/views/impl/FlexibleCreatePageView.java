@@ -2,6 +2,7 @@ package portfolio.views.impl;
 
 import java.io.PrintStream;
 import java.util.List;
+import javax.swing.JPanel;
 import portfolio.models.entities.Transaction;
 import portfolio.views.ViewAbs;
 
@@ -131,5 +132,10 @@ public class FlexibleCreatePageView extends ViewAbs {
       }
     }
     printStream.print("input > ");
+  }
+
+  @Override
+  public JPanel getJPanel() {
+    return null;
   }
 }

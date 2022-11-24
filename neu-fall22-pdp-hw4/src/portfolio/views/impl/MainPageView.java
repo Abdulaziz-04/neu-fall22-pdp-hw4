@@ -1,6 +1,9 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import portfolio.views.ViewAbs;
 
 /**
@@ -68,6 +71,19 @@ public class MainPageView extends ViewAbs {
     printStream.println("----------------------------------------------------------");
     printStream.println("Please enter the number 1,2 or 3.");
     printStream.print("input > ");
+  }
+
+  @Override
+  public JPanel getJPanel() {
+    JPanel panel = new JPanel();
+    JLabel error = new JLabel(errorMessage);
+    JButton button1 = new JButton("Create a flexible portfolio");
+    JButton button2 = new JButton("Create a flexible portfolio");
+    panel.setSize(500,500);
+    panel.add(error);
+    panel.add(button1);
+    panel.add(button2);
+    return panel;
   }
 
 }

@@ -2,6 +2,7 @@ package portfolio.views.impl;
 
 import java.io.PrintStream;
 import java.util.List;
+import javax.swing.JPanel;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.views.ViewAbs;
@@ -90,6 +91,11 @@ public class LoadPageView extends ViewAbs {
       printStream.println("--Please enter the number in above");
     }
     printStream.print("input > ");
+  }
+
+  @Override
+  public JPanel getJPanel() {
+    return null;
   }
 
 }

@@ -3,6 +3,7 @@ package portfolio.views.impl;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Map;
+import javax.swing.JPanel;
 import portfolio.views.ViewAbs;
 
 /**
@@ -112,7 +113,7 @@ public class PerformancePageView extends ViewAbs {
       for (var entry : performance.entrySet()) {
         printStream.println(entry.getKey() + "*".repeat(entry.getValue()));
       }
-      printStream.println("scale: " + scale);
+      printStream.println("scale: \n" + scale);
       printStream.println("----------------------------------------------------------");
       printStream.println("Please enter the start date of the timespan " +
           "that you want to performance.");
@@ -127,6 +128,11 @@ public class PerformancePageView extends ViewAbs {
       printStream.println("--The format of date needs to be 2022-10-11");
       printStream.print("input > ");
     }
+  }
+
+  @Override
+  public JPanel getJPanel() {
+    return null;
   }
 }
 
