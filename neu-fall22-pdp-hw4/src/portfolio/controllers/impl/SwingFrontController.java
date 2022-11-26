@@ -1,13 +1,15 @@
 package portfolio.controllers.impl;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import portfolio.controllers.FrontController;
+import portfolio.controllers.InputHandler;
 import portfolio.controllers.PageController;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.views.View;
 import portfolio.views.ViewFactory;
+import portfolio.views.gui.SwingViewFactory;
 
-public class SwingFrontController implements FrontController {
+public class SwingFrontController implements FrontController, InputHandler {
 
   private PageController pageController;
   private final PortfolioModel portfolioModel;
@@ -16,34 +18,25 @@ public class SwingFrontController implements FrontController {
    * Contructs the controller.
    *
    * @param portfolioModel PortfolioModel
-   * @param viewFactory    viewFactory
    */
-  public SwingFrontController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
-    this.pageController = new MainPageController(portfolioModel, viewFactory);
+  public SwingFrontController(PortfolioModel portfolioModel) {
     this.portfolioModel = portfolioModel;
-    this.viewFactory = viewFactory;
+    JFrame frame = new JFrame();
+    frame.setVisible(true);
+    this.viewFactory = new SwingViewFactory(frame, this);
+    this.pageController = new MainPageController(portfolioModel, viewFactory);
+  }
+
+  @Override
+  public void handleInput(String input) {
+    pageController = pageController.handleInput(input);
+    View view = pageController.getView();
+    view.render();
   }
 
   @Override
   public void run() {
-    JFrame frame = new JFrame();
-    frame.add(pageController.getView().getJPanel());
-    frame.setVisible(true);
-    while (true) {
-      // Render the page
-      JPanel panel = pageController.getView().getJPanel();
-      frame.setContentPane(panel);
-      frame.repaint();
-      frame.revalidate();
-
-      try {
-        Thread.sleep(30000);
-      }
-      catch (Exception e) {
-
-      }
-
-      pageController = pageController.handleInput("");
-    }
+    View view = pageController.getView();
+    view.render();
   }
 }

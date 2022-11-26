@@ -108,8 +108,5 @@ public class InflexibleCreatePageView extends ViewAbs {
     printStream.print("input > ");
   }
 
-  @Override
-  public JPanel getJPanel() {
-    return null;
-  }
+
 }
