@@ -12,5 +12,4 @@ public interface View {
    */
   void render();
 
-  JPanel getJPanel();
 }

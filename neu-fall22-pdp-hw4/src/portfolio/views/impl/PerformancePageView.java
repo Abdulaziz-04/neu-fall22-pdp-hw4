@@ -130,10 +130,6 @@ public class PerformancePageView extends ViewAbs {
     }
   }
 
-  @Override
-  public JPanel getJPanel() {
-    return null;
-  }
 }
 
 

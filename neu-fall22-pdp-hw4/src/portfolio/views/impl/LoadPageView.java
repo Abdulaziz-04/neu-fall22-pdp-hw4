@@ -93,9 +93,4 @@ public class LoadPageView extends ViewAbs {
     printStream.print("input > ");
   }
 
-  @Override
-  public JPanel getJPanel() {
-    return null;
-  }
-
 }

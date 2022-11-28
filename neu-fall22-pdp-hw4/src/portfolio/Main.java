@@ -12,6 +12,7 @@ import portfolio.models.stockprice.StockPriceApi;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
+import portfolio.views.gui.SwingViewFactory;
 import portfolio.views.impl.DefaultSysOutViewFactory;
 
 /**
@@ -39,7 +40,7 @@ public class Main {
     // Controller
 //    FrontController frontController = new FrontControllerImpl(portfolioModel, viewFactory,
 //        System.in);
-    SwingFrontController swingFrontController = new SwingFrontController(portfolioModel, viewFactory);
+    SwingFrontController swingFrontController = new SwingFrontController(portfolioModel);
 
     // Run controller
 //    frontController.run();
