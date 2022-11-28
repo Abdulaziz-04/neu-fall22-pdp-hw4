@@ -40,7 +40,7 @@ public class PerformancePageControllerTest {
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser,null);
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
 

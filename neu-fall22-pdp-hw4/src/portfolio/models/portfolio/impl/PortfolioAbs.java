@@ -39,19 +39,19 @@ public abstract class PortfolioAbs implements Portfolio {
   }
 
   @Override
-  public Map<String, Integer> getComposition() {
+  public Map<String, Double> getComposition() {
     return getComposition(null);
   }
 
   @Override
-  public Map<String, Integer> getComposition(LocalDate date) {
-    Map<String, Integer> stocks = new LinkedHashMap<>();
+  public Map<String, Double> getComposition(LocalDate date) {
+    Map<String, Double> stocks = new LinkedHashMap<>();
     for (var tx : transactions) {
       if (date != null && tx.getDate() != null && tx.getDate().compareTo(date) > 0) {
         break;
       }
-      int current = stocks.getOrDefault(tx.getSymbol(), 0);
-      int newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
+      double current = stocks.getOrDefault(tx.getSymbol(), 0.0);
+      double newShare = current + tx.getAmount() * TransactionType.getMultiplier(tx.getType());
       if (newShare > 0) {
         stocks.put(tx.getSymbol(), newShare);
       } else if (newShare == 0) {

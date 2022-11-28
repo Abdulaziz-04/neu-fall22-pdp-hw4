@@ -14,9 +14,11 @@ import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.ScheduleRunner;
 import portfolio.models.stockprice.StockQueryService;
 
 /**
@@ -27,6 +29,8 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   private final StockQueryService stockQueryService;
   private final PortfolioParser portfolioParser;
+
+  private final ScheduleRunner scheduleRunner;
   private Portfolio portfolio = null;
 
   /**
@@ -37,9 +41,10 @@ public class PortfolioModelImpl implements PortfolioModel {
    * @param portfolioParser   parse portfolio
    */
   public PortfolioModelImpl(StockQueryService stockQueryService,
-      PortfolioParser portfolioParser) {
+      PortfolioParser portfolioParser, ScheduleRunner scheduleRunner) {
     this.stockQueryService = stockQueryService;
     this.portfolioParser = portfolioParser;
+    this.scheduleRunner = scheduleRunner;
   }
 
   public void init() throws Exception {
@@ -53,8 +58,7 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions)
-      throws Exception {
+  public Portfolio create(String name, PortfolioFormat format, List<Transaction> transactions) throws Exception {
     checkTransactions(transactions);
     switch (format) {
       case INFLEXIBLE:
@@ -71,8 +75,15 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public void load(String name, String text) throws Exception {
-    var format = portfolioParser.parseFormat(text);
-    portfolio = create(name, format, portfolioParser.parseTransaction(text));
+    var p = portfolioParser.parse(text);
+    checkTransactions(p.getTransactions());
+    List<Transaction> transactions = new ArrayList<>(p.getTransactions());
+    BuySchedule schedule = p.getBuySchedule();
+    if (schedule != null) {
+      List<Transaction> scheduledTransactions = scheduleRunner.run(LocalDate.now(), schedule);
+      transactions.addAll(scheduledTransactions);
+    }
+    portfolio = create(name, p.getFormat(), transactions);
   }
 
   @Override
@@ -114,6 +125,33 @@ public class PortfolioModelImpl implements PortfolioModel {
 
     // Create same class of portfolio with new set of transactions
     portfolio = portfolio.create(newTransactions);
+  }
+
+  @Override
+  public void addScheduler(double amount, int frequencyDays, LocalDate startDate, LocalDate endDate,
+      double transactionFee, List<Transaction> buyingList) throws Exception {
+    BuySchedule schedule = new DollarCostAverageSchedule(amount, frequencyDays, startDate, endDate,
+        transactionFee, null, buyingList);
+    List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
+    List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
+    scheduledTransaction.addAll(transactions);
+    portfolio = portfolio.create(scheduledTransaction, schedule);
+  }
+
+  @Override
+  public void modifyScheduler(double amount, int frequencyDays, LocalDate startDate,
+      LocalDate endDate, double transactionFee, List<Transaction> buyingList) throws Exception {
+
+    if (portfolio.getBuySchedule() == null) {
+      throw new Exception("Current portfolio does not have buy schedule.");
+    }
+    BuySchedule schedule = new DollarCostAverageSchedule(amount, frequencyDays, startDate, endDate,
+        transactionFee, portfolio.getBuySchedule().getLastRunDate(), buyingList);
+
+    List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
+    List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
+    scheduledTransaction.addAll(transactions);
+    portfolio = portfolio.create(scheduledTransaction, schedule);
   }
 
   @Override

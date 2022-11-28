@@ -1,7 +1,6 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
-import javax.swing.JPanel;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.ViewAbs;
 
@@ -67,7 +66,7 @@ public class InfoPageView extends ViewAbs {
       printStream.println("+---------+---------------+--------------------+");
       for (var entry : portfolioWithPrice.getValues()) {
         String symbol = entry.getSymbol();
-        int amount = entry.getAmount();
+        double amount = entry.getAmount();
         String value = entry.getValue() ==
             null ? "N/A" : "$" + entry.getValue().toString();
         printStream.printf("|%9s|%15d|%20s|%n", symbol, amount, value);

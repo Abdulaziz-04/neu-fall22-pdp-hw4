@@ -1,10 +1,10 @@
 package portfolio;
 
-import portfolio.controllers.FrontController;
-import portfolio.controllers.impl.FrontControllerImpl;
 import portfolio.controllers.impl.SwingFrontController;
-import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
+import portfolio.models.portfolio.PortfolioParser;
+import portfolio.models.portfolio.ScheduleRunner;
+import portfolio.models.portfolio.impl.DollarCostAverageRunner;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.AlphaVantageApi;
@@ -12,7 +12,6 @@ import portfolio.models.stockprice.StockPriceApi;
 import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
-import portfolio.views.gui.SwingViewFactory;
 import portfolio.views.impl.DefaultSysOutViewFactory;
 
 /**
@@ -32,7 +31,9 @@ public class Main {
     StockPriceApi stockPriceApi = new AlphaVantageApi();
     StockQueryService stockQueryService = new StockQueryServiceImpl(stockPriceApi);
     PortfolioParser portfolioParser = new PortfolioTextParser();
-    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, portfolioParser);
+    ScheduleRunner scheduleRunner = new DollarCostAverageRunner(stockQueryService);
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, portfolioParser,
+        scheduleRunner);
 
     // Views
     ViewFactory viewFactory = new DefaultSysOutViewFactory();

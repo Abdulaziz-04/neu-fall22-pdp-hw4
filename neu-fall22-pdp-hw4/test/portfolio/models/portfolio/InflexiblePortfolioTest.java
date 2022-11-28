@@ -75,18 +75,18 @@ public class InflexiblePortfolioTest {
 
   @Test
   public void getComposition() {
-    Map<String, Integer> portfolioEntries = portfolio.getComposition();
+    Map<String, Double> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
-    assertEquals(100, (int) portfolioEntries.get("AAA"));
-    assertEquals(1000, (int) portfolioEntries.get("AAPL"));
+    assertEquals(100, portfolioEntries.get("AAA"), EPSILON);
+    assertEquals(1000, portfolioEntries.get("AAPL"), EPSILON);
   }
 
   @Test
   public void getComposition_anyDate() {
-    Map<String, Integer> portfolioEntries = portfolio.getComposition(LocalDate.parse("2050-10-10"));
+    Map<String, Double> portfolioEntries = portfolio.getComposition(LocalDate.parse("2050-10-10"));
     assertEquals(2, portfolioEntries.size());
-    assertEquals(100, (int) portfolioEntries.get("AAA"));
-    assertEquals(1000, (int) portfolioEntries.get("AAPL"));
+    assertEquals(100, portfolioEntries.get("AAA"), EPSILON);
+    assertEquals(1000, portfolioEntries.get("AAPL"), EPSILON);
   }
 
   @Test
@@ -95,8 +95,8 @@ public class InflexiblePortfolioTest {
     assertEquals(2, portfolioEntries.size());
     assertEquals("AAA", portfolioEntries.get(0).getSymbol());
     assertEquals("AAPL", portfolioEntries.get(1).getSymbol());
-    assertEquals(100, portfolioEntries.get(0).getAmount());
-    assertEquals(1000, portfolioEntries.get(1).getAmount());
+    assertEquals(100, portfolioEntries.get(0).getAmount(), EPSILON);
+    assertEquals(1000, portfolioEntries.get(1).getAmount(), EPSILON);
   }
 
   @Test

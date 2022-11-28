@@ -39,13 +39,14 @@ public class LoadPageControllerTest {
   private ArgumentCaptor<Object> argumentCaptor;
   private PortfolioModel portfolioModel;
   private PageController pageController;
+  private final double EPSILON = 0.000000001;
 
   @Before
   public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, null);
     pageController = new LoadPageController(portfolioModel, viewFactory);
   }
 
@@ -83,7 +84,7 @@ public class LoadPageControllerTest {
     assertEquals(expected.size(), actual.size());
     for (int i = 0; i < expected.size(); i++) {
       assertEquals(expected.get(i).getSymbol(), actual.get(i).getSymbol());
-      assertEquals(expected.get(i).getAmount(), actual.get(i).getAmount());
+      assertEquals(expected.get(i).getAmount(), actual.get(i).getAmount(), EPSILON);
     }
     assertTrue((boolean) argumentCaptor.getArguments().get(1));
     assertNull(argumentCaptor.getArguments().get(2));

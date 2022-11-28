@@ -7,6 +7,7 @@ import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 
 /**
@@ -14,7 +15,7 @@ import portfolio.models.portfolio.Portfolio;
  */
 public class FlexiblePortfolio extends PortfolioAbs {
 
-
+  private final BuySchedule schedule;
   /**
    * This is a constructor to a flexible portfolio object, which will contain the name of this
    * portfolio and a list of transaction entry.
@@ -22,10 +23,15 @@ public class FlexiblePortfolio extends PortfolioAbs {
    * @param name         the name of a portfolio
    * @param transactions a list of transaction entry
    */
-  public FlexiblePortfolio(String name, List<Transaction> transactions) {
+  public FlexiblePortfolio(String name, List<Transaction> transactions, BuySchedule schedule) {
     super(name, transactions);
+    this.schedule = schedule;
   }
 
+  public FlexiblePortfolio(String name, List<Transaction> transactions) {
+    super(name, transactions);
+    this.schedule = null;
+  }
   @Override
   public PortfolioFormat getFormat() {
     return PortfolioFormat.FLEXIBLE;
@@ -34,6 +40,11 @@ public class FlexiblePortfolio extends PortfolioAbs {
   @Override
   public Portfolio create(List<Transaction> transactions) {
     return new FlexiblePortfolio(name, transactions);
+  }
+
+  @Override
+  public Portfolio create(List<Transaction> transactions, BuySchedule schedule) throws Exception {
+    return new FlexiblePortfolio(name, transactions, schedule);
   }
 
   @Override
@@ -54,6 +65,11 @@ public class FlexiblePortfolio extends PortfolioAbs {
   @Override
   public boolean isReadOnly() {
     return false;
+  }
+
+  @Override
+  public BuySchedule getBuySchedule() {
+    return schedule;
   }
 
 }

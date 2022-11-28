@@ -47,7 +47,7 @@ public class InfoPageControllerTest {
     argumentCaptor = new ArgumentCaptor<>();
     ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, null);
 
     map.put("AAPL", 100);
     map.put("AAA", 10000);

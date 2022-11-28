@@ -63,11 +63,11 @@ public class FlexiblePortfolioTest {
     for (int i = 0; i < expected.size(); i++) {
       assertEquals(actual.get(i).getType(), expected.get(i).getType());
       assertEquals(actual.get(i).getSymbol(), expected.get(i).getSymbol());
-      assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount());
+      assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount(), EPSILON);
       assertEquals(actual.get(i).getDate(), expected.get(i).getDate());
     }
-    Map<String, Integer> expectedMap = portfolio.getComposition();
-    Map<String, Integer> actualMap = actualPortfolio.getComposition();
+    Map<String, Double> expectedMap = portfolio.getComposition();
+    Map<String, Double> actualMap = actualPortfolio.getComposition();
     assertEquals(expectedMap.size(), actualMap.size());
   }
 
@@ -108,22 +108,22 @@ public class FlexiblePortfolioTest {
 
   @Test
   public void getComposition_latest() {
-    Map<String, Integer> portfolioEntries = portfolio.getComposition();
+    Map<String, Double> portfolioEntries = portfolio.getComposition();
     assertEquals(2, portfolioEntries.size());
-    assertEquals(100, (int) portfolioEntries.get("AAA"));
-    assertEquals(1000, (int) portfolioEntries.get("AAPL"));
+    assertEquals(100, portfolioEntries.get("AAA"), EPSILON);
+    assertEquals(1000, portfolioEntries.get("AAPL"), EPSILON);
   }
 
   @Test
   public void getComposition_mid() {
-    Map<String, Integer> portfolioEntries = portfolio.getComposition(LocalDate.parse("2022-10-10"));
+    Map<String, Double> portfolioEntries = portfolio.getComposition(LocalDate.parse("2022-10-10"));
     assertEquals(1, portfolioEntries.size());
-    assertEquals(100, (int) portfolioEntries.get("AAA"));
+    assertEquals(100, portfolioEntries.get("AAA"), EPSILON);
   }
 
   @Test
   public void getComposition_noStock() {
-    Map<String, Integer> portfolioEntries = portfolio.getComposition(LocalDate.parse("1999-01-01"));
+    Map<String, Double> portfolioEntries = portfolio.getComposition(LocalDate.parse("1999-01-01"));
     assertEquals(0, portfolioEntries.size());
   }
 
@@ -140,9 +140,9 @@ public class FlexiblePortfolioTest {
     assertEquals(LocalDate.parse("2022-10-10"), portfolioEntries.get(0).getDate());
     assertEquals(LocalDate.parse("2022-10-10"), portfolioEntries.get(1).getDate());
     assertEquals(LocalDate.parse("2022-10-11"), portfolioEntries.get(2).getDate());
-    assertEquals(110, portfolioEntries.get(0).getAmount());
-    assertEquals(10, portfolioEntries.get(1).getAmount());
-    assertEquals(1000, portfolioEntries.get(2).getAmount());
+    assertEquals(110, portfolioEntries.get(0).getAmount(), EPSILON);
+    assertEquals(10, portfolioEntries.get(1).getAmount(), EPSILON);
+    assertEquals(1000, portfolioEntries.get(2).getAmount(), EPSILON);
   }
 
   @Test

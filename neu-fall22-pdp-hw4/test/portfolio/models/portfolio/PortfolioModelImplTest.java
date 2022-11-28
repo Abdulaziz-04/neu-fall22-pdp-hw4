@@ -38,7 +38,7 @@ public class PortfolioModelImplTest {
   @Before
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser());
+    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), null);
 
     transactions.add(
         new Transaction(TransactionType.BUY, "AAA", 110, LocalDate.parse("2022-10-10"), 10));
@@ -72,11 +72,11 @@ public class PortfolioModelImplTest {
     for (int i = 0; i < transactions.size(); i++) {
       assertEquals(actual.get(i).getType(), transactions.get(i).getType());
       assertEquals(actual.get(i).getSymbol(), transactions.get(i).getSymbol());
-      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount());
+      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount(), EPSILON);
       assertEquals(actual.get(i).getDate(), transactions.get(i).getDate());
     }
-    Map<String, Integer> actualMap = actualPortfolio.getComposition();
-    assertEquals(2, actualMap.size());
+    Map<String, Double> actualMap = actualPortfolio.getComposition();
+    assertEquals(2, actualMap.size(), EPSILON);
   }
 
   @Test
@@ -91,11 +91,11 @@ public class PortfolioModelImplTest {
     for (int i = 0; i < transactions.size(); i++) {
       assertEquals(actual.get(i).getType(), transactions.get(i).getType());
       assertEquals(actual.get(i).getSymbol(), transactions.get(i).getSymbol());
-      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount());
+      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount(), EPSILON);
       assertEquals(actual.get(i).getDate(), transactions.get(i).getDate());
     }
-    Map<String, Integer> actualMap = actualPortfolio.getComposition();
-    assertEquals(2, actualMap.size());
+    Map<String, Double> actualMap = actualPortfolio.getComposition();
+    assertEquals(2, actualMap.size(), EPSILON);
   }
 
   @Test
@@ -179,7 +179,7 @@ public class PortfolioModelImplTest {
   @Test
   public void checkTransaction_apiUnavailable() {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser());
+    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), null);
     try {
       portfolioModel.checkTransaction(LocalDate.parse("2022-10-11"), "AAAAA");
       fail();
@@ -221,7 +221,7 @@ public class PortfolioModelImplTest {
   @Test
   public void checkTransactions_apiUnavailable() {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser());
+    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), null);
     List<Transaction> transactions = new ArrayList<>();
     transactions.add(
         new Transaction(TransactionType.BUY, "AAAAA", 110, LocalDate.parse("2022-10-10"), 10));

@@ -3,6 +3,7 @@ package portfolio.models.portfolio;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import portfolio.models.portfolio.impl.DollarCostAverageSchedule;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
@@ -52,6 +53,16 @@ public interface PortfolioModel {
    * @throws Exception the portfolio is inflexible
    */
   void addTransactions(List<Transaction> transactions) throws Exception;
+
+  void addScheduler(double amount, int frequencyDays,
+      LocalDate startDate,
+      LocalDate endDate, double transactionFee,
+      List<Transaction> buyingList) throws Exception;
+
+  void modifyScheduler(double amount, int frequencyDays,
+      LocalDate startDate,
+      LocalDate endDate, double transactionFee,
+      List<Transaction> buyingList) throws Exception;
 
   /**
    * This is a method to get the portfolio with value on a certain date.
