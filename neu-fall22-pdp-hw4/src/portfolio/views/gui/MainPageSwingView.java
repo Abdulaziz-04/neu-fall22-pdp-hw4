@@ -26,17 +26,20 @@ public class MainPageSwingView implements View {
     JPanel panel = new JPanel();
 
     JButton button1 = new JButton("Create a flexible portfolio");
-    button1.addActionListener(e -> inputHandler.handleInput("1"));
+    button1.addActionListener(e -> inputHandler.handleInput("2"));
 
     JButton button2 = new JButton("Load portfolio");
-    button2.addActionListener(e -> inputHandler.handleInput("2"));
+    button2.addActionListener(e -> inputHandler.handleInput("3"));
 
     panel.setSize(500,500);
     panel.add(button1);
     panel.add(button2);
 
+    frame.setSize(600,600);
     frame.setContentPane(panel);
     frame.repaint();
     frame.revalidate();
+    frame.setVisible(true);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 }

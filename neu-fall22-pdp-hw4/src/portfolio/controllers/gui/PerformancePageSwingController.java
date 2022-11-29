@@ -62,6 +62,7 @@ public class PerformancePageSwingController implements SwingPageController {
    */
   @Override
   public SwingPageController handleInput(String input) {
+
     input = input.trim();
     errorMessage = null;
     Map<LocalDate, Double> map;
@@ -77,9 +78,11 @@ public class PerformancePageSwingController implements SwingPageController {
     }
     isFinish = false;
     if (startDate == null || endDate == null) {
+      System.out.println(input);
       String []date = input.split(",");
       try {
         startDate = LocalDate.parse(date[0]);
+        System.out.println(startDate);
         map = portfolioModel.getValues(startDate, startDate);
         if (!map.containsKey(startDate)) {
           errorMessage = "Error:"
