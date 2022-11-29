@@ -1,9 +1,11 @@
-package portfolio.controllers.impl;
+package portfolio.controllers.gui;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+
 import portfolio.controllers.PageController;
+import portfolio.controllers.impl.LoadPageController;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
@@ -15,7 +17,7 @@ import portfolio.views.ViewFactory;
  * for performing the performance of a portfolio in a timespan and creating a view to show it
  * performance.
  */
-public class PerformancePageController implements PageController {
+public class PerformancePageSwingController implements SwingPageController {
 
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
@@ -34,7 +36,7 @@ public class PerformancePageController implements PageController {
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
    */
-  public PerformancePageController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
+  public PerformancePageSwingController(PortfolioModel portfolioModel, ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
   }
@@ -59,40 +61,39 @@ public class PerformancePageController implements PageController {
    * @return PageController as a next page to be redirected
    */
   @Override
-  public PageController handleInput(String input) {
+  public SwingPageController handleInput(String input) {
     input = input.trim();
     errorMessage = null;
     Map<LocalDate, Double> map;
 
     if (input.equals("back")) {
-      return new LoadPageController(portfolioModel, viewFactory);
+      return new LoadPageSwingController(portfolioModel, viewFactory);
     }
 
     if (isFinish) {
       startDate = null;
       endDate = null;
+      portfolioPerformance = null;
     }
     isFinish = false;
-    if (startDate == null && endDate == null) {
+    if (startDate == null || endDate == null) {
+      String []date = input.split(",");
       try {
-        startDate = LocalDate.parse(input);
+        startDate = LocalDate.parse(date[0]);
         map = portfolioModel.getValues(startDate, startDate);
         if (!map.containsKey(startDate)) {
-          errorMessage = "Error: Please choose input new timespan."
-              + "This start date maybe the holiday, weekend, or in the future!";
+          errorMessage = "Error:"
+                  + "The start date maybe the holiday, weekend, or in the future!";
           startDate = null;
-          endDate = null;
           return this;
         }
-        return this;
       } catch (Exception e) {
-        errorMessage = "Error start date format!";
+        errorMessage = "Error date format!";
         startDate = null;
         return this;
       }
-    } else if (startDate != null && endDate == null) {
       try {
-        endDate = LocalDate.parse(input);
+        endDate = LocalDate.parse(date[1]);
         portfolioModel.getValues(startDate, endDate);
         if (endDate.compareTo(LocalDate.now()) > 0) {
           errorMessage = "Error: EndDate cannot be in future.";
@@ -104,14 +105,15 @@ public class PerformancePageController implements PageController {
         endDate = null;
         return this;
       }
-    }
-    try {
-      portfolioPerformance = portfolioModel.getPerformance(startDate, endDate);
-      isFinish = true;
-    } catch (Exception e) {
-      errorMessage = e.getMessage();
-      startDate = null;
-      endDate = null;
+    } else if (startDate != null && endDate != null) {
+      try {
+        portfolioPerformance = portfolioModel.getPerformance(startDate, endDate);
+        isFinish = true;
+      } catch (Exception e) {
+        errorMessage = e.getMessage();
+        startDate = null;
+        endDate = null;
+      }
     }
     return this;
   }
