@@ -17,6 +17,7 @@ public class InfoPageView extends ViewAbs {
    * This is a constructor that construct a determine page view.
    *
    * @param printStream        a PrintStream object to where the output will be directed to
+   * @param costOfBasis        the cost and basis for this portfolio
    * @param portfolioWithPrice the object of PortfolioWithValue
    * @param errorMessage       the error message we want to show to the user
    */
@@ -33,6 +34,7 @@ public class InfoPageView extends ViewAbs {
    * This is a constructor that construct a determine page view. The output stream is System.out.
    *
    * @param portfolioWithPrice the object of PortfolioWithValue
+   * @param costOfBasis        the cost and basis for this portfolio
    * @param errorMessage       the error message we want to show to the user
    */
   public InfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,

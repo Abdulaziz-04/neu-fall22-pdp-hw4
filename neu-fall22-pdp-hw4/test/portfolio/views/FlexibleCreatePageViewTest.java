@@ -36,7 +36,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_Date() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 0, transactions, null);
+        new FlexibleCreatePageView(printStream, false, false, 0, null, transactions, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
         + "!!! If you enter back, you will back to the main menu.\r\n"
@@ -51,7 +51,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_ErrorTime() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 0, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 0, null, transactions,
             "The time format is error");
     view.render();
 
@@ -70,7 +70,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_SymbolError() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 1, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 1, null, transactions,
             "Cannot find the symbol");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -89,7 +89,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_Symbol() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 1, transactions, null);
+        new FlexibleCreatePageView(printStream, false, false, 1, null, transactions, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
         + "!!! If you enter back, you will back to the main menu.\r\n"
@@ -105,7 +105,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_Type() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 2, transactions, null);
+        new FlexibleCreatePageView(printStream, false, false, 2, null, transactions, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
         + "!!! If you enter back, you will back to the main menu.\r\n"
@@ -120,7 +120,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_TypeError() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 2, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 2, null, transactions,
             "Type error");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -139,7 +139,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_ShareError1() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 3, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 3, null, transactions,
             "The shares cannot be negative.");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -158,7 +158,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_ShareError2() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 3, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 3, null, transactions,
             "The share is not a number or an integer.");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -177,7 +177,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_Share() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 3, transactions, null);
+        new FlexibleCreatePageView(printStream, false, false, 3, null, transactions, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
         + "!!! If you enter back, you will back to the main menu.\r\n"
@@ -193,7 +193,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_Fee() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 4, transactions, null);
+        new FlexibleCreatePageView(printStream, false, false, 4, null, transactions, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
         + "!!! If you enter back, you will back to the main menu.\r\n"
@@ -209,7 +209,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_FeeError1() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 4, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 4, null, transactions,
             "Commission cannot be negative.");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -229,7 +229,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_FeeError2() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 4, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 4, null, transactions,
             "Commission fee input is not a number.");
     view.render();
     assertEquals("---------------------ERROR--------------------------------\r\n"
@@ -251,7 +251,7 @@ public class FlexibleCreatePageViewTest {
     transactions.add(new Transaction(TransactionType.BUY, "AAA", 110,
         LocalDate.parse("2022-10-10"), 12));
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 5, transactions, null);
+        new FlexibleCreatePageView(printStream, false, false, 5, null, transactions, null);
     view.render();
     assertEquals("             +-----------+------+---------+---"
         + "------------+---------------+\r\n"
@@ -274,7 +274,7 @@ public class FlexibleCreatePageViewTest {
     transactions.add(new Transaction(TransactionType.BUY, "AAA", 110,
         LocalDate.parse("2022-10-10"), 12));
     View view =
-        new FlexibleCreatePageView(printStream, true, false, 5, transactions, null);
+        new FlexibleCreatePageView(printStream, true, false, 5, null, transactions, null);
 
     view.render();
     assertEquals("             +-----------+------+---------+---"
@@ -296,7 +296,7 @@ public class FlexibleCreatePageViewTest {
   public void testRender_ErrorEnd() {
     setUp();
     View view =
-        new FlexibleCreatePageView(printStream, false, false, 0, transactions,
+        new FlexibleCreatePageView(printStream, false, false, 0, null, transactions,
             " Please enter transaction list again.");
     view.render();
 
@@ -317,7 +317,7 @@ public class FlexibleCreatePageViewTest {
     transactions.add(new Transaction(TransactionType.BUY, "AAA", 110,
         LocalDate.parse("2022-10-10"), 12));
     View view =
-        new FlexibleCreatePageView(printStream, true, true, 5, transactions, null);
+        new FlexibleCreatePageView(printStream, true, true, 5, null, transactions, null);
     view.render();
     assertEquals("-------------------------Tips-----------------------------\r\n"
         + "!!! If you enter back, you will back to the main menu.\r\n"

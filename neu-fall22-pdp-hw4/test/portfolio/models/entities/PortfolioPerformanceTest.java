@@ -19,7 +19,8 @@ public class PortfolioPerformanceTest {
     Map<String, Integer> numStars = new LinkedHashMap<>();
     numStars.put("1", 1);
     numStars.put("2", 2);
-    portfolioPerformance = new PortfolioPerformance(numStars, "this is scale.");
+    portfolioPerformance = new PortfolioPerformance(numStars, "this is scale.",
+            Double.parseDouble("2"), Double.parseDouble("1"));
   }
 
   @Test

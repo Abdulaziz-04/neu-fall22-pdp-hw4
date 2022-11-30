@@ -10,9 +10,11 @@ import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
+import portfolio.views.impl.FlexibleCreatePageView;
 
 /**
- * This is a class that can generate different view, which implement the view factory.
+ * This is a class that can generate different Swing view, which implement the view factory. It
+ * will contain the inputHandler and frame.
  */
 public class SwingViewFactory implements ViewFactory {
 
@@ -27,7 +29,8 @@ public class SwingViewFactory implements ViewFactory {
   @Override
   public View newInfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
       String errorMessage) {
-    return null;
+    return new InforPageSwingView(frame, inputHandler,portfolioWithPrice, costOfBasis,
+            errorMessage);
   }
 
   @Override
@@ -38,13 +41,16 @@ public class SwingViewFactory implements ViewFactory {
 
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
+                                        List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage) {
-    return null;
+    return new FlexibleCreatePageSwingView(frame, inputHandler, isEnd, isNamed, stage,
+            inputBuffer, transactions,
+            errorMessage);
   }
 
   @Override
   public View newLoadPageView(Portfolio portfolio, boolean showModifyMenu, String errorMessage) {
-    return null;
+    return new LoadPageSwingView(frame, inputHandler, portfolio, showModifyMenu, errorMessage );
   }
 
   @Override
@@ -58,7 +64,9 @@ public class SwingViewFactory implements ViewFactory {
       LocalDate endDate,
       Map<String, Integer> performance,
       String scale, boolean isFinish, String errorMessage) {
-    return null;
+    return new PerformancePageSwingView(frame, inputHandler,portfolioName, startDate, endDate,
+            performance, scale, isFinish,
+            errorMessage);
   }
 
 }

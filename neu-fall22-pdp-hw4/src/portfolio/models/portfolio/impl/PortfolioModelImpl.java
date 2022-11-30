@@ -332,7 +332,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       for (var entry : perf.entrySet()) {
         scaledPerf.put(entry.getKey(), 0);
       }
-      return new PortfolioPerformance(scaledPerf, scale);
+      return new PortfolioPerformance(scaledPerf, scale, maxAmount, minAmount);
     }
     // the min can not be zero when we calculate the scale
     if (minAmount.equals(0.0)) {
@@ -372,7 +372,7 @@ public class PortfolioModelImpl implements PortfolioModel {
         scaledPerf.put(entry.getKey(), star);
       }
     }
-    return new PortfolioPerformance(scaledPerf, scale);
+    return new PortfolioPerformance(scaledPerf, scale, maxAmount,minAmount);
   }
 
 

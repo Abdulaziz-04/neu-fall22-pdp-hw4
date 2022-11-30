@@ -1,6 +1,7 @@
-package portfolio.controllers.impl;
+package portfolio.controllers.gui;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+
 import portfolio.controllers.FrontController;
 import portfolio.controllers.InputHandler;
 import portfolio.controllers.PageController;
@@ -11,7 +12,7 @@ import portfolio.views.gui.SwingViewFactory;
 
 public class SwingFrontController implements FrontController, InputHandler {
 
-  private PageController pageController;
+  private SwingPageController pageController;
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   /**
@@ -24,7 +25,7 @@ public class SwingFrontController implements FrontController, InputHandler {
     JFrame frame = new JFrame();
     frame.setVisible(true);
     this.viewFactory = new SwingViewFactory(frame, this);
-    this.pageController = new MainPageController(portfolioModel, viewFactory);
+    this.pageController = new MainPageSwingController(portfolioModel, viewFactory);
   }
 
   @Override

@@ -2,8 +2,8 @@ package portfolio;
 
 import java.util.Objects;
 import portfolio.controllers.FrontController;
+import portfolio.controllers.gui.SwingFrontController;
 import portfolio.controllers.impl.FrontControllerImpl;
-import portfolio.controllers.impl.SwingFrontController;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.ScheduleRunner;
@@ -29,7 +29,6 @@ public class Main {
    * @throws Exception error
    */
   public static void main(String[] args) throws Exception {
-
 
     // Models
     StockPriceApi stockPriceApi = new AlphaVantageApi();

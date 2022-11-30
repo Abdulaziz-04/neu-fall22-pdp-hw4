@@ -12,7 +12,8 @@ public class MainPageView extends ViewAbs {
   private final boolean isInitFailed;
 
   /**
-   * It will show the error message for main menu.
+   * This is a constructor to construct a main page view. It will show the error message to user
+   * if there is any error.
    *
    * @param printStream  a PrintStream object to where the output will be directed to
    * @param errorMessage "Please enter the correct number!"
@@ -25,7 +26,8 @@ public class MainPageView extends ViewAbs {
   }
 
   /**
-   * It will show the error message for main menu. The output stream is System.out.
+   * This is a constructor to construct a main page view. It will show the error message to user
+   * if there is any error. The output stream is System.out.
    *
    * @param errorMessage "Please enter the correct number!"
    * @param isInitFailed is initialization failed

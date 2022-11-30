@@ -16,6 +16,7 @@ public class FlexibleCreatePageView extends ViewAbs {
   private final Boolean isEnd;
   private final Boolean isNamed;
   private final int state;
+  private List<String> inputBuffer;
 
   /**
    * This is a constructor that construct a create page view. The error messages will contain "Error
@@ -26,15 +27,18 @@ public class FlexibleCreatePageView extends ViewAbs {
    * @param printStream  a PrintStream object to where the output will be directed to
    * @param isEnd        if the user finish input the portfolio, it will be true. Otherwise, false.
    * @param isNamed      if the user finish input name, it will be true. Otherwise, false.
+   * @param state        the inputBuffer size in controller
    * @param transactions the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
-  public FlexibleCreatePageView(PrintStream printStream, Boolean isEnd, Boolean isNamed, int state,
-      List<Transaction> transactions, String errorMessage) {
+  public FlexibleCreatePageView(PrintStream printStream, Boolean isEnd, Boolean isNamed,
+                                int state, List<String> inputBuffer,
+                                List<Transaction> transactions, String errorMessage) {
     super(printStream);
     this.isEnd = isEnd;
     this.isNamed = isNamed;
     this.state = state;
+    this.inputBuffer = inputBuffer;
     this.transactions = transactions;
     this.errorMessage = errorMessage;
   }
@@ -47,15 +51,17 @@ public class FlexibleCreatePageView extends ViewAbs {
    *
    * @param isEnd        if user finish input the portfolio, it will be true. Otherwise, false.
    * @param isNamed      if user finish input name, it will be true. Otherwise, false.
+   * @param state        the inputBuffer size in controller
    * @param transactions the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
-  public FlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int state,
-      List<Transaction> transactions,
-      String errorMessage) {
+  public FlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int state, List<String> inputBuffer,
+                                List<Transaction> transactions,
+                                String errorMessage) {
     this.isEnd = isEnd;
     this.isNamed = isNamed;
     this.state = state;
+    this.inputBuffer = inputBuffer;
     this.transactions = transactions;
     this.errorMessage = errorMessage;
   }
