@@ -37,13 +37,15 @@ public interface Portfolio {
    */
   Portfolio create(List<Transaction> transactions) throws Exception;
 
+  Portfolio create(List<Transaction> transactions, List<BuySchedule> schedule) throws Exception;
+
   /**
    * This is a method to get the composition map of a portfolio. Return a map with the symbol and
    * amount(shares).
    *
    * @return a list with the symbol and amount.
    */
-  Map<String, Integer> getComposition();
+  Map<String, Double> getComposition();
 
   /**
    * This is a method to get the composition map of a portfolio on a given date. Return a map with
@@ -52,7 +54,7 @@ public interface Portfolio {
    * @param date the date that we want to get the composition
    * @return map with the symbol and amount(shares).
    */
-  Map<String, Integer> getComposition(LocalDate date);
+  Map<String, Double> getComposition(LocalDate date);
 
   /**
    * This is a method to return a list of transaction entry.
@@ -96,4 +98,5 @@ public interface Portfolio {
    */
   boolean isReadOnly();
 
+  List<BuySchedule> getBuySchedules();
 }

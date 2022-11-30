@@ -53,6 +53,16 @@ public interface PortfolioModel {
    */
   void addTransactions(List<Transaction> transactions) throws Exception;
 
+  void addSchedule(String name, double amount, int frequencyDays,
+      LocalDate startDate,
+      LocalDate endDate, double transactionFee, LocalDate lastRunDate,
+      List<Transaction> buyingList) throws Exception;
+
+  void modifySchedule(String name, double amount, int frequencyDays,
+      LocalDate startDate,
+      LocalDate endDate, double transactionFee, LocalDate lastRunDate,
+      List<Transaction> buyingList) throws Exception;
+
   /**
    * This is a method to get the portfolio with value on a certain date.
    *

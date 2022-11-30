@@ -38,7 +38,7 @@ public class MainPageControllerTest {
   public void setUp() throws Exception {
     argumentCaptor = new ArgumentCaptor<>();
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, null);
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     pageController = new MainPageController(portfolioModel, viewFactory);
   }
@@ -46,7 +46,7 @@ public class MainPageControllerTest {
   @Test
   public void failToInit() {
     stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, null);
     pageController = new MainPageController(portfolioModel, viewFactory);
 
     pageController.getView();

@@ -153,7 +153,6 @@ public class FlexibleCreatePageController implements PageController {
         portfolioModel.checkTransactions(transactions);
         portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
-        //portfolioModel.init();
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
         inputBuffer.clear();

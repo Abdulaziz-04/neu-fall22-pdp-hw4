@@ -7,7 +7,6 @@ import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Before;
@@ -19,6 +18,7 @@ import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
+import portfolio.models.portfolio.impl.DollarCostAverageRunner;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;
 import portfolio.models.portfolio.impl.PortfolioTextParser;
 import portfolio.models.stockprice.StockQueryService;
@@ -30,15 +30,16 @@ import portfolio.models.stockprice.StockQueryServiceImpl;
 public class PortfolioModelImplTest {
 
   private PortfolioModel portfolioModel;
-  private final Map<String, Integer> map = new HashMap<>();
   private final List<Transaction> transactions = new ArrayList<>();
   private final List<Transaction> transactions2 = new ArrayList<>();
   private final double EPSILON = 0.000000001;
+  private ScheduleRunner runner;
 
   @Before
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser());
+    runner = new DollarCostAverageRunner(stockQueryService);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), runner);
 
     transactions.add(
         new Transaction(TransactionType.BUY, "AAA", 110, LocalDate.parse("2022-10-10"), 10));
@@ -72,11 +73,24 @@ public class PortfolioModelImplTest {
     for (int i = 0; i < transactions.size(); i++) {
       assertEquals(actual.get(i).getType(), transactions.get(i).getType());
       assertEquals(actual.get(i).getSymbol(), transactions.get(i).getSymbol());
-      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount());
+      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount(), EPSILON);
       assertEquals(actual.get(i).getDate(), transactions.get(i).getDate());
     }
-    Map<String, Integer> actualMap = actualPortfolio.getComposition();
+    Map<String, Double> actualMap = actualPortfolio.getComposition();
     assertEquals(2, actualMap.size());
+  }
+
+  @Test
+  public void create_flexible_noTransaction() throws Exception {
+    Portfolio actualPortfolio = portfolioModel.create("name", PortfolioFormat.FLEXIBLE,
+        new ArrayList<>());
+
+    List<Transaction> actual = actualPortfolio.getTransactions();
+
+    assertEquals(PortfolioFormat.FLEXIBLE, actualPortfolio.getFormat());
+    assertEquals(0, actual.size());
+    Map<String, Double> actualMap = actualPortfolio.getComposition();
+    assertEquals(0, actualMap.size());
   }
 
   @Test
@@ -91,11 +105,11 @@ public class PortfolioModelImplTest {
     for (int i = 0; i < transactions.size(); i++) {
       assertEquals(actual.get(i).getType(), transactions.get(i).getType());
       assertEquals(actual.get(i).getSymbol(), transactions.get(i).getSymbol());
-      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount());
+      assertEquals(actual.get(i).getAmount(), transactions.get(i).getAmount(), EPSILON);
       assertEquals(actual.get(i).getDate(), transactions.get(i).getDate());
     }
-    Map<String, Integer> actualMap = actualPortfolio.getComposition();
-    assertEquals(2, actualMap.size());
+    Map<String, Double> actualMap = actualPortfolio.getComposition();
+    assertEquals(2, actualMap.size(), EPSILON);
   }
 
   @Test
@@ -152,6 +166,88 @@ public class PortfolioModelImplTest {
   }
 
   @Test
+  public void load_v3_flexible() throws Exception {
+    String str = "[INFO]\n"
+        + "FORMAT=FLEXIBLE\n"
+        + "VERSION=3\n"
+        + "\n"
+        + "[TRANSACTION]\n"
+        + "2022-10-10,BUY,AAA,100,12.3\n"
+        + "2022-10-11,SELL,AAA,10,4\n"
+        + "2022-10-11,BUY,AAPL,123,5\n\n";
+    portfolioModel.load("name", str);
+    assertEquals(PortfolioFormat.FLEXIBLE, portfolioModel.getPortfolio().getFormat());
+  }
+
+  @Test
+  public void load_v3_inflexible() throws Exception {
+    String str = "[INFO]\r\nFORMAT=INFLEXIBLE\r\nVERSION=3\r\n\r\n[TRANSACTION]\r\nAAA,100\r\nAAPL,123\r\n\r\n";
+    portfolioModel.load("name", str);
+    assertEquals(PortfolioFormat.INFLEXIBLE, portfolioModel.getPortfolio().getFormat());
+  }
+
+  @Test
+  public void load_v3_flexible_withSchedule() throws Exception {
+    String str = "[INFO]\r\n"
+        + "FORMAT=FLEXIBLE\r\n"
+        + "VERSION=3\r\n"
+        + "\r\n"
+        + "[SCHEDULE]\r\n"
+        + "NAME=DOLLAR_COST_AVG\r\n"
+        + "AMOUNT=2000\r\n"
+        + "SCHEDULE=5,2022-10-05,2022-10-10\r\n"
+        + "TRANSACTION_FEE=10\r\n"
+        + "LAST_RUN_DATE=2022-09-30\r\n"
+        + "AAPL,40\r\n"
+        + "AAA,20\r\n"
+        + "\r\n"
+        + "[TRANSACTION]\r\n"
+        + "2022-10-10,BUY,AAA,100,12.3\r\n"
+        + "2022-10-11,SELL,AAA,10,4\r\n"
+        + "2022-10-11,BUY,AAPL,123,5\r\n\r\n";
+
+    portfolioModel.load("name", str);
+
+    List<Transaction> expected = new ArrayList<>();
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAA", 6.6000, LocalDate.parse("2022-10-05"), 10.0));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAPL", 146.666666, LocalDate.parse("2022-10-05"),
+            10.0));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAA", 15.0, LocalDate.parse("2022-10-10"), 10.0));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAA", 100.0, LocalDate.parse("2022-10-10"), 12.3));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAPL", 330.000, LocalDate.parse("2022-10-10"), 10.0));
+    expected.add(
+        new Transaction(TransactionType.SELL, "AAA", 10.0, LocalDate.parse("2022-10-11"), 4));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAPL", 123.0, LocalDate.parse("2022-10-11"), 5));
+
+    List<Transaction> actual = portfolioModel.getPortfolio().getTransactions();
+    assertEquals(PortfolioFormat.FLEXIBLE, portfolioModel.getPortfolio().getFormat());
+    assertEquals(7, actual.size());
+    for (int i = 0; i < expected.size(); i++) {
+      assertEquals(expected.get(i).getSymbol(), actual.get(i).getSymbol());
+      assertEquals(expected.get(i).getType(), actual.get(i).getType());
+      assertEquals(expected.get(i).getDate(), actual.get(i).getDate());
+      assertEquals(expected.get(i).getAmount(), actual.get(i).getAmount(), 0.001);
+      assertEquals(expected.get(i).getCommissionFee(), actual.get(i).getCommissionFee());
+    }
+    List<BuySchedule> schedules = portfolioModel.getPortfolio().getBuySchedules();
+    assertEquals(1, schedules.size());
+    assertEquals(LocalDate.now(), schedules.get(0).getLastRunDate());
+  }
+
+  @Test
+  public void load_v3_flexible_withMultipleSchedule() throws Exception {
+    String str = "FORMAT=INFLEXIBLE\r\nAAA,100\r\nAAPL,100\r\n";
+    portfolioModel.load("name", str);
+    assertEquals(PortfolioFormat.INFLEXIBLE, portfolioModel.getPortfolio().getFormat());
+  }
+
+  @Test
   public void checkTransaction() throws Exception {
     assertTrue(portfolioModel.checkTransaction(LocalDate.parse("2022-10-11"), "AAA"));
   }
@@ -179,7 +275,7 @@ public class PortfolioModelImplTest {
   @Test
   public void checkTransaction_apiUnavailable() {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser());
+    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), null);
     try {
       portfolioModel.checkTransaction(LocalDate.parse("2022-10-11"), "AAAAA");
       fail();
@@ -221,7 +317,7 @@ public class PortfolioModelImplTest {
   @Test
   public void checkTransactions_apiUnavailable() {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(true));
-    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser());
+    portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), null);
     List<Transaction> transactions = new ArrayList<>();
     transactions.add(
         new Transaction(TransactionType.BUY, "AAAAA", 110, LocalDate.parse("2022-10-10"), 10));
@@ -393,4 +489,215 @@ public class PortfolioModelImplTest {
     }
   }
 
+  @Test
+  public void addSchedule() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    List<Transaction> buyingList = new ArrayList<>();
+    buyingList.add(new Transaction("AAPL", 10));
+    buyingList.add(new Transaction("AAA", 10));
+    portfolioModel.addSchedule(
+        "name",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList);
+
+    List<Transaction> expected = new ArrayList<>();
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAA", 22.61363, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAA", 110.0, LocalDate.parse("2022-10-10"), 10.0));
+    expected.add(
+        new Transaction(TransactionType.SELL, "AAA", 10.0, LocalDate.parse("2022-10-10"), 20.0));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAPL", 248.75, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(
+        new Transaction(TransactionType.BUY, "AAPL", 1000.0, LocalDate.parse("2022-10-11"), 30.0));
+
+    List<Transaction> actual = portfolioModel.getPortfolio().getTransactions();
+    assertEquals(PortfolioFormat.FLEXIBLE, portfolioModel.getPortfolio().getFormat());
+    assertEquals(5, actual.size());
+    for (int i = 0; i < expected.size(); i++) {
+      assertEquals(expected.get(i).getSymbol(), actual.get(i).getSymbol());
+      assertEquals(expected.get(i).getType(), actual.get(i).getType());
+      assertEquals(expected.get(i).getDate(), actual.get(i).getDate());
+      assertEquals(expected.get(i).getAmount(), actual.get(i).getAmount(), 0.001);
+      assertEquals(expected.get(i).getCommissionFee(), actual.get(i).getCommissionFee());
+    }
+    List<BuySchedule> schedules = portfolioModel.getPortfolio().getBuySchedules();
+    assertEquals(1, schedules.size());
+    assertEquals(LocalDate.now(), schedules.get(0).getLastRunDate());
+  }
+
+  @Test
+  public void addSchedule_duplicateName() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    List<Transaction> buyingList = new ArrayList<>();
+    buyingList.add(new Transaction("AAPL", 10));
+    buyingList.add(new Transaction("AAA", 10));
+    portfolioModel.addSchedule(
+        "name",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList);
+
+    try {
+      portfolioModel.addSchedule(
+          "name",
+          2000,
+          5,
+          LocalDate.parse("2022-09-05"),
+          LocalDate.parse("2022-10-10"),
+          5,
+          LocalDate.parse("2022-10-05"),
+          buyingList);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Duplicate schedule name in the same portfolio.", e.getMessage());
+    }
+  }
+
+  @Test
+  public void addSchedule_multipleSchedules() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    List<Transaction> buyingList1 = new ArrayList<>();
+    buyingList1.add(new Transaction("AAPL", 10));
+    List<Transaction> buyingList2 = new ArrayList<>();
+    buyingList2.add(new Transaction("AAA", 10));
+    portfolioModel.addSchedule(
+        "s1",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList1);
+    assertEquals(4, portfolioModel.getPortfolio().getTransactions().size());
+    portfolioModel.addSchedule(
+        "s2",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList2);
+    assertEquals(5, portfolioModel.getPortfolio().getTransactions().size());
+    assertEquals(2, portfolioModel.getPortfolio().getBuySchedules().size());
+  }
+
+  @Test
+  public void addSchedule_modifyPortfolio() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    List<Transaction> buyingList1 = new ArrayList<>();
+    buyingList1.add(new Transaction("AAPL", 10));
+    List<Transaction> buyingList2 = new ArrayList<>();
+    buyingList2.add(new Transaction("AAA", 10));
+    portfolioModel.addSchedule(
+        "s1",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList1);
+    portfolioModel.addSchedule(
+        "sss",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList1);
+    List<BuySchedule> schedules = portfolioModel.getPortfolio().getBuySchedules();
+    assertEquals("AAPL", schedules.get(0).getBuyingList().get(0).getSymbol());
+    assertEquals(2, portfolioModel.getPortfolio().getBuySchedules().size());
+
+    portfolioModel.modifySchedule(
+        "s1",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList2);
+    schedules = portfolioModel.getPortfolio().getBuySchedules();
+    assertEquals("s1", schedules.get(1).getName());
+    assertEquals("AAA", schedules.get(1).getBuyingList().get(0).getSymbol());
+    assertEquals(2, portfolioModel.getPortfolio().getBuySchedules().size());
+  }
+
+  @Test
+  public void addSchedule_noScheduleToModify() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    List<Transaction> buyingList1 = new ArrayList<>();
+    buyingList1.add(new Transaction("AAPL", 10));
+    List<Transaction> buyingList2 = new ArrayList<>();
+    buyingList2.add(new Transaction("AAA", 10));
+    portfolioModel.addSchedule(
+        "s1",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList1);
+    portfolioModel.addSchedule(
+        "sss",
+        2000,
+        5,
+        LocalDate.parse("2022-09-05"),
+        LocalDate.parse("2022-10-10"),
+        5,
+        LocalDate.parse("2022-10-05"),
+        buyingList1);
+
+    try {
+      portfolioModel.modifySchedule(
+          "s3",
+          2000,
+          5,
+          LocalDate.parse("2022-09-05"),
+          LocalDate.parse("2022-10-10"),
+          5,
+          LocalDate.parse("2022-10-05"),
+          buyingList2);
+      fail();
+    }
+    catch (Exception e) {
+      assertEquals("Cannot find schedule name: s3", e.getMessage());
+    }
+  }
+
+  @Test
+  public void addSchedule_noScheduleInPortfolio() throws Exception {
+    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
+    try {
+      portfolioModel.modifySchedule(
+          "s3",
+          2000,
+          5,
+          LocalDate.parse("2022-09-05"),
+          LocalDate.parse("2022-10-10"),
+          5,
+          LocalDate.parse("2022-10-05"),
+          null);
+      fail();
+    }
+    catch (Exception e) {
+      assertEquals("Current portfolio does not have buy schedule.", e.getMessage());
+    }
+  }
 }

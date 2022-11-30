@@ -9,7 +9,7 @@ public class Transaction {
 
   private final TransactionType txType;
   private final String symbol;
-  private final int amount;
+  private final double amount;
   private final LocalDate date;
   private final Double commissionFee;
 
@@ -21,7 +21,7 @@ public class Transaction {
    * @param symbol the symbol of stock
    * @param amount the share for this stock
    */
-  public Transaction(String symbol, int amount) {
+  public Transaction(String symbol, double amount) {
     this.txType = null;
     this.symbol = symbol;
     this.amount = amount;
@@ -41,7 +41,7 @@ public class Transaction {
    */
   public Transaction(TransactionType txType,
       String symbol,
-      int amount,
+      double amount,
       LocalDate date,
       double commissionFee) {
     this.txType = txType;
@@ -74,7 +74,7 @@ public class Transaction {
    *
    * @return the shares of a stock
    */
-  public int getAmount() {
+  public double getAmount() {
     return amount;
   }
 

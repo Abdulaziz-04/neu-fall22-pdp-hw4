@@ -1,12 +1,15 @@
 package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 
 /**
@@ -14,7 +17,7 @@ import portfolio.models.portfolio.Portfolio;
  */
 public class FlexiblePortfolio extends PortfolioAbs {
 
-
+  private final List<BuySchedule> schedules;
   /**
    * This is a constructor to a flexible portfolio object, which will contain the name of this
    * portfolio and a list of transaction entry.
@@ -22,10 +25,15 @@ public class FlexiblePortfolio extends PortfolioAbs {
    * @param name         the name of a portfolio
    * @param transactions a list of transaction entry
    */
-  public FlexiblePortfolio(String name, List<Transaction> transactions) {
+  public FlexiblePortfolio(String name, List<Transaction> transactions, List<BuySchedule> schedule) {
     super(name, transactions);
+    this.schedules = schedule;
   }
 
+  public FlexiblePortfolio(String name, List<Transaction> transactions) {
+    super(name, transactions);
+    this.schedules = new ArrayList<>();
+  }
   @Override
   public PortfolioFormat getFormat() {
     return PortfolioFormat.FLEXIBLE;
@@ -34,6 +42,11 @@ public class FlexiblePortfolio extends PortfolioAbs {
   @Override
   public Portfolio create(List<Transaction> transactions) {
     return new FlexiblePortfolio(name, transactions);
+  }
+
+  @Override
+  public Portfolio create(List<Transaction> transactions, List<BuySchedule> schedules) throws Exception {
+    return new FlexiblePortfolio(name, transactions, schedules);
   }
 
   @Override
@@ -54,6 +67,11 @@ public class FlexiblePortfolio extends PortfolioAbs {
   @Override
   public boolean isReadOnly() {
     return false;
+  }
+
+  @Override
+  public List<BuySchedule> getBuySchedules() {
+    return Collections.unmodifiableList(schedules);
   }
 
 }

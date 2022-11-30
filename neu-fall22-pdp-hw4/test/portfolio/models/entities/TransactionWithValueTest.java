@@ -14,6 +14,7 @@ import portfolio.models.entities.PortfolioEntryWithValue;
 public class TransactionWithValueTest {
 
   private PortfolioEntryWithValue portfolioEntryWithValue;
+  private final double EPSILON = 0.000000001;
 
   @Before
   public void setup() {
@@ -26,7 +27,7 @@ public class TransactionWithValueTest {
   @Test
   public void test() {
     assertEquals("AAA", portfolioEntryWithValue.getSymbol());
-    assertEquals(100, portfolioEntryWithValue.getAmount());
+    assertEquals(100, portfolioEntryWithValue.getAmount(), EPSILON);
     assertEquals(Double.valueOf(100.2), portfolioEntryWithValue.getValue());
   }
 

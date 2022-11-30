@@ -12,6 +12,7 @@ import portfolio.models.entities.Transaction;
 public class TransactionTest {
 
   private Transaction transaction;
+  private final double EPSILON = 0.000000001;
 
   @Before
   public void setup() {
@@ -21,7 +22,7 @@ public class TransactionTest {
   @Test
   public void test() {
     assertEquals("AAA", transaction.getSymbol());
-    assertEquals(100, transaction.getAmount());
+    assertEquals(100, transaction.getAmount(), EPSILON);
   }
 
 }

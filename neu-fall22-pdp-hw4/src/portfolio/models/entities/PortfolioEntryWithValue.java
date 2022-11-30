@@ -8,7 +8,7 @@ package portfolio.models.entities;
 public class PortfolioEntryWithValue {
 
   private final String symbol;
-  private final int amount;
+  private final double amount;
   private final Double value;
 
   /**
@@ -17,7 +17,7 @@ public class PortfolioEntryWithValue {
    * @param symbol PortfolioEntry object containing symbol and shares
    * @param value  the value of this stock
    */
-  public PortfolioEntryWithValue(String symbol, int amount, Double value) {
+  public PortfolioEntryWithValue(String symbol, double amount, Double value) {
     this.value = value;
     this.symbol = symbol;
     this.amount = amount;
@@ -46,7 +46,7 @@ public class PortfolioEntryWithValue {
    *
    * @return the shares of this stock.
    */
-  public int getAmount() {
+  public double getAmount() {
     return amount;
   }
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.StockPrice;
 import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 
 /**
@@ -36,6 +37,11 @@ public class InflexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
+  public Portfolio create(List<Transaction> transactions, List<BuySchedule> schedule) throws Exception {
+    throw new Exception("Buy schedule is not supported.");
+  }
+
+  @Override
   public double getCostBasis(LocalDate date, Map<String, StockPrice> prices) throws Exception {
     throw new Exception("Cost basis function is not supported.");
   }
@@ -43,6 +49,11 @@ public class InflexiblePortfolio extends PortfolioAbs {
   @Override
   public boolean isReadOnly() {
     return true;
+  }
+
+  @Override
+  public List<BuySchedule> getBuySchedules()  {
+    return null;
   }
 
 }

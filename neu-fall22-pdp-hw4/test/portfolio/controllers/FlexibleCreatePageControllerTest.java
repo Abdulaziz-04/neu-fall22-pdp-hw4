@@ -42,7 +42,7 @@ public class FlexibleCreatePageControllerTest {
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser);
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, null);
     argumentCaptor = new ArgumentCaptor<>();
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
 
