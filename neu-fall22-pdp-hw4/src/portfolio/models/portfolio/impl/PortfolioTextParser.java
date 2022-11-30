@@ -88,18 +88,11 @@ public class PortfolioTextParser implements PortfolioParser {
     double transactionFee = Double.parseDouble(m.group(1));
     m = Pattern.compile("LAST_RUN_DATE=(.*)").matcher(str);
     m.find();
-    LocalDate lastRunDate = LocalDate.parse(m.group(1));
-
-//    m = Pattern.compile("^(?:\\w+,\\w+\n)+").matcher(str);
-//    boolean hasTransactions = m.find();
-//    List<Transaction> transactions = null;
-//    if (hasTransactions) {
-//      transactions = parseTransaction(m.group());
-//    }
+    LocalDate lastRunDate = m.group(1).isEmpty() ? null : LocalDate.parse(m.group(1));
 
     List<String> lines = new ArrayList<>();
-    for (var line: str.split("\n")) {
-      if (!line.contains("=") && !line.contains("[")){
+    for (var line : str.split("\n")) {
+      if (!line.contains("=") && !line.contains("[")) {
         lines.add(line);
       }
     }
@@ -107,6 +100,7 @@ public class PortfolioTextParser implements PortfolioParser {
     List<Transaction> transactions = parseTransaction(String.join("\n", lines));
 
     return new DollarCostAverageSchedule(
+        name,
         amount,
         Integer.parseInt(splited[0]),
         LocalDate.parse(splited[1]),
@@ -125,9 +119,11 @@ public class PortfolioTextParser implements PortfolioParser {
     if (version == 3) {
       Matcher m = Pattern.compile("\\[SCHEDULE\\]([\\s\\S]*?[\\r\\n]{2})")
           .matcher(str);
-      m.find();
-      String scheduleStr = m.group(1);
-      BuySchedule schedule = parseSchedule(scheduleStr);
+      List<BuySchedule> buySchedules = new ArrayList<>();
+      while (m.find()) {
+        String scheduleStr = m.group(1);
+        buySchedules.add(parseSchedule(scheduleStr));
+      }
 
       Matcher txMatcher = Pattern.compile("\\[TRANSACTION\\]([\\s\\S]*?[\\r\\n]{2})")
           .matcher(str);
@@ -135,7 +131,7 @@ public class PortfolioTextParser implements PortfolioParser {
       String txStr = txMatcher.group(1);
       List<Transaction> transactions = parseTransaction(txStr);
 
-      return new FlexiblePortfolio(null, transactions, schedule);
+      return new FlexiblePortfolio(null, transactions, buySchedules);
     } else if (version == 2) {
       String txStr = str.substring(str.indexOf('\n') + 1);
       List<Transaction> transactions = parseTransaction(txStr);
@@ -169,19 +165,21 @@ public class PortfolioTextParser implements PortfolioParser {
     builder.append("FORMAT=").append(portfolio.getFormat()).append("\n");
     builder.append("VERSION=3\n\n");
 
-    BuySchedule schedule = portfolio.getBuySchedule();
-    if (schedule != null) {
-      builder.append("[SCHEDULE]\n");
-      builder.append(String.format("NAME=%s\n"
-              + "SCHEDULE=%d,%s,%s\n"
-              + "TRANSACTION_FEE=%.2f\n"
-              + "LAST_RUN_DATE=%s\n", schedule.getName(), schedule.getFrequencyDays(),
-          schedule.getStartDate(), schedule.getEndDate(), schedule.getTransactionFee(),
-          schedule.getLastRunDate()));
-      for (var entry : schedule.getBuyingList()) {
-        builder.append(String.format("%s, %.2f\n",entry.getSymbol(), entry.getAmount()));
+    List<BuySchedule> schedules = portfolio.getBuySchedules();
+    if (schedules != null) {
+      for (var schedule : schedules) {
+        builder.append("[SCHEDULE]\n");
+        builder.append(String.format("NAME=%s\n"
+                + "SCHEDULE=%d,%s,%s\n"
+                + "TRANSACTION_FEE=%.2f\n"
+                + "LAST_RUN_DATE=%s\n", schedule.getName(), schedule.getFrequencyDays(),
+            schedule.getStartDate(), schedule.getEndDate(), schedule.getTransactionFee(),
+            schedule.getLastRunDate()));
+        for (var entry : schedule.getBuyingList()) {
+          builder.append(String.format("%s, %.2f\n", entry.getSymbol(), entry.getAmount()));
+        }
+        builder.append("\n");
       }
-      builder.append("\n");
     }
 
     builder.append("[TRANSACTION]\n");

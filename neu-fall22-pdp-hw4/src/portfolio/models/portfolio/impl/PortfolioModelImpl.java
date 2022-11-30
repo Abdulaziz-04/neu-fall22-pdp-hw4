@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
@@ -78,12 +80,21 @@ public class PortfolioModelImpl implements PortfolioModel {
     var p = portfolioParser.parse(text);
     checkTransactions(p.getTransactions());
     List<Transaction> transactions = new ArrayList<>(p.getTransactions());
-    BuySchedule schedule = p.getBuySchedule();
-    if (schedule != null) {
-      List<Transaction> scheduledTransactions = scheduleRunner.run(LocalDate.now(), schedule);
-      transactions.addAll(scheduledTransactions);
-    }
+    List<BuySchedule> schedules = p.getBuySchedules();
     portfolio = create(name, p.getFormat(), transactions);
+    if (schedules != null) {
+      for(var schedule: schedules) {
+        addScheduler(
+            schedule.getName(),
+            schedule.getAmount(),
+            schedule.getFrequencyDays(),
+            schedule.getStartDate(),
+            schedule.getEndDate(),
+            schedule.getTransactionFee(),
+            schedule.getBuyingList()
+        );
+      }
+    }
   }
 
   @Override
@@ -128,30 +139,49 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public void addScheduler(double amount, int frequencyDays, LocalDate startDate, LocalDate endDate,
+  public void addScheduler(String name, double amount, int frequencyDays, LocalDate startDate, LocalDate endDate,
       double transactionFee, List<Transaction> buyingList) throws Exception {
-    BuySchedule schedule = new DollarCostAverageSchedule(amount, frequencyDays, startDate, endDate,
+    BuySchedule schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
         transactionFee, null, buyingList);
+    List<BuySchedule> currentSchedules = portfolio.getBuySchedules();
+    if (currentSchedules == null){
+      throw new Exception("Cannot add schedule to this portfolio.");
+    }
+    if (currentSchedules.stream().anyMatch(x -> Objects.equals(x.getName(), name))) {
+      throw new Exception("Duplicate schedule name in the same portfolio.");
+    }
     List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
     List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
     scheduledTransaction.addAll(transactions);
-    portfolio = portfolio.create(scheduledTransaction, schedule);
+    currentSchedules.add(schedule);
+    portfolio = portfolio.create(scheduledTransaction, currentSchedules);
   }
 
   @Override
-  public void modifyScheduler(double amount, int frequencyDays, LocalDate startDate,
+  public void modifyScheduler(String name, double amount, int frequencyDays, LocalDate startDate,
       LocalDate endDate, double transactionFee, List<Transaction> buyingList) throws Exception {
-
-    if (portfolio.getBuySchedule() == null) {
+    List<BuySchedule> schedules = portfolio.getBuySchedules();
+    if (schedules == null || schedules.isEmpty()) {
       throw new Exception("Current portfolio does not have buy schedule.");
     }
-    BuySchedule schedule = new DollarCostAverageSchedule(amount, frequencyDays, startDate, endDate,
-        transactionFee, portfolio.getBuySchedule().getLastRunDate(), buyingList);
-
+    BuySchedule schedule = null;
+    for (int i = 0; i < schedules.size(); i++) {
+      if (Objects.equals(schedules.get(i).getName(), name)) {
+        schedule = schedules.get(i);
+        schedules.remove(i);
+        break;
+      }
+    }
+    if (schedule == null) {
+      throw new Exception("Cannot find schedule name: " + name);
+    }
+    schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
+        transactionFee, schedule.getLastRunDate(), buyingList);
     List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
     List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
     scheduledTransaction.addAll(transactions);
-    portfolio = portfolio.create(scheduledTransaction, schedule);
+    schedules.add(schedule);
+    portfolio = portfolio.create(scheduledTransaction, schedules);
   }
 
   @Override

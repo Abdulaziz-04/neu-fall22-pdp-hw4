@@ -37,7 +37,7 @@ public interface Portfolio {
    */
   Portfolio create(List<Transaction> transactions) throws Exception;
 
-  Portfolio create(List<Transaction> transactions, BuySchedule schedule) throws Exception;
+  Portfolio create(List<Transaction> transactions, List<BuySchedule> schedule) throws Exception;
 
   /**
    * This is a method to get the composition map of a portfolio. Return a map with the symbol and
@@ -98,5 +98,5 @@ public interface Portfolio {
    */
   boolean isReadOnly();
 
-  BuySchedule getBuySchedule();
+  List<BuySchedule> getBuySchedules();
 }

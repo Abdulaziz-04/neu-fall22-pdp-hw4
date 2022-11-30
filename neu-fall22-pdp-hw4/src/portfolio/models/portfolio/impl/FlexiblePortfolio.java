@@ -1,6 +1,7 @@
 package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
@@ -15,7 +16,7 @@ import portfolio.models.portfolio.Portfolio;
  */
 public class FlexiblePortfolio extends PortfolioAbs {
 
-  private final BuySchedule schedule;
+  private final List<BuySchedule> schedules;
   /**
    * This is a constructor to a flexible portfolio object, which will contain the name of this
    * portfolio and a list of transaction entry.
@@ -23,14 +24,14 @@ public class FlexiblePortfolio extends PortfolioAbs {
    * @param name         the name of a portfolio
    * @param transactions a list of transaction entry
    */
-  public FlexiblePortfolio(String name, List<Transaction> transactions, BuySchedule schedule) {
+  public FlexiblePortfolio(String name, List<Transaction> transactions, List<BuySchedule> schedule) {
     super(name, transactions);
-    this.schedule = schedule;
+    this.schedules = schedule;
   }
 
   public FlexiblePortfolio(String name, List<Transaction> transactions) {
     super(name, transactions);
-    this.schedule = null;
+    this.schedules = new ArrayList<>();
   }
   @Override
   public PortfolioFormat getFormat() {
@@ -43,8 +44,8 @@ public class FlexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
-  public Portfolio create(List<Transaction> transactions, BuySchedule schedule) throws Exception {
-    return new FlexiblePortfolio(name, transactions, schedule);
+  public Portfolio create(List<Transaction> transactions, List<BuySchedule> schedules) throws Exception {
+    return new FlexiblePortfolio(name, transactions, schedules);
   }
 
   @Override
@@ -68,8 +69,8 @@ public class FlexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
-  public BuySchedule getBuySchedule() {
-    return schedule;
+  public List<BuySchedule> getBuySchedules() {
+    return schedules;
   }
 
 }

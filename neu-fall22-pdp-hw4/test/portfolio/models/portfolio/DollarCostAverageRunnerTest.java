@@ -32,6 +32,7 @@ public class DollarCostAverageRunnerTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         5,
         LocalDate.parse("2022-10-05"),
@@ -64,6 +65,7 @@ public class DollarCostAverageRunnerTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         5,
         LocalDate.parse("2022-10-05"),
@@ -96,6 +98,7 @@ public class DollarCostAverageRunnerTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         5,
         LocalDate.parse("2022-10-04"),
@@ -128,6 +131,7 @@ public class DollarCostAverageRunnerTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         5,
         LocalDate.parse("2022-09-05"),
@@ -160,6 +164,7 @@ public class DollarCostAverageRunnerTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         5,
         LocalDate.parse("2022-09-05"),
@@ -192,6 +197,7 @@ public class DollarCostAverageRunnerTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         5,
         LocalDate.parse("2022-09-05"),

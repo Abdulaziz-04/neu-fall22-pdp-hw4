@@ -54,12 +54,12 @@ public interface PortfolioModel {
    */
   void addTransactions(List<Transaction> transactions) throws Exception;
 
-  void addScheduler(double amount, int frequencyDays,
+  void addScheduler(String name, double amount, int frequencyDays,
       LocalDate startDate,
       LocalDate endDate, double transactionFee,
       List<Transaction> buyingList) throws Exception;
 
-  void modifyScheduler(double amount, int frequencyDays,
+  void modifyScheduler(String name, double amount, int frequencyDays,
       LocalDate startDate,
       LocalDate endDate, double transactionFee,
       List<Transaction> buyingList) throws Exception;

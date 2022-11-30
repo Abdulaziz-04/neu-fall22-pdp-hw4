@@ -68,7 +68,7 @@ public class FlexibleCreatePageView extends ViewAbs {
     printStream.println(
         "             +-----------+------+---------+---------------+---------------+");
     for (var entry : transactions) {
-      printStream.printf("             |%11s|%6s|%9s|%15d|%15s|%n", entry.getDate(),
+      printStream.printf("             |%11s|%6s|%9s|%15.2f|%15s|%n", entry.getDate(),
           entry.getType(),
           entry.getSymbol(), entry.getAmount(), "$" + entry.getCommissionFee());
     }

@@ -8,7 +8,9 @@ import portfolio.models.portfolio.BuySchedule;
 
 public class DollarCostAverageSchedule implements BuySchedule {
 
-  private final String name = "dollar_cost_average";
+  private final String scheduleType = "dollar_cost_average";
+
+  private final String name;
   private final int frequencyDays;
   private final LocalDate startDate;
   private final LocalDate endDate;
@@ -17,7 +19,7 @@ public class DollarCostAverageSchedule implements BuySchedule {
   private final LocalDate lastRunDate;
   private final List<Transaction> buyingList;
 
-  public DollarCostAverageSchedule(double amount, int frequencyDays,
+  public DollarCostAverageSchedule(String name, double amount, int frequencyDays,
       LocalDate startDate,
       LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws IllegalArgumentException {
@@ -47,7 +49,7 @@ public class DollarCostAverageSchedule implements BuySchedule {
     for (var entry : buyingList) {
       scaledBuyingList.add(new Transaction(entry.getSymbol(), entry.getAmount() * 100 / total));
     }
-
+    this.name = name;
     this.amount = amount;
     this.frequencyDays = frequencyDays;
     this.startDate = startDate;
@@ -58,16 +60,21 @@ public class DollarCostAverageSchedule implements BuySchedule {
   }
 
   @Override
-  public BuySchedule create(double amount, int frequencyDays, LocalDate startDate,
+  public BuySchedule create(String name, double amount, int frequencyDays, LocalDate startDate,
       LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) {
-    return new DollarCostAverageSchedule(amount, frequencyDays, startDate, endDate, transactionFee,
+    return new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate, transactionFee,
         lastRunDate, buyingList);
   }
 
   @Override
   public String getName() {
     return name;
+  }
+
+  @Override
+  public String getType() {
+    return scheduleType;
   }
 
   @Override

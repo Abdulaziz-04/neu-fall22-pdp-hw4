@@ -52,7 +52,7 @@ public class LoadPageView extends ViewAbs {
     printStream.println(
         "             +-----------+------+---------+---------------+---------------+");
     for (var entry : transactions) {
-      printStream.printf("             |%11s|%6s|%9s|%15d|%15s|%n",
+      printStream.printf("             |%11s|%6s|%9s|%15.2f|%15s|%n",
           entry.getDate() == null ? "N/A" : entry.getDate(),
           entry.getType() == null ? "N/A" : entry.getType(),
           entry.getSymbol(),

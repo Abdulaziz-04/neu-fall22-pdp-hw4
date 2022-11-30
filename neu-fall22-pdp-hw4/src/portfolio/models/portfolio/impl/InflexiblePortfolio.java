@@ -37,7 +37,7 @@ public class InflexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
-  public Portfolio create(List<Transaction> transactions, BuySchedule schedule) throws Exception {
+  public Portfolio create(List<Transaction> transactions, List<BuySchedule> schedule) throws Exception {
     throw new Exception("Buy schedule is not supported.");
   }
 
@@ -52,7 +52,7 @@ public class InflexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
-  public DollarCostAverageSchedule getBuySchedule() {
+  public List<BuySchedule> getBuySchedules()  {
     return null;
   }
 

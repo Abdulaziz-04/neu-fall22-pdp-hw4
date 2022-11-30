@@ -22,6 +22,7 @@ public class DollarCostAverageScheduleTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
     2000,
         30,
         LocalDate.parse("2020-10-10"),
@@ -31,7 +32,7 @@ public class DollarCostAverageScheduleTest {
         buyingList
     ) ;
 
-    assertEquals("dollar_cost_average", schedule.getName());
+    assertEquals("name", schedule.getName());
     assertEquals(30, schedule.getFrequencyDays());
     assertEquals(LocalDate.parse("2020-10-10"), schedule.getStartDate());
     assertEquals(LocalDate.parse("2022-10-10"), schedule.getEndDate());
@@ -50,6 +51,7 @@ public class DollarCostAverageScheduleTest {
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
+        "name",
         2000,
         30,
         LocalDate.parse("2020-10-10"),
@@ -69,6 +71,7 @@ public class DollarCostAverageScheduleTest {
     buyingList.add(new Transaction("AAA", 10));
     try {
       BuySchedule schedule = new DollarCostAverageSchedule(
+          "name",
           2000,
           30,
           LocalDate.parse("2020-10-10"),
@@ -91,6 +94,7 @@ public class DollarCostAverageScheduleTest {
     buyingList.add(new Transaction("AAA", 10));
     try {
       BuySchedule schedule = new DollarCostAverageSchedule(
+          "name",
           2000,
           -1,
           LocalDate.parse("2020-10-10"),
@@ -113,6 +117,7 @@ public class DollarCostAverageScheduleTest {
     buyingList.add(new Transaction("AAA", 10));
     try {
       BuySchedule schedule = new DollarCostAverageSchedule(
+          "name",
           2000,
           30,
           LocalDate.parse("2020-10-10"),
@@ -133,6 +138,7 @@ public class DollarCostAverageScheduleTest {
     List<Transaction> buyingList = new ArrayList<>();
     try {
       BuySchedule schedule = new DollarCostAverageSchedule(
+          "name",
           2000,
           30,
           LocalDate.parse("2020-10-10"),
@@ -155,6 +161,7 @@ public class DollarCostAverageScheduleTest {
     buyingList.add(new Transaction("AAA", 10));
     try {
       BuySchedule schedule = new DollarCostAverageSchedule(
+          "name",
           -1,
           30,
           LocalDate.parse("2020-10-10"),

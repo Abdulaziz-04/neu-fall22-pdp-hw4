@@ -6,12 +6,14 @@ import portfolio.models.entities.Transaction;
 
 public interface BuySchedule {
 
-  BuySchedule create(double amount, int frequencyDays,
+  BuySchedule create(String name, double amount, int frequencyDays,
       LocalDate startDate,
       LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList);
 
   String getName();
+
+  String getType();
 
   double getAmount();
 

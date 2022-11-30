@@ -69,7 +69,7 @@ public class InfoPageView extends ViewAbs {
         double amount = entry.getAmount();
         String value = entry.getValue() ==
             null ? "N/A" : "$" + entry.getValue().toString();
-        printStream.printf("|%9s|%15d|%20s|%n", symbol, amount, value);
+        printStream.printf("|%9s|%15.2f|%20s|%n", symbol, amount, value);
       }
       printStream.println("+---------+---------------+--------------------+");
       printStream.println("Total value: " + "$" + portfolioWithPrice.getTotalValue());
