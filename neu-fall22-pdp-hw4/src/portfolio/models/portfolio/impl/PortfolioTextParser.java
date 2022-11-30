@@ -64,10 +64,10 @@ public class PortfolioTextParser implements PortfolioParser {
       }
       if (stock.length == 5) {
         transactions.add(
-            new Transaction(TransactionType.parse(stock[1]), stock[2], Integer.parseInt(stock[3]),
+            new Transaction(TransactionType.parse(stock[1]), stock[2], Double.parseDouble(stock[3]),
                 LocalDate.parse(stock[0]), Double.parseDouble(stock[4])));
       } else if (stock.length == 2) {
-        transactions.add(new Transaction(stock[0], Integer.parseInt(stock[1])));
+        transactions.add(new Transaction(stock[0], Double.parseDouble(stock[1])));
       } else {
         throw new Exception("Wrong Transaction format.");
       }

@@ -1,5 +1,8 @@
 package portfolio;
 
+import java.util.Objects;
+import portfolio.controllers.FrontController;
+import portfolio.controllers.impl.FrontControllerImpl;
 import portfolio.controllers.impl.SwingFrontController;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.PortfolioParser;
@@ -27,6 +30,7 @@ public class Main {
    */
   public static void main(String[] args) throws Exception {
 
+
     // Models
     StockPriceApi stockPriceApi = new AlphaVantageApi();
     StockQueryService stockQueryService = new StockQueryServiceImpl(stockPriceApi);
@@ -38,14 +42,15 @@ public class Main {
     // Views
     ViewFactory viewFactory = new DefaultSysOutViewFactory();
 
-    // Controller
-//    FrontController frontController = new FrontControllerImpl(portfolioModel, viewFactory,
-//        System.in);
-    SwingFrontController swingFrontController = new SwingFrontController(portfolioModel);
-
-    // Run controller
-//    frontController.run();
-    swingFrontController.run();
+    if (args.length > 0 && Objects.equals(args[0], "cli")) {
+      FrontController frontController = new FrontControllerImpl(portfolioModel, viewFactory,
+          System.in);
+      frontController.run();
+    }
+    else {
+      SwingFrontController swingFrontController = new SwingFrontController(portfolioModel);
+      swingFrontController.run();
+    }
   }
 
 }
