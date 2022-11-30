@@ -48,14 +48,17 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
 
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int state,
+                                        List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage) {
     argumentCaptor.clear();
     argumentCaptor.addArgument(isEnd);
     argumentCaptor.addArgument(isNamed);
     argumentCaptor.addArgument(state);
+    argumentCaptor.addArgument(inputBuffer);
     argumentCaptor.addArgument(transactions);
     argumentCaptor.addArgument(errorMessage);
-    return new FlexibleCreatePageView(isEnd, isNamed, state, transactions, errorMessage);
+    return new FlexibleCreatePageView(isEnd, isNamed, state, inputBuffer, transactions,
+            errorMessage);
   }
 
   @Override

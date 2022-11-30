@@ -108,7 +108,6 @@ public class PerformancePageSwingController implements SwingPageController {
         endDate = null;
         return this;
       }
-    } else if (startDate != null && endDate != null) {
       try {
         portfolioPerformance = portfolioModel.getPerformance(startDate, endDate);
         isFinish = true;
@@ -117,7 +116,8 @@ public class PerformancePageSwingController implements SwingPageController {
         startDate = null;
         endDate = null;
       }
-    }
+      return this;
+    } 
     return this;
   }
 }

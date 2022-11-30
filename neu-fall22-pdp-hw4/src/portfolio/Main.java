@@ -1,8 +1,9 @@
 package portfolio;
 
 import portfolio.controllers.FrontController;
+import portfolio.controllers.gui.SwingFrontController;
 import portfolio.controllers.impl.FrontControllerImpl;
-import portfolio.controllers.impl.SwingFrontController;
+
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.impl.PortfolioModelImpl;

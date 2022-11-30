@@ -1,7 +1,9 @@
 package portfolio.views.impl;
 
 import java.io.PrintStream;
+
 import javax.swing.JPanel;
+
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.ViewAbs;
 
@@ -18,12 +20,13 @@ public class InfoPageView extends ViewAbs {
    * This is a constructor that construct a determine page view.
    *
    * @param printStream        a PrintStream object to where the output will be directed to
+   * @param costOfBasis        the cost and basis for this portfolio
    * @param portfolioWithPrice the object of PortfolioWithValue
    * @param errorMessage       the error message we want to show to the user
    */
   public InfoPageView(PrintStream printStream, Double costOfBasis,
-      PortfolioWithValue portfolioWithPrice,
-      String errorMessage) {
+                      PortfolioWithValue portfolioWithPrice,
+                      String errorMessage) {
     super(printStream);
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;
@@ -34,10 +37,11 @@ public class InfoPageView extends ViewAbs {
    * This is a constructor that construct a determine page view. The output stream is System.out.
    *
    * @param portfolioWithPrice the object of PortfolioWithValue
+   * @param costOfBasis        the cost and basis for this portfolio
    * @param errorMessage       the error message we want to show to the user
    */
   public InfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
-      String errorMessage) {
+                      String errorMessage) {
     this.portfolioWithPrice = portfolioWithPrice;
     this.errorMessage = errorMessage;
     this.costOfBasis = costOfBasis;
@@ -57,11 +61,11 @@ public class InfoPageView extends ViewAbs {
     printStream.println("----------------------------------------------------------");
     if (portfolioWithPrice != null) {
       printStream.println(
-          "If stock price not found, the value with be N/A and "
-              + "will not be include in the total value.");
+              "If stock price not found, the value with be N/A and "
+                      + "will not be include in the total value.");
       printStream.println("");
       printStream.println("Portfolio composition and value as of: "
-          + portfolioWithPrice.getDate());
+              + portfolioWithPrice.getDate());
       printStream.println("+---------+---------------+--------------------+");
       printStream.println("|    Stock|  No. of shares|       Current value|");
       printStream.println("+---------+---------------+--------------------+");
@@ -69,24 +73,24 @@ public class InfoPageView extends ViewAbs {
         String symbol = entry.getSymbol();
         int amount = entry.getAmount();
         String value = entry.getValue() ==
-            null ? "N/A" : "$" + entry.getValue().toString();
+                null ? "N/A" : "$" + entry.getValue().toString();
         printStream.printf("|%9s|%15d|%20s|%n", symbol, amount, value);
       }
       printStream.println("+---------+---------------+--------------------+");
       printStream.println("Total value: " + "$" + portfolioWithPrice.getTotalValue());
       if (costOfBasis != null) {
         printStream.println("Cost of basis as of "
-            + portfolioWithPrice.getDate() + ": " + "$" + costOfBasis);
+                + portfolioWithPrice.getDate() + ": " + "$" + costOfBasis);
       } else {
         printStream.println("Cost of basis is not available for this portfolio.");
       }
       printStream.println();
       printStream.println("Please enter the date again if "
-          + "you want to determine value for another date. "
-          + "The format is year-month-day, ex: 2022-10-11");
+              + "you want to determine value for another date. "
+              + "The format is year-month-day, ex: 2022-10-11");
     } else {
       printStream.println("Please enter the date that you want to determine. "
-          + "The format is year-month-day, ex: 2022-10-11");
+              + "The format is year-month-day, ex: 2022-10-11");
     }
     printStream.print("input > ");
   }

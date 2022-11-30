@@ -16,22 +16,24 @@ import portfolio.models.portfolio.Portfolio;
 
 public class LoadPageSwingView implements View {
 
- private String errorMessage;
- private Portfolio portfolio;
+  private String errorMessage;
+  private Portfolio portfolio;
   boolean showModifyMenu;
   private final JFrame frame;
   private final InputHandler inputHandler;
 
   /**
-   * This is a constructor that construct a load page view.
+   * This is a constructor that construct a GUI load page view.
    *
-   * @param portfolio    the portfolio that we want to load
+   * @param frame          the frame for GUI
+   * @param inputHandler   the controller for handling input
+   * @param portfolio      the portfolio that we want to load
    * @param showModifyMenu show modify menu or not
-   * @param errorMessage the error message we want to show to the user
+   * @param errorMessage   the error message we want to show to the user
    */
   public LoadPageSwingView(JFrame frame, InputHandler inputHandler,
-                      Portfolio portfolio,
-                      boolean showModifyMenu, String errorMessage) {
+                           Portfolio portfolio,
+                           boolean showModifyMenu, String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.errorMessage = errorMessage;
@@ -69,9 +71,9 @@ public class LoadPageSwingView implements View {
     return jsp;
   }
 
-  private JPanel showMenu () {
+  private JPanel showMenu() {
     JPanel panelMenu = new JPanel();
-    panelMenu.setLayout(new GridLayout(4,1));
+    panelMenu.setLayout(new GridLayout(4, 1));
     JLabel menuLabel = new JLabel("Menu for current portfolio:");
     panelMenu.add(menuLabel);
     JButton informationsButton = new JButton("Show composition, value, cost of basis for " +
@@ -81,22 +83,23 @@ public class LoadPageSwingView implements View {
     JButton performanceButton = new JButton("Show performance of a portfolio");
     performanceButton.addActionListener(e -> inputHandler.handleInput("2"));
     panelMenu.add(performanceButton);
-    if(showModifyMenu == true) {
+    if (showModifyMenu == true) {
       JButton modifyButton = new JButton("modify the portfolio");
       modifyButton.addActionListener(e -> inputHandler.handleInput("3"));
       panelMenu.add(modifyButton);
     }
     return panelMenu;
   }
+
   @Override
   public void render() {
     //JFrame frame = new JFrame();
-    frame.setSize(600,600);
+    frame.setSize(600, 600);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
     JButton backButton = new JButton("back");
     backButton.addActionListener(e -> inputHandler.handleInput("back"));
-    backButton.setBounds(0,0,70, 30);
+    backButton.setBounds(0, 0, 70, 30);
     panelBack.add(backButton);
 
 
@@ -105,17 +108,17 @@ public class LoadPageSwingView implements View {
 
     JPanel panelNameAndButton = new JPanel();
     panelNameAndButton.setLayout(new FlowLayout());
-    panelNameAndButton.setSize(500,20);
+    panelNameAndButton.setSize(500, 20);
     JLabel portfolioName = new JLabel("Name of Portfolio:");
     panelNameAndButton.add(portfolioName);
 
     JTextField nameTextArea = new JTextField(10);
-    if(portfolio != null) {
+    if (portfolio != null) {
       nameTextArea.setText(portfolio.getName());
     }
     panelNameAndButton.add(nameTextArea);
 
-    if(portfolio == null) {
+    if (portfolio == null) {
       JButton loadButton = new JButton("load");
       loadButton.addActionListener(e -> inputHandler.handleInput(nameTextArea.getText()));
       panelNameAndButton.add(loadButton);
@@ -124,8 +127,8 @@ public class LoadPageSwingView implements View {
 
     JPanel panelShow = new JPanel();
     JPanel panelMenu = new JPanel();
-    panelMenu.setLayout(new GridLayout(4,1));
-    if(portfolio != null) {
+    panelMenu.setLayout(new GridLayout(4, 1));
+    if (portfolio != null) {
       JScrollPane jsp = showPortfolioComposition();
       panelShow.add(jsp);
 
@@ -139,14 +142,14 @@ public class LoadPageSwingView implements View {
       JButton performanceButton = new JButton("Show performance of a portfolio");
       performanceButton.addActionListener(e -> inputHandler.handleInput("2"));
       panelMenu.add(performanceButton);
-      if(showModifyMenu == true) {
+      if (showModifyMenu == true) {
         JButton modifyButton = new JButton("modify the portfolio");
         modifyButton.addActionListener(e -> inputHandler.handleInput("3"));
         panelMenu.add(modifyButton);
       }
     }
     Box vBox = Box.createVerticalBox();
-    vBox.setPreferredSize(new Dimension(500,500));
+    vBox.setPreferredSize(new Dimension(500, 500));
     vBox.add(panelBack);
     vBox.add(error);
     vBox.add(panelNameAndButton);

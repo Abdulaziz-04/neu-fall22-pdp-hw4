@@ -110,10 +110,10 @@ public class PortfolioModelImpl implements PortfolioModel {
     }
 
     List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
-    newTransactions.addAll(transactions);
+    transactions.addAll(newTransactions);
 
     // Create same class of portfolio with new set of transactions
-    portfolio = portfolio.create(newTransactions);
+    portfolio = portfolio.create(transactions);
   }
 
   @Override

@@ -9,6 +9,9 @@ import javax.swing.*;
 import portfolio.controllers.InputHandler;
 import portfolio.views.View;
 
+/**
+ * This is a GUI view for performance page, which implement View interface.
+ */
 public class PerformancePageSwingView implements View {
 
   private final String errorMessage;
@@ -27,8 +30,10 @@ public class PerformancePageSwingView implements View {
   private InputHandler inputHandler;
 
   /**
-   * This is a constructor to construct a performance page view. The output stream is System.out.
+   * This is a constructor to construct a GUI performance page view.
    *
+   * @param frame         the GUI frame
+   * @param inputHandler  the controller for handling input
    * @param portfolioName the name of portfolio
    * @param startDate     the start date to performance
    * @param endDate       the end date to performance
@@ -58,12 +63,12 @@ public class PerformancePageSwingView implements View {
   @Override
   public void render() {
 
-    frame.setSize(600,600);
+    frame.setSize(600, 700);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
     JButton backButton = new JButton("back");
     backButton.addActionListener(e -> inputHandler.handleInput("back"));
-    backButton.setBounds(0,0,70, 30);
+    backButton.setBounds(0, 0, 70, 30);
     panelBack.add(backButton);
 
 
@@ -72,7 +77,7 @@ public class PerformancePageSwingView implements View {
 
     JPanel panelStartDate = new JPanel();
     panelStartDate.setLayout(new FlowLayout());
-    panelStartDate.setSize(500,20);
+    panelStartDate.setSize(500, 20);
     JLabel startLabel = new JLabel("Start Date:");
     panelStartDate.add(startLabel);
     JTextField startTextArea = new JTextField(10);
@@ -80,7 +85,7 @@ public class PerformancePageSwingView implements View {
 
     JPanel panelEndDate = new JPanel();
     panelEndDate.setLayout(new FlowLayout());
-    panelEndDate.setSize(500,20);
+    panelEndDate.setSize(500, 20);
     JLabel endLabel = new JLabel("End Date:");
     panelEndDate.add(endLabel);
     JTextField endTextArea = new JTextField(10);
@@ -90,12 +95,12 @@ public class PerformancePageSwingView implements View {
     panelShowButton.setLayout(new FlowLayout());
     JButton showButton = new JButton("show performance");
     showButton.addActionListener(e -> inputHandler.handleInput(startTextArea.getText() +
-           "," + endTextArea.getText()));
+            "," + endTextArea.getText()));
     panelShowButton.add(showButton);
 
     JPanel panelShow = new JPanel();
     panelShowButton.setLayout(new FlowLayout());
-    if(performance != null && isFinish) {
+    if (performance != null && isFinish) {
       JLabel performaceLabel = new JLabel("Performance of portfolio " + portfolioName
               + " from " + startDate + " to " + endDate);
       JTextArea showArea = new JTextArea();
@@ -108,7 +113,7 @@ public class PerformancePageSwingView implements View {
     }
 
     Box vBox = Box.createVerticalBox();
-    vBox.setPreferredSize(new Dimension(500,500));
+    vBox.setPreferredSize(new Dimension(500, 500));
     vBox.add(panelBack);
     vBox.add(error);
     vBox.add(panelStartDate);

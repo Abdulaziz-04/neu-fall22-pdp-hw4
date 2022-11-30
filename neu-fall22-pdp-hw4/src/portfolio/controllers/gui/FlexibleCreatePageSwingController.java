@@ -33,7 +33,7 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
   private boolean isNamed = false;
   private final boolean modifyMode;
   private List<Transaction> transactions = new ArrayList<>();
-  private final List<String> inputBuffer = new ArrayList<>();
+  private  final List<String> inputBuffer = new ArrayList<>();
 
   private Portfolio portfolioTmp;
 
@@ -64,7 +64,8 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
     }
     transactions.addAll(this.transactions);
-    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), transactions,
+    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), inputBuffer,
+            transactions,
         errorMessage);
   }
 
@@ -85,7 +86,102 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
     if (input.equals("back")) {
       return new MainPageSwingController(portfolioModel, viewFactory);
     }
-    if (!isEnd && !input.equals("end")) {
+
+    if(!isEnd && !input.equals("yes")) {
+      inputBuffer.clear();
+      String [] cmd = input.split(",");
+      if(cmd.length != 5) {
+        errorMessage = "Error for input";
+        return this;
+      }
+      inputBuffer.add(cmd[0]);
+      inputBuffer.add(cmd[1]);
+      inputBuffer.add(cmd[2]);
+      inputBuffer.add(cmd[3]);
+      if(cmd[4].equals("") || cmd[4] == null){
+        cmd[4] = "0";
+      }
+      inputBuffer.add(cmd[4]);
+
+
+
+      try {
+        try {
+          LocalDate.parse(cmd[0]);
+        } catch (Exception e) {
+          errorMessage = "The format error!";
+          return this;
+        }
+        portfolioModel.checkTransaction(LocalDate.parse(cmd[0]), cmd[1]);
+        TransactionType.parse(cmd[2]);
+        Integer.parseInt(cmd[3]);
+        if (Integer.parseInt(cmd[3]) <= 0) {
+          errorMessage = "The shares cannot be negative.";
+          return this;
+        }
+
+          if (Double.parseDouble(cmd[4]) < 0) {
+            errorMessage = "Commission cannot be negative.";
+            return this;
+          }
+        transactions.add(
+                new Transaction(
+                        TransactionType.parse(inputBuffer.get(2)),
+                        inputBuffer.get(1),
+                        Integer.parseInt(inputBuffer.get(3)),
+                        LocalDate.parse(inputBuffer.get(0)),
+                        Double.parseDouble(inputBuffer.get(4))
+                )
+        );
+
+      } catch (Exception e) {
+        errorMessage = e.getMessage();
+        return this;
+      }
+      return this;
+    }
+
+    if(input.equals("yes") && isEnd == false) {
+      try {
+        // Check amount valid
+        portfolioModel.checkTransactions(transactions);
+        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
+        isEnd = true;
+        //portfolioModel.init();
+        return this;
+      } catch (Exception e) {
+        errorMessage = e.getMessage() + " Please enter transaction list again.";
+        inputBuffer.clear();
+        transactions.clear();
+        return this;
+      }
+    } else {
+      String pname = portfolioTmp != null && isNamed ? portfolioTmp.getName() : input;
+      try {
+        if (modifyMode) {
+          portfolioModel.addTransactions(portfolioTmp.getTransactions());
+        } else {
+          portfolioModel.create(pname, PortfolioFormat.FLEXIBLE, transactions);
+        }
+        ioService.saveTo(portfolioModel.getString(), pname + ".txt", modifyMode);
+        return new LoadPageSwingController(portfolioModel, viewFactory);
+      } catch (RuntimeException e) {
+        errorMessage = e.getMessage() + " Please enter transaction list again.";
+        inputBuffer.clear();
+        transactions.clear();
+      } catch (Exception e) {
+        try {
+          portfolioModel.init();
+        } catch (Exception ignored) {
+        }
+        errorMessage = e.getMessage();
+      }
+    }
+
+    return  this;
+
+
+    /*if (!isEnd && !input.equals("end")) {
       try {
         int size = inputBuffer.size();
         if (size == 0) {
@@ -183,7 +279,7 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
         errorMessage = e.getMessage();
       }
     }
-    return this;
+    return this;*/
   }
 
 }

@@ -61,7 +61,8 @@ public class FlexibleCreatePageController implements PageController {
       transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
     }
     transactions.addAll(this.transactions);
-    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), transactions,
+    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), inputBuffer,
+            transactions,
         errorMessage);
   }
 
@@ -152,7 +153,7 @@ public class FlexibleCreatePageController implements PageController {
         portfolioModel.checkTransactions(transactions);
         portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
-        portfolioModel.init();
+        //portfolioModel.init();
       } catch (Exception e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
         inputBuffer.clear();
@@ -162,7 +163,7 @@ public class FlexibleCreatePageController implements PageController {
       String name = portfolioTmp != null && isNamed ? portfolioTmp.getName() : input;
       try {
         if (modifyMode) {
-          portfolioModel.addTransactions(transactions);
+          portfolioModel.addTransactions(portfolioTmp.getTransactions());
         } else {
           portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
         }
