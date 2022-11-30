@@ -2,6 +2,7 @@ package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioFormat;
@@ -70,7 +71,7 @@ public class FlexiblePortfolio extends PortfolioAbs {
 
   @Override
   public List<BuySchedule> getBuySchedules() {
-    return schedules;
+    return Collections.unmodifiableList(schedules);
   }
 
 }

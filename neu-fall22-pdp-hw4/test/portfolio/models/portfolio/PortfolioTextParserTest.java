@@ -223,6 +223,31 @@ public class PortfolioTextParserTest {
   }
 
   @Test
+  public void parse_v3_inflexible() throws Exception {
+    String str = "[INFO]\r\n"
+        + "FORMAT=INFLEXIBLE\r\n"
+        + "VERSION=3\r\n"
+        + "\r\n"
+        + "[TRANSACTION]\r\n"
+        + "AAA,100\r\n"
+        + "AA,123\r\n"
+        + "\r\n";
+    Portfolio portfolio = portfolioParser.parse(str);
+    assertEquals(PortfolioFormat.INFLEXIBLE, portfolio.getFormat());
+
+    List<Transaction> actual = portfolio.getTransactions();
+    List<Transaction> expected = new ArrayList<>();
+    expected.add(new Transaction("AAA", 100));
+    expected.add(new Transaction("AA", 123 ));
+
+    assertEquals(expected.size(), actual.size());
+    for (int i = 0; i < expected.size(); i++) {
+      assertEquals(actual.get(i).getSymbol(), expected.get(i).getSymbol());
+      assertEquals(actual.get(i).getAmount(), expected.get(i).getAmount(), EPSILON);
+    }
+  }
+
+  @Test
   public void parse_v3_flexible_nullEndDate() throws Exception {
     String str = "[INFO]\r\n"
         + "FORMAT=FLEXIBLE\r\n"

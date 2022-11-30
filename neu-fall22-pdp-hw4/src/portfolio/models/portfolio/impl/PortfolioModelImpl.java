@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
@@ -84,13 +83,14 @@ public class PortfolioModelImpl implements PortfolioModel {
     portfolio = create(name, p.getFormat(), transactions);
     if (schedules != null) {
       for(var schedule: schedules) {
-        addScheduler(
+        addSchedule(
             schedule.getName(),
             schedule.getAmount(),
             schedule.getFrequencyDays(),
             schedule.getStartDate(),
             schedule.getEndDate(),
             schedule.getTransactionFee(),
+            schedule.getLastRunDate(),
             schedule.getBuyingList()
         );
       }
@@ -139,12 +139,12 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
-  public void addScheduler(String name, double amount, int frequencyDays, LocalDate startDate, LocalDate endDate,
-      double transactionFee, List<Transaction> buyingList) throws Exception {
+  public void addSchedule(String name, double amount, int frequencyDays, LocalDate startDate, LocalDate endDate,
+      double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
     BuySchedule schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
-        transactionFee, null, buyingList);
-    List<BuySchedule> currentSchedules = portfolio.getBuySchedules();
-    if (currentSchedules == null){
+        transactionFee, lastRunDate, buyingList);
+    List<BuySchedule> currentSchedules = new ArrayList<>(portfolio.getBuySchedules());
+    if (portfolio.getBuySchedules() == null){
       throw new Exception("Cannot add schedule to this portfolio.");
     }
     if (currentSchedules.stream().anyMatch(x -> Objects.equals(x.getName(), name))) {
@@ -153,14 +153,16 @@ public class PortfolioModelImpl implements PortfolioModel {
     List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
     List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
     scheduledTransaction.addAll(transactions);
+    schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
+        transactionFee, LocalDate.now(), buyingList);
     currentSchedules.add(schedule);
     portfolio = portfolio.create(scheduledTransaction, currentSchedules);
   }
 
   @Override
-  public void modifyScheduler(String name, double amount, int frequencyDays, LocalDate startDate,
-      LocalDate endDate, double transactionFee, List<Transaction> buyingList) throws Exception {
-    List<BuySchedule> schedules = portfolio.getBuySchedules();
+  public void modifySchedule(String name, double amount, int frequencyDays, LocalDate startDate,
+      LocalDate endDate,  double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
+    List<BuySchedule> schedules = new ArrayList<>(portfolio.getBuySchedules());
     if (schedules == null || schedules.isEmpty()) {
       throw new Exception("Current portfolio does not have buy schedule.");
     }

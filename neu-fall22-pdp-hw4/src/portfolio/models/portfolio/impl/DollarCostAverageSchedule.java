@@ -2,6 +2,7 @@ package portfolio.models.portfolio.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.BuySchedule;
@@ -109,6 +110,6 @@ public class DollarCostAverageSchedule implements BuySchedule {
 
   @Override
   public List<Transaction> getBuyingList() {
-    return buyingList;
+    return Collections.unmodifiableList(buyingList);
   }
 }

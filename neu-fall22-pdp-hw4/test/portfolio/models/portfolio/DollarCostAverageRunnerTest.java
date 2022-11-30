@@ -44,10 +44,10 @@ public class DollarCostAverageRunnerTest {
 
     List<Transaction> transactions = runner.run(LocalDate.parse("2022-10-20"), schedule);
     List<Transaction> expected =  new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 111.111111, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 10.0, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 250.0, LocalDate.parse("2022-10-10"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.7272727, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 110.55555555555556, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 9.95, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 248.75, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.613636363636363, LocalDate.parse("2022-10-10"), 5.0));
 
     assertEquals(4, transactions.size());
     for(int i =0; i<expected.size(); i++) {
@@ -77,10 +77,10 @@ public class DollarCostAverageRunnerTest {
 
     List<Transaction> transactions = runner.run(LocalDate.parse("2022-10-11"), schedule);
     List<Transaction> expected =  new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 111.111111, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 10.0, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 250.0, LocalDate.parse("2022-10-10"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.7272727, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 110.55555555555556, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 9.95, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 248.75, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.613636363636363, LocalDate.parse("2022-10-10"), 5.0));
 
     assertEquals(4, transactions.size());
     for(int i =0; i<expected.size(); i++) {
@@ -110,10 +110,10 @@ public class DollarCostAverageRunnerTest {
 
     List<Transaction> transactions = runner.run(LocalDate.parse("2022-10-11"), schedule);
     List<Transaction> expected =  new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 111.111111, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 10.0, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 250.0, LocalDate.parse("2022-10-10"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.7272727, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 110.55555555555556, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 9.95, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 248.75, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.613636363636363, LocalDate.parse("2022-10-10"), 5.0));
 
     assertEquals(4, transactions.size());
     for(int i =0; i<expected.size(); i++) {
@@ -143,10 +143,10 @@ public class DollarCostAverageRunnerTest {
 
     List<Transaction> transactions = runner.run(LocalDate.parse("2022-10-11"), schedule);
     List<Transaction> expected =  new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 111.111111, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 10.0, LocalDate.parse("2022-10-05"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 250.0, LocalDate.parse("2022-10-10"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.7272727, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 110.55555555555556, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 9.95, LocalDate.parse("2022-10-05"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 248.75, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.613636363636363, LocalDate.parse("2022-10-10"), 5.0));
 
     assertEquals(4, transactions.size());
     for(int i =0; i<expected.size(); i++) {
@@ -176,8 +176,8 @@ public class DollarCostAverageRunnerTest {
 
     List<Transaction> transactions = runner.run(LocalDate.parse("2022-10-11"), schedule);
     List<Transaction> expected =  new ArrayList<>();
-    expected.add(new Transaction(TransactionType.BUY, "AAPL", 250.0, LocalDate.parse("2022-10-10"), 5.0));
-    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.7272727, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAPL", 248.75, LocalDate.parse("2022-10-10"), 5.0));
+    expected.add(new Transaction(TransactionType.BUY, "AAA", 22.613636363636363, LocalDate.parse("2022-10-10"), 5.0));
 
     assertEquals(2, transactions.size());
     for(int i =0; i<expected.size(); i++) {
@@ -188,6 +188,7 @@ public class DollarCostAverageRunnerTest {
       assertEquals(expected.get(i).getCommissionFee(), transactions.get(i).getCommissionFee());
     }
   }
+
 
   @Test
   public void run_apiThrowError(){

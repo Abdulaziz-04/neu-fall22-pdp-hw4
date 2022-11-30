@@ -27,6 +27,7 @@ public class DollarCostAverageRunner implements ScheduleRunner {
     List<String> stocks = schedule.getBuyingList().stream().map(Transaction::getSymbol).collect(
         Collectors.toList());
     List<Transaction> transactions = new ArrayList<>();
+    double totalAmount = schedule.getAmount() - schedule.getTransactionFee() * schedule.getBuyingList().size();
     while (today.compareTo(current.minusDays(schedule.getFrequencyDays() - 1)) > 0) {
       LocalDate newBuy = current.plusDays(schedule.getFrequencyDays());
       current = current.plusDays(schedule.getFrequencyDays());
@@ -47,7 +48,7 @@ public class DollarCostAverageRunner implements ScheduleRunner {
 
       for (var p : schedule.getBuyingList()) {
         double shares =
-            ((p.getAmount() / 100) * schedule.getAmount()) / prices.get(p.getSymbol()).getClose();
+            ((p.getAmount() / 100) * totalAmount) / prices.get(p.getSymbol()).getClose();
         transactions.add(new Transaction(TransactionType.BUY, p.getSymbol(), shares, newBuy.plusDays(tryNextDay),
             schedule.getTransactionFee()));
       }

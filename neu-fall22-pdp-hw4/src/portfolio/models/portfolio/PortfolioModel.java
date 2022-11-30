@@ -3,7 +3,6 @@ package portfolio.models.portfolio;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import portfolio.models.portfolio.impl.DollarCostAverageSchedule;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
@@ -54,14 +53,14 @@ public interface PortfolioModel {
    */
   void addTransactions(List<Transaction> transactions) throws Exception;
 
-  void addScheduler(String name, double amount, int frequencyDays,
+  void addSchedule(String name, double amount, int frequencyDays,
       LocalDate startDate,
-      LocalDate endDate, double transactionFee,
+      LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
 
-  void modifyScheduler(String name, double amount, int frequencyDays,
+  void modifySchedule(String name, double amount, int frequencyDays,
       LocalDate startDate,
-      LocalDate endDate, double transactionFee,
+      LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
 
   /**

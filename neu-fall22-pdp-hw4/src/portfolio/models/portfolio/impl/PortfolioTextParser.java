@@ -41,10 +41,13 @@ public class PortfolioTextParser implements PortfolioParser {
   }
 
   protected PortfolioFormat parseFormat(String str) throws Exception {
-    String[] line = str.split("\n");
-    line[0] = line[0].replace("\r", "");
-    String[] format = line[0].split("=");
-    if (format[0].equals("FORMAT")) {
+    String[] format = null;
+    try {
+      format = Arrays.stream(str.split("\n")).filter(x -> x.contains("FORMAT=")).collect(
+          Collectors.toList()).get(0).replace("\r", "").split("=");
+    } catch (Exception ignored) {
+    }
+    if (format != null && format[0].equals("FORMAT")) {
       return PortfolioFormat.parse(format[1]);
     }
     return PortfolioFormat.INFLEXIBLE;
@@ -130,8 +133,14 @@ public class PortfolioTextParser implements PortfolioParser {
       txMatcher.find();
       String txStr = txMatcher.group(1);
       List<Transaction> transactions = parseTransaction(txStr);
-
-      return new FlexiblePortfolio(null, transactions, buySchedules);
+      switch (format) {
+        case INFLEXIBLE:
+          return new InflexiblePortfolio(null, transactions);
+        case FLEXIBLE:
+          return new FlexiblePortfolio(null, transactions, buySchedules);
+        default:
+          throw new Exception("Unsupported Portfolio type.");
+      }
     } else if (version == 2) {
       String txStr = str.substring(str.indexOf('\n') + 1);
       List<Transaction> transactions = parseTransaction(txStr);
