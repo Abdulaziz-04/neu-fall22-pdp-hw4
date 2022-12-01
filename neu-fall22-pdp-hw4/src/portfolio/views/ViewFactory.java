@@ -78,8 +78,8 @@ public interface ViewFactory {
       String scale, boolean isFinish,
       String errorMessage);
 
-  View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
-      List<Transaction> transactions, String errorMessage);
+  View newScheduleCreatePageView(Map<String, Double> stockList, boolean isEnd,
+      List<String> inputBuffer, List<Transaction> transactions, String errorMessage);
 
   View newScheduleInfoPageView(BuySchedule schedule, String errorMessage);
 }

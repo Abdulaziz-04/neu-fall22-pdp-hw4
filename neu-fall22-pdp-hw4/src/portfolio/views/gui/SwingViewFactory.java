@@ -70,9 +70,9 @@ public class SwingViewFactory implements ViewFactory {
   }
 
   @Override
-  public View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
-      List<Transaction> transactions, String errorMessage) {
-    return new ScheduleCreatePageSwingView(frame, inputHandler, isEnd, inputBuffer,
+  public View newScheduleCreatePageView(Map<String, Double> stockList, boolean isEnd,
+      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
+    return new ScheduleCreatePageSwingView(frame, inputHandler, stockList, isEnd, inputBuffer,
         transactions, errorMessage);
   }
 
