@@ -89,7 +89,7 @@ public class ScheduleInfoPageSwingView implements View {
     panelShow.add(new JLabel("Amount: $" + schedule.getAmount()));
     panelShow.add(new JLabel("Start date: " + schedule.getStartDate()));
     panelShow.add(new JLabel("End date: " + schedule.getEndDate()));
-    panelShow.add(new JLabel("Commission fee: " + schedule.getTransactionFee()));
+    panelShow.add(new JLabel("Commission fee: $" + schedule.getTransactionFee()));
 
     if (schedule.getBuyingList() != null) {
       JScrollPane jsp = showStockList();

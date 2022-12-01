@@ -61,7 +61,7 @@ public class LoadPageSwingView implements View {
       row.add(String.valueOf(entry.getType()));
       row.add(String.valueOf(entry.getSymbol()));
       row.add(String.valueOf(entry.getAmount()));
-      row.add(String.valueOf(entry.getCommissionFee()));
+      row.add("$" + entry.getCommissionFee());
       vData.add(row);
     }
     DefaultTableModel model = new DefaultTableModel(vData, vName) {
@@ -90,7 +90,7 @@ public class LoadPageSwingView implements View {
       Vector row = new Vector();
       row.add(String.valueOf(entry.getName()));
       row.add(String.valueOf(entry.getType()));
-      row.add(String.valueOf(entry.getAmount()));
+      row.add("$" + entry.getAmount());
       row.add(String.valueOf(entry.getFrequencyDays()));
       row.add(String.valueOf(entry.getStartDate()));
       row.add(String.valueOf(entry.getEndDate()));

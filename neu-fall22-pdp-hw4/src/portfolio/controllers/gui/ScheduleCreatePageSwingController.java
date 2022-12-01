@@ -135,7 +135,6 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
       try {
         if (!addToPortfolio) {
           portfolioModel.create(pname, PortfolioFormat.FLEXIBLE, new ArrayList<>());
-
         }
         portfolioModel.addSchedule(
             sname,
@@ -147,7 +146,7 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
             null,
             transactions
         );
-        ioService.saveTo(portfolioModel.getString(), pname + ".txt", true);
+        ioService.saveTo(portfolioModel.getString(), pname + ".txt", addToPortfolio);
         return new LoadPageSwingController(portfolioModel, viewFactory);
       } catch (RuntimeException e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";

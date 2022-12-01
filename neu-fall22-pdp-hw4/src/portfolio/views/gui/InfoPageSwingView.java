@@ -53,7 +53,7 @@ public class InfoPageSwingView implements View {
       Vector row = new Vector();
       row.add(String.valueOf(entry.getSymbol()));
       row.add(String.valueOf(entry.getAmount()));
-      row.add(String.valueOf(entry.getValue()));
+      row.add("$" + entry.getValue());
       vData.add(row);
     }
 
@@ -63,7 +63,6 @@ public class InfoPageSwingView implements View {
         return false;
       }
     };
-    //DefaultTableModel model = new DefaultTableModel();
     JTable portfolioTable = new JTable(model);
     portfolioTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
     JScrollPane jsp = new JScrollPane(portfolioTable);
@@ -108,7 +107,7 @@ public class InfoPageSwingView implements View {
       panelShow.add(showLabel);
       panelShow.add(jsp);
 
-      JLabel totalLabel = new JLabel("Total value :" + portfolioWithPrice.getTotalValue());
+      JLabel totalLabel = new JLabel("Total value : $" + portfolioWithPrice.getTotalValue());
       panelTotal.add(totalLabel);
 
       JLabel costLabel = new JLabel("Cost of basis : " + "$" + costOfBasis);

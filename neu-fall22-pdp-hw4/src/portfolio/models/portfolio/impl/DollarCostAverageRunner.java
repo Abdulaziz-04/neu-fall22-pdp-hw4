@@ -28,7 +28,7 @@ public class DollarCostAverageRunner implements ScheduleRunner {
         Collectors.toList());
     List<Transaction> transactions = new ArrayList<>();
     double totalAmount = schedule.getAmount() - schedule.getTransactionFee() * schedule.getBuyingList().size();
-    today = today.compareTo(schedule.getEndDate()) > 0 ? schedule.getEndDate() : today;
+    today = schedule.getEndDate() != null && today.compareTo(schedule.getEndDate()) > 0 ? schedule.getEndDate() : today;
     while (today.compareTo(current.minusDays(schedule.getFrequencyDays() - 1)) > 0) {
       LocalDate newBuy = current.plusDays(schedule.getFrequencyDays());
       current = current.plusDays(schedule.getFrequencyDays());

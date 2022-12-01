@@ -180,7 +180,7 @@ public class FlexibleCreatePageSwingView implements View {
         panelButton.add(buttonSell);
       }
 
-      JButton buttonFinish = new JButton("finish");
+      JButton buttonFinish = new JButton("Finish");
       buttonFinish.addActionListener(e -> inputHandler.handleInput("yes"));
       panelButton.add(buttonFinish);
 

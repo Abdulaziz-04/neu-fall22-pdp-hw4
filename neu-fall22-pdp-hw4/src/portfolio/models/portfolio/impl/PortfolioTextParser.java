@@ -107,7 +107,7 @@ public class PortfolioTextParser implements PortfolioParser {
         amount,
         Integer.parseInt(splited[0]),
         LocalDate.parse(splited[1]),
-        splited.length > 2 ? LocalDate.parse(splited[2]) : null,
+        !Objects.equals(splited[2], "null") ? LocalDate.parse(splited[2]) : null,
         transactionFee,
         lastRunDate,
         transactions);

@@ -145,8 +145,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       LocalDate endDate,
       double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
     BuySchedule schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate,
-        endDate,
-        transactionFee, lastRunDate, buyingList);
+        endDate, transactionFee, lastRunDate, buyingList);
     List<BuySchedule> currentSchedules = new ArrayList<>(portfolio.getBuySchedules());
     if (portfolio.getBuySchedules() == null) {
       throw new Exception("Cannot add schedule to this portfolio.");
