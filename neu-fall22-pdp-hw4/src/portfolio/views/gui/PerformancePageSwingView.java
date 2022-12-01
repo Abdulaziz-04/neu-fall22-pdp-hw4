@@ -21,17 +21,12 @@ import portfolio.views.View;
 public class PerformancePageSwingView implements View {
 
   private final String errorMessage;
-
   private final String portfolioName;
-
   private final LocalDate startDate;
   private final LocalDate endDate;
-
   private final Map<String, Integer> performance;
   private final String scale;
-
   private final boolean isFinish;
-
   private final JFrame frame;
   private final InputHandler inputHandler;
 
@@ -69,7 +64,7 @@ public class PerformancePageSwingView implements View {
 
   @Override
   public void render() {
-    frame.setTitle("Performance Page");
+    frame.setTitle("Portfolio performance overtime");
     frame.setSize(600, 700);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);

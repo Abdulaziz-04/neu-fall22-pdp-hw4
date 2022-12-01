@@ -97,18 +97,30 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   @Override
   public View newScheduleCreatePageView(Map<String, Double> stockList, boolean isEnd,
       List<String> inputBuffer, List<Transaction> transactions, boolean addToPortfolio,
-                                        String errorMessage) {
+      String errorMessage) {
+    argumentCaptor.addArgument(stockList);
+    argumentCaptor.addArgument(isEnd);
+    argumentCaptor.addArgument(inputBuffer);
+    argumentCaptor.addArgument(transactions);
+    argumentCaptor.addArgument(addToPortfolio);
+    argumentCaptor.addArgument(errorMessage);
     return null;
   }
 
   @Override
   public View newOneTimeStrategyPageView(Map<String, Double> stockList, boolean isEnd,
       List<String> inputBuffer, String errorMessage) {
+    argumentCaptor.addArgument(stockList);
+    argumentCaptor.addArgument(isEnd);
+    argumentCaptor.addArgument(inputBuffer);
+    argumentCaptor.addArgument(errorMessage);
     return null;
   }
 
   @Override
   public View newScheduleInfoPageView(BuySchedule schedule, String errorMessage) {
+    argumentCaptor.addArgument(schedule);
+    argumentCaptor.addArgument(errorMessage);
     return null;
   }
 

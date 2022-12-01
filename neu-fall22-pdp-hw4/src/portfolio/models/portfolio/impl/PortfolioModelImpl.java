@@ -25,13 +25,12 @@ import portfolio.models.stockprice.StockQueryService;
 
 /**
  * Portfolio model handles all portfolio related operation including querying stock price for
- * specific date.
+ * specific date. It holds one portfolio at a time and provides functions to modify it.
  */
 public class PortfolioModelImpl implements PortfolioModel {
 
   private final StockQueryService stockQueryService;
   private final PortfolioParser portfolioParser;
-
   private final ScheduleRunner scheduleRunner;
   private Portfolio portfolio = null;
 
@@ -172,34 +171,6 @@ public class PortfolioModelImpl implements PortfolioModel {
       }
     }
     portfolio = portfolio.create(new ArrayList<>(portfolio.getTransactions()), schedules);
-  }
-
-  @Override
-  public void modifySchedule(String name, double amount, int frequencyDays, LocalDate startDate,
-      LocalDate endDate, double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList)
-      throws Exception {
-    List<BuySchedule> schedules = new ArrayList<>(portfolio.getBuySchedules());
-    if (schedules == null || schedules.isEmpty()) {
-      throw new Exception("Current portfolio does not have buy schedule.");
-    }
-    BuySchedule schedule = null;
-    for (int i = 0; i < schedules.size(); i++) {
-      if (Objects.equals(schedules.get(i).getName(), name)) {
-        schedule = schedules.get(i);
-        schedules.remove(i);
-        break;
-      }
-    }
-    if (schedule == null) {
-      throw new Exception("Cannot find schedule name: " + name);
-    }
-    schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
-        transactionFee, schedule.getLastRunDate(), buyingList);
-    List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
-    List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
-    scheduledTransaction.addAll(transactions);
-    schedules.add(schedule);
-    portfolio = portfolio.create(scheduledTransaction, schedules);
   }
 
   @Override
@@ -383,7 +354,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       double more = (maxAmount - minAmount) / 45;
       double base = minAmount - more - 1;
 
-      scale = "one asterisk is" + more + "more than a base amount of $" + base;
+      scale = "one asterisk is $" + more + " more than a base amount of $" + base;
 
       for (var entry : perf.entrySet()) {
         int star = 0;

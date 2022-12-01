@@ -160,7 +160,7 @@ public class LoadPageSwingView implements View {
     panelNameAndButton.add(nameTextArea);
 
     if (portfolio == null) {
-      JButton loadButton = new JButton("load");
+      JButton loadButton = new JButton("Load");
       loadButton.addActionListener(e -> inputHandler.handleInput(nameTextArea.getText()));
       panelNameAndButton.add(loadButton);
     }

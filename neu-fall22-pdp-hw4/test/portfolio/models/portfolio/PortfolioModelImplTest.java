@@ -420,8 +420,7 @@ public class PortfolioModelImplTest {
     assertEquals(1, performance.getPerformance().get("2022-10-10: "), EPSILON);
     assertEquals(46, performance.getPerformance().get("2022-10-11: "), EPSILON);
     assertEquals(
-        "first * = $4076.777777777778\n"
-            + "* = $322.22222222222223",
+        "one asterisk is $322.22222222222223 more than a base amount of $4076.777777777778",
         performance.getScale());
   }
 
@@ -595,7 +594,7 @@ public class PortfolioModelImplTest {
   }
 
   @Test
-  public void addSchedule_modifyPortfolio() throws Exception {
+  public void addSchedule_removeSchedule() throws Exception {
     portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
     List<Transaction> buyingList1 = new ArrayList<>();
     buyingList1.add(new Transaction("AAPL", 10));
@@ -623,23 +622,14 @@ public class PortfolioModelImplTest {
     assertEquals("AAPL", schedules.get(0).getBuyingList().get(0).getSymbol());
     assertEquals(2, portfolioModel.getPortfolio().getBuySchedules().size());
 
-    portfolioModel.modifySchedule(
-        "s1",
-        2000,
-        5,
-        LocalDate.parse("2022-09-05"),
-        LocalDate.parse("2022-10-10"),
-        5,
-        LocalDate.parse("2022-10-05"),
-        buyingList2);
+    portfolioModel.removeSchedule("s1");
     schedules = portfolioModel.getPortfolio().getBuySchedules();
-    assertEquals("s1", schedules.get(1).getName());
-    assertEquals("AAA", schedules.get(1).getBuyingList().get(0).getSymbol());
-    assertEquals(2, portfolioModel.getPortfolio().getBuySchedules().size());
+    assertEquals("sss", schedules.get(0).getName());
+    assertEquals(1, portfolioModel.getPortfolio().getBuySchedules().size());
   }
 
   @Test
-  public void addSchedule_noScheduleToModify() throws Exception {
+  public void addSchedule_noScheduleToRemove() throws Exception {
     portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
     List<Transaction> buyingList1 = new ArrayList<>();
     buyingList1.add(new Transaction("AAPL", 10));
@@ -664,40 +654,7 @@ public class PortfolioModelImplTest {
         LocalDate.parse("2022-10-05"),
         buyingList1);
 
-    try {
-      portfolioModel.modifySchedule(
-          "s3",
-          2000,
-          5,
-          LocalDate.parse("2022-09-05"),
-          LocalDate.parse("2022-10-10"),
-          5,
-          LocalDate.parse("2022-10-05"),
-          buyingList2);
-      fail();
-    }
-    catch (Exception e) {
-      assertEquals("Cannot find schedule name: s3", e.getMessage());
-    }
-  }
-
-  @Test
-  public void addSchedule_noScheduleInPortfolio() throws Exception {
-    portfolioModel.create("name", PortfolioFormat.FLEXIBLE, transactions);
-    try {
-      portfolioModel.modifySchedule(
-          "s3",
-          2000,
-          5,
-          LocalDate.parse("2022-09-05"),
-          LocalDate.parse("2022-10-10"),
-          5,
-          LocalDate.parse("2022-10-05"),
-          null);
-      fail();
-    }
-    catch (Exception e) {
-      assertEquals("Current portfolio does not have buy schedule.", e.getMessage());
-    }
+    portfolioModel.removeSchedule("s3");
+    assertEquals(2, portfolioModel.getPortfolio().getBuySchedules().size());
   }
 }

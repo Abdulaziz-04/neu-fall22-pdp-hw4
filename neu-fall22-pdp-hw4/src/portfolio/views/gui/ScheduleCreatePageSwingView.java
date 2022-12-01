@@ -173,7 +173,12 @@ public class ScheduleCreatePageSwingView implements View {
         panelShow.add(jsp);
       }
 
-      JLabel namedLabel = new JLabel("Name of portfolio:");
+      JLabel namedLabel = new JLabel();
+      if(addToPortfolio) {
+        namedLabel.setText("Name of strategy: ");
+      } else {
+        namedLabel.setText("Name of portfolio: ");
+      }
       panelNamed.add(namedLabel);
       JTextField namedTextArea = new JTextField(10);
       panelNamed.add(namedTextArea);
@@ -198,7 +203,7 @@ public class ScheduleCreatePageSwingView implements View {
       JTextField endDate = new JTextField(10);
       panelEnd.add(endDate);
 
-      JLabel commissionFee = new JLabel("Commission fee:");
+      JLabel commissionFee = new JLabel("Commission fee (USD): ");
       panelCommission.add(commissionFee);
       JTextField commissionFeeTextArea = new JTextField(10);
       panelCommission.add(commissionFeeTextArea);

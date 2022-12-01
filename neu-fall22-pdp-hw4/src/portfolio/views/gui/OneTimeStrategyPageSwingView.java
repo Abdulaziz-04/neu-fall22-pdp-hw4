@@ -117,7 +117,7 @@ public class OneTimeStrategyPageSwingView implements View {
       JTextField symbolTextArea = new JTextField(10);
       panelSymbol.add(symbolTextArea);
 
-      JLabel sharesLabel = new JLabel("Weight: ");
+      JLabel sharesLabel = new JLabel("Weight: (ex. 12.34)");
       panelShares.add(sharesLabel);
       JTextField sharesTextArea = new JTextField(10);
       panelShares.add(sharesTextArea);

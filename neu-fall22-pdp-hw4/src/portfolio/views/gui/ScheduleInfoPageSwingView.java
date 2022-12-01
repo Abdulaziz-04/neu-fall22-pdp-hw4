@@ -68,7 +68,7 @@ public class ScheduleInfoPageSwingView implements View {
 
   @Override
   public void render() {
-    frame.setTitle("Information of Strategies");
+    frame.setTitle("Information of strategy");
     frame.setSize(600, 600);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);

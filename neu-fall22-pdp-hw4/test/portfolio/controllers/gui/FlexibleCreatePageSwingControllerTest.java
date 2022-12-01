@@ -233,7 +233,7 @@ public class FlexibleCreatePageSwingControllerTest {
     pageController.getView();
     assertTrue((boolean) argumentCaptor.getArguments().get(0));
     assertTrue((boolean) argumentCaptor.getArguments().get(1));
-    assertEquals(0, (int) argumentCaptor.getArguments().get(2));
+    assertEquals(99, (int) argumentCaptor.getArguments().get(2));
     assertEquals(5, ((List<ArrayList>) argumentCaptor.getArguments().get(3)).size());
     assertEquals(3, ((List<Transaction>) argumentCaptor.getArguments().get(4)).size());
     assertNull(argumentCaptor.getArguments().get(5));
