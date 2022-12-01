@@ -90,6 +90,7 @@ public class OneTimeStrategyPageSwingView implements View {
 
   @Override
   public void render() {
+    frame.setTitle("Specific Date Strategy");
     frame.setSize(600, 700);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
@@ -101,8 +102,6 @@ public class OneTimeStrategyPageSwingView implements View {
     JLabel error = new JLabel(errorMessage);
     error.setForeground(Color.red);
 
-    JPanel panelCommissionFee = new JPanel();
-    panelCommissionFee.setLayout(new FlowLayout());
     JPanel panelSymbol = new JPanel();
     panelSymbol.setLayout(new FlowLayout());
     JPanel panelShares = new JPanel();
@@ -144,32 +143,44 @@ public class OneTimeStrategyPageSwingView implements View {
 
     }
 
-    JPanel panelNamed = new JPanel();
-    panelNamed.setLayout(new FlowLayout());
-    panelNamed.setSize(500, 20);
+
+    JPanel panelAmount = new JPanel();
+    panelAmount.setLayout(new FlowLayout());
+    JPanel panelDate = new JPanel();
+    panelDate.setLayout(new FlowLayout());
+    JPanel panelCommission = new JPanel();
+    panelCommission.setLayout(new FlowLayout());
+    JPanel panelCreate = new JPanel();
+    panelCreate.setLayout(new FlowLayout());
 
     if (isEnd) {
       if (stockList != null) {
         JScrollPane jsp = showTransaction();
         panelShow.add(jsp);
       }
+
+
+
       JLabel amountLabel = new JLabel("Amount (USD):");
-      panelNamed.add(amountLabel);
+      panelAmount.add(amountLabel);
       JTextField amountTextArea = new JTextField(10);
-      panelNamed.add(amountTextArea);
-      JLabel startDateLabel = new JLabel("Transaction date (format: 2022-10-10):");
-      panelNamed.add(startDateLabel);
-      JTextField startDate = new JTextField(10);
-      panelNamed.add(startDate);
+      panelAmount.add(amountTextArea);
+
+      JLabel TransactionDateLabel = new JLabel("Transaction date (format: 2022-10-10):");
+      panelDate.add(TransactionDateLabel);
+      JTextField TransactionDate = new JTextField(10);
+      panelDate.add(TransactionDate);
+
       JLabel commissionFee = new JLabel("Commission fee:");
-      panelNamed.add(commissionFee);
+      panelCommission.add(commissionFee);
       JTextField commissionFeeTextArea = new JTextField(10);
-      panelNamed.add(commissionFeeTextArea);
-      JButton buttonNamed = new JButton("Create & Save to File");
-      buttonNamed.addActionListener(e -> inputHandler.handleInput(
-          amountTextArea.getText() + "," + startDate.getText() + ","
+      panelCommission.add(commissionFeeTextArea);
+
+      JButton buttonCreate = new JButton("Create & Save to File");
+      buttonCreate.addActionListener(e -> inputHandler.handleInput(
+          amountTextArea.getText() + "," + TransactionDate.getText() + ","
               + commissionFeeTextArea.getText()));
-      panelNamed.add(buttonNamed);
+      panelCreate.add(buttonCreate);
     }
 
     Box vBox = Box.createVerticalBox();
@@ -180,7 +191,10 @@ public class OneTimeStrategyPageSwingView implements View {
     vBox.add(panelShares);
     vBox.add(panelShow);
     vBox.add(panelButton);
-    vBox.add(panelNamed);
+    vBox.add(panelAmount);
+    vBox.add(panelDate);
+    vBox.add(panelCommission);
+    vBox.add(panelCreate);
 
     frame.setContentPane(vBox);
     frame.repaint();

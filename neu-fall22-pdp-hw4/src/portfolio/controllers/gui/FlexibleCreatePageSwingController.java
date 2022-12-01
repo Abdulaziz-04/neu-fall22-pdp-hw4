@@ -82,8 +82,10 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
   public SwingPageController handleInput(String input) {
     input = input.trim();
 
-    if (input.equals("back")) {
+    if (input.equals("back") && modifyMode == false) {
       return new MainPageSwingController(portfolioModel, viewFactory);
+    } else if (input.equals("back")) {
+      return new LoadPageSwingController(portfolioModel, viewFactory);
     }
 
     if (!isEnd && !input.equals("yes")) {

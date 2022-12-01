@@ -79,7 +79,8 @@ public interface ViewFactory {
       String errorMessage);
 
   View newScheduleCreatePageView(Map<String, Double> stockList, boolean isEnd,
-      List<String> inputBuffer, List<Transaction> transactions, String errorMessage);
+      List<String> inputBuffer, List<Transaction> transactions, boolean addToPortfolio,
+                                 String errorMessage);
 
   View newOneTimeStrategyPageView(Map<String, Double> stockList, boolean isEnd,
       List<String> inputBuffer, String errorMessage);

@@ -69,7 +69,7 @@ public class PerformancePageSwingView implements View {
 
   @Override
   public void render() {
-
+    frame.setTitle("Performance Page");
     frame.setSize(600, 700);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);

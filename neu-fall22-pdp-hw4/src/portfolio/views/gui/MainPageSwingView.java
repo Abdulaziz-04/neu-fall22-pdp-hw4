@@ -46,6 +46,7 @@ public class MainPageSwingView implements View {
     panel.add(button2);
     panel.add(button3);
 
+    frame.setTitle("Main page");
     frame.setSize(600, 600);
     frame.setContentPane(panel);
     frame.repaint();

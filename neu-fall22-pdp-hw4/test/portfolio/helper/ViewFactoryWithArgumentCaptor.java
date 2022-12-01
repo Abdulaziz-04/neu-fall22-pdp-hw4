@@ -96,7 +96,8 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
 
   @Override
   public View newScheduleCreatePageView(Map<String, Double> stockList, boolean isEnd,
-      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
+      List<String> inputBuffer, List<Transaction> transactions, boolean addToPortfolio,
+                                        String errorMessage) {
     return null;
   }
 

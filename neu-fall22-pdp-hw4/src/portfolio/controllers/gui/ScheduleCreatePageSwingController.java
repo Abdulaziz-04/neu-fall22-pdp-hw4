@@ -58,6 +58,7 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
   @Override
   public View getView() {
     return viewFactory.newScheduleCreatePageView(stockList, isEnd, inputBuffer, transactions,
+            addToPortfolio,
         errorMessage);
   }
 
@@ -76,8 +77,10 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
   @Override
   public SwingPageController handleInput(String input) {
     input = input.trim();
-    if (input.equals("back")) {
+    if (input.equals("back") && addToPortfolio == false) {
       return new MainPageSwingController(portfolioModel, viewFactory);
+    } else if (input.equals("back")) {
+      return new LoadPageSwingController(portfolioModel, viewFactory);
     }
 
     if (!isEnd && !input.equals("yes")) {

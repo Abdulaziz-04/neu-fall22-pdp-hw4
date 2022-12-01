@@ -77,7 +77,7 @@ public class OneTimeStrategyPageSwingController implements SwingPageController {
   public SwingPageController handleInput(String input) {
     input = input.trim();
     if (input.equals("back")) {
-      return new MainPageSwingController(portfolioModel, viewFactory);
+      return new LoadPageSwingController(portfolioModel, viewFactory);
     }
 
     if (!isEnd && !input.equals("yes")) {

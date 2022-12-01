@@ -1,14 +1,16 @@
 package portfolio.views.gui;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.util.Vector;
 
 
 import javax.swing.*;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
+
 import javax.swing.table.DefaultTableModel;
 
 import portfolio.controllers.InputHandler;
@@ -133,7 +135,8 @@ public class LoadPageSwingView implements View {
 
   @Override
   public void render() {
-    frame.setSize(600, 800);
+    frame.setTitle("Load Portfolio");
+    frame.setSize(600, 820);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
     JButton backButton = new JButton("back");
@@ -165,7 +168,7 @@ public class LoadPageSwingView implements View {
     JPanel panelShow = new JPanel();
     JPanel panelMenu = new JPanel();
     JPanel panelShowSchedule = new JPanel();
-    panelMenu.setLayout(new GridLayout(5, 1));
+    panelMenu.setLayout(new GridLayout(6, 1));
     if (portfolio != null) {
       JScrollPane jsp = showPortfolioComposition();
       panelShow.add(jsp);
@@ -181,18 +184,19 @@ public class LoadPageSwingView implements View {
           "specific date");
       informationsButton.addActionListener(e -> inputHandler.handleInput("1"));
       panelMenu.add(informationsButton);
-      JButton performanceButton = new JButton("Show performance of a portfolio");
+      JButton performanceButton = new JButton("Show performance of this portfolio");
       performanceButton.addActionListener(e -> inputHandler.handleInput("2"));
       panelMenu.add(performanceButton);
       if (showModifyMenu) {
-        JButton modifyButton = new JButton("modify the portfolio");
+        JButton modifyButton = new JButton("Buy or sell stocks (modify portfolio)");
         modifyButton.addActionListener(e -> inputHandler.handleInput("3"));
         panelMenu.add(modifyButton);
       }
-      JButton addScheduleButton = new JButton("Add new strategy");
+      JButton addScheduleButton = new JButton("Add new strategy to portfolio");
       addScheduleButton.addActionListener(e -> inputHandler.handleInput("4"));
       panelMenu.add(addScheduleButton);
-      JButton addSchedule2Button = new JButton("Buy stock by weight strategy");
+      JButton addSchedule2Button = new JButton("Buy stock by weight strategy on a day " +
+              "for this portfolio");
       addSchedule2Button.addActionListener(e -> inputHandler.handleInput("5"));
       panelMenu.add(addSchedule2Button);
     }

@@ -31,6 +31,7 @@ public class ScheduleCreatePageSwingView implements View {
   private final String errorMessage;
   private final Boolean isEnd;
   private final List<String> inputBuffer;
+  private boolean addToPortfolio;
 
   /**
    * This is a constructor that construct a create page view. The error messages will contain "Error
@@ -46,12 +47,13 @@ public class ScheduleCreatePageSwingView implements View {
    */
   public ScheduleCreatePageSwingView(JFrame frame, InputHandler inputHandler,
       Map<String, Double> stockList, boolean isEnd, List<String> inputBuffer,
-      List<Transaction> transactions, String errorMessage) {
+      List<Transaction> transactions, boolean addToPortfolio, String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.isEnd = isEnd;
     this.inputBuffer = inputBuffer;
     this.stockList = stockList;
+    this.addToPortfolio = addToPortfolio;
     this.errorMessage = errorMessage;
   }
 
@@ -93,6 +95,11 @@ public class ScheduleCreatePageSwingView implements View {
 
   @Override
   public void render() {
+    if(addToPortfolio) {
+      frame.setTitle("Add New Strategy to Existing Portfolio");
+    } else {
+      frame.setTitle("Create Dollar Cost Average Portfolio");
+    }
     frame.setSize(600, 800);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);

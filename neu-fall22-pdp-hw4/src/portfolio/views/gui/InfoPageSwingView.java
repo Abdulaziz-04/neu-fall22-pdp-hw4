@@ -71,6 +71,7 @@ public class InfoPageSwingView implements View {
 
   @Override
   public void render() {
+    frame.setTitle("Infor");
     frame.setSize(600, 600);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);

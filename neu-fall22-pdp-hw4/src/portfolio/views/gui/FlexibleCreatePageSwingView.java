@@ -91,6 +91,11 @@ public class FlexibleCreatePageSwingView implements View {
 
   @Override
   public void render() {
+    if(isNamed) {
+      frame.setTitle("Add More Transaction");
+    } else {
+      frame.setTitle("Flexible Create Page");
+    }
     frame.setSize(600, 700);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
