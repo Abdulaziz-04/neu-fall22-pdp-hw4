@@ -31,20 +31,19 @@ public class LoadPageSwingController implements SwingPageController {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
     showModifyMenu =
-            portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
+        portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
   }
 
   @Override
   public View getView() {
     return viewFactory.newLoadPageView(portfolioModel.getPortfolio(),
-            showModifyMenu, errorMessage);
+        showModifyMenu, errorMessage);
   }
 
   /**
-   * Handle user input for loading portfolio.
-   * First, get the name of portfolio from GUI text filed.
-   * Second, return different page according to the action command send to controller.
-   * (diifferent: add a switch to return new feature page)
+   * Handle user input for loading portfolio. First, get the name of portfolio from GUI text filed.
+   * Second, return different page according to the action command send to controller. (diifferent:
+   * add a switch to return new feature page)
    *
    * @param input the action command send from GUI
    * @return PageController as a next page to be redirected
@@ -56,11 +55,16 @@ public class LoadPageSwingController implements SwingPageController {
     if (input.equals("back")) {
       return new MainPageSwingController(portfolioModel, viewFactory);
     }
+    if (input.contains("view_schedule_name,")) {
+      String[] cmd = input.split(",");
+      return new ScheduleInfoSwingController(cmd[1], portfolioModel, viewFactory);
+    }
     try {
       if (portfolioModel.getPortfolio() == null) {
         //get portfolio
         String str = ioService.read(input + ".txt");
         portfolioModel.load(input, str);
+        ioService.saveTo(portfolioModel.getString(), input + ".txt", true);
         showModifyMenu = !portfolioModel.getPortfolio().isReadOnly();
         return this;
       } else {
@@ -75,6 +79,8 @@ public class LoadPageSwingController implements SwingPageController {
             return new PerformancePageSwingController(portfolioModel, viewFactory);
           case "3":
             return new FlexibleCreatePageSwingController(portfolioModel, viewFactory);
+          case "4":
+            return new ScheduleCreatePageSwingController(portfolioModel, viewFactory);
           default:
             errorMessage = "Please input valid number.";
             return this;

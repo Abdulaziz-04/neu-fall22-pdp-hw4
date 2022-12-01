@@ -45,9 +45,13 @@ public class MainPageSwingView implements View {
     JButton button2 = new JButton("Load portfolio");
     button2.addActionListener(e -> inputHandler.handleInput("3"));
 
+    JButton button3 = new JButton("Create dollar cost average portfolio");
+    button3.addActionListener(e -> inputHandler.handleInput("4"));
+
     panel.setSize(500, 500);
     panel.add(button1);
     panel.add(button2);
+    panel.add(button3);
 
     frame.setSize(600, 600);
     frame.setContentPane(panel);

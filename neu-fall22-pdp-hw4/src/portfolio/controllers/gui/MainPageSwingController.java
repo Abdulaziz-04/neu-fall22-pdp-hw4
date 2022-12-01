@@ -48,6 +48,8 @@ public class MainPageSwingController implements SwingPageController {
         return new FlexibleCreatePageSwingController(portfolioModel, viewFactory);
       case "3":
         return new LoadPageSwingController(portfolioModel, viewFactory);
+      case "4":
+        return new ScheduleCreatePageSwingController(portfolioModel, viewFactory);
       default:
         errorMessage = "Please enter the correct number!";
         return this;

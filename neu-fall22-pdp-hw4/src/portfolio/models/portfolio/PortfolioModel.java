@@ -44,9 +44,8 @@ public interface PortfolioModel {
   /**
    * This is a method to check the transaction for a stock on a certain date is valid or not.
    *
-   * @param date the date to check
+   * @param date   the date to check
    * @param symbol the symbol to check
-   *
    * @return true for valid, false for invalid
    * @throws Exception excetion error
    */
@@ -69,13 +68,11 @@ public interface PortfolioModel {
   void addTransactions(List<Transaction> transactions) throws Exception;
 
   void addSchedule(String name, double amount, int frequencyDays,
-      LocalDate startDate,
-      LocalDate endDate, double transactionFee, LocalDate lastRunDate,
+      LocalDate startDate, LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
 
   void modifySchedule(String name, double amount, int frequencyDays,
-      LocalDate startDate,
-      LocalDate endDate, double transactionFee, LocalDate lastRunDate,
+      LocalDate startDate, LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
 
   /**
@@ -110,13 +107,14 @@ public interface PortfolioModel {
    * This is a method to the performance for a portfolio on a certain timespan.
    *
    * @param from the start date
-   * @param to the end date
+   * @param to   the end date
    * @return the PortfolioPerformance entity
    */
   PortfolioPerformance getPerformance(LocalDate from, LocalDate to);
 
   /**
    * To get the string of a portfolio by using the portfolio parser.
+   *
    * @return
    * @throws Exception
    */

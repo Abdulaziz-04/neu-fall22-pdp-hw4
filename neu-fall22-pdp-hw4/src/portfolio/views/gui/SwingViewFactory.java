@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import portfolio.controllers.InputHandler;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -67,6 +68,19 @@ public class SwingViewFactory implements ViewFactory {
     return new PerformancePageSwingView(frame, inputHandler,portfolioName, startDate, endDate,
             performance, listAmount, scale, isFinish,
             errorMessage);
+  }
+
+  @Override
+  public View newScheduleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
+      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
+    return new ScheduleCreatePageSwingView(frame, inputHandler, isEnd, isNamed, stage,
+        inputBuffer, transactions,
+        errorMessage);
+  }
+
+  @Override
+  public View newScheduleInfoPageView(BuySchedule schedule, String errorMessage) {
+    return new ScheduleInfoPageSwingView(frame, inputHandler, schedule, errorMessage);
   }
 
 }

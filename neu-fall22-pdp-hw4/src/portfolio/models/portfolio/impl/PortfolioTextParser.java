@@ -179,9 +179,12 @@ public class PortfolioTextParser implements PortfolioParser {
       for (var schedule : schedules) {
         builder.append("[SCHEDULE]\n");
         builder.append(String.format("NAME=%s\n"
+                + "TYPE=%s\n"
+                + "AMOUNT=%.2f\n"
                 + "SCHEDULE=%d,%s,%s\n"
                 + "TRANSACTION_FEE=%.2f\n"
-                + "LAST_RUN_DATE=%s\n", schedule.getName(), schedule.getFrequencyDays(),
+                + "LAST_RUN_DATE=%s\n", schedule.getName(), schedule.getType(), schedule.getAmount(),
+            schedule.getFrequencyDays(),
             schedule.getStartDate(), schedule.getEndDate(), schedule.getTransactionFee(),
             schedule.getLastRunDate()));
         for (var entry : schedule.getBuyingList()) {

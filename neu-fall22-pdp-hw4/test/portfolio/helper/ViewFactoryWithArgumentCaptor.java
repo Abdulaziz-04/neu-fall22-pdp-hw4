@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
@@ -92,6 +93,17 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
     argumentCaptor.addArgument(errorMessage);
     return new PerformancePageView(portfolioName, startDate, endDate, performance, listAmount,scale, isFinish,
         errorMessage);
+  }
+
+  @Override
+  public View newScheduleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
+      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
+    return null;
+  }
+
+  @Override
+  public View newScheduleInfoPageView(BuySchedule schedule, String errorMessage) {
+    return null;
   }
 
 }
