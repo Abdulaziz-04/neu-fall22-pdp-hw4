@@ -81,6 +81,8 @@ public class LoadPageSwingController implements SwingPageController {
             return new FlexibleCreatePageSwingController(portfolioModel, viewFactory);
           case "4":
             return new ScheduleCreatePageSwingController(portfolioModel, viewFactory);
+          case "5":
+            return new OneTimeStrategyPageSwingController(portfolioModel, viewFactory);
           default:
             errorMessage = "Please input valid number.";
             return this;

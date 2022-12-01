@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
@@ -51,10 +50,6 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
     portfolioTmp = portfolioModel.getPortfolio();
     if (portfolioTmp != null) {
       addToPortfolio = true;
-      this.stockList = portfolioTmp.getComposition();
-      for (var entry: stockList.entrySet()) {
-        entry.setValue(100.0/stockList.size());
-      }
     } else {
       addToPortfolio = false;
     }
@@ -121,10 +116,10 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
       return this;
     } else if (input.equals("yes") && !isEnd) {
       try {
-        transactions = stockList.entrySet().stream()
-                .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
-                        Collectors.toList());
         // Check amount valid
+        transactions = stockList.entrySet().stream()
+            .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+                Collectors.toList());
         portfolioModel.checkTransactions(transactions);
         isEnd = true;
         return this;

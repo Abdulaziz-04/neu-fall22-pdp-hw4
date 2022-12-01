@@ -101,6 +101,12 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   }
 
   @Override
+  public View newOneTimeStrategyPageView(Map<String, Double> stockList, boolean isEnd,
+      List<String> inputBuffer, String errorMessage) {
+    return null;
+  }
+
+  @Override
   public View newScheduleInfoPageView(BuySchedule schedule, String errorMessage) {
     return null;
   }

@@ -163,6 +163,18 @@ public class PortfolioModelImpl implements PortfolioModel {
   }
 
   @Override
+  public void removeSchedule(String name) throws Exception {
+    List<BuySchedule> schedules = new ArrayList<>(portfolio.getBuySchedules());
+    for (int i = 0; i < schedules.size(); i++) {
+      if (Objects.equals(schedules.get(i).getName(), name)) {
+        schedules.remove(i);
+        break;
+      }
+    }
+    portfolio = portfolio.create(new ArrayList<>(portfolio.getTransactions()), schedules);
+  }
+
+  @Override
   public void modifySchedule(String name, double amount, int frequencyDays, LocalDate startDate,
       LocalDate endDate, double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList)
       throws Exception {

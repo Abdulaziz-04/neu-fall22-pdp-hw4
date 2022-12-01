@@ -192,6 +192,9 @@ public class LoadPageSwingView implements View {
       JButton addScheduleButton = new JButton("Add new strategy");
       addScheduleButton.addActionListener(e -> inputHandler.handleInput("4"));
       panelMenu.add(addScheduleButton);
+      JButton addSchedule2Button = new JButton("Buy stock by weight strategy");
+      addSchedule2Button.addActionListener(e -> inputHandler.handleInput("5"));
+      panelMenu.add(addSchedule2Button);
     }
 
     Box vBox = Box.createVerticalBox();

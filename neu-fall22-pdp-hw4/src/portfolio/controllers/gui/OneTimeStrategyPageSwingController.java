@@ -2,8 +2,10 @@ package portfolio.controllers.gui;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
+import java.util.stream.Collectors;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
@@ -20,17 +22,17 @@ import portfolio.views.ViewFactory;
  * checking valid stock input, creating portfolio, saving portfolio and generate View. The
  * controller can hold states while user creating their portfolio.
  */
-public class FlexibleCreatePageSwingController implements SwingPageController {
+public class OneTimeStrategyPageSwingController implements SwingPageController {
 
   private final PortfolioModel portfolioModel;
   private final IOService ioService = new FileIOService();
   private final ViewFactory viewFactory;
   private String errorMessage;
   private boolean isEnd = false;
-  private boolean isNamed = false;
-  private final boolean modifyMode;
-  private int state = 0;
-  private final List<Transaction> transactions = new ArrayList<>();
+  private final boolean addToPortfolio;
+  private List<Transaction> transactions = new ArrayList<>();
+
+  private Map<String, Double> stockList = new LinkedHashMap<>();
   private final List<String> inputBuffer = new ArrayList<>();
   private final Portfolio portfolioTmp;
 
@@ -41,29 +43,22 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
    */
-  public FlexibleCreatePageSwingController(PortfolioModel portfolioModel,
+  public OneTimeStrategyPageSwingController(
+      PortfolioModel portfolioModel,
       ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
     portfolioTmp = portfolioModel.getPortfolio();
     if (portfolioTmp != null) {
-      isNamed = true;
-      modifyMode = true;
+      addToPortfolio = true;
     } else {
-      modifyMode = false;
+      addToPortfolio = false;
     }
   }
 
   @Override
   public View getView() {
-    List<Transaction> transactions = new ArrayList<>();
-    if (portfolioTmp != null) {
-      transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
-    }
-    transactions.addAll(this.transactions);
-    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, state, inputBuffer,
-        transactions,
-        errorMessage);
+    return viewFactory.newOneTimeStrategyPageView(stockList, isEnd, inputBuffer, errorMessage);
   }
 
   /**
@@ -81,65 +76,34 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
   @Override
   public SwingPageController handleInput(String input) {
     input = input.trim();
-
     if (input.equals("back")) {
       return new MainPageSwingController(portfolioModel, viewFactory);
     }
 
     if (!isEnd && !input.equals("yes")) {
-      if (input.equals("checkbox")) {
-        if (state == 0) {
-          state = 1;
-        } else {
-          state = 0;
-        }
-        return this;
-      }
       errorMessage = null;
       inputBuffer.clear();
-      String[] cmd = input.split(",");
-      if (cmd.length != 5) {
-        errorMessage = "Error for input";
-        return this;
-      }
-      inputBuffer.add(cmd[0]);
-      inputBuffer.add(cmd[1]);
-      inputBuffer.add(cmd[2]);
-      inputBuffer.add(cmd[3]);
-      if (cmd[4].equals("")) {
-        cmd[4] = "0";
-      }
-      inputBuffer.add(cmd[4]);
-
       try {
+        String[] cmd = input.split(",");
+        String symbol = cmd[0];
+        inputBuffer.add(cmd[0]);
+        inputBuffer.add(cmd[1]);
+        if (cmd.length != 2) {
+          errorMessage = "Error Format!";
+          return this;
+        }
+        double amount = 0;
         try {
-          LocalDate.parse(cmd[0]);
+          amount = Double.parseDouble(cmd[1]);
         } catch (Exception e) {
-          errorMessage = "The format error!";
+          errorMessage = "The weight is not a number.";
           return this;
         }
-        portfolioModel.checkTransaction(LocalDate.parse(cmd[0]), cmd[1]);
-        TransactionType.parse(cmd[2]);
-        Integer.parseInt(cmd[3]);
-        if (Integer.parseInt(cmd[3]) <= 0) {
-          errorMessage = "The shares cannot be negative.";
+        if (amount <= 0) {
+          errorMessage = "The weight cannot be negative and 0.";
           return this;
         }
-
-        if (Double.parseDouble(cmd[4]) < 0) {
-          errorMessage = "Commission cannot be negative.";
-          return this;
-        }
-        transactions.add(
-            new Transaction(
-                TransactionType.parse(inputBuffer.get(2)),
-                inputBuffer.get(1),
-                Integer.parseInt(inputBuffer.get(3)),
-                LocalDate.parse(inputBuffer.get(0)),
-                Double.parseDouble(inputBuffer.get(4))
-            )
-        );
-
+        stockList.put(symbol, amount);
       } catch (Exception e) {
         errorMessage = e.getMessage();
         return this;
@@ -147,53 +111,56 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       return this;
     }
     errorMessage = null;
-    if (input.equals("yes") && !isEnd) {
+    if (input.equals("yes") && stockList.size() == 0) {
+      errorMessage = "No stock entered. Please input stock.";
+      return this;
+    } else if (input.equals("yes") && !isEnd) {
       try {
         // Check amount valid
-        List<Transaction> transactions = new ArrayList<>();
-        if (portfolioTmp != null) {
-          transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
-        }
-        transactions.addAll(this.transactions);
+        transactions = stockList.entrySet().stream()
+            .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+                Collectors.toList());
         portfolioModel.checkTransactions(transactions);
-        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
-        if (modifyMode) {
-          state = 99;
-        }
         return this;
       } catch (Exception e) {
-        errorMessage = e.getMessage() + " Please enter transaction list again.";
+        errorMessage = e.getMessage();
         inputBuffer.clear();
-        transactions.clear();
+        stockList.clear();
         return this;
       }
     } else {
-      String pname = portfolioTmp != null && isNamed ? portfolioTmp.getName() : input;
+      String[] cmd = input.split(",");
+      String pname = portfolioTmp.getName();
+      String sname = "oneTimeBuySchedule";
       try {
-        if (modifyMode) {
-          List<Transaction> transactions = new ArrayList<>();
-          if (portfolioTmp != null) {
-            transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
-          }
-          transactions.addAll(this.transactions);
-          portfolioModel.create(pname, PortfolioFormat.FLEXIBLE, transactions);
-          assert portfolioTmp != null;
-          for (var schedule : portfolioTmp.getBuySchedules()) {
-            portfolioModel.addSchedule(
-                schedule.getName(),
-                schedule.getAmount(),
-                schedule.getFrequencyDays(),
-                schedule.getStartDate(),
-                schedule.getEndDate(),
-                schedule.getTransactionFee(),
-                schedule.getLastRunDate(),
-                schedule.getBuyingList());
-          }
-        } else {
-          portfolioModel.create(pname, PortfolioFormat.FLEXIBLE, transactions);
+        if (Double.parseDouble(cmd[2]) < 0) {
+          errorMessage = "Commission cannot be negative.";
+          return this;
         }
-        ioService.saveTo(portfolioModel.getString(), pname + ".txt", modifyMode);
+      } catch (Exception e) {
+        errorMessage = e.getMessage();
+        return this;
+      }
+      try {
+        if (!addToPortfolio) {
+          portfolioModel.create(pname, PortfolioFormat.FLEXIBLE, new ArrayList<>());
+        }
+        transactions = stockList.entrySet().stream()
+            .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+                Collectors.toList());
+        portfolioModel.addSchedule(
+            sname,
+            Double.parseDouble(cmd[0]),
+            1,
+            LocalDate.parse(cmd[1]),
+            LocalDate.parse(cmd[1]),
+            Double.parseDouble(cmd[2]),
+            null,
+            transactions
+        );
+        portfolioModel.removeSchedule(sname);
+        ioService.saveTo(portfolioModel.getString(), pname + ".txt", addToPortfolio);
         return new LoadPageSwingController(portfolioModel, viewFactory);
       } catch (RuntimeException e) {
         errorMessage = e.getMessage() + " Please enter transaction list again.";
