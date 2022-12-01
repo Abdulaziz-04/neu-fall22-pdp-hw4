@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -26,7 +27,7 @@ public class ScheduleCreatePageSwingView implements View {
   private final JFrame frame;
 
   private final InputHandler inputHandler;
-  private final List<Transaction> transactions;
+  private final Map<String, Double> stockList;
   private final String errorMessage;
   private final Boolean isEnd;
   private final List<String> inputBuffer;
@@ -43,14 +44,14 @@ public class ScheduleCreatePageSwingView implements View {
    * @param transactions the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
-  public ScheduleCreatePageSwingView(JFrame frame, InputHandler inputHandler, boolean isEnd,
-      List<String> inputBuffer, List<Transaction> transactions,
-      String errorMessage) {
+  public ScheduleCreatePageSwingView(JFrame frame, InputHandler inputHandler,
+      Map<String, Double> stockList, boolean isEnd, List<String> inputBuffer,
+      List<Transaction> transactions, String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.isEnd = isEnd;
     this.inputBuffer = inputBuffer;
-    this.transactions = transactions;
+    this.stockList = stockList;
     this.errorMessage = errorMessage;
   }
 
@@ -64,10 +65,10 @@ public class ScheduleCreatePageSwingView implements View {
     Vector vName = new Vector();
     vName.add("Stock symbol");
     vName.add("Weight");
-    for (var entry : transactions) {
+    for (var entry : stockList.entrySet()) {
       Vector row = new Vector();
-      row.add(String.valueOf(entry.getSymbol()));
-      row.add(String.valueOf(entry.getAmount()));
+      row.add(String.valueOf(entry.getKey()));
+      row.add(String.valueOf(entry.getValue()));
       vData.add(row);
     }
 
@@ -75,6 +76,13 @@ public class ScheduleCreatePageSwingView implements View {
       @Override
       public boolean isCellEditable(int row, int column) {
         return true;
+      }
+
+      @Override
+      public void setValueAt(Object value, int row, int col)
+      {
+          String firstKey = (String) stockList.keySet().toArray()[row];
+          inputHandler.handleInput(firstKey + "," + value);
       }
     };
     JTable portfolioTable = new JTable(model);
@@ -123,7 +131,7 @@ public class ScheduleCreatePageSwingView implements View {
         sharesTextArea.setText(inputBuffer.get(1));
       }
 
-      if (transactions != null) {
+      if (stockList != null) {
         JScrollPane jsp = showTransaction();
         panelShow.add(jsp);
       }
@@ -144,7 +152,7 @@ public class ScheduleCreatePageSwingView implements View {
     panelNamed.setSize(500, 20);
 
     if (isEnd) {
-      if (transactions != null) {
+      if (stockList != null) {
         JScrollPane jsp = showTransaction();
         panelShow.add(jsp);
       }

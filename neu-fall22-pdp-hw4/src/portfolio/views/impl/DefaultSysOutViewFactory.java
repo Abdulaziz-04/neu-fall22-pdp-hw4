@@ -56,8 +56,8 @@ public class DefaultSysOutViewFactory implements ViewFactory {
   }
 
   @Override
-  public View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
-      List<Transaction> transactions, String errorMessage) {
+  public View newScheduleCreatePageView(Map<String, Double> stockList, boolean isEnd,
+      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
     return null;
   }
 

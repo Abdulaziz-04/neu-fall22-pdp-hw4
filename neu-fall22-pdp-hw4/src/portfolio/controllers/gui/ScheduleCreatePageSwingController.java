@@ -2,7 +2,9 @@ package portfolio.controllers.gui;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
@@ -28,6 +30,8 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
   private final boolean addToPortfolio;
   private final List<Transaction> transactions = new ArrayList<>();
   private final List<String> inputBuffer = new ArrayList<>();
+
+  private Map<String, Double> stockList = new LinkedHashMap<>();
   private final Portfolio portfolioTmp;
 
   /**
@@ -45,6 +49,10 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
     portfolioTmp = portfolioModel.getPortfolio();
     if (portfolioTmp != null) {
       addToPortfolio = true;
+      this.stockList = portfolioTmp.getComposition();
+      for (var entry: stockList.entrySet()) {
+        entry.setValue(100.0/stockList.size());
+      }
     } else {
       addToPortfolio = false;
     }
@@ -52,7 +60,8 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
 
   @Override
   public View getView() {
-    return viewFactory.newScheduleCreatePageView(isEnd, inputBuffer, transactions, errorMessage);
+    return viewFactory.newScheduleCreatePageView(stockList, isEnd, inputBuffer, transactions,
+        errorMessage);
   }
 
   /**
@@ -86,9 +95,9 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
           errorMessage = "Error Format!";
           return this;
         }
-        int amount = 0;
+        double amount = 0;
         try {
-          amount = Integer.parseInt(cmd[1]);
+          amount = Double.parseDouble(cmd[1]);
         } catch (Exception e) {
           errorMessage = "The weight is not a number.";
           return this;
@@ -97,9 +106,7 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
           errorMessage = "The weight cannot be negative and 0.";
           return this;
         }
-        transactions.add(
-            new Transaction(symbol, amount)
-        );
+        stockList.put(symbol, amount);
       } catch (Exception e) {
         errorMessage = e.getMessage();
         return this;
@@ -107,7 +114,10 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
       return this;
     }
     errorMessage = null;
-    if (input.equals("yes") && !isEnd) {
+    if (input.equals("yes") && stockList.size() == 0) {
+      errorMessage = "No stock entered. Please input stock.";
+      return this;
+    } else if (input.equals("yes") && !isEnd) {
       try {
         // Check amount valid
         portfolioModel.checkTransactions(transactions);
