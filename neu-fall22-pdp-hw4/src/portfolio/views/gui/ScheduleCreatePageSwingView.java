@@ -86,14 +86,14 @@ public class ScheduleCreatePageSwingView implements View {
       }
     };
     JTable portfolioTable = new JTable(model);
-    portfolioTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
+    portfolioTable.setPreferredScrollableViewportSize(new Dimension(500, 150));
     JScrollPane jsp = new JScrollPane(portfolioTable);
     return jsp;
   }
 
   @Override
   public void render() {
-    frame.setSize(600, 700);
+    frame.setSize(600, 800);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
     JButton backButton = new JButton("back");
@@ -104,12 +104,10 @@ public class ScheduleCreatePageSwingView implements View {
     JLabel error = new JLabel(errorMessage);
     error.setForeground(Color.red);
 
-    JPanel panelCommissionFee = new JPanel();
-    panelCommissionFee.setLayout(new FlowLayout());
     JPanel panelSymbol = new JPanel();
     panelSymbol.setLayout(new FlowLayout());
-    JPanel panelShares = new JPanel();
-    panelShares.setLayout(new FlowLayout());
+    JPanel panelWeight = new JPanel();
+    panelWeight.setLayout(new FlowLayout());
     JPanel panelShow = new JPanel();
     panelShow.setLayout(new FlowLayout());
     JPanel panelButton = new JPanel();
@@ -121,14 +119,14 @@ public class ScheduleCreatePageSwingView implements View {
       JTextField symbolTextArea = new JTextField(10);
       panelSymbol.add(symbolTextArea);
 
-      JLabel sharesLabel = new JLabel("Weight: ");
-      panelShares.add(sharesLabel);
-      JTextField sharesTextArea = new JTextField(10);
-      panelShares.add(sharesTextArea);
+      JLabel weightLabel = new JLabel("Weight: ");
+      panelWeight.add(weightLabel);
+      JTextField weightTextArea = new JTextField(10);
+      panelWeight.add(weightTextArea);
 
       if (errorMessage != null && inputBuffer.size() > 0) {
         symbolTextArea.setText(inputBuffer.get(0));
-        sharesTextArea.setText(inputBuffer.get(1));
+        weightTextArea.setText(inputBuffer.get(1));
       }
 
       if (stockList != null) {
@@ -138,7 +136,7 @@ public class ScheduleCreatePageSwingView implements View {
 
       JButton buttonBuy = new JButton("Add");
       buttonBuy.addActionListener(
-          e -> inputHandler.handleInput(symbolTextArea.getText() + "," + sharesTextArea.getText()));
+          e -> inputHandler.handleInput(symbolTextArea.getText() + "," + weightTextArea.getText()));
       panelButton.add(buttonBuy);
 
       JButton buttonFinish = new JButton("Finish");
@@ -149,54 +147,78 @@ public class ScheduleCreatePageSwingView implements View {
 
     JPanel panelNamed = new JPanel();
     panelNamed.setLayout(new FlowLayout());
-    panelNamed.setSize(500, 20);
+    JPanel panelAmount = new JPanel();
+    panelAmount.setLayout(new FlowLayout());
+    JPanel panelStart = new JPanel();
+    panelStart.setLayout(new FlowLayout());
+    JPanel panelEnd = new JPanel();
+    panelEnd.setLayout(new FlowLayout());
+    JPanel panelFrequency = new JPanel();
+    panelFrequency.setLayout(new FlowLayout());
+    JPanel panelCommission = new JPanel();
+    panelCommission.setLayout(new FlowLayout());
+    JPanel panelCreate = new JPanel();
+    panelCreate.setLayout(new FlowLayout());
 
     if (isEnd) {
       if (stockList != null) {
         JScrollPane jsp = showTransaction();
         panelShow.add(jsp);
       }
+
       JLabel namedLabel = new JLabel("Name of portfolio:");
       panelNamed.add(namedLabel);
       JTextField namedTextArea = new JTextField(10);
       panelNamed.add(namedTextArea);
+
       JLabel amountLabel = new JLabel("Amount (USD):");
-      panelNamed.add(amountLabel);
+      panelAmount.add(amountLabel);
       JTextField amountTextArea = new JTextField(10);
-      panelNamed.add(amountTextArea);
+      panelAmount.add(amountTextArea);
+
       JLabel startDateLabel = new JLabel("StartDate (format: 2022-10-10):");
-      panelNamed.add(startDateLabel);
+      panelStart.add(startDateLabel);
       JTextField startDate = new JTextField(10);
-      panelNamed.add(startDate);
+      panelStart.add(startDate);
+
       JLabel frequency = new JLabel("Frequency (number of days):");
-      panelNamed.add(frequency);
+      panelFrequency.add(frequency);
       JTextField frequencyTextArea = new JTextField(10);
-      panelNamed.add(frequencyTextArea);
+      panelFrequency.add(frequencyTextArea);
+
       JLabel endDateLabel = new JLabel("EndDate (format: 2022-10-10):");
-      panelNamed.add(endDateLabel);
+      panelEnd.add(endDateLabel);
       JTextField endDate = new JTextField(10);
-      panelNamed.add(endDate);
+      panelEnd.add(endDate);
+
       JLabel commissionFee = new JLabel("Commission fee:");
-      panelNamed.add(commissionFee);
+      panelCommission.add(commissionFee);
       JTextField commissionFeeTextArea = new JTextField(10);
-      panelNamed.add(commissionFeeTextArea);
-      JButton buttonNamed = new JButton("Create & Save to File");
-      buttonNamed.addActionListener(e -> inputHandler.handleInput(
+      panelCommission.add(commissionFeeTextArea);
+
+      JButton buttonCreate = new JButton("Create & Save to File");
+      buttonCreate.addActionListener(e -> inputHandler.handleInput(
           namedTextArea.getText() + "," + amountTextArea.getText() + ","
               + frequencyTextArea.getText() + "," + startDate.getText()
               + "," + endDate.getText() + "," + commissionFeeTextArea.getText()));
-      panelNamed.add(buttonNamed);
+      panelCreate.add(buttonCreate);
     }
 
     Box vBox = Box.createVerticalBox();
-    vBox.setPreferredSize(new Dimension(500, 500));
+    vBox.setPreferredSize(new Dimension(500, 700));
     vBox.add(panelBack);
     vBox.add(error);
     vBox.add(panelSymbol);
-    vBox.add(panelShares);
+    vBox.add(panelWeight);
     vBox.add(panelShow);
     vBox.add(panelButton);
     vBox.add(panelNamed);
+    vBox.add(panelAmount);
+    vBox.add(panelStart);
+    vBox.add(panelEnd);
+    vBox.add(panelFrequency);
+    vBox.add(panelCommission);
+    vBox.add(panelCreate);
 
     frame.setContentPane(vBox);
     frame.repaint();
