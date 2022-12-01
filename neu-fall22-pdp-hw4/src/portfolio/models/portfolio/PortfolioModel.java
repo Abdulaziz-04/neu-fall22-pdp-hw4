@@ -9,7 +9,7 @@ import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 
 /**
- * This is an interface for Portfolio model.
+ * This is an interface for Portfolio model which include all method for portfolio.
  */
 public interface PortfolioModel {
 
@@ -41,8 +41,23 @@ public interface PortfolioModel {
 
   void load(String name, String text) throws Exception;
 
+  /**
+   * This is a method to check the transaction for a stock on a certain date is valid or not.
+   *
+   * @param date the date to check
+   * @param symbol the symbol to check
+   *
+   * @return true for valid, false for invalid
+   * @throws Exception excetion error
+   */
   boolean checkTransaction(LocalDate date, String symbol) throws Exception;
 
+  /**
+   * This is a method to check the transaction list is valid or not.
+   *
+   * @param transactions the transaction list
+   * @throws Exception not valid
+   */
   void checkTransactions(List<Transaction> transactions) throws Exception;
 
   /**
@@ -91,7 +106,19 @@ public interface PortfolioModel {
    */
   Map<LocalDate, Double> getValues(LocalDate from, LocalDate to) throws Exception;
 
+  /**
+   * This is a method to the performance for a portfolio on a certain timespan.
+   *
+   * @param from the start date
+   * @param to the end date
+   * @return the PortfolioPerformance entity
+   */
   PortfolioPerformance getPerformance(LocalDate from, LocalDate to);
 
+  /**
+   * To get the string of a portfolio by using the portfolio parser.
+   * @return
+   * @throws Exception
+   */
   String getString() throws Exception;
 }

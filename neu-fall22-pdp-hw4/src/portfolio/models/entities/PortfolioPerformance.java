@@ -1,6 +1,7 @@
 package portfolio.models.entities;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +15,7 @@ public class PortfolioPerformance {
 
   private double max;
   private double min;
+  private List<Double> listAmount;
 
   /**
    * This is a constructor to construct a PortfolioEntryWithValue object.
@@ -22,11 +24,12 @@ public class PortfolioPerformance {
    * @param scale  scale
    */
   public PortfolioPerformance(Map<String, Integer> performance, String scale, double max,
-                              double min) {
+                              double min, List<Double> listAmount) {
     this.performance = performance;
     this.scale = scale;
     this.max = max;
     this.min = min;
+    this.listAmount = listAmount;
   }
 
   public Map<String, Integer> getPerformance() {
@@ -43,5 +46,8 @@ public class PortfolioPerformance {
 
   public double getMin() {
     return min;
+  }
+  public List<Double> getListAmount() {
+    return listAmount;
   }
 }

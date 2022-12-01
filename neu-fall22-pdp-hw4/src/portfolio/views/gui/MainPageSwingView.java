@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import portfolio.controllers.InputHandler;
 import portfolio.views.View;
 
+/**
+ * This is a class that represent a GUI main menu view page, which implement the View interface.
+ */
 public class MainPageSwingView implements View {
 
   private final JFrame frame;
@@ -24,7 +27,8 @@ public class MainPageSwingView implements View {
    * @param errorMessage the error message will show to the user
    * @param isInitFailed initialize fail or not
    */
-  public MainPageSwingView(JFrame frame, InputHandler inputHandler, String errorMessage, boolean isInitFailed) {
+  public MainPageSwingView(JFrame frame, InputHandler inputHandler,
+                           String errorMessage, boolean isInitFailed) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.errorMessage = errorMessage;

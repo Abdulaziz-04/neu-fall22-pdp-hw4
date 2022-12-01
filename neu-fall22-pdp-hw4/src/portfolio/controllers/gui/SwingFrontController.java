@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import portfolio.controllers.FrontController;
 import portfolio.controllers.InputHandler;
-import portfolio.controllers.PageController;
+
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -15,8 +15,9 @@ public class SwingFrontController implements FrontController, InputHandler {
   private SwingPageController pageController;
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
+
   /**
-   * Contructs the controller.
+   * Contructs the SwingFrontController for GUI first page.
    *
    * @param portfolioModel PortfolioModel
    */

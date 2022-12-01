@@ -2,8 +2,9 @@ package portfolio.views.impl;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
-import javax.swing.JPanel;
+
 import portfolio.views.ViewAbs;
 
 /**
@@ -22,6 +23,7 @@ public class PerformancePageView extends ViewAbs {
   private final String scale;
 
   private boolean isFinish;
+  private List<Double> listAmount;
 
   /**
    * This is a constructor to construct a performance page view.
@@ -38,7 +40,7 @@ public class PerformancePageView extends ViewAbs {
   public PerformancePageView(PrintStream printStream, String portfolioName,
       LocalDate startDate,
       LocalDate endDate,
-      Map<String, Integer> performance,
+      Map<String, Integer> performance, List<Double> listAmount,
       String scale,
       boolean isFinish,
       String errorMessage) {
@@ -47,6 +49,7 @@ public class PerformancePageView extends ViewAbs {
     this.startDate = startDate;
     this.endDate = endDate;
     this.performance = performance;
+    this.listAmount = listAmount;
     this.scale = scale;
     this.isFinish = isFinish;
     this.errorMessage = errorMessage;
@@ -59,21 +62,23 @@ public class PerformancePageView extends ViewAbs {
    * @param startDate     the start date to performance
    * @param endDate       the end date to performance
    * @param performance   a map of performance
+   * @param listAmount
    * @param scale         the scale of performance
    * @param isFinish      finish current performance is true. Otherwise, false.
    * @param errorMessage  the error message will show to the user
    */
   public PerformancePageView(String portfolioName,
-      LocalDate startDate,
-      LocalDate endDate,
-      Map<String, Integer> performance,
-      String scale,
-      boolean isFinish,
-      String errorMessage) {
+                             LocalDate startDate,
+                             LocalDate endDate,
+                             Map<String, Integer> performance,
+                             List<Double> listAmount, String scale,
+                             boolean isFinish,
+                             String errorMessage) {
     this.portfolioName = portfolioName;
     this.startDate = startDate;
     this.endDate = endDate;
     this.performance = performance;
+    this.listAmount = listAmount;
     this.scale = scale;
     this.isFinish = isFinish;
     this.errorMessage = errorMessage;

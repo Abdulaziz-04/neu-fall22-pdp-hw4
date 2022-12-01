@@ -2,6 +2,7 @@ package portfolio.views.gui;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
@@ -29,6 +30,8 @@ public class PerformancePageSwingView implements View {
   private JFrame frame;
   private InputHandler inputHandler;
 
+  private List<Double> listAmount;
+
   /**
    * This is a constructor to construct a GUI performance page view.
    *
@@ -46,6 +49,7 @@ public class PerformancePageSwingView implements View {
                                   LocalDate startDate,
                                   LocalDate endDate,
                                   Map<String, Integer> performance,
+                                  List<Double> listAmount,
                                   String scale,
                                   boolean isFinish,
                                   String errorMessage) {
@@ -55,6 +59,7 @@ public class PerformancePageSwingView implements View {
     this.startDate = startDate;
     this.endDate = endDate;
     this.performance = performance;
+    this.listAmount = listAmount;
     this.scale = scale;
     this.isFinish = isFinish;
     this.errorMessage = errorMessage;

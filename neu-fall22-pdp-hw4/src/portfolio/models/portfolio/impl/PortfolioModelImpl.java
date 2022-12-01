@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.entities.PortfolioWithValue;
@@ -42,7 +43,7 @@ public class PortfolioModelImpl implements PortfolioModel {
    * @param portfolioParser   parse portfolio
    */
   public PortfolioModelImpl(StockQueryService stockQueryService,
-      PortfolioParser portfolioParser, ScheduleRunner scheduleRunner) {
+                            PortfolioParser portfolioParser, ScheduleRunner scheduleRunner) {
     this.stockQueryService = stockQueryService;
     this.portfolioParser = portfolioParser;
     this.scheduleRunner = scheduleRunner;
@@ -82,16 +83,16 @@ public class PortfolioModelImpl implements PortfolioModel {
     List<BuySchedule> schedules = p.getBuySchedules();
     portfolio = create(name, p.getFormat(), transactions);
     if (schedules != null) {
-      for(var schedule: schedules) {
+      for (var schedule : schedules) {
         addSchedule(
-            schedule.getName(),
-            schedule.getAmount(),
-            schedule.getFrequencyDays(),
-            schedule.getStartDate(),
-            schedule.getEndDate(),
-            schedule.getTransactionFee(),
-            schedule.getLastRunDate(),
-            schedule.getBuyingList()
+                schedule.getName(),
+                schedule.getAmount(),
+                schedule.getFrequencyDays(),
+                schedule.getStartDate(),
+                schedule.getEndDate(),
+                schedule.getTransactionFee(),
+                schedule.getLastRunDate(),
+                schedule.getBuyingList()
         );
       }
     }
@@ -105,7 +106,7 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public void checkTransactions(List<Transaction> transactions)
-      throws Exception {
+          throws Exception {
     Map<String, LocalDate> map = new HashMap<>();
     for (var stock : stockQueryService.getStockList()) {
       map.put(stock.getSymbol(), stock.getIpoDate());
@@ -140,11 +141,11 @@ public class PortfolioModelImpl implements PortfolioModel {
 
   @Override
   public void addSchedule(String name, double amount, int frequencyDays, LocalDate startDate, LocalDate endDate,
-      double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
+                          double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
     BuySchedule schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
-        transactionFee, lastRunDate, buyingList);
+            transactionFee, lastRunDate, buyingList);
     List<BuySchedule> currentSchedules = new ArrayList<>(portfolio.getBuySchedules());
-    if (portfolio.getBuySchedules() == null){
+    if (portfolio.getBuySchedules() == null) {
       throw new Exception("Cannot add schedule to this portfolio.");
     }
     if (currentSchedules.stream().anyMatch(x -> Objects.equals(x.getName(), name))) {
@@ -154,14 +155,14 @@ public class PortfolioModelImpl implements PortfolioModel {
     List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
     scheduledTransaction.addAll(transactions);
     schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
-        transactionFee, LocalDate.now(), buyingList);
+            transactionFee, LocalDate.now(), buyingList);
     currentSchedules.add(schedule);
     portfolio = portfolio.create(scheduledTransaction, currentSchedules);
   }
 
   @Override
   public void modifySchedule(String name, double amount, int frequencyDays, LocalDate startDate,
-      LocalDate endDate,  double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
+                             LocalDate endDate, double transactionFee, LocalDate lastRunDate, List<Transaction> buyingList) throws Exception {
     List<BuySchedule> schedules = new ArrayList<>(portfolio.getBuySchedules());
     if (schedules == null || schedules.isEmpty()) {
       throw new Exception("Current portfolio does not have buy schedule.");
@@ -178,7 +179,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       throw new Exception("Cannot find schedule name: " + name);
     }
     schedule = new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
-        transactionFee, schedule.getLastRunDate(), buyingList);
+            transactionFee, schedule.getLastRunDate(), buyingList);
     List<Transaction> scheduledTransaction = scheduleRunner.run(LocalDate.now(), schedule);
     List<Transaction> transactions = new ArrayList<>(portfolio.getTransactions());
     scheduledTransaction.addAll(transactions);
@@ -189,7 +190,7 @@ public class PortfolioModelImpl implements PortfolioModel {
   @Override
   public PortfolioWithValue getValue(LocalDate date) throws Exception {
     Map<String, StockPrice> prices = stockQueryService.getStockPrice(date,
-        portfolio.getSymbols(date));
+            portfolio.getSymbols(date));
     return portfolio.getPortfolioWithValue(date, prices);
   }
 
@@ -198,7 +199,7 @@ public class PortfolioModelImpl implements PortfolioModel {
     Map<String, StockPrice> prices = new HashMap<>();
     for (var entry : portfolio.getTransactions()) {
       for (var p : stockQueryService.getStockPrice(entry.getDate(), List.of(entry.getSymbol()))
-          .entrySet()) {
+              .entrySet()) {
         prices.put(entry.getDate() + p.getKey(), p.getValue());
       }
     }
@@ -219,6 +220,13 @@ public class PortfolioModelImpl implements PortfolioModel {
     return map;
   }
 
+  /**
+   * This is a method to the performance for a portfolio on a certain timespan.
+   *
+   * @param from the start date
+   * @param to   the end date
+   * @return the PortfolioPerformance entity
+   */
   @Override
   public PortfolioPerformance getPerformance(LocalDate from, LocalDate to) {
     if (to.compareTo(from) < 0) {
@@ -280,7 +288,7 @@ public class PortfolioModelImpl implements PortfolioModel {
           currentMonthGet = currentMonthGet.minusDays(1);
         }
         perf.put(currentMonthEnd.getYear() +
-            "-" + currentMonthEnd.getMonthValue() + ": ", map.get(currentMonthGet));
+                "-" + currentMonthEnd.getMonthValue() + ": ", map.get(currentMonthGet));
         currentDate = currentMonthEnd.plusDays(1);
       }
     } else if ((monthCount / 3) >= 5 && (monthCount / 3) < 29) {
@@ -297,7 +305,7 @@ public class PortfolioModelImpl implements PortfolioModel {
           currentMonthGet = currentMonthGet.minusDays(1);
         }
         perf.put(currentMonthEnd.getYear() + "-Quarter " +
-            (currentMonthEnd.getMonthValue() / 3 + 1) + ": ", map.get(currentMonthGet));
+                (currentMonthEnd.getMonthValue() / 3 + 1) + ": ", map.get(currentMonthGet));
         currentDate = currentMonthEnd.plusDays(1);
         //monthCount = monthCount -3;
       }
@@ -332,7 +340,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       for (var entry : perf.entrySet()) {
         scaledPerf.put(entry.getKey(), 0);
       }
-      return new PortfolioPerformance(scaledPerf, scale, maxAmount, minAmount);
+      return new PortfolioPerformance(scaledPerf, scale, maxAmount, minAmount, listAmount);
     }
     // the min can not be zero when we calculate the scale
     if (minAmount.equals(0.0)) {
@@ -372,7 +380,7 @@ public class PortfolioModelImpl implements PortfolioModel {
         scaledPerf.put(entry.getKey(), star);
       }
     }
-    return new PortfolioPerformance(scaledPerf, scale, maxAmount,minAmount);
+    return new PortfolioPerformance(scaledPerf, scale, maxAmount, minAmount, listAmount);
   }
 
 

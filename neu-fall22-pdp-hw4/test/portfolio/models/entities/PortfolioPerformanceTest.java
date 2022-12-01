@@ -20,7 +20,7 @@ public class PortfolioPerformanceTest {
     numStars.put("1", 1);
     numStars.put("2", 2);
     portfolioPerformance = new PortfolioPerformance(numStars, "this is scale.",
-            Double.parseDouble("2"), Double.parseDouble("1"));
+            Double.parseDouble("2"), Double.parseDouble("1"),null);
   }
 
   @Test

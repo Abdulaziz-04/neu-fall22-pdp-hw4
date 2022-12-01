@@ -4,11 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import portfolio.controllers.PageController;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
-import portfolio.controllers.impl.LoadPageController;
-import portfolio.controllers.impl.MainPageController;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
 import portfolio.models.entities.TransactionType;
@@ -18,10 +15,10 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a page controller for the flexible portfolio create page, which is implement the page
- * controller. CreatePageController handles input from user and is responsible for checking valid
- * stock input, creating portfolio, saving portfolio and generate View. The controller can hold
- * states while user creating their portfolio.
+ * This is a page controller for the GUI flexible portfolio create page, which is implement the
+ * Gui page controller. CreatePageController handles input send by action command and is
+ * responsible for checking valid stock input, creating portfolio, saving portfolio and generate
+ * View. The controller can hold states while user creating their portfolio.
  */
 public class FlexibleCreatePageSwingController implements SwingPageController {
 
@@ -32,13 +29,15 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
   private boolean isEnd = false;
   private boolean isNamed = false;
   private final boolean modifyMode;
+  private int state = 0;
   private List<Transaction> transactions = new ArrayList<>();
   private  final List<String> inputBuffer = new ArrayList<>();
 
   private Portfolio portfolioTmp;
 
   /**
-   * This is a constructor to construct a FlexibleCreatePageController.
+   * This is a constructor to construct a FlexibleCreatePageSwingController. It will initialize
+   * the model and view. And also for modify page will use the same page for this one.
    *
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
@@ -64,30 +63,43 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
     }
     transactions.addAll(this.transactions);
-    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), inputBuffer,
+    return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, state, inputBuffer,
             transactions,
         errorMessage);
   }
 
   /**
-   * Handle user input for creating portfolio. User can select stock symbol and number of shares,
-   * after type 'end', user can input the desire portfolio name. Portfolio name cannot be the same
-   * as an existing file in the folder and some keywords such as 'end', 'yes' and 'no'. The method
-   * return the next page controller that user should be navigated to.
+   * Handle user input for creating portfolio. User will input in GUI text fields and this input
+   * will be all of them.(The input receive here is different from last one. The input for Gui
+   * controller will include all inputs in text field)
+   * After user click finish, it will check the transactions are valid or not. If not, the user
+   * need to input all transactions again.
+   * If all the transactions are valid, it will handle the name input after the user click create
+   * and save to file button.(if it is not modify mode). In the end, it will create new one for
+   * name and save into file (for create) or save the original file.
    *
-   * @param input user input as a string
+   * @param input the action command send from GUI
    * @return PageController as a next page to be redirected
    */
   @Override
   public SwingPageController handleInput(String input) {
     input = input.trim();
-    errorMessage = null;
+    //errorMessage = null;
 
     if (input.equals("back")) {
       return new MainPageSwingController(portfolioModel, viewFactory);
     }
 
     if(!isEnd && !input.equals("yes")) {
+      if(input.equals("checkbox")) {
+        if(state == 0) {
+          state = 1;
+        } else {
+          state = 0;
+        }
+        return this;
+      }
+      errorMessage = null;
       inputBuffer.clear();
       String [] cmd = input.split(",");
       if(cmd.length != 5) {
@@ -140,7 +152,7 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       }
       return this;
     }
-
+    errorMessage = null;
     if(input.equals("yes") && isEnd == false) {
       try {
         // Check amount valid
@@ -177,7 +189,6 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
         errorMessage = e.getMessage();
       }
     }
-
     return  this;
 
 

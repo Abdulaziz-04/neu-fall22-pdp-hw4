@@ -3,7 +3,8 @@ package portfolio.controllers.gui;
 import portfolio.views.View;
 
 /**
- * PageController store the logic, create view and handle input of each user interface page.
+ * SwingPageController store the logic, create view and handle action command send from each user
+ * interface page.
  */
 public interface SwingPageController {
 

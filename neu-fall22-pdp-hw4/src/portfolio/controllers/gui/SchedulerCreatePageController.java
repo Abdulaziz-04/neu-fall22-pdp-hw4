@@ -1,4 +1,4 @@
-package portfolio.controllers.impl;
+package portfolio.controllers.gui;
 
 public class SchedulerCreatePageController {
 

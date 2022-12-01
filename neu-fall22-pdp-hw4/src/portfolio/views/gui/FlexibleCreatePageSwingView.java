@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -14,6 +12,9 @@ import portfolio.controllers.InputHandler;
 import portfolio.models.entities.Transaction;
 import portfolio.views.View;
 
+/**
+ * This is a view that show the GUI create page, which implement the View function.
+ */
 public class FlexibleCreatePageSwingView implements View {
 
   private JFrame frame;
@@ -54,6 +55,11 @@ public class FlexibleCreatePageSwingView implements View {
     this.errorMessage = errorMessage;
   }
 
+  /**
+   * The helper function to show the transaction table in a ScrollPane.
+   *
+   * @return ScrollPanel that contain the table of transaction
+   */
   private JScrollPane showTransaction() {
     Vector vData = new Vector();
     Vector vName = new Vector();
@@ -117,23 +123,13 @@ public class FlexibleCreatePageSwingView implements View {
     //panelButton.setSize(500,20);
 
     if (isEnd == false) {
-      /*JCheckBox jCheckBox = new JCheckBox("With or without commission fee");
-      jCheckBox.addChangeListener(new ChangeListener() {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-          JCheckBox checkBox = (JCheckBox) e.getSource();
-          if(checkBox.isSelected()) {
-            JLabel commissionLabel = new JLabel("Commission fee (without please input 0):");
-            panelCommissionFee.add(commissionLabel);
-            JTextField commissionTextArea = new JTextField(10);
-            panelCommissionFee.add(commissionTextArea);
-          }
-        }
-      });*/
-      JLabel commissionLabel = new JLabel("Commission fee (without please input 0):");
-      panelCommissionFee.add(commissionLabel);
-      JTextField commissionTextArea = new JTextField(10);
-      panelCommissionFee.add(commissionTextArea);
+      boolean check = true;
+      if(state == 1) {
+        check = false;
+      }
+      JCheckBox jCheckBox = new JCheckBox("Commission fee",check);
+      jCheckBox.addActionListener(e -> inputHandler.handleInput("checkbox"));
+      panelCommissionFee.add(jCheckBox);
 
 
       JLabel dateLabel = new JLabel("Date for transaction (format: 2022-10-10)");
@@ -154,7 +150,7 @@ public class FlexibleCreatePageSwingView implements View {
       panelShares.add(sharesTextArea);
 
       if (errorMessage != null) {
-        commissionTextArea.setText(inputBuffer.get(4));
+        //commissionTextArea.setText(inputBuffer.get(4));
         dateTextArea.setText(inputBuffer.get(0));
         symbolTextArea.setText(inputBuffer.get(1));
         sharesTextArea.setText(inputBuffer.get(3));
@@ -165,16 +161,49 @@ public class FlexibleCreatePageSwingView implements View {
         panelShow.add(jsp);
       }
 
-      JButton buttonBuy = new JButton("BUY");
+      if(jCheckBox.isSelected()) {
+        //JLabel commissionLabel = new JLabel("Commission fee:");
+        //panelCommissionFee.add(commissionLabel);
+        JTextField commissionTextArea = new JTextField(10);
+        panelCommissionFee.add(commissionTextArea);
+        if(errorMessage != null) {
+          commissionTextArea.setText(inputBuffer.get(4));
+        }
+        JButton buttonBuy = new JButton("BUY");
+        buttonBuy.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
+                + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
+                + commissionTextArea.getText()));
+        panelButton.add(buttonBuy);
+
+        JButton buttonSell = new JButton("SELL");
+        buttonSell.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
+                + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
+                + commissionTextArea.getText()));
+        panelButton.add(buttonSell);
+      } else {
+        JButton buttonBuy = new JButton("BUY");
+        buttonBuy.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
+                + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
+                + "0"));
+        panelButton.add(buttonBuy);
+
+        JButton buttonSell = new JButton("SELL");
+        buttonSell.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
+                + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
+                + "0"));
+        panelButton.add(buttonSell);
+      }
+
+      /*JButton buttonBuy = new JButton("BUY");
       buttonBuy.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
               + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
               + commissionTextArea.getText()));
-      panelButton.add(buttonBuy);
-      JButton buttonSell = new JButton("SELL");
+      panelButton.add(buttonBuy);*/
+      /*JButton buttonSell = new JButton("SELL");
       buttonSell.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
               + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
               + commissionTextArea.getText()));
-      panelButton.add(buttonSell);
+      panelButton.add(buttonSell);*/
       JButton buttonFinish = new JButton("finish");
       buttonFinish.addActionListener(e -> inputHandler.handleInput("yes"));
       panelButton.add(buttonFinish);

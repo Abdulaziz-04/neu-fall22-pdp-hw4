@@ -1,15 +1,12 @@
 package portfolio.controllers.gui;
 
-import portfolio.controllers.PageController;
-import portfolio.controllers.impl.FlexibleCreatePageController;
-import portfolio.controllers.impl.InflexibleCreatePageController;
-import portfolio.controllers.impl.LoadPageController;
+
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a controller for handling the first page. It implements PageController.
+ * This is a controller for handling the GUI Main page. It implements SwingPageController.
  * MainPageController handles input from user and is responsible for redirecting user to others
  * PageController.
  */

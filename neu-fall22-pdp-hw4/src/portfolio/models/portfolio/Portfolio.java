@@ -98,5 +98,10 @@ public interface Portfolio {
    */
   boolean isReadOnly();
 
+  /**
+   * This is a get the buy schedules. Return the BuySchedules in a list.
+   *
+   * @return a list of BuySchedules.
+   */
   List<BuySchedule> getBuySchedules();
 }

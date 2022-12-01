@@ -80,16 +80,17 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
   public View newPerformacePageView(String portfolioName,
       LocalDate startDate,
       LocalDate endDate,
-      Map<String, Integer> performance,
+      Map<String, Integer> performance, List<Double> listAmount,
       String scale, boolean isFinish, String errorMessage) {
     argumentCaptor.addArgument(portfolioName);
     argumentCaptor.addArgument(startDate);
     argumentCaptor.addArgument(endDate);
     argumentCaptor.addArgument(performance);
+    argumentCaptor.addArgument(listAmount);
     argumentCaptor.addArgument(scale);
     argumentCaptor.addArgument(isFinish);
     argumentCaptor.addArgument(errorMessage);
-    return new PerformancePageView(portfolioName, startDate, endDate, performance, scale, isFinish,
+    return new PerformancePageView(portfolioName, startDate, endDate, performance, listAmount,scale, isFinish,
         errorMessage);
   }
 

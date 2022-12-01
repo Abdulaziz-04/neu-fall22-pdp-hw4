@@ -13,7 +13,9 @@ import portfolio.views.View;
 
 import portfolio.models.portfolio.Portfolio;
 
-
+/**
+ * This is a view that show the GUI load page, which implement the View function.
+ */
 public class LoadPageSwingView implements View {
 
   private String errorMessage;

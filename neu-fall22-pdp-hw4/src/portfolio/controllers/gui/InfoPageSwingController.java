@@ -9,7 +9,7 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a controller for the determining portfolio value. It implements PageController.
+ * This is a controller for the determining portfolio value. It implements SwingPageController.
  * InfoPageController handles input from user and is responsible for getting portfolio value of the
  * input date.
  */
@@ -22,8 +22,8 @@ public class InfoPageSwingController implements SwingPageController {
   private Double costOfBasis;
 
   /**
-   * This is a constructor that construct a InfoPageController, which is for determining a portfolio
-   * on a certain date.
+   * This is a constructor that construct a InfoPageSwingController, which is for showing the
+   * total value and cost basis.
    *
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
@@ -40,11 +40,11 @@ public class InfoPageSwingController implements SwingPageController {
   }
 
   /**
-   * Handle user input for determining portfolio value. User can input a date as many times as they
-   * want. If the input is 'back', the method will return LoadPageController, otherwise return
-   * current object.
+   * Handle user input for determining portfolio value and its cost and basis. User can
+   * input a date as many times as they want. If the input is 'back', the method will return
+   * LoadPageController, otherwise return current object.
    *
-   * @param input user input as a string
+   * @param input the action command send from GUI
    * @return PageController as a next page to be redirected
    */
   @Override

@@ -1,21 +1,21 @@
 package portfolio.controllers.gui;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import portfolio.controllers.PageController;
-import portfolio.controllers.impl.LoadPageController;
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a class that represent the performance over time page controller, which implement the
- * PageController interface. PerformancePageController handles input from user and is responsible
- * for performing the performance of a portfolio in a timespan and creating a view to show it
- * performance.
+ * This is a class that represent the GUI performance over time page controller, which implement the
+ * SwingPageController interface. PerformancePageController handles input from user and is
+ * responsible for performing the performance of a portfolio in a timespan and creating a view to
+ * show it performance.
  */
 public class PerformancePageSwingController implements SwingPageController {
 
@@ -26,7 +26,9 @@ public class PerformancePageSwingController implements SwingPageController {
   private LocalDate endDate = null;
 
   private PortfolioPerformance portfolioPerformance = new PortfolioPerformance(new HashMap<>(),
-      null, Double.parseDouble("0"),Double.parseDouble("0"));
+      null, Double.parseDouble("0"),Double.parseDouble("0"), new ArrayList<>());
+
+  private List<Double> listAmount;
   private boolean isFinish;
 
 
@@ -48,14 +50,16 @@ public class PerformancePageSwingController implements SwingPageController {
         startDate,
         endDate,
         portfolioPerformance.getPerformance(),
+        portfolioPerformance.getListAmount(),
         portfolioPerformance.getScale(),
         isFinish,
         errorMessage);
   }
 
   /**
-   * Handle user input for loading portfolio. User can enter the start date and the end date. The
-   * method return the next page controller that user should be navigated to.
+   * Handle user input from GUI text field. The input get here will be the "start date,
+   * end date". (This will be the different from last assignment) The method return the next page
+   * controller that user should be navigated to.
    *
    * @param input user input as a string
    * @return PageController as a next page to be redirected
@@ -78,7 +82,6 @@ public class PerformancePageSwingController implements SwingPageController {
     }
     isFinish = false;
     if (startDate == null || endDate == null) {
-      System.out.println(input);
       String []date = input.split(",");
       try {
         startDate = LocalDate.parse(date[0]);

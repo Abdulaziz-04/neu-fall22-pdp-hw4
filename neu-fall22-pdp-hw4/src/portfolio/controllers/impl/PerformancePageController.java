@@ -1,6 +1,7 @@
 package portfolio.controllers.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import portfolio.controllers.PageController;
@@ -24,7 +25,7 @@ public class PerformancePageController implements PageController {
   private LocalDate endDate = null;
 
   private PortfolioPerformance portfolioPerformance = new PortfolioPerformance(new HashMap<>(),
-      null, Double.parseDouble("0"),Double.parseDouble("0"));
+      null, Double.parseDouble("0"),Double.parseDouble("0"), new ArrayList<>());
   private boolean isFinish;
 
 
@@ -46,6 +47,7 @@ public class PerformancePageController implements PageController {
         startDate,
         endDate,
         portfolioPerformance.getPerformance(),
+        portfolioPerformance.getListAmount(),
         portfolioPerformance.getScale(),
         isFinish,
         errorMessage);

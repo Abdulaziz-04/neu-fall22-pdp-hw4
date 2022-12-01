@@ -1,18 +1,14 @@
 package portfolio.controllers.gui;
 
-import portfolio.controllers.PageController;
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
-import portfolio.controllers.impl.FlexibleCreatePageController;
-import portfolio.controllers.impl.InfoPageController;
-import portfolio.controllers.impl.MainPageController;
-import portfolio.controllers.impl.PerformancePageController;
+
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a controller for the retrieving portfolio. It implements PageController.
+ * This is a controller for the retrieving portfolio. It implements SwingPageController.
  * LoadPageController handles input from user and is responsible for retrieving portfolio and
  * creating a view to show portfolio content.
  */
@@ -45,10 +41,12 @@ public class LoadPageSwingController implements SwingPageController {
   }
 
   /**
-   * Handle user input for loading portfolio. User can enter portfolio name. The method return the
-   * next page controller that user should be navigated to.
+   * Handle user input for loading portfolio.
+   * First, get the name of portfolio from GUI text filed.
+   * Second, return different page according to the action command send to controller.
+   * (diifferent: add a switch to return new feature page)
    *
-   * @param input user input as a string
+   * @param input the action command send from GUI
    * @return PageController as a next page to be redirected
    */
   @Override

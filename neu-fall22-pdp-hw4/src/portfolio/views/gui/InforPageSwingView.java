@@ -12,6 +12,9 @@ import portfolio.controllers.InputHandler;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;
 
+/**
+ * This is a view that show the GUI determine page, which implement the View function.
+ */
 public class InforPageSwingView implements View {
 
   private JFrame frame;
