@@ -133,7 +133,7 @@ public class LoadPageSwingView implements View {
 
   @Override
   public void render() {
-    frame.setSize(600, 600);
+    frame.setSize(600, 800);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);
     JButton backButton = new JButton("back");
@@ -165,12 +165,11 @@ public class LoadPageSwingView implements View {
     JPanel panelShow = new JPanel();
     JPanel panelMenu = new JPanel();
     JPanel panelShowSchedule = new JPanel();
-    panelMenu.setLayout(new GridLayout(4, 1));
+    panelMenu.setLayout(new GridLayout(5, 1));
     if (portfolio != null) {
       JScrollPane jsp = showPortfolioComposition();
       panelShow.add(jsp);
 
-      panelMenu.setLayout(new GridLayout(4, 1));
       if (portfolio.getBuySchedules() != null) {
         JScrollPane jsp1 = showSchedule();
         panelShowSchedule.add(jsp1);

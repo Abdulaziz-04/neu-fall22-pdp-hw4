@@ -1,8 +1,6 @@
 package portfolio.views.gui;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import portfolio.controllers.InputHandler;
 import portfolio.views.View;
