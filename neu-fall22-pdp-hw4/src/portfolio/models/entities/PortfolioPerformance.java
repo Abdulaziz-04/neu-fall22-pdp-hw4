@@ -13,9 +13,6 @@ public class PortfolioPerformance {
   private final Map<String, Integer> performance;
   private final String scale;
 
-  private double max;
-  private double min;
-  private List<Double> listAmount;
 
   /**
    * This is a constructor to construct a PortfolioEntryWithValue object.
@@ -23,13 +20,9 @@ public class PortfolioPerformance {
    * @param performance Map of date and scaled value
    * @param scale  scale
    */
-  public PortfolioPerformance(Map<String, Integer> performance, String scale, double max,
-                              double min, List<Double> listAmount) {
+  public PortfolioPerformance(Map<String, Integer> performance, String scale) {
     this.performance = performance;
     this.scale = scale;
-    this.max = max;
-    this.min = min;
-    this.listAmount = listAmount;
   }
 
   public Map<String, Integer> getPerformance() {
@@ -40,14 +33,4 @@ public class PortfolioPerformance {
     return scale;
   }
 
-  public double getMax() {
-    return max;
-  }
-
-  public double getMin() {
-    return min;
-  }
-  public List<Double> getListAmount() {
-    return listAmount;
-  }
 }

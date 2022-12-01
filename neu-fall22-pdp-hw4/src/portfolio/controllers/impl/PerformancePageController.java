@@ -25,7 +25,7 @@ public class PerformancePageController implements PageController {
   private LocalDate endDate = null;
 
   private PortfolioPerformance portfolioPerformance = new PortfolioPerformance(new HashMap<>(),
-      null, Double.parseDouble("0"),Double.parseDouble("0"), new ArrayList<>());
+      null);
   private boolean isFinish;
 
 
@@ -47,7 +47,6 @@ public class PerformancePageController implements PageController {
         startDate,
         endDate,
         portfolioPerformance.getPerformance(),
-        portfolioPerformance.getListAmount(),
         portfolioPerformance.getScale(),
         isFinish,
         errorMessage);

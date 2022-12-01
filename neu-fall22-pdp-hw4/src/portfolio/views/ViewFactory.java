@@ -72,7 +72,6 @@ public interface ViewFactory {
       LocalDate startDate,
       LocalDate endDate,
       Map<String, Integer> performance,
-      List<Double> listAmount,
       String scale, boolean isFinish,
       String errorMessage);
 }

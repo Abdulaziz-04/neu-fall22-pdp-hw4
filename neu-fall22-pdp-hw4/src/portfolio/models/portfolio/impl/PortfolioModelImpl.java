@@ -340,7 +340,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       for (var entry : perf.entrySet()) {
         scaledPerf.put(entry.getKey(), 0);
       }
-      return new PortfolioPerformance(scaledPerf, scale, maxAmount, minAmount, listAmount);
+      return new PortfolioPerformance(scaledPerf, scale);
     }
     // the min can not be zero when we calculate the scale
     if (minAmount.equals(0.0)) {
@@ -368,7 +368,7 @@ public class PortfolioModelImpl implements PortfolioModel {
       double more = (maxAmount - minAmount) / 45;
       double base = minAmount - more - 1;
 
-      scale = "first * = $" + base + "\n* = $" + more;
+      scale = "one asterisk is" + more + "more than a base amount of $" + base;
 
       for (var entry : perf.entrySet()) {
         int star = 0;
@@ -380,7 +380,7 @@ public class PortfolioModelImpl implements PortfolioModel {
         scaledPerf.put(entry.getKey(), star);
       }
     }
-    return new PortfolioPerformance(scaledPerf, scale, maxAmount, minAmount, listAmount);
+    return new PortfolioPerformance(scaledPerf, scale);
   }
 
 
