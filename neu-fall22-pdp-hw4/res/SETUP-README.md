@@ -16,7 +16,72 @@ The procedure to use this program: (input exit will exit the program)
 
 2. Execute the neu-fall22-pdp-hw4.jar file.
 
-## Main Page:
+3. If user want to excute text-based,
+
+## GUI:
+
+### Main Page:
+
+1. After execute jar file, user will see the main page GUI. 
+
+2. There is three buttons : create a flexible portfolio; load portfolio; Create dollar cost 
+   average portfolio. User can click this three button to different page.
+
+#### Option 1: Flexible Create Page
+The user will see flexible create page GUI. (Back button is on the top of left, it will back 
+main page after user clicks it)
+
+1. There is a checkbox for commission fee. User can click it to choose it will have or not have 
+   commission fee for this transaction. If it has transaction fee, user need to input that fee 
+   in text field. If not, it will not show the text field.
+
+2. In the text filed labeled "Date for transaction", user inputs the date in given format.(If 
+   the format is error, it will show it.)
+
+3. In the text filed labeled "Stock Symbol", user input the symbol of stock. (If the input is 
+   negative and not an integer, it will show error.)
+
+4. In the text filed labeled "Share of Stock", User inputs a shares of stocks.(If the input is 
+   negative and not an integer, it will show error.)
+
+5. User clicks the "BUY" or "SELL" button to buy or sell stock. (The transactions will show in 
+   Table)
+
+6. If user want to add more transactions, do 1-5 procedures repeatedly. Otherwise, user clicks 
+   the finish button to finish adding transactions.
+
+7. Then user will see the text filed labeled "Name of Portfolio", user inputs the name of 
+   this portfolio (If the name is valid, it will create the portfolio successfully and go to the 
+   load page automatically. Otherwise, user need to input name again.)
+
+#### Option 2: Load Page
+
+User can see Load page.
+
+1. There is a text filed labeled "Name of Portfolio", user inputs the name of a portfolio. 
+
+2. User click the load button. If it exists, user can see the composition of it in first table 
+   and the investment in another table. Otherwise, show the error message to user.
+
+3. The second table, it will have a view button, it can view the information of investment 
+   detail in it.
+
+4. For existing portfolio, there are five buttons for user:
+   1. Determine the value and cost of basis.
+   2. Show the performance of the portfolio.
+   3. Modify the portfolio (Buy or sell the stock for this portfolio) --This option only show if
+      the portfolio is flexible.
+   4. Add new strategy or modify it
+
+   User inputs "1", it will go to determine page. User input "2", it will go to performance page.
+   User inputs "3", it will go to create page to modify the transaction. (after modify, it will  
+   automatically go back to the load page)
+
+3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the main page.
+
+## Text-based:
+
+### Main Page:
 
 1. After execute jar file, user will see the main menu screen. 
 
@@ -27,7 +92,7 @@ The procedure to use this program: (input exit will exit the program)
    inputted is not "1", "2", or "3" the program will show the error message to user and user 
    need to input again). 
 
-### Option 1: Inflexible Create Page
+#### Option 1: Inflexible Create Page
 The user will see inflexible create page.
 
 1. User can input the symbol of a stock and the amount, which is number of shares, in the giving format. The format is (symbol,shares) ex. AA,100 (All the letter need to be in uppercase). If user inputs is not correct, user can see different error messages for why the input is not correct. Otherwise, the user can see the stocks and shares which were inputted before.
@@ -40,7 +105,7 @@ The user will see inflexible create page.
 
 5. After that, user will automatically go to the load page.
 
-### Option 2: Flexible Create Page
+#### Option 2: Flexible Create Page
 The user will see flexible create page.
 
 1. User inputs the date to do the transaction. The format is "2022-10-10". Other input will 
@@ -66,7 +131,7 @@ The user will see flexible create page.
 8. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the 
 main page.
 
-### Option 3: Load Page
+#### Option 3: Load Page
 User can see Load page.
 
 1. User inputs the name of a portfolio. If it exists, user can see the composition. Otherwise, show the error message to user.
@@ -83,7 +148,7 @@ User can see Load page.
 
 3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the main page.
 
-#### Option 1 for Load Page: Determine Page
+##### Option 1 for Load Page: Determine Page
 
 User can see the determine page. (It will show the value and cost of basis together)
 
@@ -97,7 +162,7 @@ User can see the determine page. (It will show the value and cost of basis toget
 3. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the 
    load page.
 
-#### Option 2 for Load Page: Performance Page
+##### Option 2 for Load Page: Performance Page
 
 User can see the performance page.
 
@@ -111,7 +176,7 @@ User can see the performance page.
 4. If user inputs "back" (lower case) at anytime in this page, user will be directed back to the
       load page.
 
-#### Option 3 for Load Page: Flexible Create Page to modify it.
+##### Option 3 for Load Page: Flexible Create Page to modify it.
 
 User will see the flexible create page again to buy or sell the stocks.
 
