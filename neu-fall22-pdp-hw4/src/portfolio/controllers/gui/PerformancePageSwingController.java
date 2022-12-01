@@ -26,9 +26,8 @@ public class PerformancePageSwingController implements SwingPageController {
   private LocalDate endDate = null;
 
   private PortfolioPerformance portfolioPerformance = new PortfolioPerformance(new HashMap<>(),
-      null, Double.parseDouble("0"),Double.parseDouble("0"), new ArrayList<>());
+      null);
 
-  private List<Double> listAmount;
   private boolean isFinish;
 
 
@@ -50,7 +49,6 @@ public class PerformancePageSwingController implements SwingPageController {
         startDate,
         endDate,
         portfolioPerformance.getPerformance(),
-        portfolioPerformance.getListAmount(),
         portfolioPerformance.getScale(),
         isFinish,
         errorMessage);

@@ -11,7 +11,6 @@ import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
-import portfolio.views.impl.FlexibleCreatePageView;
 
 /**
  * This is a class that can generate different Swing view, which implement the view factory. It
@@ -63,10 +62,10 @@ public class SwingViewFactory implements ViewFactory {
   public View newPerformacePageView(String portfolioName,
       LocalDate startDate,
       LocalDate endDate,
-      Map<String, Integer> performance, List<Double> listAmount,
+      Map<String, Integer> performance,
       String scale, boolean isFinish, String errorMessage) {
     return new PerformancePageSwingView(frame, inputHandler,portfolioName, startDate, endDate,
-            performance, listAmount, scale, isFinish,
+            performance, scale, isFinish,
             errorMessage);
   }
 

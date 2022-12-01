@@ -150,7 +150,7 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       return this;
     }
     errorMessage = null;
-    if (input.equals("yes") && isEnd == false) {
+    if (input.equals("yes") && !isEnd) {
       try {
         // Check amount valid
         List<Transaction> transactions = new ArrayList<>();
@@ -210,107 +210,6 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       }
     }
     return this;
-
-
-    /*if (!isEnd && !input.equals("end")) {
-      try {
-        int size = inputBuffer.size();
-        if (size == 0) {
-          LocalDate.parse(input);
-          inputBuffer.add(input);
-          return this;
-        } else if (size == 1) {
-          try {
-            portfolioModel.checkTransaction(LocalDate.parse(inputBuffer.get(0)), input);
-            inputBuffer.add(input);
-          } catch (Exception e) {
-            errorMessage = e.getMessage();
-            inputBuffer.clear();
-          }
-          return this;
-        } else if (size == 2) {
-          TransactionType.parse(input);
-          inputBuffer.add(input);
-          return this;
-        } else if (size == 3) {
-          try {
-            if (Integer.parseInt(input) <= 0) {
-              errorMessage = "The shares cannot be negative.";
-              return this;
-            }
-            inputBuffer.add(input);
-            return this;
-          } catch (Exception e) {
-            errorMessage = "The share is not a number or an integer.";
-            return this;
-          }
-        } else if (size == 4) {
-          try {
-            if (Double.parseDouble(input) < 0) {
-              errorMessage = "Commission cannot be negative.";
-              return this;
-            }
-            inputBuffer.add(input);
-          } catch (Exception e) {
-            errorMessage = "Commission fee input is not a number.";
-            return this;
-          }
-          transactions.add(
-              new Transaction(
-                  TransactionType.parse(inputBuffer.get(2)),
-                  inputBuffer.get(1),
-                  Integer.parseInt(inputBuffer.get(3)),
-                  LocalDate.parse(inputBuffer.get(0)),
-                  Double.parseDouble(inputBuffer.get(4))
-              )
-          );
-          return this;
-        } else if (size == 5) {
-          if (input.equals("yes")) {
-            inputBuffer.clear();
-            return this;
-          }
-        }
-      } catch (Exception e) {
-        errorMessage = e.getMessage();
-        return this;
-      }
-    }
-    if (inputBuffer.size() == 5 && !isEnd) {
-      try {
-        // Check amount valid
-        portfolioModel.checkTransactions(transactions);
-        portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
-        isEnd = true;
-        portfolioModel.init();
-      } catch (Exception e) {
-        errorMessage = e.getMessage() + " Please enter transaction list again.";
-        inputBuffer.clear();
-        transactions.clear();
-      }
-    } else if (inputBuffer.size() == 5) {
-      String name = portfolioTmp != null && isNamed ? portfolioTmp.getName() : input;
-      try {
-        if (modifyMode) {
-          portfolioModel.addTransactions(transactions);
-        } else {
-          portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
-        }
-        ioService.saveTo(portfolioModel.getString(), name + ".txt", modifyMode);
-        return new LoadPageSwingController(portfolioModel, viewFactory);
-      } catch (RuntimeException e) {
-        errorMessage = e.getMessage() + " Please enter transaction list again.";
-        inputBuffer.clear();
-        transactions.clear();
-      } catch (Exception e) {
-        try {
-          portfolioModel.init();
-        } catch (Exception ignored) {
-        }
-        errorMessage = e.getMessage();
-      }
-    }
-    return this;*/
   }
 
 }

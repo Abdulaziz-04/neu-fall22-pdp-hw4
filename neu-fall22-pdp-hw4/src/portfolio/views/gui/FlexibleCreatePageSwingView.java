@@ -203,7 +203,7 @@ public class FlexibleCreatePageSwingView implements View {
     JPanel panelNamed = new JPanel();
     panelNamed.setLayout(new FlowLayout());
     panelNamed.setSize(500, 20);
-    if (isEnd == true && isNamed == false) {
+    if (isEnd && !isNamed) {
       if (transactions != null) {
         JScrollPane jsp = showTransaction();
         panelShow.add(jsp);

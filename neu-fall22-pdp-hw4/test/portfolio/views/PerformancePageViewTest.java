@@ -32,7 +32,7 @@ public class PerformancePageViewTest {
   @Test
   public void testRender_First() {
     View view = new PerformancePageView(printStream, "name1",
-        null, null, null, null, null, false,
+        null, null, null, null,  false,
         null);
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"
@@ -51,7 +51,7 @@ public class PerformancePageViewTest {
   public void testRender_startDate() {
     View view = new PerformancePageView(printStream, "name1",
         LocalDate.parse("2013-01-10"),
-        null, null, null, null, false,
+        null, null, null, false,
         null);
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"
@@ -86,7 +86,7 @@ public class PerformancePageViewTest {
     map.put("2022: ", 15);
     View view = new PerformancePageView(printStream, "name1",
         LocalDate.parse("2013-01-10"), LocalDate.parse("2022-10-11"),
-        map,null,
+        map,
         "one asterisk is $ 100 more than a base amount of $100000",true,
         null);
     view.render();
@@ -129,7 +129,7 @@ public class PerformancePageViewTest {
     map.put("2022-10: ", 15);
     View view = new PerformancePageView(printStream, "name1",
         LocalDate.parse("2022-01-05"), LocalDate.parse("2022-10-11"),
-        map,null,
+        map,
         "one asterisk is $ 100 more than a base amount of $100000", true,
         null);
     view.render();
@@ -172,7 +172,7 @@ public class PerformancePageViewTest {
     map.put("2022-02-10: ", 15);
     View view = new PerformancePageView(printStream, "name1",
         LocalDate.parse("2022-02-01"), LocalDate.parse("2022-02-10"),
-        map, null,
+        map,
         "one asterisk is $ 100 more than a base amount of $100000", true,
         null);
     view.render();
@@ -205,7 +205,7 @@ public class PerformancePageViewTest {
     setUp();
     View view = new PerformancePageView(printStream, "name1",
         null, null, null,
-        null, null, false,
+        null,  false,
         "Error: Please choose input new timespan. "
             + "This start date maybe the holiday or "
             + "weekend!");
@@ -230,7 +230,7 @@ public class PerformancePageViewTest {
     setUp();
     View view = new PerformancePageView(printStream, "name1",
         null, null, null,
-        null, null, false,
+        null,  false,
         "Error start date format!");
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"
@@ -252,7 +252,7 @@ public class PerformancePageViewTest {
     setUp();
     View view = new PerformancePageView(printStream, "name1",
         LocalDate.parse("2013-01-10"),
-        null, null, null, null, false,
+        null, null, null, false,
         "Error end date format!");
     view.render();
     assertEquals("*************This is the interface for Performance**************\r\n"

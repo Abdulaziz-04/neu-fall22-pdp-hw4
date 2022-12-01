@@ -42,7 +42,7 @@ public class LoadPageSwingController implements SwingPageController {
 
   /**
    * Handle user input for loading portfolio. First, get the name of portfolio from GUI text filed.
-   * Second, return different page according to the action command send to controller. (diifferent:
+   * Second, return different page according to the action command send to controller. (different:
    * add a switch to return new feature page)
    *
    * @param input the action command send from GUI

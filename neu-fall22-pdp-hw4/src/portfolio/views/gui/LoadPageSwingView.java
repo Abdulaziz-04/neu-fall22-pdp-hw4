@@ -103,7 +103,6 @@ public class LoadPageSwingView implements View {
         return false;
       }
     };
-    //DefaultTableModel model = new DefaultTableModel();
     JTable table = new JTable(model);
 
     Action view = new AbstractAction() {

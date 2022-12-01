@@ -36,7 +36,7 @@ public interface ViewFactory {
       Map<String, Integer> transactions, String errorMessage);
 
   View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-      List<String> inputBuffer,
+                                 List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage);
 
   /**
@@ -73,7 +73,6 @@ public interface ViewFactory {
       LocalDate startDate,
       LocalDate endDate,
       Map<String, Integer> performance,
-      List<Double> listAmount,
       String scale, boolean isFinish,
       String errorMessage);
 
