@@ -49,7 +49,7 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
 
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int state,
-                                        List<String> inputBuffer,
+      List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage) {
     argumentCaptor.clear();
     argumentCaptor.addArgument(isEnd);
@@ -59,7 +59,7 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
     argumentCaptor.addArgument(transactions);
     argumentCaptor.addArgument(errorMessage);
     return new FlexibleCreatePageView(isEnd, isNamed, state, inputBuffer, transactions,
-            errorMessage);
+        errorMessage);
   }
 
   @Override
@@ -90,13 +90,13 @@ public class ViewFactoryWithArgumentCaptor implements ViewFactory {
     argumentCaptor.addArgument(scale);
     argumentCaptor.addArgument(isFinish);
     argumentCaptor.addArgument(errorMessage);
-    return new PerformancePageView(portfolioName, startDate, endDate, performance,scale, isFinish,
+    return new PerformancePageView(portfolioName, startDate, endDate, performance, scale, isFinish,
         errorMessage);
   }
 
   @Override
-  public View newScheduleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
+  public View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
+      List<Transaction> transactions, String errorMessage) {
     return null;
   }
 

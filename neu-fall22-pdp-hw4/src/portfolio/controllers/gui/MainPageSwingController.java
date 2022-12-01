@@ -1,6 +1,5 @@
 package portfolio.controllers.gui;
 
-
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;

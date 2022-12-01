@@ -29,10 +29,10 @@ public class FlexibleCreatePageController implements PageController {
   private boolean isEnd = false;
   private boolean isNamed = false;
   private final boolean modifyMode;
-  private List<Transaction> transactions = new ArrayList<>();
+  private final List<Transaction> transactions = new ArrayList<>();
   private final List<String> inputBuffer = new ArrayList<>();
 
-  private Portfolio portfolioTmp;
+  private final Portfolio portfolioTmp;
 
   /**
    * This is a constructor to construct a FlexibleCreatePageController.
@@ -62,7 +62,7 @@ public class FlexibleCreatePageController implements PageController {
     }
     transactions.addAll(this.transactions);
     return viewFactory.newFlexibleCreatePageView(isEnd, isNamed, inputBuffer.size(), inputBuffer,
-            transactions,
+        transactions,
         errorMessage);
   }
 
@@ -150,6 +150,11 @@ public class FlexibleCreatePageController implements PageController {
     if (inputBuffer.size() == 5 && !isEnd) {
       try {
         // Check amount valid
+        List<Transaction> transactions = new ArrayList<>();
+        if (portfolioTmp != null) {
+          transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
+        }
+        transactions.addAll(this.transactions);
         portfolioModel.checkTransactions(transactions);
         portfolioModel.create(null, PortfolioFormat.FLEXIBLE, transactions);
         isEnd = true;
@@ -162,7 +167,12 @@ public class FlexibleCreatePageController implements PageController {
       String name = portfolioTmp != null && isNamed ? portfolioTmp.getName() : input;
       try {
         if (modifyMode) {
-          portfolioModel.addTransactions(portfolioTmp.getTransactions());
+          List<Transaction> transactions = new ArrayList<>();
+          if (portfolioTmp != null) {
+            transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
+          }
+          transactions.addAll(this.transactions);
+          portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
         } else {
           portfolioModel.create(name, PortfolioFormat.FLEXIBLE, transactions);
         }

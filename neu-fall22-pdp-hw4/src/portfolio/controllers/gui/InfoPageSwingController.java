@@ -22,14 +22,14 @@ public class InfoPageSwingController implements SwingPageController {
   private Double costOfBasis;
 
   /**
-   * This is a constructor that construct a InfoPageSwingController, which is for showing the
-   * total value and cost basis.
+   * This is a constructor that construct a InfoPageSwingController, which is for showing the total
+   * value and cost basis.
    *
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
    */
   public InfoPageSwingController(PortfolioModel portfolioModel,
-                                 ViewFactory viewFactory) {
+      ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
   }
@@ -40,9 +40,9 @@ public class InfoPageSwingController implements SwingPageController {
   }
 
   /**
-   * Handle user input for determining portfolio value and its cost and basis. User can
-   * input a date as many times as they want. If the input is 'back', the method will return
-   * LoadPageController, otherwise return current object.
+   * Handle user input for determining portfolio value and its cost and basis. User can input a date
+   * as many times as they want. If the input is 'back', the method will return LoadPageController,
+   * otherwise return current object.
    *
    * @param input the action command send from GUI
    * @return PageController as a next page to be redirected

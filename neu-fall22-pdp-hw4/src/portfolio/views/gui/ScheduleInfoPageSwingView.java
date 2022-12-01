@@ -1,6 +1,5 @@
 package portfolio.views.gui;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import portfolio.controllers.InputHandler;
 import portfolio.models.portfolio.BuySchedule;
@@ -23,11 +21,10 @@ import portfolio.views.View;
  */
 public class ScheduleInfoPageSwingView implements View {
 
-  private JFrame frame;
-
-  private InputHandler inputHandler;
-  private String errorMessage;
-  private BuySchedule schedule;
+  private final JFrame frame;
+  private final InputHandler inputHandler;
+  private final String errorMessage;
+  private final BuySchedule schedule;
 
   /**
    * This is a constructor that construct a GUI determine page view.
@@ -48,16 +45,13 @@ public class ScheduleInfoPageSwingView implements View {
   private JScrollPane showStockList() {
     Vector vData = new Vector();
     Vector vName = new Vector();
-    //vName.add("");
     vName.add("Stock");
     vName.add("Weight percentage");
-    int i = 1;
     for (var entry : schedule.getBuyingList()) {
       Vector row = new Vector();
       row.add(String.valueOf(entry.getSymbol()));
       row.add(String.valueOf(entry.getAmount()));
       vData.add(row);
-      i++;
     }
 
     DefaultTableModel model = new DefaultTableModel(vData, vName) {
@@ -66,7 +60,6 @@ public class ScheduleInfoPageSwingView implements View {
         return false;
       }
     };
-    //DefaultTableModel model = new DefaultTableModel();
     JTable portfolioTable = new JTable(model);
     portfolioTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
     JScrollPane jsp = new JScrollPane(portfolioTable);
@@ -104,7 +97,6 @@ public class ScheduleInfoPageSwingView implements View {
       panelShow.add(showLabel);
       panelShow.add(jsp);
     }
-
 
     Box vBox = Box.createVerticalBox();
     vBox.setPreferredSize(new Dimension(500, 500));

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,15 +23,13 @@ import portfolio.views.View;
  */
 public class ScheduleCreatePageSwingView implements View {
 
-  private JFrame frame;
+  private final JFrame frame;
 
-  private InputHandler inputHandler;
-  private List<Transaction> transactions;
-  private String errorMessage;
-  private Boolean isEnd;
-  private Boolean isNamed;
-  private int state;
-  private List<String> inputBuffer;
+  private final InputHandler inputHandler;
+  private final List<Transaction> transactions;
+  private final String errorMessage;
+  private final Boolean isEnd;
+  private final List<String> inputBuffer;
 
   /**
    * This is a constructor that construct a create page view. The error messages will contain "Error
@@ -43,20 +40,15 @@ public class ScheduleCreatePageSwingView implements View {
    * @param frame        the frame for GUI
    * @param inputHandler the controller for handling input
    * @param isEnd        if user finish input the portfolio, it will be true. Otherwise, false.
-   * @param isNamed      if user finish input name, it will be true. Otherwise, false.
-   * @param state        the inputBuffer size in controller
    * @param transactions the map that store the symbol and shares for portfolio.
    * @param errorMessage the error message we want to show to the user.
    */
-  public ScheduleCreatePageSwingView(JFrame frame, InputHandler inputHandler, Boolean isEnd,
-      Boolean isNamed, int state, List<String> inputBuffer,
-      List<Transaction> transactions,
+  public ScheduleCreatePageSwingView(JFrame frame, InputHandler inputHandler, boolean isEnd,
+      List<String> inputBuffer, List<Transaction> transactions,
       String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.isEnd = isEnd;
-    this.isNamed = isNamed;
-    this.state = state;
     this.inputBuffer = inputBuffer;
     this.transactions = transactions;
     this.errorMessage = errorMessage;
@@ -70,8 +62,8 @@ public class ScheduleCreatePageSwingView implements View {
   private JScrollPane showTransaction() {
     Vector vData = new Vector();
     Vector vName = new Vector();
-    vName.add("Stock");
-    vName.add("Share percentage");
+    vName.add("Stock symbol");
+    vName.add("Weight");
     for (var entry : transactions) {
       Vector row = new Vector();
       row.add(String.valueOf(entry.getSymbol()));
@@ -116,17 +108,12 @@ public class ScheduleCreatePageSwingView implements View {
     panelButton.setLayout(new FlowLayout());
 
     if (isEnd == false) {
-      boolean check = true;
-      if (state == 1) {
-        check = false;
-      }
-
       JLabel symbolLabel = new JLabel("Stock Symbol (ex. AAPL)");
       panelSymbol.add(symbolLabel);
       JTextField symbolTextArea = new JTextField(10);
       panelSymbol.add(symbolTextArea);
 
-      JLabel sharesLabel = new JLabel("Shares of stocks");
+      JLabel sharesLabel = new JLabel("Weight: ");
       panelShares.add(sharesLabel);
       JTextField sharesTextArea = new JTextField(10);
       panelShares.add(sharesTextArea);
@@ -156,7 +143,7 @@ public class ScheduleCreatePageSwingView implements View {
     panelNamed.setLayout(new FlowLayout());
     panelNamed.setSize(500, 20);
 
-    if (isEnd == true && isNamed == false) {
+    if (isEnd) {
       if (transactions != null) {
         JScrollPane jsp = showTransaction();
         panelShow.add(jsp);

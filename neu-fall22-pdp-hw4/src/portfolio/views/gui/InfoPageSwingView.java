@@ -15,14 +15,14 @@ import portfolio.views.View;
 /**
  * This is a view that show the GUI determine page, which implement the View function.
  */
-public class InforPageSwingView implements View {
+public class InfoPageSwingView implements View {
 
-  private JFrame frame;
+  private final JFrame frame;
 
-  private InputHandler inputHandler;
-  private PortfolioWithValue portfolioWithPrice;
-  private String errorMessage;
-  private Double costOfBasis;
+  private final InputHandler inputHandler;
+  private final PortfolioWithValue portfolioWithPrice;
+  private final String errorMessage;
+  private final Double costOfBasis;
 
   /**
    * This is a constructor that construct a GUI determine page view.
@@ -33,9 +33,9 @@ public class InforPageSwingView implements View {
    * @param costOfBasis        the cost and basis for this portfolio
    * @param errorMessage       the error message we want to show to the user
    */
-  public InforPageSwingView(JFrame frame, InputHandler inputHandler,
-                            PortfolioWithValue portfolioWithPrice, Double costOfBasis,
-                            String errorMessage) {
+  public InfoPageSwingView(JFrame frame, InputHandler inputHandler,
+      PortfolioWithValue portfolioWithPrice, Double costOfBasis,
+      String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.portfolioWithPrice = portfolioWithPrice;
@@ -46,19 +46,15 @@ public class InforPageSwingView implements View {
   private JScrollPane showPortfolioInfor() {
     Vector vData = new Vector();
     Vector vName = new Vector();
-    //vName.add("");
     vName.add("Stock");
     vName.add("No. of shares");
     vName.add("Current value");
-    int i = 1;
     for (var entry : portfolioWithPrice.getValues()) {
       Vector row = new Vector();
-      //row.add(i);
       row.add(String.valueOf(entry.getSymbol()));
       row.add(String.valueOf(entry.getAmount()));
       row.add(String.valueOf(entry.getValue()));
       vData.add(row);
-      i++;
     }
 
     DefaultTableModel model = new DefaultTableModel(vData, vName) {
@@ -115,11 +111,9 @@ public class InforPageSwingView implements View {
       JLabel totalLabel = new JLabel("Total value :" + portfolioWithPrice.getTotalValue());
       panelTotal.add(totalLabel);
 
-
       JLabel costLabel = new JLabel("Cost of basis : " + "$" + costOfBasis);
       panelCost.add(costLabel);
     }
-
 
     Box vBox = Box.createVerticalBox();
     vBox.setPreferredSize(new Dimension(500, 500));
@@ -129,7 +123,6 @@ public class InforPageSwingView implements View {
     vBox.add(panelShow);
     vBox.add(panelTotal);
     vBox.add(panelCost);
-
 
     frame.setContentPane(vBox);
     frame.repaint();

@@ -13,8 +13,8 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a class that can generate different Swing view, which implement the view factory. It
- * will contain the inputHandler and frame.
+ * This is a class that can generate different Swing view, which implement the view factory. It will
+ * contain the inputHandler and frame.
  */
 public class SwingViewFactory implements ViewFactory {
 
@@ -29,8 +29,8 @@ public class SwingViewFactory implements ViewFactory {
   @Override
   public View newInfoPageView(PortfolioWithValue portfolioWithPrice, Double costOfBasis,
       String errorMessage) {
-    return new InforPageSwingView(frame, inputHandler,portfolioWithPrice, costOfBasis,
-            errorMessage);
+    return new InfoPageSwingView(frame, inputHandler, portfolioWithPrice, costOfBasis,
+        errorMessage);
   }
 
   @Override
@@ -41,16 +41,16 @@ public class SwingViewFactory implements ViewFactory {
 
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-                                        List<String> inputBuffer,
+      List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage) {
     return new FlexibleCreatePageSwingView(frame, inputHandler, isEnd, isNamed, stage,
-            inputBuffer, transactions,
-            errorMessage);
+        inputBuffer, transactions,
+        errorMessage);
   }
 
   @Override
   public View newLoadPageView(Portfolio portfolio, boolean showModifyMenu, String errorMessage) {
-    return new LoadPageSwingView(frame, inputHandler, portfolio, showModifyMenu, errorMessage );
+    return new LoadPageSwingView(frame, inputHandler, portfolio, showModifyMenu, errorMessage);
   }
 
   @Override
@@ -64,17 +64,16 @@ public class SwingViewFactory implements ViewFactory {
       LocalDate endDate,
       Map<String, Integer> performance,
       String scale, boolean isFinish, String errorMessage) {
-    return new PerformancePageSwingView(frame, inputHandler,portfolioName, startDate, endDate,
-            performance, scale, isFinish,
-            errorMessage);
+    return new PerformancePageSwingView(frame, inputHandler, portfolioName, startDate, endDate,
+        performance, scale, isFinish,
+        errorMessage);
   }
 
   @Override
-  public View newScheduleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
-    return new ScheduleCreatePageSwingView(frame, inputHandler, isEnd, isNamed, stage,
-        inputBuffer, transactions,
-        errorMessage);
+  public View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
+      List<Transaction> transactions, String errorMessage) {
+    return new ScheduleCreatePageSwingView(frame, inputHandler, isEnd, inputBuffer,
+        transactions, errorMessage);
   }
 
   @Override

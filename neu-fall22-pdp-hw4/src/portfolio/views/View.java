@@ -1,7 +1,5 @@
 package portfolio.views;
 
-import javax.swing.JPanel;
-
 /**
  * This is an interface for storing user interface for each page.
  */

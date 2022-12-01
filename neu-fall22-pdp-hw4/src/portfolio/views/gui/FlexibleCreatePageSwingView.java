@@ -17,15 +17,14 @@ import portfolio.views.View;
  */
 public class FlexibleCreatePageSwingView implements View {
 
-  private JFrame frame;
-
-  private InputHandler inputHandler;
-  private List<Transaction> transactions;
-  private String errorMessage;
-  private Boolean isEnd;
-  private Boolean isNamed;
-  private int state;
-  private List<String> inputBuffer;
+  private final JFrame frame;
+  private final InputHandler inputHandler;
+  private final List<Transaction> transactions;
+  private final String errorMessage;
+  private final Boolean isEnd;
+  private final Boolean isNamed;
+  private final int state;
+  private final List<String> inputBuffer;
 
   /**
    * This is a constructor that construct a create page view. The error messages will contain "Error
@@ -42,9 +41,8 @@ public class FlexibleCreatePageSwingView implements View {
    * @param errorMessage the error message we want to show to the user.
    */
   public FlexibleCreatePageSwingView(JFrame frame, InputHandler inputHandler, Boolean isEnd,
-                                     Boolean isNamed, int state, List<String> inputBuffer,
-                                     List<Transaction> transactions,
-                                     String errorMessage) {
+      Boolean isNamed, int state, List<String> inputBuffer, List<Transaction> transactions,
+      String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.isEnd = isEnd;
@@ -74,7 +72,7 @@ public class FlexibleCreatePageSwingView implements View {
       row.add(String.valueOf(entry.getType()));
       row.add(String.valueOf(entry.getSymbol()));
       row.add(String.valueOf(entry.getAmount()));
-      row.add(String.valueOf(entry.getCommissionFee()));
+      row.add("$" + entry.getCommissionFee());
       vData.add(row);
     }
 
@@ -84,7 +82,6 @@ public class FlexibleCreatePageSwingView implements View {
         return false;
       }
     };
-    //DefaultTableModel model = new DefaultTableModel();
     JTable portfolioTable = new JTable(model);
     portfolioTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
     JScrollPane jsp = new JScrollPane(portfolioTable);
@@ -106,43 +103,35 @@ public class FlexibleCreatePageSwingView implements View {
 
     JPanel panelCommissionFee = new JPanel();
     panelCommissionFee.setLayout(new FlowLayout());
-    //panelCommissionFee.setSize(500,20);
     JPanel panelDate = new JPanel();
     panelDate.setLayout(new FlowLayout());
-    //panelDate.setSize(500,20);
     JPanel panelSymbol = new JPanel();
     panelSymbol.setLayout(new FlowLayout());
-    //panelSymbol.setSize(500,20);
     JPanel panelShares = new JPanel();
     panelShares.setLayout(new FlowLayout());
-    //panelShares.setSize(500,20);
     JPanel panelShow = new JPanel();
     panelShow.setLayout(new FlowLayout());
     JPanel panelButton = new JPanel();
     panelButton.setLayout(new FlowLayout());
-    //panelButton.setSize(500,20);
 
-    if (isEnd == false) {
+    if (!isEnd) {
       boolean check = true;
-      if(state == 1) {
+      if (state == 1) {
         check = false;
       }
-      JCheckBox jCheckBox = new JCheckBox("Commission fee",check);
+      JCheckBox jCheckBox = new JCheckBox("Commission fee", check);
       jCheckBox.addActionListener(e -> inputHandler.handleInput("checkbox"));
       panelCommissionFee.add(jCheckBox);
-
 
       JLabel dateLabel = new JLabel("Date for transaction (format: 2022-10-10)");
       panelDate.add(dateLabel);
       JTextField dateTextArea = new JTextField(10);
       panelDate.add(dateTextArea);
 
-
       JLabel symbolLabel = new JLabel("Stock Symbol (ex. AAPL)");
       panelSymbol.add(symbolLabel);
       JTextField symbolTextArea = new JTextField(10);
       panelSymbol.add(symbolTextArea);
-
 
       JLabel sharesLabel = new JLabel("Shares of stocks");
       panelShares.add(sharesLabel);
@@ -150,7 +139,6 @@ public class FlexibleCreatePageSwingView implements View {
       panelShares.add(sharesTextArea);
 
       if (errorMessage != null && inputBuffer.size() > 3) {
-        //commissionTextArea.setText(inputBuffer.get(4));
         dateTextArea.setText(inputBuffer.get(0));
         symbolTextArea.setText(inputBuffer.get(1));
         sharesTextArea.setText(inputBuffer.get(3));
@@ -161,36 +149,34 @@ public class FlexibleCreatePageSwingView implements View {
         panelShow.add(jsp);
       }
 
-      if(jCheckBox.isSelected()) {
-        //JLabel commissionLabel = new JLabel("Commission fee:");
-        //panelCommissionFee.add(commissionLabel);
+      if (jCheckBox.isSelected()) {
         JTextField commissionTextArea = new JTextField(10);
         panelCommissionFee.add(commissionTextArea);
-        if(errorMessage != null  && inputBuffer.size() > 4) {
+        if (errorMessage != null && inputBuffer.size() > 4) {
           commissionTextArea.setText(inputBuffer.get(4));
         }
         JButton buttonBuy = new JButton("BUY");
         buttonBuy.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
-                + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
-                + commissionTextArea.getText()));
+            + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
+            + commissionTextArea.getText()));
         panelButton.add(buttonBuy);
 
         JButton buttonSell = new JButton("SELL");
         buttonSell.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
-                + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
-                + commissionTextArea.getText()));
+            + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
+            + commissionTextArea.getText()));
         panelButton.add(buttonSell);
       } else {
         JButton buttonBuy = new JButton("BUY");
         buttonBuy.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
-                + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
-                + "0"));
+            + symbolTextArea.getText() + "," + "BUY" + "," + sharesTextArea.getText() + ","
+            + "0"));
         panelButton.add(buttonBuy);
 
         JButton buttonSell = new JButton("SELL");
         buttonSell.addActionListener(e -> inputHandler.handleInput(dateTextArea.getText() + ","
-                + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
-                + "0"));
+            + symbolTextArea.getText() + "," + "SELL" + "," + sharesTextArea.getText() + ","
+            + "0"));
         panelButton.add(buttonSell);
       }
 
@@ -235,7 +221,7 @@ public class FlexibleCreatePageSwingView implements View {
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    if (state == 99){
+    if (state == 99) {
       inputHandler.handleInput("saved.");
     }
   }

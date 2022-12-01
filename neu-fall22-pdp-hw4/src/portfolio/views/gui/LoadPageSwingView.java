@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import portfolio.controllers.InputHandler;
@@ -21,8 +22,8 @@ import portfolio.models.portfolio.Portfolio;
  */
 public class LoadPageSwingView implements View {
 
-  private String errorMessage;
-  private Portfolio portfolio;
+  private final String errorMessage;
+  private final Portfolio portfolio;
   boolean showModifyMenu;
   private final JFrame frame;
   private final InputHandler inputHandler;
@@ -69,7 +70,6 @@ public class LoadPageSwingView implements View {
         return false;
       }
     };
-    //DefaultTableModel model = new DefaultTableModel();
     JTable portfolioTable = new JTable(model);
     portfolioTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
     JScrollPane jsp = new JScrollPane(portfolioTable);
@@ -133,7 +133,6 @@ public class LoadPageSwingView implements View {
 
   @Override
   public void render() {
-    //JFrame frame = new JFrame();
     frame.setSize(600, 600);
     JPanel panelBack = new JPanel();
     panelBack.setLayout(null);

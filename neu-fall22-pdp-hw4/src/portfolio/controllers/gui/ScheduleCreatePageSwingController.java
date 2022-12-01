@@ -7,18 +7,16 @@ import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
-import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
-import portfolio.models.portfolio.impl.DollarCostAverageSchedule;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
 
 /**
- * This is a page controller for the GUI flexible portfolio create page, which is implement the
- * Gui page controller. CreatePageController handles input send by action command and is
- * responsible for checking valid stock input, creating portfolio, saving portfolio and generate
- * View. The controller can hold states while user creating their portfolio.
+ * This is a page controller for the GUI flexible portfolio create page, which is implement the Gui
+ * page controller. CreatePageController handles input send by action command and is responsible for
+ * checking valid stock input, creating portfolio, saving portfolio and generate View. The
+ * controller can hold states while user creating their portfolio.
  */
 public class ScheduleCreatePageSwingController implements SwingPageController {
 
@@ -27,16 +25,14 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
   private final ViewFactory viewFactory;
   private String errorMessage;
   private boolean isEnd = false;
-  private boolean isNamed = false;
   private final boolean addToPortfolio;
-  private int state = 0;
-  private List<Transaction> transactions = new ArrayList<>();
-  private  final List<String> inputBuffer = new ArrayList<>();
-  private Portfolio portfolioTmp;
+  private final List<Transaction> transactions = new ArrayList<>();
+  private final List<String> inputBuffer = new ArrayList<>();
+  private final Portfolio portfolioTmp;
 
   /**
-   * This is a constructor to construct a FlexibleCreatePageSwingController. It will initialize
-   * the model and view. And also for modify page will use the same page for this one.
+   * This is a constructor to construct a FlexibleCreatePageSwingController. It will initialize the
+   * model and view. And also for modify page will use the same page for this one.
    *
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
@@ -56,25 +52,17 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
 
   @Override
   public View getView() {
-//    List<Transaction> transactions = new ArrayList<>();
-//    if (portfolioTmp != null) {
-//      transactions.addAll(new ArrayList<>(portfolioTmp.getTransactions()));
-//    }
-//    transactions.addAll(this.transactions);
-    return viewFactory.newScheduleCreatePageView(isEnd, isNamed, state, inputBuffer,
-            transactions,
-        errorMessage);
+    return viewFactory.newScheduleCreatePageView(isEnd, inputBuffer, transactions, errorMessage);
   }
 
   /**
    * Handle user input for creating portfolio. User will input in GUI text fields and this input
    * will be all of them.(The input receive here is different from last one. The input for Gui
-   * controller will include all inputs in text field)
-   * After user click finish, it will check the transactions are valid or not. If not, the user
-   * need to input all transactions again.
-   * If all the transactions are valid, it will handle the name input after the user click create
-   * and save to file button.(if it is not modify mode). In the end, it will create new one for
-   * name and save into file (for create) or save the original file.
+   * controller will include all inputs in text field) After user click finish, it will check the
+   * transactions are valid or not. If not, the user need to input all transactions again. If all
+   * the transactions are valid, it will handle the name input after the user click create and save
+   * to file button.(if it is not modify mode). In the end, it will create new one for name and save
+   * into file (for create) or save the original file.
    *
    * @param input the action command send from GUI
    * @return PageController as a next page to be redirected
@@ -82,8 +70,6 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
   @Override
   public SwingPageController handleInput(String input) {
     input = input.trim();
-    //errorMessage = null;
-
     if (input.equals("back")) {
       return new MainPageSwingController(portfolioModel, viewFactory);
     }
@@ -104,11 +90,11 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
         try {
           amount = Integer.parseInt(cmd[1]);
         } catch (Exception e) {
-          errorMessage = "The share is not a number.";
+          errorMessage = "The weight is not a number.";
           return this;
         }
         if (amount <= 0) {
-          errorMessage = "The shares cannot be negative and 0.";
+          errorMessage = "The weight cannot be negative and 0.";
           return this;
         }
         transactions.add(
@@ -126,7 +112,6 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
         // Check amount valid
         portfolioModel.checkTransactions(transactions);
         isEnd = true;
-        //portfolioModel.init();
         return this;
       } catch (Exception e) {
         errorMessage = e.getMessage();

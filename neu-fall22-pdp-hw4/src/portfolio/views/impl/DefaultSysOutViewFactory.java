@@ -29,10 +29,10 @@ public class DefaultSysOutViewFactory implements ViewFactory {
 
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-                                        List<String> inputBuffer,
+      List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage) {
     return new FlexibleCreatePageView(isEnd, isNamed, stage, inputBuffer, transactions,
-            errorMessage);
+        errorMessage);
   }
 
   @Override
@@ -56,8 +56,8 @@ public class DefaultSysOutViewFactory implements ViewFactory {
   }
 
   @Override
-  public View newScheduleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-      List<String> inputBuffer, List<Transaction> transactions, String errorMessage) {
+  public View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
+      List<Transaction> transactions, String errorMessage) {
     return null;
   }
 

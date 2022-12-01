@@ -18,7 +18,6 @@ public class ScheduleInfoSwingController implements SwingPageController {
   private final PortfolioModel portfolioModel;
   private final ViewFactory viewFactory;
   private String errorMessage;
-
   private BuySchedule schedule;
 
   /**
@@ -28,18 +27,18 @@ public class ScheduleInfoSwingController implements SwingPageController {
    * @param portfolioModel the model of portfolio
    * @param viewFactory    ViewFactor for creating a view
    */
-  public ScheduleInfoSwingController(String name, PortfolioModel portfolioModel, ViewFactory viewFactory) {
+  public ScheduleInfoSwingController(String name, PortfolioModel portfolioModel,
+      ViewFactory viewFactory) {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
     List<BuySchedule> schedules = portfolioModel.getPortfolio().getBuySchedules();
-    Optional<BuySchedule> option = schedules.stream().filter(x -> Objects.equals(x.getName(), name)).findFirst();
+    Optional<BuySchedule> option = schedules.stream().filter(x -> Objects.equals(x.getName(), name))
+        .findFirst();
     if (option.isPresent()) {
       this.schedule = option.get();
-    }
-    else {
+    } else {
       errorMessage = "No schedule name: " + name;
     }
-
   }
 
   @Override
@@ -48,10 +47,9 @@ public class ScheduleInfoSwingController implements SwingPageController {
   }
 
   /**
-   * Handle user input for loading portfolio.
-   * First, get the name of portfolio from GUI text filed.
-   * Second, return different page according to the action command send to controller.
-   * (diifferent: add a switch to return new feature page)
+   * Handle user input for loading portfolio. First, get the name of portfolio from GUI text filed.
+   * Second, return different page according to the action command send to controller. (diifferent:
+   * add a switch to return new feature page)
    *
    * @param input the action command send from GUI
    * @return PageController as a next page to be redirected

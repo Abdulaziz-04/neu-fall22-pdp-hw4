@@ -15,9 +15,6 @@ public class MainPageSwingView implements View {
   private final JFrame frame;
   private final InputHandler inputHandler;
 
-  private final String errorMessage;
-  private final boolean isInitFail;
-
   /**
    * This is a constructor to construct a GUI main page view, which contains the frame,
    * inputHandler,error message and isInitFailed.
@@ -27,12 +24,10 @@ public class MainPageSwingView implements View {
    * @param errorMessage the error message will show to the user
    * @param isInitFailed initialize fail or not
    */
-  public MainPageSwingView(JFrame frame, InputHandler inputHandler,
-                           String errorMessage, boolean isInitFailed) {
+  public MainPageSwingView(JFrame frame, InputHandler inputHandler, String errorMessage,
+      boolean isInitFailed) {
     this.frame = frame;
     this.inputHandler = inputHandler;
-    this.errorMessage = errorMessage;
-    this.isInitFail = isInitFailed;
   }
 
   @Override

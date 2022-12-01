@@ -30,10 +30,9 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
   private boolean isNamed = false;
   private final boolean modifyMode;
   private int state = 0;
-  private List<Transaction> transactions = new ArrayList<>();
+  private final List<Transaction> transactions = new ArrayList<>();
   private final List<String> inputBuffer = new ArrayList<>();
-
-  private Portfolio portfolioTmp;
+  private final Portfolio portfolioTmp;
 
   /**
    * This is a constructor to construct a FlexibleCreatePageSwingController. It will initialize the
@@ -83,7 +82,6 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
   @Override
   public SwingPageController handleInput(String input) {
     input = input.trim();
-    //errorMessage = null;
 
     if (input.equals("back")) {
       return new MainPageSwingController(portfolioModel, viewFactory);
@@ -109,7 +107,7 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
       inputBuffer.add(cmd[1]);
       inputBuffer.add(cmd[2]);
       inputBuffer.add(cmd[3]);
-      if (cmd[4].equals("") || cmd[4] == null) {
+      if (cmd[4].equals("")) {
         cmd[4] = "0";
       }
       inputBuffer.add(cmd[4]);
@@ -181,7 +179,8 @@ public class FlexibleCreatePageSwingController implements SwingPageController {
           }
           transactions.addAll(this.transactions);
           portfolioModel.create(pname, PortfolioFormat.FLEXIBLE, transactions);
-          for (var schedule: portfolioTmp.getBuySchedules()) {
+          assert portfolioTmp != null;
+          for (var schedule : portfolioTmp.getBuySchedules()) {
             portfolioModel.addSchedule(
                 schedule.getName(),
                 schedule.getAmount(),

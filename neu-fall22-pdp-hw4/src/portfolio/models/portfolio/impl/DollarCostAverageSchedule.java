@@ -10,7 +10,6 @@ import portfolio.models.portfolio.BuySchedule;
 public class DollarCostAverageSchedule implements BuySchedule {
 
   private final String scheduleType = "dollar_cost_average";
-
   private final String name;
   private final int frequencyDays;
   private final LocalDate startDate;
@@ -64,7 +63,8 @@ public class DollarCostAverageSchedule implements BuySchedule {
   public BuySchedule create(String name, double amount, int frequencyDays, LocalDate startDate,
       LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) {
-    return new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate, transactionFee,
+    return new DollarCostAverageSchedule(name, amount, frequencyDays, startDate, endDate,
+        transactionFee,
         lastRunDate, buyingList);
   }
 
