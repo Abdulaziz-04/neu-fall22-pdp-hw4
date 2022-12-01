@@ -3,8 +3,11 @@ package portfolio.views;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JFrame;
+import portfolio.controllers.InputHandler;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 
 /**
@@ -35,7 +38,7 @@ public interface ViewFactory {
       Map<String, Integer> transactions, String errorMessage);
 
   View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-                                 List<String> inputBuffer,
+      List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage);
 
   /**
@@ -74,4 +77,9 @@ public interface ViewFactory {
       Map<String, Integer> performance,
       String scale, boolean isFinish,
       String errorMessage);
+
+  View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
+      List<Transaction> transactions, String errorMessage);
+
+  View newScheduleInfoPageView(BuySchedule schedule, String errorMessage);
 }

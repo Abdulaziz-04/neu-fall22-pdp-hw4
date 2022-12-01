@@ -25,11 +25,10 @@ public abstract class PortfolioAbs implements Portfolio {
 
   protected final String name;
 
-
   protected PortfolioAbs(String name, List<Transaction> transactions) {
     this.name = name;
     this.transactions = transactions;
-    if (transactions.size() >0 && transactions.get(0).getDate() != null) {
+    if (transactions.size() > 0 && transactions.get(0).getDate() != null) {
       transactions.sort(
           Comparator.comparing(Transaction::getDate)
               .thenComparing(Transaction::getSymbol)

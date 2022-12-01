@@ -2,7 +2,6 @@ package portfolio.views.impl;
 
 import java.io.PrintStream;
 import java.util.Map;
-import javax.swing.JPanel;
 import portfolio.views.ViewAbs;
 
 /**

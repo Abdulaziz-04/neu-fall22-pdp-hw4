@@ -2,9 +2,7 @@ package portfolio.views.impl;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
-
 import portfolio.views.ViewAbs;
 
 /**
@@ -13,9 +11,7 @@ import portfolio.views.ViewAbs;
 public class PerformancePageView extends ViewAbs {
 
   private final String errorMessage;
-
   private final String portfolioName;
-
   private final LocalDate startDate;
   private final LocalDate endDate;
 

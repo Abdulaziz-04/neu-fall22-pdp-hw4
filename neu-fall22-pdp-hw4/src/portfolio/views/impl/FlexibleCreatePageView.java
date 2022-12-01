@@ -2,7 +2,6 @@ package portfolio.views.impl;
 
 import java.io.PrintStream;
 import java.util.List;
-import javax.swing.JPanel;
 import portfolio.models.entities.Transaction;
 import portfolio.views.ViewAbs;
 
@@ -16,7 +15,6 @@ public class FlexibleCreatePageView extends ViewAbs {
   private final Boolean isEnd;
   private final Boolean isNamed;
   private final int state;
-  private List<String> inputBuffer;
 
   /**
    * This is a constructor that construct a create page view. The error messages will contain "Error
@@ -38,7 +36,6 @@ public class FlexibleCreatePageView extends ViewAbs {
     this.isEnd = isEnd;
     this.isNamed = isNamed;
     this.state = state;
-    this.inputBuffer = inputBuffer;
     this.transactions = transactions;
     this.errorMessage = errorMessage;
   }
@@ -61,7 +58,6 @@ public class FlexibleCreatePageView extends ViewAbs {
     this.isEnd = isEnd;
     this.isNamed = isNamed;
     this.state = state;
-    this.inputBuffer = inputBuffer;
     this.transactions = transactions;
     this.errorMessage = errorMessage;
   }

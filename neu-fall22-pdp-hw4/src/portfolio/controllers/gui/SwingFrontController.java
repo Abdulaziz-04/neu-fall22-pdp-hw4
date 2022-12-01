@@ -13,8 +13,6 @@ import portfolio.views.gui.SwingViewFactory;
 public class SwingFrontController implements FrontController, InputHandler {
 
   private SwingPageController pageController;
-  private final PortfolioModel portfolioModel;
-  private final ViewFactory viewFactory;
 
   /**
    * Contructs the SwingFrontController for GUI first page.
@@ -22,10 +20,9 @@ public class SwingFrontController implements FrontController, InputHandler {
    * @param portfolioModel PortfolioModel
    */
   public SwingFrontController(PortfolioModel portfolioModel) {
-    this.portfolioModel = portfolioModel;
     JFrame frame = new JFrame();
     frame.setVisible(true);
-    this.viewFactory = new SwingViewFactory(frame, this);
+    ViewFactory viewFactory = new SwingViewFactory(frame, this);
     this.pageController = new MainPageSwingController(portfolioModel, viewFactory);
   }
 

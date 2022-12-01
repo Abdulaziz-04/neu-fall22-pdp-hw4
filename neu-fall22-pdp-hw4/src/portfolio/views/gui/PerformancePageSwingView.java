@@ -1,12 +1,17 @@
 package portfolio.views.gui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
-
-import javax.swing.*;
-
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import portfolio.controllers.InputHandler;
 import portfolio.views.View;
 
@@ -25,10 +30,10 @@ public class PerformancePageSwingView implements View {
   private final Map<String, Integer> performance;
   private final String scale;
 
-  private boolean isFinish;
+  private final boolean isFinish;
 
-  private JFrame frame;
-  private InputHandler inputHandler;
+  private final JFrame frame;
+  private final InputHandler inputHandler;
 
 
   /**
@@ -45,12 +50,12 @@ public class PerformancePageSwingView implements View {
    * @param errorMessage  the error message will show to the user
    */
   public PerformancePageSwingView(JFrame frame, InputHandler inputHandler, String portfolioName,
-                                  LocalDate startDate,
-                                  LocalDate endDate,
-                                  Map<String, Integer> performance,
-                                  String scale,
-                                  boolean isFinish,
-                                  String errorMessage) {
+      LocalDate startDate,
+      LocalDate endDate,
+      Map<String, Integer> performance,
+      String scale,
+      boolean isFinish,
+      String errorMessage) {
     this.frame = frame;
     this.inputHandler = inputHandler;
     this.portfolioName = portfolioName;
@@ -72,7 +77,6 @@ public class PerformancePageSwingView implements View {
     backButton.addActionListener(e -> inputHandler.handleInput("back"));
     backButton.setBounds(0, 0, 70, 30);
     panelBack.add(backButton);
-
 
     JLabel error = new JLabel(errorMessage);
     error.setForeground(Color.red);
@@ -97,14 +101,14 @@ public class PerformancePageSwingView implements View {
     panelShowButton.setLayout(new FlowLayout());
     JButton showButton = new JButton("show performance");
     showButton.addActionListener(e -> inputHandler.handleInput(startTextArea.getText() +
-            "," + endTextArea.getText()));
+        "," + endTextArea.getText()));
     panelShowButton.add(showButton);
 
     JPanel panelShow = new JPanel();
     panelShowButton.setLayout(new FlowLayout());
     if (performance != null && isFinish) {
       JLabel performaceLabel = new JLabel("Performance of portfolio " + portfolioName
-              + " from " + startDate + " to " + endDate);
+          + " from " + startDate + " to " + endDate);
       JTextArea showArea = new JTextArea();
       for (var entry : performance.entrySet()) {
         showArea.append(entry.getKey() + "*".repeat(entry.getValue()) + "\n");

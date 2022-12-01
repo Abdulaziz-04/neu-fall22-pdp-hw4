@@ -18,6 +18,7 @@ import portfolio.models.portfolio.Portfolio;
 public class FlexiblePortfolio extends PortfolioAbs {
 
   private final List<BuySchedule> schedules;
+
   /**
    * This is a constructor to a flexible portfolio object, which will contain the name of this
    * portfolio and a list of transaction entry.
@@ -25,7 +26,8 @@ public class FlexiblePortfolio extends PortfolioAbs {
    * @param name         the name of a portfolio
    * @param transactions a list of transaction entry
    */
-  public FlexiblePortfolio(String name, List<Transaction> transactions, List<BuySchedule> schedule) {
+  public FlexiblePortfolio(String name, List<Transaction> transactions,
+      List<BuySchedule> schedule) {
     super(name, transactions);
     this.schedules = schedule;
   }
@@ -34,6 +36,7 @@ public class FlexiblePortfolio extends PortfolioAbs {
     super(name, transactions);
     this.schedules = new ArrayList<>();
   }
+
   @Override
   public PortfolioFormat getFormat() {
     return PortfolioFormat.FLEXIBLE;
@@ -45,7 +48,8 @@ public class FlexiblePortfolio extends PortfolioAbs {
   }
 
   @Override
-  public Portfolio create(List<Transaction> transactions, List<BuySchedule> schedules) throws Exception {
+  public Portfolio create(List<Transaction> transactions, List<BuySchedule> schedules)
+      throws Exception {
     return new FlexiblePortfolio(name, transactions, schedules);
   }
 

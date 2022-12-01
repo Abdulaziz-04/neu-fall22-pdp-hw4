@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
+import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.views.View;
 import portfolio.views.ViewFactory;
@@ -28,10 +29,10 @@ public class DefaultSysOutViewFactory implements ViewFactory {
 
   @Override
   public View newFlexibleCreatePageView(Boolean isEnd, Boolean isNamed, int stage,
-                                        List<String> inputBuffer,
+      List<String> inputBuffer,
       List<Transaction> transactions, String errorMessage) {
     return new FlexibleCreatePageView(isEnd, isNamed, stage, inputBuffer, transactions,
-            errorMessage);
+        errorMessage);
   }
 
   @Override
@@ -52,6 +53,17 @@ public class DefaultSysOutViewFactory implements ViewFactory {
       String scale, boolean isFinish, String errorMessage) {
     return new PerformancePageView(portfolioName, startDate, endDate, performance, scale, isFinish,
         errorMessage);
+  }
+
+  @Override
+  public View newScheduleCreatePageView(boolean isEnd, List<String> inputBuffer,
+      List<Transaction> transactions, String errorMessage) {
+    return null;
+  }
+
+  @Override
+  public View newScheduleInfoPageView(BuySchedule schedule, String errorMessage) {
+    return null;
   }
 
 }

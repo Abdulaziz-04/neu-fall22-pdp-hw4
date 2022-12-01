@@ -31,13 +31,13 @@ public class LoadPageController implements PageController {
     this.portfolioModel = portfolioModel;
     this.viewFactory = viewFactory;
     showModifyMenu =
-            portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
+        portfolioModel.getPortfolio() != null && !portfolioModel.getPortfolio().isReadOnly();
   }
 
   @Override
   public View getView() {
     return viewFactory.newLoadPageView(portfolioModel.getPortfolio(),
-            showModifyMenu, errorMessage);
+        showModifyMenu, errorMessage);
   }
 
   /**

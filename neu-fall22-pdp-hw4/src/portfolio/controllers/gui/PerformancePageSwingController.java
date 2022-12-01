@@ -1,11 +1,8 @@
 package portfolio.controllers.gui;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import portfolio.models.entities.PortfolioPerformance;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;

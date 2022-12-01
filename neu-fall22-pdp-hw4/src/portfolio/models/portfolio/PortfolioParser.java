@@ -5,6 +5,7 @@ package portfolio.models.portfolio;
  * given format.
  */
 public interface PortfolioParser {
+
   Portfolio parse(String str) throws Exception;
 
   /**
