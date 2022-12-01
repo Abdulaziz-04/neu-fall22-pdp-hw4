@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
@@ -28,7 +30,7 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
   private String errorMessage;
   private boolean isEnd = false;
   private final boolean addToPortfolio;
-  private final List<Transaction> transactions = new ArrayList<>();
+  private List<Transaction> transactions = new ArrayList<>();
   private final List<String> inputBuffer = new ArrayList<>();
 
   private Map<String, Double> stockList = new LinkedHashMap<>();
@@ -119,6 +121,9 @@ public class ScheduleCreatePageSwingController implements SwingPageController {
       return this;
     } else if (input.equals("yes") && !isEnd) {
       try {
+        transactions = stockList.entrySet().stream()
+                .map(x -> new Transaction(x.getKey(), x.getValue())).collect(
+                        Collectors.toList());
         // Check amount valid
         portfolioModel.checkTransactions(transactions);
         isEnd = true;
