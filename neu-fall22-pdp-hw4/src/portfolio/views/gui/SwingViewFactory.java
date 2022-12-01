@@ -77,6 +77,13 @@ public class SwingViewFactory implements ViewFactory {
   }
 
   @Override
+  public View newOneTimeStrategyPageView(Map<String, Double> stockList, boolean isEnd,
+      List<String> inputBuffer, String errorMessage) {
+    return new OneTimeStrategyPageSwingView(frame, inputHandler, stockList, isEnd, inputBuffer,
+        errorMessage);
+  }
+
+  @Override
   public View newScheduleInfoPageView(BuySchedule schedule, String errorMessage) {
     return new ScheduleInfoPageSwingView(frame, inputHandler, schedule, errorMessage);
   }

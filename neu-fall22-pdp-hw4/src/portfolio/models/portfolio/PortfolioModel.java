@@ -71,6 +71,8 @@ public interface PortfolioModel {
       LocalDate startDate, LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
 
+  void removeSchedule(String name) throws Exception;
+
   void modifySchedule(String name, double amount, int frequencyDays,
       LocalDate startDate, LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
