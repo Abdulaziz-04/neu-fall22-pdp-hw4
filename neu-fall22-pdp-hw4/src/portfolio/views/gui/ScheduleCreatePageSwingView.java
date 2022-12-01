@@ -126,7 +126,7 @@ public class ScheduleCreatePageSwingView implements View {
       JTextField symbolTextArea = new JTextField(10);
       panelSymbol.add(symbolTextArea);
 
-      JLabel weightLabel = new JLabel("Weight: ");
+      JLabel weightLabel = new JLabel("Weight (ex. 10): ");
       panelWeight.add(weightLabel);
       JTextField weightTextArea = new JTextField(10);
       panelWeight.add(weightTextArea);

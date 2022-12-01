@@ -2,17 +2,20 @@
 
 ## Design changes
 
-As per last assignment feedback, we have change some of our project structure.
+### GUI
+In order to support GUI that has different input behavior than TUI, we implemented new View and Controller for GUI using the same View and Controller interface as before.
+Since our TUI handle input in string, we send a callback into View and pass it back to a Contoller.
+Both GUI and TUI call the same main model (PortfolioModelImpl.)
 
-1. Before our controller interacts with multiple models, now controller only call on main model. Our
-   main model (PortfolioModel) now responses for managing and maintaining a portfolio.
-2. IO file read/write has been moved to controller layer.
-3. Remove unnecessary factory class
+### Buy strategy
+We create a new interface called BuySchedule for buying strategy. 
+It contains information such as which stock to buy, start date, end date and buying frequency days.
+We have added these following items to cooperate the changes:
 
-## Change to cooperate new requirement for this assignment
-1. PortfolioEntry class is renamed to Transaction. It has three more fields which are date, transaction type and commission fee.
-2. New PerformancePageController and PerformancePageView for showing portfolio performance overtime.
-3. More functions added in Portfolio interface (calculate cost of basis, performance)
+1. New field in Portfolio for holding a list of BuySchedule. (Also get method to get the list)
+2. ScheduleRunner class and its interface for calculate the list of transactions from scheduled strategy.
+3. New methods in main model to add schedule into Portfolio (PortfolioModel.addSchedule())
+4. PortfolioParser parse text with version. Going forward we can easily parse older version of Portfolio.
 
 ## Project Overview
 
@@ -45,6 +48,7 @@ Controllers coresponse for one user interface page. It mainly handles user input
 - PerformancePageController
 - IOService (interface) *Service interface for reading and writing string to external storage*
 - FileIOService *IOService for reading and writing file*
+- New SwingPageController (8 files)
 
 ## Model
 
@@ -91,11 +95,13 @@ display text.
 - InfoPageView
 - MainPageView
 - PerformancePageView
+- New View for GUI (8 files)
 
 ### Additional classes
 
 - ViewFactory (interface)
 - DefaultSysOutViewFactory *Create View with System.out as a output PrintStream*
+- SwingViewFactory
 
 ## Life Cycle
 
