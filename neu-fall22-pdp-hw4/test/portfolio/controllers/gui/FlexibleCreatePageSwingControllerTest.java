@@ -26,6 +26,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Test class for FlexibleCreatePageSwingController.
+ */
 public class FlexibleCreatePageSwingControllerTest {
   private ArgumentCaptor<Object> argumentCaptor;
   private SwingPageController pageController;
@@ -78,7 +81,6 @@ public class FlexibleCreatePageSwingControllerTest {
     assertFalse((boolean) argumentCaptor.getArguments().get(0));
     assertFalse((boolean) argumentCaptor.getArguments().get(1));
     assertEquals(0, (int) argumentCaptor.getArguments().get(2));
-    //assertEquals(0, argumentCaptor.getArguments().get(3)((List<Transaction>) argumentCaptor.getArguments().get(3)).size());
     assertEquals(5, ((List<ArrayList>) argumentCaptor.getArguments().get(3)).size());
     assertEquals(0, ((List<Transaction>) argumentCaptor.getArguments().get(4)).size());
     assertEquals("The format error!",

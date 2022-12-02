@@ -3,7 +3,6 @@ package portfolio.controllers.gui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,24 +25,25 @@ import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
+/**
+ * Test for OneTimeStrategyPageSwingController.
+ */
 public class OneTimeStrategyPageSwingControllerTest {
 
   private ArgumentCaptor<Object> argumentCaptor;
   private SwingPageController pageController;
-  private ViewFactory viewFactory;
 
   private List<Transaction> transactions = new ArrayList<>();
-  private PortfolioModel portfolioModel;
   private final double EPSILON = 0.000000001;
 
   @Before
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser,
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser,
         new DollarCostAverageRunner(stockQueryService));
     argumentCaptor = new ArgumentCaptor<>();
-    viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
+    ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     transactions.add(
         new Transaction(TransactionType.BUY, "AAA", 110, LocalDate.parse("2022-10-10"), 12));
     transactions.add(

@@ -1,7 +1,6 @@
 package portfolio.models.entities;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
@@ -12,25 +11,28 @@ import org.junit.Test;
 import portfolio.models.portfolio.BuySchedule;
 import portfolio.models.portfolio.impl.DollarCostAverageSchedule;
 
+/**
+ * Test for DollarCostAverageSchedule.
+ */
 public class DollarCostAverageScheduleTest {
 
   private final double EPSILON = 0.000000001;
 
   @Test
-  public void createObj(){
+  public void createObj() {
     List<Transaction> buyingList = new ArrayList<>();
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
     BuySchedule schedule = new DollarCostAverageSchedule(
         "name",
-    2000,
+        2000,
         30,
         LocalDate.parse("2020-10-10"),
         LocalDate.parse("2022-10-10"),
         5,
         null,
         buyingList
-    ) ;
+    );
 
     assertEquals("name", schedule.getName());
     assertEquals(30, schedule.getFrequencyDays());
@@ -46,7 +48,7 @@ public class DollarCostAverageScheduleTest {
   }
 
   @Test
-  public void createObj_noEndDate(){
+  public void createObj_noEndDate() {
     List<Transaction> buyingList = new ArrayList<>();
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
@@ -59,13 +61,13 @@ public class DollarCostAverageScheduleTest {
         5,
         null,
         buyingList
-    ) ;
+    );
 
     assertNull(schedule.getEndDate());
   }
 
   @Test
-  public void createObj_endDateBeforeStartDate(){
+  public void createObj_endDateBeforeStartDate() {
     List<Transaction> buyingList = new ArrayList<>();
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
@@ -79,16 +81,15 @@ public class DollarCostAverageScheduleTest {
           5,
           null,
           buyingList
-      ) ;
+      );
       fail();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("endDate cannot be before startDate", e.getMessage());
     }
   }
 
   @Test
-  public void createObj_frequencyLessThanZero(){
+  public void createObj_frequencyLessThanZero() {
     List<Transaction> buyingList = new ArrayList<>();
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
@@ -102,16 +103,15 @@ public class DollarCostAverageScheduleTest {
           5,
           null,
           buyingList
-      ) ;
+      );
       fail();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Frequency day cannot be less than zero.", e.getMessage());
     }
   }
 
   @Test
-  public void createObj_TransactionLessThanZero(){
+  public void createObj_TransactionLessThanZero() {
     List<Transaction> buyingList = new ArrayList<>();
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
@@ -125,16 +125,15 @@ public class DollarCostAverageScheduleTest {
           -1,
           null,
           buyingList
-      ) ;
+      );
       fail();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Commission fee cannot be negative.", e.getMessage());
     }
   }
 
   @Test
-  public void createObj_buyingListEmpty(){
+  public void createObj_buyingListEmpty() {
     List<Transaction> buyingList = new ArrayList<>();
     try {
       BuySchedule schedule = new DollarCostAverageSchedule(
@@ -146,16 +145,15 @@ public class DollarCostAverageScheduleTest {
           5,
           null,
           buyingList
-      ) ;
+      );
       fail();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Stock buying list is empty", e.getMessage());
     }
   }
 
   @Test
-  public void createObj_amountLessThanZero(){
+  public void createObj_amountLessThanZero() {
     List<Transaction> buyingList = new ArrayList<>();
     buyingList.add(new Transaction("AAPL", 10));
     buyingList.add(new Transaction("AAA", 10));
@@ -169,10 +167,9 @@ public class DollarCostAverageScheduleTest {
           5,
           null,
           buyingList
-      ) ;
+      );
       fail();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       assertEquals("Amount cannot be less than zero", e.getMessage());
     }
   }

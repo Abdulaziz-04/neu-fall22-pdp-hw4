@@ -7,6 +7,10 @@ import java.util.List;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.BuySchedule;
 
+/**
+ * DollarCostAverageSchedule implements BuySchedule. It stores the information of schedule stock to
+ * buy, date to buy, amount of money and buying frequency days.
+ */
 public class DollarCostAverageSchedule implements BuySchedule {
 
   private final String scheduleType = "dollar_cost_average";
@@ -19,6 +23,19 @@ public class DollarCostAverageSchedule implements BuySchedule {
   private final LocalDate lastRunDate;
   private final List<Transaction> buyingList;
 
+  /**
+   * Contruct DollarCostAverageSchedule object.
+   *
+   * @param name           name of schedule
+   * @param amount         investment amount
+   * @param frequencyDays  number of days
+   * @param startDate      start date
+   * @param endDate        end date
+   * @param transactionFee commission fee
+   * @param lastRunDate    last schedule run date
+   * @param buyingList     buying stock list
+   * @throws IllegalArgumentException if input iss not correct
+   */
   public DollarCostAverageSchedule(String name, double amount, int frequencyDays,
       LocalDate startDate,
       LocalDate endDate, double transactionFee, LocalDate lastRunDate,

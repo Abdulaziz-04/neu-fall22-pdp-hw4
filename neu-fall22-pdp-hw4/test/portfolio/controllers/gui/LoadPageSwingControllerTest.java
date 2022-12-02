@@ -27,6 +27,9 @@ import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
+/**
+ * Test class for LoadPageSwingController.
+ */
 public class LoadPageSwingControllerTest {
   private final PortfolioParser parser = new PortfolioTextParser();
   private ArgumentCaptor<Object> argumentCaptor;

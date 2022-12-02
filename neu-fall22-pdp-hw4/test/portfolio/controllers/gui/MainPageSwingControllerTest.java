@@ -21,7 +21,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 
-
+/**
+ * Test class for MainPageSwingController.
+ */
 public class MainPageSwingControllerTest {
   private final PortfolioParser parser = new PortfolioTextParser();
   private PortfolioModel portfolioModel;

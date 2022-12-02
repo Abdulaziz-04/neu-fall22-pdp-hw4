@@ -81,10 +81,9 @@ public class ScheduleCreatePageSwingView implements View {
       }
 
       @Override
-      public void setValueAt(Object value, int row, int col)
-      {
-          String firstKey = (String) stockList.keySet().toArray()[row];
-          inputHandler.handleInput(firstKey + "," + value);
+      public void setValueAt(Object value, int row, int col) {
+        String firstKey = (String) stockList.keySet().toArray()[row];
+        inputHandler.handleInput(firstKey + "," + value);
       }
     };
     JTable portfolioTable = new JTable(model);
@@ -95,7 +94,7 @@ public class ScheduleCreatePageSwingView implements View {
 
   @Override
   public void render() {
-    if(addToPortfolio) {
+    if (addToPortfolio) {
       frame.setTitle("Add New Strategy to Existing Portfolio");
     } else {
       frame.setTitle("Create Dollar Cost Average Portfolio");
@@ -120,7 +119,7 @@ public class ScheduleCreatePageSwingView implements View {
     JPanel panelButton = new JPanel();
     panelButton.setLayout(new FlowLayout());
 
-    if (isEnd == false) {
+    if (!isEnd) {
       JLabel symbolLabel = new JLabel("Stock Symbol (ex. AAPL)");
       panelSymbol.add(symbolLabel);
       JTextField symbolTextArea = new JTextField(10);
@@ -174,7 +173,7 @@ public class ScheduleCreatePageSwingView implements View {
       }
 
       JLabel namedLabel = new JLabel();
-      if(addToPortfolio) {
+      if (addToPortfolio) {
         namedLabel.setText("Name of strategy: ");
       } else {
         namedLabel.setText("Name of portfolio: ");

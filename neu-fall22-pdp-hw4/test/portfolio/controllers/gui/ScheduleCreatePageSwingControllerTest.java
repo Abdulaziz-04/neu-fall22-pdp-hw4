@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import portfolio.helper.ArgumentCaptor;
 import portfolio.helper.StockApiMock;
 import portfolio.helper.ViewFactoryWithArgumentCaptor;
 import portfolio.models.entities.Transaction;
-import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.models.portfolio.PortfolioParser;
 import portfolio.models.portfolio.impl.DollarCostAverageRunner;
@@ -25,7 +23,11 @@ import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
+/**
+ * Test for ScheduleCreatePageSwingController.
+ */
 public class ScheduleCreatePageSwingControllerTest {
+
   private ArgumentCaptor<Object> argumentCaptor;
   private SwingPageController pageController;
   private ViewFactory viewFactory;
@@ -38,7 +40,8 @@ public class ScheduleCreatePageSwingControllerTest {
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, new DollarCostAverageRunner(stockQueryService));
+    portfolioModel = new PortfolioModelImpl(stockQueryService, parser,
+        new DollarCostAverageRunner(stockQueryService));
     argumentCaptor = new ArgumentCaptor<>();
     viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
     pageController = new ScheduleCreatePageSwingController(portfolioModel, viewFactory);
@@ -157,7 +160,8 @@ public class ScheduleCreatePageSwingControllerTest {
     assertTrue((boolean) argumentCaptor.getArguments().get(1));
     assertEquals(0, ((List<ArrayList>) argumentCaptor.getArguments().get(3)).size());
     assertFalse((boolean) argumentCaptor.getArguments().get(4));
-    assertEquals("Amount cannot be less than zero Please enter transaction list again.", argumentCaptor.getArguments().get(5));
+    assertEquals("Amount cannot be less than zero Please enter transaction list again.",
+        argumentCaptor.getArguments().get(5));
   }
 
   @Test
@@ -186,7 +190,7 @@ public class ScheduleCreatePageSwingControllerTest {
   @Test
   public void handleInput_modifyMode() throws Exception {
     portfolioModel.load("test/resources/flex", "2022-10-10,BUY,AAA,100,12\n"
-            + "2022-10-11,SELL,AAA,100,34\n");
+        + "2022-10-11,SELL,AAA,100,34\n");
     pageController = new FlexibleCreatePageSwingController(portfolioModel, viewFactory);
     SwingPageController nextPage = pageController.handleInput("AAPL,10");
     nextPage = pageController.handleInput("yes");

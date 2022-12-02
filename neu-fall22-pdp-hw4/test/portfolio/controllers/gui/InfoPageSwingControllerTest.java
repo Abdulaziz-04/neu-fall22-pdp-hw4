@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
-import portfolio.controllers.impl.InfoPageController;
-import portfolio.controllers.impl.LoadPageController;
 import portfolio.helper.ArgumentCaptor;
 import portfolio.helper.StockApiMock;
 import portfolio.helper.TransactionConverter;
@@ -29,6 +27,9 @@ import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
+/**
+ * Test class for InfoPageSwingController.
+ */
 public class InfoPageSwingControllerTest {
 
   private final PortfolioParser parser = new PortfolioTextParser();
@@ -85,13 +86,13 @@ public class InfoPageSwingControllerTest {
   public void handelInput_Flexible() throws Exception {
     List<Transaction> expectedTx = new ArrayList<>();
     expectedTx.add(
-            new Transaction(TransactionType.BUY, "AAA", 100, LocalDate.parse("2022-10-10"), 1));
+        new Transaction(TransactionType.BUY, "AAA", 100, LocalDate.parse("2022-10-10"), 1));
     expectedTx.add(
-            new Transaction(TransactionType.BUY, "AAPL", 100, LocalDate.parse("2022-10-10"), 2));
+        new Transaction(TransactionType.BUY, "AAPL", 100, LocalDate.parse("2022-10-10"), 2));
     expectedTx.add(
-            new Transaction(TransactionType.SELL, "AAA", 10, LocalDate.parse("2022-10-11"), 3));
+        new Transaction(TransactionType.SELL, "AAA", 10, LocalDate.parse("2022-10-11"), 3));
     expectedTx.add(
-            new Transaction(TransactionType.BUY, "AAA", 12, LocalDate.parse("2022-10-11"), 4));
+        new Transaction(TransactionType.BUY, "AAA", 12, LocalDate.parse("2022-10-11"), 4));
 
     portfolioModel.create("name", PortfolioFormat.FLEXIBLE, expectedTx);
     SwingPageController nextPage = pageController.handleInput("2022-10-10");

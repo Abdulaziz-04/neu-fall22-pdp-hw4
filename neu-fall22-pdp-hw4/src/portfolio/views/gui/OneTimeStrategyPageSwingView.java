@@ -16,11 +16,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import portfolio.controllers.InputHandler;
-import portfolio.models.entities.Transaction;
 import portfolio.views.View;
 
 /**
- * This is a view that show the GUI create page, which implement the View function.
+ * This is a view that show the GUI one time strategy page, which implement the View function.
  */
 public class OneTimeStrategyPageSwingView implements View {
 
@@ -111,7 +110,7 @@ public class OneTimeStrategyPageSwingView implements View {
     JPanel panelButton = new JPanel();
     panelButton.setLayout(new FlowLayout());
 
-    if (isEnd == false) {
+    if (!isEnd) {
       JLabel symbolLabel = new JLabel("Stock Symbol (ex. AAPL)");
       panelSymbol.add(symbolLabel);
       JTextField symbolTextArea = new JTextField(10);
@@ -166,10 +165,10 @@ public class OneTimeStrategyPageSwingView implements View {
       JTextField amountTextArea = new JTextField(10);
       panelAmount.add(amountTextArea);
 
-      JLabel TransactionDateLabel = new JLabel("Transaction date (format: 2022-10-10):");
-      panelDate.add(TransactionDateLabel);
-      JTextField TransactionDate = new JTextField(10);
-      panelDate.add(TransactionDate);
+      JLabel transactionDateLabel = new JLabel("Transaction date (format: 2022-10-10):");
+      panelDate.add(transactionDateLabel);
+      JTextField transactionDate = new JTextField(10);
+      panelDate.add(transactionDate);
 
       JLabel commissionFee = new JLabel("Commission fee:");
       panelCommission.add(commissionFee);
@@ -178,7 +177,7 @@ public class OneTimeStrategyPageSwingView implements View {
 
       JButton buttonCreate = new JButton("Create & Save to File");
       buttonCreate.addActionListener(e -> inputHandler.handleInput(
-          amountTextArea.getText() + "," + TransactionDate.getText() + ","
+          amountTextArea.getText() + "," + transactionDate.getText() + ","
               + commissionFeeTextArea.getText()));
       panelCreate.add(buttonCreate);
     }

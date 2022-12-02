@@ -1,14 +1,20 @@
 package portfolio.views.gui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.List;
 import java.util.Vector;
-
-
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
-
 import portfolio.controllers.InputHandler;
 import portfolio.models.entities.Transaction;
 import portfolio.views.View;
@@ -91,7 +97,7 @@ public class FlexibleCreatePageSwingView implements View {
 
   @Override
   public void render() {
-    if(isNamed) {
+    if (isNamed) {
       frame.setTitle("Add More Transaction");
     } else {
       frame.setTitle("Flexible Create Page");

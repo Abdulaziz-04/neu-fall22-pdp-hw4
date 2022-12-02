@@ -1,23 +1,25 @@
 package portfolio.views.gui;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.util.Vector;
-
-
-import javax.swing.*;
-
-
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import portfolio.controllers.InputHandler;
-import portfolio.views.ButtonColumn;
-import portfolio.views.View;
-
 import portfolio.models.portfolio.Portfolio;
+import portfolio.views.View;
 
 /**
  * This is a view that show the GUI load page, which implement the View function.
@@ -115,7 +117,6 @@ public class LoadPageSwingView implements View {
       }
     };
 
-    ButtonColumn buttonColumn = new ButtonColumn(table, view, 6);
     table.addMouseListener(new java.awt.event.MouseAdapter() {
       @Override
       public void mouseClicked(java.awt.event.MouseEvent evt) {

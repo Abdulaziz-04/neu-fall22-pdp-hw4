@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import portfolio.models.entities.Transaction;
 
+/**
+ * An interface for storing buying schedule information such as stock to buy, date to buy, amount of
+ * money and buying frequency days.
+ */
 public interface BuySchedule {
 
   BuySchedule create(String name, double amount, int frequencyDays,

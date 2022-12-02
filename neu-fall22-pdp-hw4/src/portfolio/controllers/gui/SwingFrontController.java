@@ -1,7 +1,6 @@
 package portfolio.controllers.gui;
 
-import javax.swing.*;
-
+import javax.swing.JFrame;
 import portfolio.controllers.FrontController;
 import portfolio.controllers.InputHandler;
 
@@ -10,6 +9,9 @@ import portfolio.views.View;
 import portfolio.views.ViewFactory;
 import portfolio.views.gui.SwingViewFactory;
 
+/**
+ * An interface to run and dispatch job to different swing controller.
+ */
 public class SwingFrontController implements FrontController, InputHandler {
 
   private SwingPageController pageController;

@@ -67,10 +67,28 @@ public interface PortfolioModel {
    */
   void addTransactions(List<Transaction> transactions) throws Exception;
 
+  /**
+   * Add schedule to the portfolio.
+   *
+   * @param name schedule name
+   * @param amount amount of investment in double
+   * @param frequencyDays frequency in integer
+   * @param startDate start date
+   * @param endDate end date
+   * @param transactionFee fee in double
+   * @param lastRunDate last run date
+   * @throws Exception if cannot add schedule to portfolio
+   */
   void addSchedule(String name, double amount, int frequencyDays,
       LocalDate startDate, LocalDate endDate, double transactionFee, LocalDate lastRunDate,
       List<Transaction> buyingList) throws Exception;
 
+  /**
+   * Remove schedule from portfolio.
+   *
+   * @param name name of schedule
+   * @throws Exception when cannot delete from list
+   */
   void removeSchedule(String name) throws Exception;
 
   /**
@@ -113,8 +131,7 @@ public interface PortfolioModel {
   /**
    * To get the string of a portfolio by using the portfolio parser.
    *
-   * @return
-   * @throws Exception
+   * @throws Exception if parse error
    */
   String getString() throws Exception;
 }

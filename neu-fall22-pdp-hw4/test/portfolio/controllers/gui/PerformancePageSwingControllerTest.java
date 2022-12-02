@@ -1,5 +1,9 @@
 package portfolio.controllers.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,8 +28,9 @@ import portfolio.models.stockprice.StockQueryService;
 import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
-import static org.junit.Assert.*;
-
+/**
+ * Test for PerformancePageSwingController.
+ */
 public class PerformancePageSwingControllerTest {
   private ArgumentCaptor<Object> argumentCaptor;
   private PageController pageController;

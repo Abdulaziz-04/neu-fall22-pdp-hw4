@@ -3,8 +3,6 @@ package portfolio.views;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import javax.swing.JFrame;
-import portfolio.controllers.InputHandler;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.models.entities.Transaction;
 import portfolio.models.portfolio.BuySchedule;

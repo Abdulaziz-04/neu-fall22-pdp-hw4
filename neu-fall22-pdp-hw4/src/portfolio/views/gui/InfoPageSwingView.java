@@ -1,13 +1,18 @@
 package portfolio.views.gui;
 
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.Vector;
-
-import javax.swing.*;
-
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import portfolio.controllers.InputHandler;
 import portfolio.models.entities.PortfolioWithValue;
 import portfolio.views.View;

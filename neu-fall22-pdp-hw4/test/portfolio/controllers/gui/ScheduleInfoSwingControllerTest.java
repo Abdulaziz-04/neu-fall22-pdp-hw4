@@ -1,14 +1,11 @@
 package portfolio.controllers.gui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import portfolio.helper.ArgumentCaptor;
@@ -28,10 +25,12 @@ import portfolio.models.stockprice.StockQueryServiceImpl;
 import portfolio.views.ViewFactory;
 
 
+/**
+ * Test for ScheduleInfoSwingController.
+ */
 public class ScheduleInfoSwingControllerTest {
+
   private final PortfolioParser parser = new PortfolioTextParser();
-  private PortfolioModel portfolioModel;
-  private ViewFactory viewFactory;
   private StockQueryService stockQueryService;
   private ArgumentCaptor<Object> argumentCaptor;
   private SwingPageController pageController;
@@ -41,9 +40,10 @@ public class ScheduleInfoSwingControllerTest {
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
     PortfolioParser parser = new PortfolioTextParser();
-    portfolioModel = new PortfolioModelImpl(stockQueryService, parser, new DollarCostAverageRunner(stockQueryService));
+    PortfolioModel portfolioModel = new PortfolioModelImpl(stockQueryService, parser,
+        new DollarCostAverageRunner(stockQueryService));
     argumentCaptor = new ArgumentCaptor<>();
-    viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
+    ViewFactory viewFactory = new ViewFactoryWithArgumentCaptor(argumentCaptor);
 
     transactions.add(
         new Transaction(TransactionType.BUY, "AAA", 110, LocalDate.parse("2022-10-10"), 12));

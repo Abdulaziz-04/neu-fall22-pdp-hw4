@@ -33,12 +33,11 @@ public class PortfolioModelImplTest {
   private final List<Transaction> transactions = new ArrayList<>();
   private final List<Transaction> transactions2 = new ArrayList<>();
   private final double EPSILON = 0.000000001;
-  private ScheduleRunner runner;
 
   @Before
   public void setUp() throws Exception {
     StockQueryService stockQueryService = new StockQueryServiceImpl(new StockApiMock(false));
-    runner = new DollarCostAverageRunner(stockQueryService);
+    ScheduleRunner runner = new DollarCostAverageRunner(stockQueryService);
     portfolioModel = new PortfolioModelImpl(stockQueryService, new PortfolioTextParser(), runner);
 
     transactions.add(
@@ -181,7 +180,8 @@ public class PortfolioModelImplTest {
 
   @Test
   public void load_v3_inflexible() throws Exception {
-    String str = "[INFO]\r\nFORMAT=INFLEXIBLE\r\nVERSION=3\r\n\r\n[TRANSACTION]\r\nAAA,100\r\nAAPL,123\r\n\r\n";
+    String str = "[INFO]\r\nFORMAT=INFLEXIBLE\r\nVERSION=3\r\n\r\n"
+        + "[TRANSACTION]\r\nAAA,100\r\nAAPL,123\r\n\r\n";
     portfolioModel.load("name", str);
     assertEquals(PortfolioFormat.INFLEXIBLE, portfolioModel.getPortfolio().getFormat());
   }

@@ -10,7 +10,6 @@ import portfolio.controllers.datastore.FileIOService;
 import portfolio.controllers.datastore.IOService;
 import portfolio.models.entities.PortfolioFormat;
 import portfolio.models.entities.Transaction;
-import portfolio.models.entities.TransactionType;
 import portfolio.models.portfolio.Portfolio;
 import portfolio.models.portfolio.PortfolioModel;
 import portfolio.views.View;
@@ -32,7 +31,7 @@ public class OneTimeStrategyPageSwingController implements SwingPageController {
   private final boolean addToPortfolio;
   private List<Transaction> transactions = new ArrayList<>();
 
-  private Map<String, Double> stockList = new LinkedHashMap<>();
+  private final Map<String, Double> stockList = new LinkedHashMap<>();
   private final List<String> inputBuffer = new ArrayList<>();
   private final Portfolio portfolioTmp;
 

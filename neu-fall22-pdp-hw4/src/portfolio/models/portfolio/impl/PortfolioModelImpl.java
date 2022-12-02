@@ -374,7 +374,7 @@ public class PortfolioModelImpl implements PortfolioModel {
    * This is a helper method to find the last day of the quarter which the given date falls.
    *
    * @param localDate the date that we want to check
-   * @returnthe last day of the quarter which the given date falls.
+   * @return the last day of the quarter which the given date falls.
    */
   private static LocalDate getQuarterEnd(LocalDate localDate) {
     localDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
